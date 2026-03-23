@@ -3,95 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TourAI - Tu Asistente de Viajes Inteligente</title>
+    <title>TourAI - Guías de Viaje y Tecnología Inteligente</title>
     <style>
-        /* Estilos CSS Básicos para que se vea Profesional */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f4f7f6; }
-        header { background-color: #0A2A43; color: white; padding: 20px 0; text-align: center; }
-        nav { background-color: #0d3b5e; padding: 10px; text-align: center; }
-        nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-        .container { max-width: 1000px; margin: 20px auto; padding: 20px; background-color: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { margin: 0; font-size: 2.5em; }
-        h2 { color: #0A2A43; border-bottom: 2px solid #0d3b5e; padding-bottom: 10px; }
-        .article { margin-bottom: 40px; overflow: hidden; border-bottom: 1px solid #eee; padding-bottom: 20px; }
-        .article-img { width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
-        .article-title { font-size: 1.8em; margin: 10px 0; color: #333; }
-        .article-meta { color: #888; font-size: 0.9em; margin-bottom: 15px; }
-        .article-content { line-height: 1.6; }
-        footer { background-color: #333; color: white; text-align: center; padding: 20px 0; margin-top: 40px; }
-        footer a { color: silver; text-decoration: none; margin: 0 10px; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f0f2f5; line-height: 1.6; }
+        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 40px 0; text-align: center; }
+        nav { background-color: #0d3b5e; padding: 12px; text-align: center; sticky; top: 0; z-index: 1000; }
+        nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: 500; transition: 0.3s; }
+        nav a:hover { color: #4db8ff; }
+        
+        .main-layout { max-width: 1100px; margin: 20px auto; display: grid; grid-template-columns: 2fr 1fr; gap: 20px; padding: 0 15px; }
+        
+        .container { background-color: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
+        .sidebar { background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 15px rgba(0,0,0,0.05); height: fit-content; }
+        
+        h1 { margin: 0; font-size: 2.8em; letter-spacing: -1px; }
+        h2 { color: #0A2A43; border-bottom: 3px solid #4db8ff; padding-bottom: 10px; margin-top: 0; }
+        
+        .article { margin-bottom: 45px; border-bottom: 1px solid #eee; padding-bottom: 30px; }
+        .article:last-child { border-bottom: none; }
+        .article-img { width: 100%; height: 350px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; }
+        .article-title { font-size: 1.9em; margin: 10px 0; color: #1a1a1a; text-decoration: none; display: block; font-weight: bold; }
+        .article-meta { color: #666; font-size: 0.85em; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .tag { background: #e3f2fd; color: #0d3b5e; padding: 3px 10px; border-radius: 4px; font-weight: bold; margin-right: 10px; }
+        
+        .trending-item { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; }
+        .trending-item a { text-decoration: none; color: #333; font-weight: 500; font-size: 0.95em; }
+        .trending-item a:hover { color: #0d3b5e; }
+
+        footer { background-color: #0A2A43; color: white; text-align: center; padding: 40px 0; margin-top: 50px; }
+        footer a { color: #4db8ff; text-decoration: none; margin: 0 10px; }
+
+        @media (max-width: 768px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .article-img { height: 200px; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>TourAI: Explora el Mundo</h1>
-        <p>Consejos, Itinerarios y Guías de Viaje Inteligentes</p>
+        <h1>TourAI: Tu Brújula Digital</h1>
+        <p>Inteligencia Artificial aplicada al Turismo y Guías de Vanguardia</p>
     </header>
 
     <nav>
-        <a href="index.html">Inicio</a>
-        <a href="#articulos">Artículos</a>
-        <a href="privacidad.html">Privacidad</a>
-        <a href="contacto.html">Contacto</a>
+        <a href="#">Inicio</a>
+        <a href="#">Destinos 2026</a>
+        <a href="#">Guías IA</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Contacto</a>
     </nav>
 
-    </div>
+    <div class="main-layout">
+        <main class="container">
+            <h2>Lo Más Reciente</h2>
 
-    <div style="text-align:center; margin: 20px 0; background: #eee; padding: 10px;">
-        <p style="font-size: 10px; color: gray; margin-bottom: 5px;">PUBLICIDAD</p>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:320px;height:50px"
-             data-ad-client="ca-pub-8251840058544269"
-             data-ad-slot="2107333980"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-    
-    <div class="article">
+            <article class="article">
+                <img src="https://images.unsplash.com/photo-1675435010629-679df3f95889?q=80&w=800" alt="IA Generativa en Viajes" class="article-img">
+                <span class="article-meta"><span class="tag">TECNOLOGÍA</span> Actualizado: 20 de Marzo, 2026</span>
+                <a href="#" class="article-title">Cómo la IA Generativa está planificando viajes en tiempo real</a>
+                <div class="article-content">
+                    <p>En este 2026, la planificación de viajes ha dado un salto cuántico. Ya no buscamos hoteles manualmente; nuestros asistentes personales analizan nuestro calendario y preferencias para proponer itinerarios completos en segundos.</p>
+                    <p>En este artículo exploramos las mejores herramientas de TourAI para optimizar tu presupuesto y encontrar vuelos con escalas inteligentes que antes eran imposibles de detectar...</p>
+                </div>
+            </article>
 
-    <div class="container" id="articulos">
-        <h2>Últimos Consejos de Viaje</h2>
+            <article class="article">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800" alt="Naturaleza y tecnología" class="article-img">
+                <span class="article-meta"><span class="tag">DESTINOS</span> Publicado: 12 de Marzo, 2026</span>
+                <a href="#" class="article-title">Destinos Sostenibles: Los 10 lugares menos saturados este año</a>
+                <div class="article-content">
+                    <p>El "slow travel" se ha convertido en la norma. Este año, regiones como el interior de Albania y las islas menos conocidas de Indonesia están liderando la recuperación del turismo consciente.</p>
+                    <p>Descubre cómo utilizar sensores de saturación turística en nuestra app para evitar colas y disfrutar de una experiencia genuina fuera de las rutas comerciales habituales.</p>
+                </div>
+            </article>
 
-        <div class="article">
-            <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=800" alt="Viajero con mochila frente a un lago" class="article-img">
-            <div class="article-title">Cómo Planificar tu Primer Viaje en Solitario</div>
-            <div class="article-meta">Por Jordi Perelló | 15 de Octubre, 2023</div>
-            <div class="article-content">
-                <p>Viajar solo es una de las experiencias más gratificantes que existen. Te permite conocerte a ti mismo, tomar tus propias decisiones y abrirte a conocer gente nueva. Para tu primera aventura, te recomendamos elegir un destino con buena infraestructura turística y un idioma que domines mínimamente.</p>
-                <p>La clave es la preparación: reserva tu alojamiento para las primeras noches, informa a tu familia de tu itinerario y, sobre todo, confía en tu instinto. No te satures de planes; deja espacio para la improvisación y disfruta del camino.</p>
+            <article class="article">
+                <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=800" alt="Viajero solitario" class="article-img">
+                <span class="article-meta"><span class="tag">CONSEJOS</span> Revisado: 01 de Marzo, 2026</span>
+                <a href="#" class="article-title">Guía Definitiva: Tu Primer Viaje en Solitario</a>
+                <div class="article-content">
+                    <p>Viajar solo sigue siendo la mejor forma de autodescubrimiento. Sin embargo, en la era digital, la seguridad ha mejorado gracias a las redes de viajeros verificados por IA.</p>
+                    <p>Desde la elección del destino hasta la gestión de la soledad, repasamos los puntos clave para que tu aventura sea un éxito rotundo.</p>
+                </div>
+            </article>
+
+        </main>
+
+        <aside class="sidebar">
+            <h3>Tendencias de Hoy</h3>
+            <div class="trending-item">
+                <a href="#">✈️ Ofertas de vuelos de última hora: ¿Valen la pena en 2026?</a>
             </div>
-        </div>
-
-        <div class="article">
-            <img src="https://images.unsplash.com/photo-1580619305218-85e47834fb31?q=80&w=800" alt="Vista aérea de una ciudad histórica europea" class="article-img">
-            <div class="article-title">5 Joyas Ocultas en Europa para este Verano</div>
-            <div class="article-meta">Por Equipo TourAI | 10 de Octubre, 2023</div>
-            <div class="article-content">
-                <p>Si estás cansado de las aglomeraciones en París o Roma, Europa ofrece alternativas fascinantes. Ciudades como Liubliana en Eslovenia, con su centro peatonal y dragones verdes, o Oporto en Portugal, famosa por su vino y puentes de hierro, son destinos perfectos.</p>
-                <p>No olvides considerar Gdansk en Polonia para una mezcla de historia báltica y playas, o Utrecht en Países Bajos, una alternativa más relajada a Ámsterdam con canales únicos. Estos destinos ofrecen autenticidad y cultura a precios más accesibles.</p>
+            <div class="trending-item">
+                <a href="#">🏨 Por qué los hoteles 'Smart' están ganando a los Airbnb</a>
             </div>
-        </div>
-
-        <div class="article">
-            <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=800" alt="Pareja mirando un mapa en una montaña" class="article-img">
-            <div class="article-title">Turismo Sostenible: Cómo Viajar Responsablemente</div>
-            <div class="article-meta">Por Jordi Perelló | 5 de Octubre, 2023</div>
-            <div class="article-content">
-                <p>El turismo tiene un gran impacto en el planeta y en las comunidades locales. Ser un viajero responsable significa minimizar nuestra huella ecológica y respetar la cultura del lugar que visitamos. Opta por transportes públicos, trenes o bicicletas siempre que sea posible.</p>
-                <p>Apoya la economía local comprando artesanías reales y comiendo en restaurantes familiares. Evita los plásticos de un solo uso y asegúrate de no dejar rastro en tus excursiones por la naturaleza. Viajar de forma consciente enriquece tanto al destino como al viajero.</p>
+            <div class="trending-item">
+                <a href="#">🎒 Equipo minimalista para nómadas digitales</a>
             </div>
-        </div>
+            <div class="trending-item">
+                <a href="#">🌍 Seguro de viaje: Qué debe cubrir tras la nueva normativa</a>
+            </div>
 
+            <div style="margin-top: 30px; background: #f9f9f9; padding: 15px; border-radius: 5px; text-align: center;">
+                <p style="font-size: 11px; color: #999;">ESPACIO PUBLICITARIO</p>
+                <div style="height: 250px; background: #eee; display: flex; align-items: center; justify-content: center; color: #ccc;">
+                    Publicidad 300x250
+                </div>
+            </div>
+        </aside>
     </div>
 
     <footer>
-        <p>&copy; 2023 TourAI Blog. Todos los derechos reservados.</p>
+        <p>&copy; 2026 TourAI Media Group. Todos los derechos reservados.</p>
         <p>
-            <a href="privacidad.html">Política de Privacidad</a> | 
-            <a href="contacto.html">Contacto</a>
+            <a href="#">Privacidad</a> | 
+            <a href="#">Cookies</a> | 
+            <a href="#">Términos de Uso</a> | 
+            <a href="#">Contacto</a>
         </p>
     </footer>
 
