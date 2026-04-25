@@ -2,28 +2,204 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - TourAI</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
+
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f7f9; text-align: center; }
-        header { background: #0A2A43; color: white; padding: 40px; }
-        .form-container { max-width: 600px; margin: 50px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;}
-        button { background: #0d3b5e; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        /* ESTILOS HEREDADOS DEL MODELO CORPORATIVO */
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f4f7f9; line-height: 1.8; }
+        
+        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid #4db8ff; }
+        
+        nav { background-color: #0d3b5e; padding: 18px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 1.1em; text-transform: uppercase; }
+        nav a:hover { color: #4db8ff; border-bottom: 2px solid #4db8ff; }
+        
+        .ads-banner-container {
+            width: 100%;
+            height: 60px;
+            background-color: #87CEEB;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .main-layout { max-width: 1300px; margin: 30px auto; display: grid; grid-template-columns: 2.8fr 1.2fr; gap: 40px; padding: 0 20px; }
+        .container { background-color: white; padding: 50px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        
+        .sidebar { 
+            background-color: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            height: fit-content; 
+            position: sticky; 
+            top: 100px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+        
+        h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
+        h2 { color: #0A2A43; border-left: 8px solid #4db8ff; padding-left: 20px; margin: 0 0 30px 0; font-size: 2.5em; background: #f9f9f9; padding-top: 10px; padding-bottom: 10px; }
+        
+        /* ESTILOS DEL FORMULARIO REFINADOS */
+        input, textarea { 
+            width: 100%; 
+            padding: 15px; 
+            margin: 10px 0 20px 0; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            box-sizing: border-box;
+            font-size: 1em;
+            background: #fbfbfb;
+            transition: 0.3s;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #4db8ff;
+            background: #fff;
+            box-shadow: 0 0 8px rgba(77, 184, 255, 0.2);
+        }
+        button { 
+            background: #0A2A43; 
+            color: white; 
+            padding: 18px 40px; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 1.1em;
+            transition: 0.3s;
+            width: 100%;
+        }
+        button:hover { 
+            background: #4db8ff;
+            transform: translateY(-2px);
+        }
+
+        .info-box {
+            margin-top: 40px;
+            padding: 25px;
+            background: #f0f7ff;
+            border-radius: 12px;
+            border: 1px solid #e3f2fd;
+        }
+
+        .trending-item { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee; display: flex; flex-direction: column; }
+        .trending-item span { color: #4db8ff; font-size: 0.8em; font-weight: bold; }
+        .trending-item a { text-decoration: none; color: #333; font-weight: 700; font-size: 1.1em; line-height: 1.3; }
+
+        footer { background-color: #0A2A43; color: #ccc; text-align: center; padding: 80px 0; margin-top: 100px; }
+        footer a { color: white; text-decoration: none; margin: 0 20px; font-weight: bold; }
+        footer .legal { font-size: 0.85em; margin-top: 30px; line-height: 2; max-width: 800px; margin-left: auto; margin-right: auto; }
+
+        @media (max-width: 1000px) {
+            .main-layout { grid-template-columns: 1fr; }
+            h1 { font-size: 2.5em; }
+            .sidebar { position: static; max-height: none; }
+        }
     </style>
 </head>
 <body>
-    <header><h1>Contacto y Soporte TourAI</h1></header>
-    <div class="form-container">
-        <h2>¿Tienes alguna duda técnica?</h2>
-        <p>Nuestro equipo de soporte para la aplicación y la web está disponible 24/7.</p>
-        <form>
-            <input type="text" placeholder="Tu Nombre Completo">
-            <input type="email" placeholder="Correo Electrónico">
-            <textarea placeholder="¿En qué podemos ayudarte?" rows="5"></textarea>
-            <button type="button">ENVIAR CONSULTA</button>
-        </form>
-        <p style="margin-top: 20px; font-size: 0.8em; color: #888;">Ubicación: Hub Tecnológico de Barcelona, España.<br>Email: info@jordiperello.github.io</p>
+
+    <nav>
+        <a href="index.html">La App</a>
+        <a href="destinos.html">Destinos 2026</a>
+        <a href="guias.html">Guías IA</a>
+        <a>Blog / Noticias</a>
+        <a href="privacy.html">Privacidad</a>
+        <a href="contacto.html">Contacto</a>
+    </nav>
+
+    <div class="ads-banner-container">
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:728px;height:60px"
+             data-ad-client="ca-pub-8251840058544269"
+             data-ad-slot="2107333980"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
-    <p><a href="index.html">Volver al Inicio</a></p>
+
+    <header>
+        <h1>Contacto y Soporte TourAI</h1>
+        <p>Estamos aquí para ayudarte a navegar por el futuro del turismo inteligente.</p>
+    </header>
+
+    <div class="main-layout">
+        <main class="container">
+            <h2>¿Tienes alguna duda técnica?</h2>
+            <p style="font-size: 1.2em; color: #666; margin-bottom: 30px;">Nuestro equipo de soporte para la aplicación y la web está disponible 24/7 para resolver cualquier incidencia.</p>
+            
+            <form>
+                <label style="font-weight: bold; color: #0A2A43;">Nombre Completo</label>
+                <input type="text" placeholder="Ej: Juan Pérez">
+                
+                <label style="font-weight: bold; color: #0A2A43;">Correo Electrónico</label>
+                <input type="email" placeholder="tu@email.com">
+                
+                <label style="font-weight: bold; color: #0A2A43;">Mensaje</label>
+                <textarea placeholder="¿En qué podemos ayudarte? Describe tu consulta detalladamente..." rows="6"></textarea>
+                
+                <button type="button">ENVIAR CONSULTA AL EQUIPO TÉCNICO</button>
+            </form>
+
+            <div class="info-box">
+                <p style="margin: 0; font-size: 0.95em; color: #0A2A43;">
+                    <strong>Sede Central:</strong> Hub Tecnológico de Barcelona, España.<br>
+                    <strong>Email Directo:</strong> info@jordiperello.github.io
+                </p>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <h3>Soporte Rápido</h3>
+            
+            <div class="trending-item">
+                <span>RESPUESTA MEDIA</span>
+                <a href="#">⏱️ Menos de 15 minutos para usuarios Pro.</a>
+            </div>
+            <div class="trending-item">
+                <span>ESTADO DEL SERVICIO</span>
+                <a href="#">✅ Todos los sistemas operativos (Cloud/IA).</a>
+            </div>
+
+            <div style="margin-top: 50px; background: #e3f2fd; padding: 25px; border-radius: 10px; text-align: center; border: 1px solid #4db8ff;">
+                <p style="font-size: 11px; color: #0A2A43; font-weight: bold;">¿ERES DESARROLLADOR?</p>
+                <p style="font-size: 13px;">Consulta nuestra API de viajes en la documentación técnica.</p>
+            </div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8251840058544269"
+                     data-ad-slot="2107333980"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        <p><strong>TourAI Media Group</strong> - La autoridad mundial en información de viajes inteligente.</p>
+        <p>Calle Ficticia 123, Hub Tecnológico, Barcelona, España.</p>
+        <p style="margin-top: 30px;">
+            <a href="index.html">Inicio</a> | 
+            <a href="privacy.html">Política de Privacidad</a> | 
+            <a href="https://es.wikipedia.org/wiki/T%C3%A9rminos_de_servicio" target="_blank">Términos y Condiciones</a> | 
+            <a href="destinos.html">Mapa del Sitio</a> | 
+            <a href="contacto.html">Contacto</a>
+        </p>
+        <div class="legal">
+            <p>Advertencia Legal: Al enviar este formulario, aceptas el tratamiento de tus datos para fines de soporte técnico según nuestra política de privacidad. TourAI utiliza sistemas de filtrado de spam mediante IA para proteger sus comunicaciones.</p>
+            <p>&copy; 2026 jordiperello.github.io - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
 </body>
 </html>
