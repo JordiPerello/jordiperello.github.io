@@ -8,6 +8,9 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
 
     <style>
+        /* AÑADIDO: Scroll suave para toda la página */
+        html { scroll-behavior: smooth; }
+
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f4f7f9; line-height: 1.8; }
         header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid #4db8ff; }
         nav { background-color: #0d3b5e; padding: 18px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
@@ -28,7 +31,19 @@
 
         .main-layout { max-width: 1300px; margin: 30px auto; display: grid; grid-template-columns: 2.8fr 1.2fr; gap: 40px; padding: 0 20px; }
         .container { background-color: white; padding: 50px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .sidebar { background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 100px; }
+        
+        /* REFINADO: Sidebar con scroll interno si fuera necesario */
+        .sidebar { 
+            background-color: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            height: fit-content; 
+            position: sticky; 
+            top: 100px;
+            max-height: calc(100vh - 120px); /* Evita que el menú se salga de la pantalla */
+            overflow-y: auto; /* Si el contenido del menú es muy largo, permite scroll ahí mismo */
+        }
         
         h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
         h2 { color: #0A2A43; border-left: 8px solid #4db8ff; padding-left: 20px; margin: 50px 0 30px 0; font-size: 2.5em; background: #f9f9f9; padding-top: 10px; padding-bottom: 10px; }
@@ -60,6 +75,7 @@
             .main-layout { grid-template-columns: 1fr; }
             .article-img { height: 300px; }
             h1 { font-size: 2.5em; }
+            .sidebar { position: static; max-height: none; } /* En móviles quitamos el sticky */
         }
     </style>
 </head>
@@ -111,87 +127,6 @@
                 </div>
             </article>
 
-            <article class="article">
-                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000" alt="Nómada digital" class="article-img">
-                <span class="article-meta"><span class="tag">ESTILO DE VIDA</span> 28 de Marzo, 2026</span>
-                <a href="https://www.visitportugal.com/es" target="_blank" class="article-title">Nómadas Digitales en Portugal: ¿Sigue siendo el paraíso fiscal y social?</a>
-                <div class="article-content">
-                    <p>Portugal ha actualizado su "Ley de Residencia Digital" para atraer no solo a trabajadores remotos, sino a emprendedores en tecnologías sostenibles. Ciudades como Lisboa y Oporto han creado distritos inteligentes donde el alquiler se ajusta al impacto social de tu proyecto profesional. Analizamos los costes de vida actuales, la infraestructura de 6G disponible y por qué Madeira sigue siendo el hub favorito para los que buscan clima subtropical y comunidad tecnológica.</p>
-                </div>
-            </article>
-
-            <article class="article">
-                <img src="https://images.unsplash.com/photo-1449034446853-66c86144b0ad?q=80&w=1000" alt="Puente San Francisco" class="article-img">
-                <span class="article-meta"><span class="tag">USA</span> 25 de Marzo, 2026</span>
-                <a href="https://www.visitcalifornia.com/es" target="_blank" class="article-title">Roadtrip por la Costa Oeste: Guía de carga para vehículos eléctricos</a>
-                <div class="article-content">
-                    <p>Recorrer la Pacific Coast Highway en un coche eléctrico es hoy más sencillo que en un vehículo de gasolina. Con la red de supercargadores solares desplegada en 2025, las paradas obligatorias ahora ofrecen centros de bienestar y miradores de realidad aumentada. Te damos la ruta exacta desde Seattle hasta San Diego, optimizando las paradas para que nunca bajes del 20% de batería mientras disfrutas de la mejor gastronomía de carretera.</p>
-                </div>
-            </article>
-
-            <article class="article">
-                <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1000" alt="Hotel de lujo" class="article-img">
-                <span class="article-meta"><span class="tag">LUJO</span> 22 de Marzo, 2026</span>
-                <a href="https://www.cntraveler.com/" target="_blank" class="article-title">Hotelería de Inmersión: Cuando el hotel es el destino</a>
-                <div class="article-content">
-                    <p>La tendencia de 2026 es el "Quiet Luxury". Hoteles que no se ven desde el aire, excavados en la roca o sumergidos bajo el agua, que ofrecen desconexión total. Sin WiFi en las habitaciones, pero con bio-sensores que ajustan la iluminación y la temperatura según tu ritmo cardíaco. Exploramos los nuevos retiros en el desierto de AlUla y por qué están agotados hasta 2027.</p>
-                </div>
-            </article>
-
-            <article class="article">
-                <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1000" alt="Montañas" class="article-img">
-                <span class="article-meta"><span class="tag">NATURALEZA</span> 19 de Marzo, 2026</span>
-                <a href="https://www.myswitzerland.com/es-es/" target="_blank" class="article-title">Los Alpes Suizos: Rutas de Trekking tras el deshielo</a>
-                <div class="article-content">
-                    <p>El cambio climático ha abierto nuevas rutas de senderismo en altitudes antes inaccesibles. Aunque agridulce, la nueva orografía de los Alpes ofrece lagos glaciares recién formados de una belleza sobrecogedora. En TourAI hemos mapeado los nuevos senderos seguros y los refugios de alta montaña que ahora operan durante todo el año debido a los inviernos más suaves.</p>
-                </div>
-            </article>
-
-            <article class="article">
-                <img src="https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?q=80&w=1000" alt="Berlín" class="article-img">
-                <span class="article-meta"><span class="tag">CULTURA</span> 15 de Marzo, 2026</span>
-                <a href="https://www.visitberlin.de/es" target="_blank" class="article-title">Berlín Nocturno: La nueva ley de protección de clubes</a>
-                <div class="article-content">
-                    <p>Berlín ha declarado sus clubes nocturnos como "Patrimonio Cultural Inmaterial". Esto ha blindado la escena techno contra la gentrificación. Te contamos cómo acceder a los clubes más exclusivos, la etiqueta de vestimenta en 2026 y por qué la zona este sigue siendo el epicentro de la vanguardia artística mundial.</p>
-                </div>
-            </article>
-
-            <article class="article">
-                <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=1000" alt="Mochilero" class="article-img">
-                <span class="article-meta"><span class="tag">SOLO TRAVEL</span> 10 de Marzo, 2026</span>
-                <a href="https://www.lonelyplanet.es/asia/sudeste-asiatico" target="_blank" class="article-title">Viajar solo por el Sudeste Asiático: Protocolos de seguridad 2026</a>
-                <div class="article-content">
-                    <p>Vietnam, Tailandia y Laos han implementado el "Sello de Viajero Seguro". Mediante una app integrada con la policía turística local, los viajeros en solitario pueden reportar su ubicación y recibir asistencia instantánea. Desmitificamos los peligros del sudeste asiático y te mostramos las comunidades de co-living más vibrantes para que nunca te sientas solo, a menos que quieras estarlo.</p>
-                </div>
-            </article>
-
-            <article class="article">
-                <img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=1000" alt="Vuelo" class="article-img">
-                <span class="article-meta"><span class="tag">AVIACIÓN</span> 05 de Marzo, 2026</span>
-                <a href="https://www.reuters.com/business/aerospace-defense/" target="_blank" class="article-title">Aviones de Hidrógeno: El primer vuelo transatlántico comercial</a>
-                <div class="article-content">
-                    <p>Este mes se ha marcado un hito: el primer vuelo Londres-Nueva York propulsado íntegramente por hidrógeno verde. ¿Cómo afecta esto al precio de los billetes? ¿Es realmente silencioso? Te contamos nuestra experiencia a bordo y cómo las aerolíneas están eliminando por fin las tasas de emisiones de carbono.</p>
-                </div>
-            </article>
-
-            <article class="article">
-                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1000" alt="Gadgets" class="article-img">
-                <span class="article-meta"><span class="tag">GADGETS</span> 01 de Marzo, 2026</span>
-                <a href="https://www.wired.com/" target="_blank" class="article-title">Top 5 Gadgets de Viaje que han quedado obsoletos</a>
-                <div class="article-content">
-                    <p>Adiós a las baterías externas pesadas y a los traductores de bolsillo. Con la llegada de los tejidos inteligentes que cargan dispositivos con el movimiento y el calor corporal, y los auriculares de traducción neuronal, tu maleta de mano va a pesar mucho menos este año. Analizamos la tecnología que debes dejar en casa.</p>
-                </div>
-            </article>
-
-            <article class="article">
-                <img src="https://images.unsplash.com/photo-1551882547-ff43c63efe81?q=80&w=1000" alt="Japón" class="article-img">
-                <span class="article-meta"><span class="tag">JAPÓN</span> 25 de Febrero, 2026</span>
-                <a href="https://www.japan.travel/es/es/" target="_blank" class="article-title">Kyoto sin masas: Cómo visitar los templos en horas mágicas</a>
-                <div class="article-content">
-                    <p>Kyoto ha restringido el acceso a ciertas áreas para proteger su integridad. Sin embargo, existe un sistema de "pases de madrugador" que pocos conocen. Te enseñamos a conseguir estos pases para ver el Fushimi Inari completamente solo bajo la luz del amanecer.</p>
-                </div>
-            </article>
-
             <section style="background: #fff; border: 2px solid #0d3b5e; padding: 40px; border-radius: 15px; margin-top: 50px;">
                 <h3>Enciclopedia del Viajero: Glosario y Conceptos 2026</h3>
                 <p>En nuestra labor informativa, creemos que el conocimiento es la base de un viaje ético. Aquí detallamos los pilares que todo viajero de esta década debe conocer:</p>
@@ -222,18 +157,6 @@
                 <span>AYER</span>
                 <a href="https://www.nationalgeographic.com.es/temas/everest" target="_blank">🏔️ El Everest limitará las expediciones a 500 personas al año.</a>
             </div>
-            <div class="trending-item">
-                <span>ESTA SEMANA</span>
-                <a href="https://www.apple.com/es/apple-vision-pro/" target="_blank">🍎 Apple Glasses Travel Edition: La nueva guía de RA.</a>
-            </div>
-            <div class="trending-item">
-                <span>ESTA SEMANA</span>
-                <a href="https://www.traveler.es/" target="_blank">🚢 Cruceros de Vela: La nueva moda de cruzar el Atlántico.</a>
-            </div>
-            <div class="trending-item">
-                <span>ESTA SEMANA</span>
-                <a href="https://www.comune.venezia.it/" target="_blank">🎭 Venecia implementa la entrada por reconocimiento facial.</a>
-            </div>
 
             <div style="margin-top: 50px; background: #e3f2fd; padding: 25px; border-radius: 10px; text-align: center; border: 1px solid #4db8ff;">
                 <p style="font-size: 12px; color: #0A2A43; font-weight: bold;">ANUNCIO PATROCINADO</p>
@@ -251,11 +174,6 @@
                 <p>Recibe análisis que no verás en redes sociales.</p>
                 <input type="email" placeholder="tu@email.com">
                 <button style="background: #4db8ff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 90%;">SUSCRIBIRME</button>
-            </div>
-
-            <div style="margin-top: 40px;">
-                <h4>Comunidad TourAI</h4>
-                <p style="font-size: 0.9em; color: #666;">Forma parte del foro de viajeros más grande del mundo. Más de 12 millones de hilos activos sobre cada rincón del planeta.</p>
             </div>
         </aside>
     </div>
