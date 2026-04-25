@@ -3,131 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TourAI - El Portal Líder en Turismo Inteligente y Guías 2026</title>
+    <title>TourAI - El Futuro del Turismo Inteligente 2026</title>
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
 
     <style>
-        :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; }
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f4f7f9; line-height: 1.8; }
-        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid #4db8ff; }
-        nav { background-color: #0d3b5e; padding: 18px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 1.1em; text-transform: uppercase; }
-        nav a:hover { color: #4db8ff; border-bottom: 2px solid #4db8ff; }
+        :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
         
-        .ads-banner-container {
-            width: 100%;
-            height: 60px;
-            background-color: #87CEEB;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            margin: 20px 0;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-        }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
+        
+        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 100px 0; text-align: center; border-bottom: 5px solid var(--accent); }
+        nav { background-color: var(--secondary); padding: 18px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 1.1em; text-transform: uppercase; }
+        nav a:hover { color: var(--accent); border-bottom: 2px solid var(--accent); }
 
-        .content-wrapper { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+        .content-wrapper { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
 
-        h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
-        h2 { color: #0A2A43; border-left: 8px solid #4db8ff; padding-left: 20px; margin: 50px 0 30px 0; font-size: 2.5em; background: #f9f9f9; padding-top: 10px; padding-bottom: 10px; }
-        h3 { color: #0d3b5e; margin-top: 40px; font-size: 1.8em; font-weight: 700; }
-
-        .feature-block { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 80px; }
+        h1 { margin: 0; font-size: 4em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
+        h2 { color: var(--primary); border-left: 8px solid var(--accent); padding-left: 20px; margin: 80px 0 40px 0; font-size: 2.8em; background: #f9f9f9; padding-top: 15px; padding-bottom: 15px; }
+        
+        .feature-block { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 120px; }
         .feature-block.reverse { direction: rtl; }
         .feature-block.reverse .text-content { direction: ltr; }
         
-        .text-content h3 { font-size: 2em; color: var(--secondary); margin-bottom: 20px; border-left: 5px solid var(--accent); padding-left: 15px; }
-        .app-img { width: 100%; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 1px solid #ddd; }
+        .text-content h3 { font-size: 2.2em; color: var(--secondary); margin-bottom: 20px; border-left: 5px solid var(--accent); padding-left: 15px; line-height: 1.2; }
+        .text-content p { font-size: 1.15em; color: #444; }
+        .badge-future { display: inline-block; background: #e0e0e0; color: #666; font-size: 0.7em; padding: 2px 10px; border-radius: 5px; vertical-align: middle; margin-left: 10px; font-weight: bold; text-transform: uppercase; }
 
-        /* SECCIÓN TIENDAS */
-        .download-zone { background: white; padding: 80px 20px; text-align: center; border-top: 1px solid #ddd; }
-        .badges-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
-        .badges-container img { height: 60px; transition: 0.3s; }
-        .badges-container img:hover { transform: scale(1.08); }
+        .app-img { width: 100%; border-radius: 30px; box-shadow: 0 25px 60px rgba(0,0,0,0.15); border: 1px solid #eee; transition: 0.5s; object-fit: cover; height: 400px; }
 
-        footer { background-color: #0A2A43; color: #ccc; text-align: center; padding: 80px 0; margin-top: 100px; }
-        footer a { color: white; text-decoration: none; margin: 0 20px; font-weight: bold; }
-        footer .legal { font-size: 0.85em; margin-top: 30px; line-height: 2; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin: 40px 0; }
+        .service-card { background: var(--white); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+        .service-card h4 { color: var(--primary); font-size: 1.4em; margin-bottom: 10px; }
+        .price-tag { color: var(--accent); font-weight: 800; font-size: 1.1em; text-transform: uppercase; display: block; margin-bottom: 10px; }
 
-        @media (max-width: 850px) { .feature-block { grid-template-columns: 1fr; text-align: center; } }
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(10, 42, 67, 0.95); }
+        .modal-content { background-color: var(--white); margin: 10% auto; padding: 40px; border-radius: 25px; width: 90%; max-width: 500px; text-align: center; position: relative; }
+        .close { position: absolute; right: 25px; top: 20px; font-size: 30px; cursor: pointer; color: var(--primary); }
+        .modal input[type="email"] { width: 100%; padding: 15px; margin: 20px 0; border: 2px solid #ddd; border-radius: 10px; }
+        .modal button { background: var(--accent); color: var(--primary); border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 1px; }
+
+        .download-zone { background: var(--white); padding: 80px 20px; text-align: center; border-top: 1px solid #ddd; }
+        .badges-container { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-top: 30px; }
+        .badges-container img { height: 60px; cursor: pointer; transition: transform 0.3s ease; }
+        .badges-container img:hover { transform: scale(1.05); }
+
+        footer { background-color: var(--primary); color: #ccc; text-align: center; padding: 60px 0; }
+        footer a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <nav>
-        <a>La App</a>
+        <a href="index.html">La App</a>
         <a href="destinos.html">Destinos 2026</a>
         <a href="guias.html">Guías IA</a>
-        <a href="blog.html">Blog / Noticias</a>
         <a href="privacy.html">Privacidad</a>
         <a href="contacto.html">Contacto</a>
     </nav>
 
-    <div class="ads-banner-container">
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:728px;height:60px"
-             data-ad-client="ca-pub-8251840058544269"
-             data-ad-slot="2107333980"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
-
     <header>
-        <h1>TourAI: Tu Guía Inteligente Personal</h1>
-        <p>Explora el mundo en 2026 con la aplicación que redefine la planificación de viajes mediante IA y datos en tiempo real.</p>
+        <h1>TourAI: La Definición del Turismo Inteligente</h1>
+        <p style="font-size: 1.4em; max-width: 900px; margin: 20px auto;">Ecosistema cognitivo de asistencia al viajero. Personalización absoluta mediante Inteligencia Artificial.</p>
     </header>
 
     <div class="content-wrapper">
-        
+
         <section class="feature-block">
             <div class="text-content">
-                <h3>El fin de las guías de viaje estáticas</h3>
-                <p>En el panorama turístico de 2026, la información queda obsoleta en cuestión de horas. <strong>TourAI</strong> nace para solucionar este problema, ofreciendo una plataforma dinámica que se sincroniza con el pulso real de cada ciudad. Nuestra aplicación no solo te dice qué ver, sino cuándo es el momento perfecto para hacerlo basándose en el flujo de personas, eventos locales y condiciones meteorológicas hiper-locales procesadas por satélite.</p>
+                <h3>El Guía Privado Definitivo</h3>
+                <p>TourAI no es una aplicación de mapas; es un <strong>guía turístico privado exclusivo</strong>. A través de algoritmos de visión y lenguaje, la APP se adapta a su perfil psicográfico para ofrecerle una experiencia de inmersión total, analizando monumentos, arquitectura y contexto histórico en tiempo real mientras usted explora.</p>
             </div>
             <div class="image-content">
-                <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?q=80&w=800" alt="App TourAI Interface" class="app-img">
+                <img src="https://images.unsplash.com/photo-1517736996303-4eec4a66bb17?q=80&w=800" alt="Exclusividad TourAI" class="app-img">
             </div>
         </section>
-
-        <div style="margin: 40px 0; text-align: center;">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-8251840058544269"
-                 data-ad-slot="2107333980"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
 
         <section class="feature-block reverse">
             <div class="text-content">
-                <h3>Inteligencia Artificial que aprende de ti</h3>
-                <p>Lo que realmente diferencia a nuestra APP es su motor de aprendizaje profundo. A diferencia de otros buscadores, TourAI analiza tus preferencias históricas, tus ritmos de descanso y tus intereses gastronómicos para sugerir itinerarios que parecen diseñados por un amigo íntimo. Si prefieres evitar las multitudes o buscas exclusivamente cafeterías con conexión 6G, la IA filtrará miles de opciones para mostrarte solo lo que realmente te importa.</p>
+                <h3>Asistencia Cognitiva por Voz y Chat</h3>
+                <p>Establezca un diálogo fluido con nuestra IA. Desde consultas complejas sobre la cronología de un palacio hasta la búsqueda de servicios específicos en su idioma, TourAI responde con precisión humana. La capacidad de <strong>hablar y chatear con la IA</strong> elimina las barreras informativas, permitiéndole disfrutar del entorno sin distracciones.</p>
             </div>
             <div class="image-content">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800" alt="IA en viajes" class="app-img">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800" alt="IA Interactiva" class="app-img">
             </div>
         </section>
 
         <section class="feature-block">
             <div class="text-content">
-                <h3>Exploración con Realidad Aumentada</h3>
-                <p>La cámara de tu smartphone se convierte en una ventana al pasado y al futuro. Gracias a nuestra tecnología de RA, podrás visualizar reconstrucciones de monumentos históricos en su estado original simplemente apuntando con tu dispositivo. Esta función interactiva incluye además traducción neuronal instantánea de cualquier cartel o menú, permitiéndote moverte por países como Japón o Vietnam con la confianza de un residente local.</p>
+                <h3>Ingeniería de Rutas a Medida</h3>
+                <p>Diseñamos itinerarios inteligentes basados en su geolocalización, intereses culturales y preferencias gastronómicas. En <strong>futuras versiones</strong>, podrá generar y publicar sus propias rutas para la comunidad, además de valorar las experiencias de otros usuarios, creando una red de conocimiento turístico global de alta calidad <span class="badge-future">V2</span>.</p>
             </div>
             <div class="image-content">
-                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800" alt="Realidad Aumentada" class="app-img">
+                <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=800" alt="Rutas Inteligentes" class="app-img">
             </div>
         </section>
 
-        <section style="background: white; padding: 40px; border-radius: 20px; margin-bottom: 80px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-            <h3>Turismo Ético y Regenerativo</h3>
-            <p>TourAI está comprometida con la preservación del planeta. La aplicación incluye una calculadora de huella de carbono integrada que te sugiere las rutas más eficientes y medios de transporte sostenibles. Además, fomentamos el turismo de impacto positivo, dirigiendo a nuestros usuarios hacia negocios locales y artesanos que no aparecen en las guías comerciales, ayudando así a distribuir la riqueza de forma más equitativa en las comunidades anfitrionas.</p>
+        <section class="feature-block reverse">
+            <div class="text-content">
+                <h3>Ecosistema de Audioguías Dinámicas <span class="badge-future">Próximamente</span></h3>
+                <p>Estamos desarrollando una biblioteca global de audioguías con actualización constante. Mediante el <strong>sistema de acceso QR</strong>, los recintos históricos (iglesias, museos, palacios) podrán ofrecer sus guías oficiales directamente en el dispositivo del turista, eliminando la necesidad de hardware externo y garantizando una higiene y comodidad superiores.</p>
+            </div>
+            <div class="image-content">
+                <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=800" alt="Tecnología QR" class="app-img">
+            </div>
         </section>
 
-        <section style="background: var(--secondary); color: white; padding: 40px; border-radius: 20px; margin-bottom: 40px;">
-            <h3>Seguridad Global Garantizada</h3>
-            <p>Tu tranquilidad es nuestra prioridad absoluta. TourAI cuenta con un centro de notificaciones de emergencia que te mantiene informado sobre cualquier cambio en la seguridad vial, huelgas o alertas climáticas en tu zona actual. Con el sistema de "Asistencia en un toque", puedes conectar con los servicios de emergencia locales compartiendo tu ubicación exacta y datos médicos vitales de forma encriptada, asegurando que nunca estés solo durante tus aventuras por el mundo.</p>
+        <section class="feature-block">
+            <div class="text-content">
+                <h3>Sincronización de Grupos Turísticos <span class="badge-future">Próximamente</span></h3>
+                <p>Revolucionamos la gestión de grupos. Nuestra tecnología permitirá la <strong>multidifusión sincronizada</strong>: un grupo completo podrá disfrutar de visitas guiadas y audio en tiempo real, manteniendo la cohesión informativa sin sacrificar la movilidad individual. Una solución profesional para el turismo de grupos del siglo XXI.</p>
+            </div>
+            <div class="image-content">
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=800" alt="Grupos Sincronizados" class="app-img">
+            </div>
         </section>
+
+        <h2>Modelos de Suscripción y Acceso</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <span class="price-tag">Daily Pass</span>
+                <h4>24 Horas</h4>
+                <p>Acceso total inmediato para exploraciones intensivas de un día.</p>
+            </div>
+            <div class="service-card">
+                <span class="price-tag">Weekender</span>
+                <h4>Fin de Semana</h4>
+                <p>Optimizado para escapadas culturales cortas con soporte IA 24/7.</p>
+            </div>
+            <div class="service-card" style="border: 2px solid var(--accent);">
+                <span class="price-tag">Premium Traveler</span>
+                <h4>Mensual / Trimestral</h4>
+                <p>La opción preferida para viajeros frecuentes y nómadas digitales.</p>
+            </div>
+            <div class="service-card">
+                <span class="price-tag">Unlimited</span>
+                <h4>Anual / Semestral</h4>
+                <p>Inmersión total anual en el ecosistema TourAI sin restricciones.</p>
+            </div>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card" style="background: #f0f4f7;">
+                <span class="badge-future" style="margin-bottom: 10px;">Versión 2.0</span>
+                <h4>B2B & Empresas</h4>
+                <p>Tarifas corporativas para agencias y operadores mayoristas.</p>
+            </div>
+            <div class="service-card" style="background: #f0f4f7;">
+                <span class="badge-future" style="margin-bottom: 10px;">Versión 2.0</span>
+                <h4>Oficinas de Turismo</h4>
+                <p>Contenido institucional compartido y personalizado para visitantes.</p>
+            </div>
+        </div>
+
+        <p style="text-align: center; color: #777; font-style: italic; margin-top: 40px;">* Otras funcionalidades disruptivas serán integradas en el roadmap de actualizaciones 2026.</p>
 
     </div>
 
@@ -135,27 +164,54 @@
         <h2>Descarga TourAI App hoy mismo</h2>
         <p>Disponible de forma gratuita para los tres sistemas operativos principales.</p>
         <div class="badges-container">
-            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store"></a>
-            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play"></a>
-            <a href="#"><img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Windows Store"></a>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" onclick="openModal('iOS')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" onclick="openModal('Android')">
+            <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Microsoft Store" onclick="openModal('Windows')">
         </div>
     </section>
 
-    <div style="padding: 20px; text-align: center; background: #f0f0f0;">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8251840058544269"
-             data-ad-slot="2107333980"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    <div id="subModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 style="color: var(--primary);">Reserva de Acceso Anticipado</h3>
+            <p>La versión para <strong id="platform"></strong> se encuentra en fase final de despliegue. Suscríbase para recibir notificación inmediata del lanzamiento oficial.</p>
+            <form id="subscriptionForm" onsubmit="handleSubscription(event)">
+                <input type="email" id="userEmail" placeholder="Su correo electrónico profesional" required>
+                <button type="submit">Solicitar Aviso de Lanzamiento</button>
+            </form>
+        </div>
     </div>
 
     <footer>
-        <p><strong>TourAI Media Group 2026</strong></p>
-        <p><a href="privacy.html">Política de Privacidad</a> | <a href="blog.html">Blog</a> | <a href="contacto.html">Contacto</a></p>
-        <p style="font-size: 0.8em; margin-top: 15px;">&copy; jordiperello.github.io - Todos los derechos reservados.</p>
+        <p><strong>TourAI 2026 - Inteligencia Aplicada al Viajero</strong></p>
+        <p>
+            <a href="index.html">Inicio</a> | 
+            <a href="privacy.html">Privacidad</a> | 
+            <a href="contacto.html">Contacto</a>
+        </p>
     </footer>
 
+    <script>
+        function openModal(p) {
+            document.getElementById('platform').innerText = p;
+            document.getElementById('subModal').style.display = "block";
+        }
+        function closeModal() {
+            document.getElementById('subModal').style.display = "none";
+        }
+        
+        function handleSubscription(e) {
+            e.preventDefault();
+            const email = document.getElementById('userEmail').value;
+            const platform = document.getElementById('platform').innerText;
+            const subject = encodeURIComponent("Solicitud de Lanzamiento TourAI - " + platform);
+            const body = encodeURIComponent("Deseo recibir aviso para la plataforma: " + platform + "\nEmail del usuario: " + email);
+            
+            // Envío vía Mailto configurado profesionalmente
+            window.location.href = "mailto:info@jordiperello.github.io?subject=" + subject + "&body=" + body;
+            
+            closeModal();
+        }
+    </script>
 </body>
 </html>
