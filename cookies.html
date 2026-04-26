@@ -4,21 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Cookies - TourAI</title>
-    
+     
+    <link rel="icon" type="image/png" href="img/tourai_logo.png">
+    <link rel="apple-touch-icon" href="img/tourai_logo.png">
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        
+        if (localStorage.getItem('cookies-aceptadas') === 'true') {
+            gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'wait_for_update': 500 });
+        } else {
+            gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'wait_for_update': 500 });
+        }
+    </script>
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
 
     <style>
         html { scroll-behavior: smooth; }
         :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
-        
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
+        
+        /* NAVEGACIÓN LIMPIA: Sin logo que desplace el menú */
+        nav { 
+            background-color: var(--secondary); 
+            padding: 20px 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
+        }
+        .nav-links { display: flex; align-items: center; }
+        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; }
+        nav a:hover { color: var(--accent); }
+        nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; }
+
+        /* ICONO FLOTANTE: Alternativa estética en la esquina inferior */
+        .floating-logo {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            z-index: 999;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border: 2px solid var(--accent);
+        }
+        .floating-logo img { width: 35px; height: auto; }
+        .floating-logo:hover { transform: scale(1.1); }
         
         header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid var(--accent); }
         h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
-        
-        nav { background-color: var(--secondary); padding: 18px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 1.1em; text-transform: uppercase; }
-        nav a:hover { color: var(--accent); border-bottom: 2px solid var(--accent); }
 
         .ads-banner-container { width: 100%; height: 60px; background-color: #87CEEB; display: flex; justify-content: center; align-items: center; overflow: hidden; margin: 20px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
 
@@ -36,25 +83,93 @@
 
         .sidebar-card { background: #f0f7ff; padding: 20px; border-radius: 10px; border: 1px solid #e3f2fd; margin-bottom: 25px; }
         .sidebar-card h3 { margin-top: 0; font-size: 1.2em; color: var(--primary); }
-
-        footer { background-color: #051622; color: #ffffff; padding: 80px 20px 40px 20px; margin-top: 100px; border-top: 4px solid var(--accent); }
-        .footer-grid { max-width: 1200px; margin: 0 auto 60px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
-        .footer-col h4 { color: var(--accent); font-size: 1.1em; text-transform: uppercase; margin-bottom: 25px; font-weight: 800; }
-        .footer-col a { display: block; color: #ccc; text-decoration: none; margin-bottom: 12px; transition: 0.3s; }
-        .footer-col a:hover { color: #fff; transform: translateX(5px); }
-        .footer-col a.active { color: var(--accent); font-weight: bold; pointer-events: none; }
+    
         
-        .legal-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; color: #aaa; font-size: 0.9em; }
-        .footer-email { color: var(--accent) !important; text-decoration: none; font-weight: bold; }
+        footer {
+            background-color: #051622;
+            color: #ffffff;
+            padding: 80px 20px 40px 20px;
+            margin-top: 100px;
+            border-top: 4px solid var(--accent);
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto 60px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--accent);
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+
+        .footer-col a {
+            display: block;
+            color: #ccc;
+            text-decoration: none;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col a:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .footer-col a.active {
+            color: var(--accent);
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        .legal {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .legal-disclaimer {
+            font-size: 0.85em;
+            color: #777;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+        }
+
+        .legal-bottom {
+            font-size: 0.9em;
+            color: #aaa;
+        }
+
+        .footer-email {
+            color: var(--accent) !important;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
         @media (max-width: 1000px) {
-            .main-layout { grid-template-columns: 1fr; }
+            .feature-block { grid-template-columns: 1fr; gap: 30px; }
             h1 { font-size: 2.5em; }
-            .sidebar { position: static; }
+            .footer-grid { text-align: center; }
+            .footer-col a:hover { transform: none; }
         }
     </style>
 </head>
 <body>
+
+    <div class="floating-logo" onclick="window.scrollTo(0,0)" title="Volver arriba">
+        <img src="img/tourai_logo.png" alt="Icono TourAI">
+    </div>
 
     <nav>
         <a href="index.html">La App</a>
@@ -158,6 +273,11 @@
     </div>
 
     <footer>
+
+        <div style="text-align: center; margin-bottom: 40px;">
+            <img src="img/tourai_logo.png" alt="TourAI Logo" style="height: 60px; opacity: 1;">
+        </div>
+
         <div class="footer-grid">
             <div class="footer-col">
                 <h4>Explora</h4>
