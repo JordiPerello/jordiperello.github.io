@@ -155,5 +155,22 @@
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
+    
+    <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 25px; border-radius: 15px; z-index: 9999; border: 1px solid var(--accent);">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+            <p style="margin: 0; font-size: 0.9em;">Utilizamos cookies para mejorar tu experiencia. <a href="cookies.html" style="color: var(--accent);">Más info</a>.</p>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="rechazarCookies()" style="background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Rechazar</button>
+                <button onclick="aceptarCookies()" style="background: var(--accent); border: none; color: #0A2A43; padding: 10px 30px; border-radius: 8px; cursor: pointer; font-weight: bold;">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const banner = document.getElementById('cookie-banner');
+        window.onload = function() { if (!localStorage.getItem('cookies-aceptadas')) banner.style.display = 'block'; };
+        function aceptarCookies() { localStorage.setItem('cookies-aceptadas', 'true'); banner.style.display = 'none'; }
+        function rechazarCookies() { localStorage.setItem('cookies-aceptadas', 'false'); banner.style.display = 'none'; }
+    </script>
 </body>
 </html>
