@@ -23,19 +23,47 @@
 
     <style>
         html { scroll-behavior: smooth; }
-
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f4f7f9; line-height: 1.8; }
-        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid #4db8ff; }
-        nav { background-color: #0d3b5e; padding: 18px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 1.1em; text-transform: uppercase; }
-        nav a:hover { color: #4db8ff; border-bottom: 2px solid #4db8ff; }
-        nav a.active {
-            color: #4db8ff; /* Color de énfasis (azul claro) */
-            border-bottom: 2px solid #4db8ff; /* Línea fija para indicar dónde estamos */
-            cursor: default; /* El cursor se queda como flecha normal, no como mano */
-            pointer-events: none; /* Desactiva cualquier interacción de clic */
-            opacity: 0.9; /* Un toque sutil para diferenciarlo, aunque sea el color activo */
+        :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
+       
+        /* NAVEGACIÓN LIMPIA: Sin logo que desplace el menú */
+        nav { 
+            background-color: var(--secondary); 
+            padding: 20px 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
         }
+        .nav-links { display: flex; align-items: center; }
+        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; }
+        nav a:hover { color: var(--accent); }
+        nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; }
+        
+        /* ICONO FLOTANTE: Alternativa estética en la esquina inferior */
+        .floating-logo {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            z-index: 999;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border: 2px solid var(--accent);
+        }
+        .floating-logo img { width: 35px; height: auto; }
+        .floating-logo:hover { transform: scale(1.1); }
+        .app-img { width: 100%; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); height: 350px; object-fit: cover; }
         
         .ads-banner-container {
             width: 100%;
