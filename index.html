@@ -64,19 +64,21 @@
         .modal input { width: 100%; padding: 15px; margin: 20px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
         .modal button { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
 
-        footer { background-color: #051622; color: #ffffff; padding: 60px 20px 40px; border-top: 4px solid var(--accent); text-align: center; }
-        .footer-grid { max-width: 1200px; margin: 40px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; }
-        .footer-col h4 { color: var(--accent); text-transform: uppercase; margin-bottom: 20px; font-size: 1em; }
-        .footer-col a { display: block; color: #ccc; text-decoration: none; margin-bottom: 10px; transition: 0.3s; }
+        footer { background-color: #051622; color: #ffffff; padding: 80px 20px 40px 20px; margin-top: 100px; border-top: 4px solid var(--accent); text-align: center; }
+        .footer-grid { max-width: 1200px; margin: 0 auto 60px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; }
+        .footer-col h4 { color: var(--accent); font-size: 1.1em; text-transform: uppercase; margin-bottom: 25px; font-weight: 800; }
+        .footer-col a { display: block; color: #ccc; text-decoration: none; margin-bottom: 12px; transition: 0.3s; }
         .footer-col a:hover { color: #fff; transform: translateX(5px); }
         .footer-col a.active { color: var(--accent); font-weight: bold; pointer-events: none; }
-        .legal-bottom { font-size: 0.9em; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
+        
+        .legal-bottom { font-size: 0.9em; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; }
+        .footer-email { color: var(--accent) !important; text-decoration: none; font-weight: bold; }
+
+        @media (max-width: 1000px) { .main-layout { grid-template-columns: 1fr; } h1 { font-size: 2.5em; } .sidebar { position: static; } .footer-grid { text-align: center; } }
 
         #cookie-banner { position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 20px; border-radius: 12px; z-index: 9999; border: 1px solid var(--accent); display: none; }
         .cookie-btns { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
         .cookie-btns button { padding: 8px 20px; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; }
-
-        @media (max-width: 1000px) { .feature-block { grid-template-columns: 1fr; gap: 30px; } h1 { font-size: 2.5em; } .footer-grid { text-align: center; } }
     </style>
 </head>
 <body>
@@ -195,16 +197,37 @@
     </div>
 
     <footer>
-        <img src="img/tourai_logo.png" alt="Logo" style="height:50px; margin-bottom:30px;">
         <div class="footer-grid">
-            <div class="footer-col"><h4>Explora</h4><a class="active">La App</a><a href="targets.html">Destinos</a><a href="guides.html">Audioguías</a></div>
-            <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacidad</a><a href="terms.html">Términos</a><a href="cookies.html">Cookies</a></div>
-            <div class="footer-col"><h4>Ayuda</h4><a href="contact.html">Contacto</a><a href="faq.html">FAQ</a></div>
+            <div class="footer-col">
+                <h4>Explora</h4>
+                <a class="active">La App</a>
+                <a href="targets.html">Destinos 2026</a>
+                <a href="guides.html">Audioguías</a>
+                <a href="blog.html">Blog / Noticias</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="privacy.html">Privacidad</a>
+                <a href="terms.html">Términos</a>
+                <a href="cookies.html">Cookies</a>
+            </div>
+            <div class="footer-col">
+                <h4>Ayuda</h4>
+                <a href="contact.html">Contacto</a>
+                <a href="faq.html">Preguntas Frecuentes</a>
+            </div>
         </div>
+
         <div class="legal-bottom">
-            &copy; <span id="current-year"></span> <strong>TourAI App</strong> - <a href="mailto:info@tourai.es" style="color:var(--accent); text-decoration:none;">info@tourai.es</a>
+            &copy; <span id="current-year"></span> <strong>TourAI App</strong> - 
+            <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a> 
+            - Todos los derechos reservados.
         </div>
     </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 
     <script>
         const banner = document.getElementById('cookie-banner');
