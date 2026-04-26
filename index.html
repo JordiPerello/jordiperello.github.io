@@ -268,5 +268,45 @@
             }
         }
     </script>
+
+    <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); z-index: 9999; border: 1px solid var(--accent);">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 300px;">
+                <h4 style="margin: 0 0 10px 0; color: var(--accent);">🍪 Control de Privacidad</h4>
+                <p style="margin: 0; font-size: 0.9em; line-height: 1.5; color: #ccc;">
+                    Utilizamos cookies propias y de terceros (AdSense/AdMob) para mejorar tu experiencia y mostrarte publicidad personalizada. Al hacer clic en "Aceptar", consientes su uso. Puedes leer más en nuestra <a href="cookies.html" style="color: var(--accent); text-decoration: underline;">Política de Cookies</a>.
+                </p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="rechazarCookies()" style="background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s;">Rechazar</button>
+                <button onclick="aceptarCookies()" style="background: var(--accent); border: none; color: #0A2A43; padding: 10px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 15px rgba(77, 184, 255, 0.3);">Aceptar Todo</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const banner = document.getElementById('cookie-banner');
+    
+        // Al cargar la página, verificamos si ya decidió
+        window.onload = function() {
+            if (!localStorage.getItem('cookies-aceptadas')) {
+                banner.style.display = 'block';
+            }
+        };
+    
+        function aceptarCookies() {
+            localStorage.setItem('cookies-aceptadas', 'true');
+            banner.style.display = 'none';
+            console.log("Cookies aceptadas por el usuario.");
+            // Aquí podrías disparar la carga de AdSense si fuera necesario
+        }
+    
+        function rechazarCookies() {
+            // Podrías guardar 'false' o simplemente cerrar el banner
+            localStorage.setItem('cookies-aceptadas', 'false');
+            banner.style.display = 'none';
+            alert("Has rechazado las cookies. Algunas funciones publicitarias podrían no funcionar correctamente.");
+        }
+    </script>
 </body>
 </html>
