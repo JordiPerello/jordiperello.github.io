@@ -8,7 +8,6 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
 
     <style>
-        /* ESTILOS UNIFICADOS TOURAI 2026 */
         html { scroll-behavior: smooth; }
         :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
         
@@ -59,13 +58,11 @@
 </head>
 <body>
 
-    <nav>
+     <nav>
         <a href="index.html">La App</a>
-        <a href="destinos.html">Destinos 2026</a>
-        <a href="guias.html">Guías IA</a>
+        <a href="targets.html">Destinos 2026</a>
+        <a href="guides.html">Guías IA</a>
         <a href="blog.html">Blog / Noticias</a>
-        <a href="privacy.html">Política de Privacidad</a>
-        <a href="terms.html">Términos y Condiciones</a>
         <a class="active">Contacto</a>
     </nav>
 
@@ -123,21 +120,48 @@
         </aside>
     </div>
 
-    <footer>
-        <p><strong>TourAI App</strong> - Inteligencia Artificial para el viajero moderno.</p>
-        <p style="margin-top: 30px;">
-            <a href="index.html">La App</a> | <a href="destinos.html">Destinos 2026</a> | <a href="guias.html">Guías IA</a> |
-            <a href="blog.html">Blog</a> | <a href="privacy.html">Privacidad</a> | <a href="terms.html">Términos</a> | <a class="active">Contacto</a>
-        </p>
-        <div class="legal">
-            <p>&copy; <span id="current-year"></span> <a href="mailto:info@tourai.es" style="color: white; text-decoration: none;">info@tourai.es</a> - Todos los derechos reservados.</p>
+     <footer>
+       <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Explora</h4>
+                <a href="index.html">La App</a>
+                <a href="targets.html">Destinos</a>
+                <a href="blog.html">Blog / Noticias</a>
+            </div>
+    
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="privacy.html">Privacidad</a>
+                <a href="terms.html">Términos</a>
+                <a href="cookies.html">Cookies</a>
+            </div>
+    
+            <div class="footer-col">
+                <h4>Ayuda</h4>
+                <a class="active">Soporte Técnico</a>
+                <a href="faq.html">Preguntas Frecuentes</a>
+            </div>
+        </div>
+       
+       <div class="legal">
+            <p style="font-size: 0.8em; color: #999; max-width: 800px; margin: 0 auto 20px;">
+                <strong>Nota legal:</strong> La información proporcionada por TourAI es orientativa y se basa en análisis de datos actualizados. No nos responsabilizamos por cambios repentinos en normativas locales o gubernamentales. El uso de este sitio implica la aceptación de cookies publicitarias.
+            </p>
+        
+            <p style="margin: 0;">
+                &copy; <span id="current-year"></span> 
+                <strong>TourAI App</strong> - 
+                <a href="mailto:info@tourai.es" style="color: white; text-decoration: underline;">info@tourai.es</a> 
+                - Todos los derechos reservados.
+            </p>
+        
+            <script>
+                document.getElementById('current-year').textContent = new Date().getFullYear();
+            </script>
         </div>
     </footer>
 
     <script>
-        // Actualización automática del año
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
         // Función para procesar el envío vía mailto
         function enviarMailto() {
             const nombre = document.getElementById('nombre').value;
