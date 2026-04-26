@@ -23,10 +23,22 @@
         :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
         
-        nav { background-color: var(--secondary); padding: 10px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        /* CORRECCIÓN DE NAVEGACIÓN: Logo y Enlaces centrados y equilibrados */
+        nav { 
+            background-color: var(--secondary); 
+            padding: 15px 40px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 40px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
+        }
         .nav-logo { height: 45px; width: auto; }
         .nav-links { display: flex; align-items: center; }
-        nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 1em; text-transform: uppercase; }
+        nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; white-space: nowrap; }
         nav a:hover { color: var(--accent); border-bottom: 2px solid var(--accent); }
         nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; opacity: 0.9; }
 
@@ -63,7 +75,7 @@
         .footer-col a { display: block; color: #ccc; text-decoration: none; margin-bottom: 10px; transition: 0.3s; }
         .footer-col a:hover { color: white; transform: translateX(5px); }
 
-        @media (max-width: 1000px) { .feature-block { grid-template-columns: 1fr; } nav { flex-direction: column; } .nav-links { margin-top: 15px; flex-wrap: wrap; justify-content: center; } }
+        @media (max-width: 1000px) { .feature-block { grid-template-columns: 1fr; } nav { flex-direction: column; gap: 15px; } .nav-links { flex-wrap: wrap; justify-content: center; } }
     </style>
 </head>
 <body>
@@ -144,7 +156,7 @@
                 <p>La libertad total para explorar ciudades con un guía experto en el bolsillo.</p>
             </div>
             <div class="service-card">
-                <span class="price-tag">Agencias y Grupos <small class="badge-future">Próximamente</small></span>
+                <span class="price-tag">Agencias y Gru <small class="badge-future">Próximamente</small></span>
                 <h4>Gestión de Grupos</h4>
                 <p>Herramientas para agencias turísticas que desean ofrecer contenido exclusivo a sus clientes.</p>
             </div>
@@ -247,7 +259,7 @@
             <p style="margin: 0; font-size: 0.9em; flex: 1;">Utilizamos cookies propias y de terceros para mejorar tu experiencia. Al aceptar, consientes su uso. <a href="cookies.html" style="color: var(--accent);">Más info</a>.</p>
             <div style="display: flex; gap: 10px;">
                 <button onclick="rechazarCookies()" style="background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Rechazar</button>
-                <button onclick="aceptarCookies()" style="background: var(--accent); border: none; color: #0A2A43; padding: 10px 30px; border-radius: 8px; cursor: pointer; font-weight: bold;">Aceptar</button>
+                <button onclick="aceptarCookies()" style="background: var(--accent); border: none; color: #0A2A43; padding: 10px 30px; border-radius: 8px; cursor: pointer; font-weight: bold;">Aceptar Todo</button>
             </div>
         </div>
     </div>
