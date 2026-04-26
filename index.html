@@ -77,8 +77,6 @@
         .footer-email { color: var(--accent) !important; text-decoration: none; font-weight: bold; }
 
         @media (max-width: 1000px) { .main-layout { grid-template-columns: 1fr; } h1 { font-size: 2.5em; } .sidebar { position: static; } .footer-grid { text-align: center; } }
-
-        #cookie-banner div div button { font-size: 0.9em; }
         
     </style>
 </head>
@@ -189,14 +187,6 @@
         </div>
     </div>
 
-    <div id="cookie-banner">
-        <p style="margin:0; font-size:0.9em; text-align:center;">Usamos cookies para mejorar tu experiencia. <a href="cookies.html" style="color:var(--accent);">Saber más</a>.</p>
-        <div class="cookie-btns">
-            <button onclick="rechazarCookies()" style="background:#444; color:white;">Rechazar</button>
-            <button onclick="aceptarCookies()" style="background:var(--accent); color:var(--primary);">Aceptar</button>
-        </div>
-    </div>
-
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
@@ -230,24 +220,21 @@
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 
+    <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 25px; border-radius: 15px; z-index: 9999; border: 1px solid var(--accent);">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+            <p style="margin: 0; font-size: 0.9em;">Utilizamos cookies para mejorar tu experiencia. <a href="cookies.html" style="color: var(--accent);">Más info</a>.</p>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="rechazarCookies()" style="background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Rechazar</button>
+                <button onclick="aceptarCookies()" style="background: var(--accent); border: none; color: #0A2A43; padding: 10px 30px; border-radius: 8px; cursor: pointer; font-weight: bold;">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const banner = document.getElementById('cookie-banner');
-        window.onload = () => {
-            if (!localStorage.getItem('cookies-aceptadas')) banner.style.display = 'block';
-            document.getElementById('current-year').textContent = new Date().getFullYear();
-        };
+        window.onload = function() { if (!localStorage.getItem('cookies-aceptadas')) banner.style.display = 'block'; };
         function aceptarCookies() { localStorage.setItem('cookies-aceptadas', 'true'); banner.style.display = 'none'; }
         function rechazarCookies() { localStorage.setItem('cookies-aceptadas', 'false'); banner.style.display = 'none'; }
-        function openModal(p) { document.getElementById('platform').innerText = p; document.getElementById('subModal').style.display = "block"; }
-        function closeModal() { document.getElementById('subModal').style.display = "none"; }
-        function handleSubscription(e) {
-            e.preventDefault();
-            const email = document.getElementById('userEmail').value;
-            const platform = document.getElementById('platform').innerText;
-            window.location.href = `mailto:info@tourai.es?subject=Lanzamiento ${platform}&body=Email: ${email}`;
-            closeModal();
-        }
-        window.onclick = (e) => { if (e.target.className == 'modal') closeModal(); }
     </script>
 </body>
 </html>
