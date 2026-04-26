@@ -5,54 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacidad - TourAI</title>
     
+    <link rel="icon" type="image/png" href="img/tourai_logo.png">
+    <link rel="apple-touch-icon" href="img/tourai_logo.png">
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
 
     <style>
         html { scroll-behavior: smooth; }
         :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
-        
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
         
+        nav { background-color: var(--secondary); padding: 20px 0; display: flex; justify-content: center; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; }
+        nav a:hover { color: var(--accent); }
+        nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; }
+
+        .floating-logo { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--white); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(0,0,0,0.2); z-index: 999; cursor: pointer; transition: transform 0.3s ease; border: 2px solid var(--accent); }
+        .floating-logo img { width: 35px; height: auto; }
+        .floating-logo:hover { transform: scale(1.1); }
+
         header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid var(--accent); }
         h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
         
-        nav { background-color: var(--secondary); padding: 18px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 1.1em; text-transform: uppercase; }
-        nav a:hover { color: var(--accent); border-bottom: 2px solid var(--accent); }
-
         .ads-banner-container { width: 100%; height: 60px; background-color: #87CEEB; display: flex; justify-content: center; align-items: center; overflow: hidden; margin: 20px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
 
         .main-layout { max-width: 1300px; margin: 30px auto; display: grid; grid-template-columns: 2.8fr 1.2fr; gap: 40px; padding: 0 20px; }
         .container { background-color: white; padding: 50px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .sidebar { background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 100px; }
         
-        h2 { color: var(--primary); border-left: 8px solid var(--accent); padding-left: 20px; margin: 40px 0 20px 0; font-size: 1.8em; background: #f9f9f9; padding-top: 5px; padding-bottom: 5px; }
-        
-        .legal-content p { font-size: 1.05em; color: #444; margin-bottom: 20px; text-align: justify; }
-        .legal-content ul { margin-bottom: 20px; color: #444; }
-        .legal-content a { color: var(--accent); text-decoration: none; font-weight: bold; }
+        h2 { color: var(--primary); border-left: 8px solid var(--accent); padding-left: 20px; margin: 40px 0 20px 0; font-size: 1.8em; background: #f9f9f9; padding: 10px 20px; }
+        .legal-content p { font-size: 1.05em; color: #444; margin-bottom: 20px; }
+        .legal-content ul { margin-bottom: 20px; color: #444; padding-left: 25px; }
+        .legal-content li { margin-bottom: 10px; }
+        .legal-content a { color: var(--secondary); text-decoration: underline; font-weight: bold; }
 
-        .sidebar-card { background: #f0f7ff; padding: 20px; border-radius: 10px; border: 1px solid #e3f2fd; margin-bottom: 25px; }
-        .sidebar-card h3 { margin-top: 0; font-size: 1.2em; color: var(--primary); }
+        .sidebar-card { background: #f0f7ff; padding: 20px; border-radius: 10px; border-left: 4px solid var(--accent); margin-bottom: 25px; }
+        .sidebar-card h3 { margin-top: 0; font-size: 1.1em; color: var(--primary); margin-bottom: 10px; }
+        .sidebar-card p { font-size: 0.9em; margin: 0; line-height: 1.5; color: #555; }
 
-        footer { background-color: #051622; color: #ffffff; padding: 80px 20px 40px 20px; margin-top: 100px; border-top: 4px solid var(--accent); }
-        .footer-grid { max-width: 1200px; margin: 0 auto 60px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
+        footer { background-color: #051622; color: #ffffff; padding: 80px 20px 40px 20px; margin-top: 100px; border-top: 4px solid var(--accent); text-align: center; }
+        .footer-grid { max-width: 1200px; margin: 0 auto 60px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; }
         .footer-col h4 { color: var(--accent); font-size: 1.1em; text-transform: uppercase; margin-bottom: 25px; font-weight: 800; }
         .footer-col a { display: block; color: #ccc; text-decoration: none; margin-bottom: 12px; transition: 0.3s; }
         .footer-col a:hover { color: #fff; transform: translateX(5px); }
         .footer-col a.active { color: var(--accent); font-weight: bold; pointer-events: none; }
         
-        .legal-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; color: #aaa; font-size: 0.9em; }
+        .legal-bottom { font-size: 0.9em; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; }
         .footer-email { color: var(--accent) !important; text-decoration: none; font-weight: bold; }
 
-        @media (max-width: 1000px) {
-            .main-layout { grid-template-columns: 1fr; }
-            h1 { font-size: 2.5em; }
-            .sidebar { position: static; }
-        }
+        @media (max-width: 1000px) { .main-layout { grid-template-columns: 1fr; } h1 { font-size: 2.5em; } .sidebar { position: static; } .footer-grid { text-align: center; } }
     </style>
 </head>
 <body>
+
+    <div class="floating-logo" onclick="window.scrollTo(0,0)" title="Volver arriba">
+        <img src="img/tourai_logo.png" alt="Icono TourAI">
+    </div>
 
     <nav>
         <a href="index.html">La App</a>
@@ -63,10 +71,7 @@
     </nav>
 
     <div class="ads-banner-container">
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:728px;height:60px"
-             data-ad-client="ca-pub-8251840058544269"
-             data-ad-slot="2107333980"></ins>
+        <ins class="adsbygoogle" style="display:inline-block;width:728px;height:60px" data-ad-client="ca-pub-8251840058544269" data-ad-slot="2107333980"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
@@ -79,62 +84,46 @@
         <main class="container legal-content">
             <h2 style="margin-top:0;">1. Compromiso de Privacidad</h2>
             <p><strong>Última actualización:</strong> 26 de Abril, 2026.</p>
-            <p>En <strong>TourAI</strong>, accesible desde jordiperello.github.io, la privacidad de nuestros usuarios es una prioridad fundamental. Esta política detalla los protocolos de gestión de datos que aplicamos para garantizar que tu navegación y el uso de nuestras audioguías sean seguros y privados.</p>
+            <p>En <strong>TourAI</strong>, accesible desde jordiperello.github.io, consideramos que la privacidad de nuestros usuarios es un pilar fundamental. Esta política detalla cómo gestionamos la información para garantizar que el uso de nuestras audioguías inteligentes sea seguro y transparente.</p>
             
             <h2>2. Información que Recopilamos</h2>
-            <p>Solo procesamos información esencial para mejorar la funcionalidad de la plataforma:</p>
+            <p>Solo procesamos información técnica y funcional necesaria para operar el servicio:</p>
             <ul>
-                <li><strong>Datos de ubicación:</strong> Utilizados exclusivamente para sugerir audioguías cercanas a tu posición en tiempo real (requiere permiso explícito).</li>
-                <li><strong>Registros de uso:</strong> Información técnica anónima sobre el navegador, tiempo de permanencia y páginas visitadas para optimizar el rendimiento técnico.</li>
-                <li><strong>Cookies de personalización:</strong> Archivos de datos mínimos que recuerdan tus preferencias de idioma y volumen.</li>
+                <li><strong>Ubicación Geográfica:</strong> Utilizada bajo tu permiso para ofrecerte audioguías de los monumentos que tienes justo delante. No almacenamos un historial de tus movimientos.</li>
+                <li><strong>Métricas de Uso:</strong> Datos anónimos sobre qué guías son las más escuchadas para mejorar nuestro catálogo.</li>
+                <li><strong>Preferencias Técnicas:</strong> Almacenamos localmente tu idioma preferido para que no tengas que configurarlo en cada visita.</li>
             </ul>
             
-            <h2>3. Gestión de Publicidad (AdSense y AdMob)</h2>
-            <p>
-                TourAI utiliza servicios de publicidad de Google para mantener la gratuidad de nuestros servicios:
-            </p>
+            <h2>3. Publicidad Responsable</h2>
+            <p>TourAI se financia mediante publicidad de Google para seguir siendo gratuita para todos los viajeros:</p>
             <ul>
-                <li>
-                    <strong>En la Web (AdSense):</strong> Utilizamos cookies para mostrar anuncios relevantes basados en tus visitas previas a este y otros sitios web.
-                </li>
-                <li>
-                    <strong>En la App (AdMob):</strong> En nuestras versiones para Android e iOS, utilizamos identificadores publicitarios del dispositivo (como el IDFA en iOS o el AAID en Android) para servir anuncios no intrusivos y gestionar la frecuencia de los mismos.
-                </li>
+                <li><strong>AdSense (Web):</strong> Utiliza cookies para mostrarte anuncios útiles basados en tus intereses generales de navegación.</li>
+                <li><strong>AdMob (App):</strong> En nuestras aplicaciones móviles, empleamos identificadores estándar de la industria (IDFA/AAID) para evitar que veas el mismo anuncio repetidamente.</li>
             </ul>
-            <p>
-                Ambos sistemas se rigen por las políticas de seguridad de Google. Puedes optar por no recibir publicidad personalizada ajustando las preferencias en tu dispositivo móvil o en la <a href="https://adssettings.google.com/" target="_blank">Configuración de anuncios de Google</a>.
-            </p>
+            <p>Puedes gestionar o desactivar la personalización de estos anuncios en cualquier momento a través de la <a href="https://adssettings.google.com/" target="_blank">Configuración de anuncios de Google</a>.</p>
             
-            <h2>4. Derechos del Usuario (RGPD)</h2>
-            <p>Bajo la normativa europea de protección de datos, tienes derecho a:</p>
+            <h2>4. Tus Derechos (RGPD)</h2>
+            <p>De acuerdo con la normativa vigente, tienes pleno control sobre tu información:</p>
             <ul>
-                <li>Acceder a cualquier dato que hayamos registrado.</li>
-                <li>Solicitar la rectificación o eliminación de tus datos de usuario de nuestra base de datos.</li>
-                <li>Retirar el consentimiento para el uso de cookies de seguimiento.</li>
+                <li>Derecho a saber qué datos procesamos.</li>
+                <li>Derecho a solicitar la eliminación de cualquier registro personal.</li>
+                <li>Derecho a retirar el consentimiento de geolocalización en cualquier momento desde los ajustes de tu navegador o dispositivo.</li>
             </ul>
-            
-            <h2>5. Seguridad de los Datos</h2>
-            <p>Implementamos protocolos de cifrado estándar para proteger cualquier intercambio de información entre tu dispositivo y nuestros servidores, asegurando que el historial de tus rutas y descargas sea confidencial.</p>
         </main>
 
         <aside class="sidebar">
             <div class="sidebar-card">
-                <h3>🛡️ Seguridad Garantizada</h3>
-                <p style="font-size: 0.9em; margin: 0;">No vendemos ni compartimos tus datos de ubicación con terceros con fines comerciales.</p>
+                <h3>🛡️ Navegación Segura</h3>
+                <p>Nuestra web utiliza cifrado SSL de 256 bits para proteger toda la comunicación entre tu dispositivo y nuestros servidores.</p>
             </div>
 
-            <div class="sidebar-card" style="background: #fff9e6; border-color: #ffeeb3;">
-                <h3>⚖️ Cumplimiento Legal</h3>
-                <p style="font-size: 0.9em; margin: 0;">Plataforma adaptada a las directivas RGPD (Europa) y CCPA (California) de 2026.</p>
+            <div class="sidebar-card" style="background: #eefdf3; border-color: #4caf50;">
+                <h3>⚖️ Estándar 2026</h3>
+                <p>Plataforma totalmente adaptada a las directivas actualizadas de la RGPD europea y la CCPA de California.</p>
             </div>
 
             <div style="margin-top: 40px;">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-8251840058544269"
-                     data-ad-slot="2107333980"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8251840058544269" data-ad-slot="2107333980" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
         </aside>
@@ -147,7 +136,7 @@
                 <a href="index.html">La App</a>
                 <a href="targets.html">Destinos 2026</a>
                 <a href="guides.html">Audioguías</a>
-                <a href="blog.html">Blog / Noticias</a>
+                <a href="blog.html">Noticias</a>
             </div>
             <div class="footer-col">
                 <h4>Legal</h4>
@@ -163,8 +152,7 @@
         </div>
 
         <div class="legal-bottom">
-            &copy; <span id="current-year"></span> 
-            <strong>TourAI App</strong> - 
+            &copy; <span id="current-year"></span> <strong>TourAI App</strong> - 
             <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a> 
             - Todos los derechos reservados.
         </div>
