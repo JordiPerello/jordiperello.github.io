@@ -8,7 +8,6 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
 
     <style>
-        /* CSS UNIFICADO BASADO EN MODELO BLOG */
         html { scroll-behavior: smooth; }
         :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
         
@@ -73,8 +72,6 @@
         <a href="targets.html">Destinos 2026</a>
         <a href="guides.html">Guías IA</a>
         <a href="blog.html">Blog / Noticias</a>
-        <a href="privacy.html">Política de Privacidad</a>
-        <a href="terms.html">Términos y Condiciones</a>
         <a href="contact.html">Contacto</a>
     </nav>
 
@@ -207,21 +204,40 @@
     </div>
 
     <footer>
-        <p><strong>TourAI App</strong> - La autoridad mundial en información de viajes inteligente.</p>
-        <p>Barcelona, España.</p>
-
-        <p style="margin-top: 30px;">
-            <a class="active">La App</a> | 
-            <a href="targets.html">Destinos 2026</a> |
-            <a href="guides.html">Guías IA</a> |
-            <a href="blog.html">Blog / Noticias</a> | 
-            <a href="privacy.html">Política de Privacidad</a> | 
-            <a href="terms.html">Términos y Condiciones</a> | 
-            <a href="contact.html">Contacto</a>
-        </p>
-        <div class="legal">
-            <p>Advertencia Legal: Todo el contenido de este sitio ha sido verificado por expertos humanos y sistemas de análisis de datos. TourAI no se hace responsable de cambios de última hora en normativas gubernamentales. El uso de este sitio web implica la aceptación de nuestras políticas de cookies para personalización publicitaria a través de Google AdSense.</p>
-            <p>&copy; <span id="current-year"></span> <a href="mailto:info@tourai.es" style="color: white; text-decoration: none;">info@tourai.es</a> - Todos los derechos reservados.</p>
+       <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Explora</h4>
+                <a href="index.html">La App</a>
+                <a href="targets.html">Destinos</a>
+                <a class="active">Noticias</a>
+            </div>
+    
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="privacy.html">Privacidad</a>
+                <a href="terms.html">Términos</a>
+                <a href="cookies.html">Cookies</a>
+            </div>
+    
+            <div class="footer-col">
+                <h4>Ayuda</h4>
+                <a href="contacto.html">Soporte Técnico</a>
+                <a href="faq.html">Preguntas Frecuentes</a>
+            </div>
+        </div>
+       
+       <div class="legal">
+            <p style="font-size: 0.8em; color: #999; max-width: 800px; margin: 0 auto 20px;">
+                <strong>Nota legal:</strong> La información proporcionada por TourAI es orientativa y se basa en análisis de datos actualizados. No nos responsabilizamos por cambios repentinos en normativas locales o gubernamentales. El uso de este sitio implica la aceptación de cookies publicitarias.
+            </p>
+        
+            <p style="margin: 0;">
+                &copy; <span id="current-year"></span> 
+                <strong>TourAI App</strong> - 
+                <a href="mailto:info@tourai.es" style="color: white; text-decoration: underline;">info@tourai.es</a> 
+                - Todos los derechos reservados.
+            </p>
+        
             <script>
                 document.getElementById('current-year').textContent = new Date().getFullYear();
             </script>
