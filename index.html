@@ -32,12 +32,12 @@
         
         .text-content h3 { font-size: 2.2em; color: var(--secondary); margin-bottom: 20px; border-left: 5px solid var(--accent); padding-left: 15px; line-height: 1.2; }
         .app-img { width: 100%; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 1px solid #eee; height: 400px; object-fit: cover; }
-        .badge-future { display: inline-block; background: #e0e0e0; color: #666; font-size: 0.7em; padding: 2px 10px; border-radius: 5px; vertical-align: middle; margin-left: 10px; font-weight: bold; text-transform: uppercase; }
 
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 40px 0; }
         .service-card { background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; text-align: center; }
         .price-tag { color: var(--accent); font-weight: 800; font-size: 1.1em; text-transform: uppercase; display: block; margin-bottom: 5px; }
 
+        /* MODAL */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(10, 42, 67, 0.95); }
         .modal-content { background-color: var(--white); margin: 10% auto; padding: 40px; border-radius: 25px; width: 90%; max-width: 500px; text-align: center; position: relative; }
         .close { position: absolute; right: 25px; top: 20px; font-size: 30px; cursor: pointer; color: var(--primary); }
@@ -49,6 +49,7 @@
         .badges-container img { height: 50px; cursor: pointer; transition: 0.3s; }
         .badges-container img:hover { transform: scale(1.05); }
 
+        /* FOOTER MODERNO */
         footer {
             background-color: #051622;
             color: #ffffff;
@@ -156,20 +157,10 @@
         <section class="feature-block">
             <div class="text-content">
                 <h3>El Guía Privado Definitivo</h3>
-                <p>TourAI no es una aplicación de mapas; es un <strong>guía turístico privado exclusivo</strong>. A través de algoritmos de visión y lenguaje, la APP se adapta a su perfil psicográfico para ofrecerle una experiencia de inmersión total.</p>
+                <p>TourAI no es una aplicación de mapas; es un <strong>guía turístico privado exclusivo</strong>. A través de algoritmos de visión y lenguaje, la APP se adapta a su perfil psicográfico.</p>
             </div>
             <div class="image-content">
                 <img src="https://images.unsplash.com/photo-1517736996303-4eec4a66bb17?q=80&w=800" alt="Exclusividad TourAI" class="app-img">
-            </div>
-        </section>
-
-        <section class="feature-block reverse">
-            <div class="text-content">
-                <h3>Asistencia Cognitiva por Voz y Chat</h3>
-                <p>Establezca un diálogo fluido con nuestra IA. Desde consultas complejas sobre la cronología de un palacio hasta la búsqueda de servicios específicos en su idioma, TourAI responde con precisión humana.</p>
-            </div>
-            <div class="image-content">
-                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800" alt="IA Interactiva" class="app-img">
             </div>
         </section>
 
@@ -193,8 +184,21 @@
         <div class="badges-container">
             <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" onclick="openModal('iOS')">
             <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" onclick="openModal('Android')">
+            <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Microsoft Store" onclick="openModal('Windows')">
         </div>
     </section>
+
+    <div id="subModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 style="color: var(--primary);">Reserva de Acceso Anticipado</h3>
+            <p>La versión para <strong id="platform"></strong> se encuentra en fase final de despliegue. Suscríbase para recibir notificación inmediata.</p>
+            <form id="subscriptionForm" onsubmit="handleSubscription(event)">
+                <input type="email" id="userEmail" placeholder="Su correo electrónico" required>
+                <button type="submit">Solicitar Aviso de Lanzamiento</button>
+            </form>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-grid">
@@ -222,7 +226,7 @@
 
         <div class="legal">
             <div class="legal-disclaimer">
-                <strong>Nota legal:</strong> La información proporcionada por TourAI es orientativa y se basa en análisis de datos actualizados. No nos responsabilizamos por cambios repentinos en normativas locales o gubernamentales. El uso de este sitio implica la aceptación de cookies publicitarias.
+                <strong>Nota legal:</strong> La información proporcionada por TourAI es orientativa. No nos responsabilizamos por cambios repentinos en normativas locales. El uso implica la aceptación de cookies publicitarias.
             </div>
 
             <div class="legal-bottom">
@@ -235,13 +239,33 @@
     </footer>
 
     <script>
+        // Actualizar año automáticamente
         document.getElementById('current-year').textContent = new Date().getFullYear();
         
+        // LÓGICA DEL MODAL RESTAURADA
         function openModal(p) {
-            // Lógica del modal...
+            document.getElementById('platform').innerText = p;
+            document.getElementById('subModal').style.display = "block";
         }
         function closeModal() {
-            // Lógica del modal...
+            document.getElementById('subModal').style.display = "none";
+        }
+        function handleSubscription(e) {
+            e.preventDefault();
+            const email = document.getElementById('userEmail').value;
+            const platform = document.getElementById('platform').innerText;
+            const subject = encodeURIComponent("Solicitud de Lanzamiento TourAI - " + platform);
+            const body = encodeURIComponent("Deseo recibir aviso para la plataforma: " + platform + "\nEmail: " + email);
+            window.location.href = "mailto:info@tourai.es?subject=" + subject + "&body=" + body;
+            closeModal();
+        }
+
+        // Cerrar modal al hacer clic fuera de él
+        window.onclick = function(event) {
+            let modal = document.getElementById('subModal');
+            if (event.target == modal) {
+                closeModal();
+            }
         }
     </script>
 </body>
