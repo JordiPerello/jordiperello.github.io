@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TourAI - El Futuro del Turismo Inteligente 2026</title>
     
+    <link rel="icon" type="image/png" href="/img/tourai_logo.png">
+    <link rel="apple-touch-icon" href="/img/tourai_logo.png">
+
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -23,24 +26,43 @@
         :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
         
-        /* CORRECCIÓN DE NAVEGACIÓN: Logo y Enlaces centrados y equilibrados */
+        /* NAVEGACIÓN LIMPIA: Sin logo que desplace el menú */
         nav { 
             background-color: var(--secondary); 
-            padding: 15px 40px; 
+            padding: 20px 0; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            gap: 40px; 
             position: sticky; 
             top: 0; 
             z-index: 1000; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
         }
-        .nav-logo { height: 45px; width: auto; }
         .nav-links { display: flex; align-items: center; }
-        nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; white-space: nowrap; }
-        nav a:hover { color: var(--accent); border-bottom: 2px solid var(--accent); }
-        nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; opacity: 0.9; }
+        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; }
+        nav a:hover { color: var(--accent); }
+        nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; }
+
+        /* ICONO FLOTANTE: Alternativa estética en la esquina inferior */
+        .floating-logo {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            z-index: 999;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border: 2px solid var(--accent);
+        }
+        .floating-logo img { width: 35px; height: auto; }
+        .floating-logo:hover { transform: scale(1.1); }
 
         header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid var(--accent); }
         h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
@@ -70,7 +92,7 @@
         .modal-content { background-color: var(--white); margin: 10% auto; padding: 40px; border-radius: 25px; width: 90%; max-width: 500px; text-align: center; position: relative; }
         .close { position: absolute; right: 25px; top: 20px; font-size: 30px; cursor: pointer; }
         
-       
+        
         footer {
             background-color: #051622;
             color: #ffffff;
@@ -153,8 +175,11 @@
 </head>
 <body>
 
+    <div class="floating-logo" onclick="window.scrollTo(0,0)" title="Volver arriba">
+        <img src="/img/tourai_logo.png" alt="Icono TourAI">
+    </div>
+
     <nav>
-        <img src="/img/tourai_logo.png" alt="TourAI Logo" class="nav-logo">
         <div class="nav-links">
             <a class="active">La App</a>
             <a href="targets.html">Destinos 2026</a>
@@ -264,7 +289,6 @@
                 <p>Acceso ilimitado para los amantes de la cultura y la historia.</p>
             </div>
         </div>
-        <p style="text-align: center; font-style: italic; color: #666;">* Tarifas para empresas y oficinas de turismo disponibles en futuras versiones.</p>
 
         <section style="margin-top: 40px; padding: 20px; background: #f0f8ff; border-radius: 10px; text-align: center;">
             <p><strong>Y mucho más:</strong> Estamos trabajando en nuevas funcionalidades que se informarán en futuras actualizaciones.</p>
@@ -325,10 +349,10 @@
                 &copy; <span id="current-year"></span> <strong>TourAI App</strong> - <a href="mailto:info@tourai.es" class="footer-email" style="color:var(--accent)">info@tourai.es</a> - Todos los derechos reservados.
             </div>
         </div>
-            
-        <script>
-            document.getElementById('current-year').textContent = new Date().getFullYear();
-        </script>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
     </footer>
 
     <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 25px; border-radius: 15px; z-index: 9999; border: 1px solid var(--accent);">
