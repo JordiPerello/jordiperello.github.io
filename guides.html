@@ -5,22 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audioguías Inteligentes - TourAI</title>
     
+    <link rel="icon" type="image/png" href="img/tourai_logo.png">
+    <link rel="apple-touch-icon" href="img/tourai_logo.png">
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
 
     <style>
         html { scroll-behavior: smooth; }
         :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
-        
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
         
-        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid var(--accent); }
-        h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
-        
-        nav { background-color: var(--secondary); padding: 18px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 1.1em; text-transform: uppercase; }
-        nav a:hover { color: var(--accent); border-bottom: 2px solid var(--accent); }
+        nav { background-color: var(--secondary); padding: 20px 0; display: flex; justify-content: center; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; }
+        nav a:hover { color: var(--accent); }
         nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; }
 
+        .floating-logo { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--white); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(0,0,0,0.2); z-index: 999; cursor: pointer; transition: transform 0.3s ease; border: 2px solid var(--accent); }
+        .floating-logo img { width: 35px; height: auto; }
+        .floating-logo:hover { transform: scale(1.1); }
+
+        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid var(--accent); }
+        h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
         .ads-banner-container { width: 100%; height: 60px; background-color: #87CEEB; display: flex; justify-content: center; align-items: center; overflow: hidden; margin: 20px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
 
         .main-layout { max-width: 1300px; margin: 30px auto; display: grid; grid-template-columns: 2.8fr 1.2fr; gap: 40px; padding: 0 20px; }
@@ -28,32 +33,31 @@
         .sidebar { background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 100px; }
         
         h2 { color: var(--primary); border-left: 8px solid var(--accent); padding-left: 20px; margin: 40px 0 20px 0; font-size: 2.2em; background: #f9f9f9; padding-top: 10px; padding-bottom: 10px; }
-        
-        .feature-box { margin-bottom: 40px; }
-        .feature-box h3 { color: var(--secondary); font-size: 1.6em; margin-bottom: 10px; }
-        .feature-box p { font-size: 1.1em; color: #555; }
+        .feature-box { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+        .feature-box:last-child { border-bottom: none; }
+        .feature-box h3 { color: var(--secondary); font-size: 1.6em; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .feature-box p { font-size: 1.1em; color: #555; margin: 0; }
 
         .sidebar-info { background: #f0f7ff; padding: 20px; border-radius: 10px; border-left: 4px solid var(--accent); margin-bottom: 20px; }
-        .sidebar-info h4 { margin-top: 0; color: var(--primary); }
+        .sidebar-info h4 { margin-top: 0; color: var(--primary); margin-bottom: 10px; }
+        .sidebar-info p { font-size: 0.95em; margin: 0; line-height: 1.5; }
 
-        footer { background-color: #051622; color: #ffffff; padding: 80px 20px 40px 20px; margin-top: 100px; border-top: 4px solid var(--accent); }
-        .footer-grid { max-width: 1200px; margin: 0 auto 60px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
+        footer { background-color: #051622; color: #ffffff; padding: 80px 20px 40px 20px; margin-top: 100px; border-top: 4px solid var(--accent); text-align: center; }
+        .footer-grid { max-width: 1200px; margin: 0 auto 60px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; }
         .footer-col h4 { color: var(--accent); font-size: 1.1em; text-transform: uppercase; margin-bottom: 25px; font-weight: 800; }
         .footer-col a { display: block; color: #ccc; text-decoration: none; margin-bottom: 12px; transition: 0.3s; }
         .footer-col a:hover { color: #fff; transform: translateX(5px); }
         .footer-col a.active { color: var(--accent); font-weight: bold; pointer-events: none; }
-        
-        .legal { max-width: 1200px; margin: 0 auto; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; }
-        .footer-email { color: var(--accent) !important; text-decoration: none; font-weight: bold; }
+        .legal-bottom { font-size: 0.9em; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; }
 
-        @media (max-width: 1000px) {
-            .main-layout { grid-template-columns: 1fr; }
-            h1 { font-size: 2.5em; }
-            .sidebar { position: static; }
-        }
+        @media (max-width: 1000px) { h1 { font-size: 2.5em; } .main-layout { grid-template-columns: 1fr; } .sidebar { position: static; } .footer-grid { text-align: center; } }
     </style>
 </head>
 <body>
+
+    <div class="floating-logo" onclick="window.scrollTo(0,0)" title="Volver arriba">
+        <img src="img/tourai_logo.png" alt="Icono TourAI">
+    </div>
 
     <nav>
         <a href="index.html">La App</a>
@@ -64,10 +68,7 @@
     </nav>
 
     <div class="ads-banner-container">
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:728px;height:60px"
-             data-ad-client="ca-pub-8251840058544269"
-             data-ad-slot="2107333980"></ins>
+        <ins class="adsbygoogle" style="display:inline-block;width:728px;height:60px" data-ad-client="ca-pub-8251840058544269" data-ad-slot="2107333980"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
@@ -79,47 +80,42 @@
     <div class="main-layout">
         <main class="container">
             <h2 style="margin-top: 0;">Explora el mundo a tu ritmo</h2>
-            <p>Las audioguías de <strong>TourAI</strong> han sido diseñadas para eliminar la dependencia de grupos turísticos rígidos y horarios estrictos. Gracias a nuestro sistema de audio narrativo, podrás descubrir la historia de las ciudades más importantes del mundo de una manera cómoda y profesional.</p>
+            <p>Las audioguías de <strong>TourAI</strong> eliminan la dependencia de grupos rígidos y horarios estrictos. Descubre la historia de las ciudades más fascinantes con una narrativa profesional y envolvente.</p>
             
             <div class="feature-box">
                 <h3>🎙️ Narraciones de Alta Calidad</h3>
-                <p>Olvídate de las voces robóticas. Nuestras guías cuentan con narraciones claras y fluidas, diseñadas para mantener tu interés y sumergirte en el contexto histórico y cultural de cada destino.</p>
+                <p>Sin voces robóticas. Disfruta de locuciones claras y fluidas diseñadas para sumergirte por completo en el contexto cultural de cada monumento.</p>
             </div>
 
             <div class="feature-box">
                 <h3>📍 Activación por Ubicación</h3>
-                <p>La aplicación detecta tu posición y te sugiere los puntos de interés más cercanos. Solo tienes que darle al <em>play</em> y dejar que la historia comience mientras caminas.</p>
+                <p>La App detecta tu posición GPS y sugiere los puntos de interés cercanos automáticamente. Solo dale al <em>play</em> y camina.</p>
             </div>
 
             <div class="feature-box">
                 <h3>📚 Contenido Curado</h3>
-                <p>Cada guía ha sido revisada para ofrecer datos precisos, anécdotas locales y recomendaciones que no aparecen en las guías convencionales de papel.</p>
+                <p>Datos precisos, anécdotas locales y secretos históricos que no encontrarás en las guías turísticas convencionales de papel.</p>
             </div>
 
             <div class="feature-box">
                 <h3>📶 Modo Offline</h3>
-                <p>Sabemos que los datos en el extranjero pueden ser un problema. Puedes descargar las audioguías antes de salir del hotel y disfrutarlas sin necesidad de conexión a internet durante todo tu recorrido.</p>
+                <p>Descarga tus guías en el hotel y disfrútalas sin gastar datos. Funciona perfectamente sin conexión a internet durante todo el recorrido.</p>
             </div>
         </main>
 
         <aside class="sidebar">
             <div class="sidebar-info">
                 <h4>Soporte Multidioma</h4>
-                <p>Nuestras audioguías están disponibles en los principales idiomas para asegurar que no te pierdas ningún detalle.</p>
+                <p>Disponible en español, inglés, francés, alemán e italiano para que no te pierdas ni un solo detalle.</p>
             </div>
 
-            <div class="sidebar-info">
+            <div class="sidebar-info" style="background: #eefdf3; border-color: #4caf50;">
                 <h4>Actualizaciones</h4>
-                <p>Añadimos nuevos destinos y puntos de interés mensualmente basados en las sugerencias de nuestra comunidad.</p>
+                <p>Añadimos nuevos destinos y puntos de interés cada mes basados en el feedback de nuestra comunidad.</p>
             </div>
 
-            <div style="margin-top: 50px;">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-8251840058544269"
-                     data-ad-slot="2107333980"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
+            <div style="margin-top: 50px; text-align: center;">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8251840058544269" data-ad-slot="2107333980" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
         </aside>
@@ -127,41 +123,16 @@
 
     <footer>
         <div class="footer-grid">
-            <div class="footer-col">
-                <h4>Explora</h4>
-                <a href="index.html">La App</a>
-                <a href="targets.html">Destinos 2026</a>
-                <a class="active">Audioguías</a>
-                <a href="blog.html">Blog / Noticias</a>
-            </div>
-            <div class="footer-col">
-                <h4>Legal</h4>
-                <a href="privacy.html">Privacidad</a>
-                <a href="terms.html">Términos</a>
-                <a href="cookies.html">Cookies</a>
-            </div>
-            <div class="footer-col">
-                <h4>Ayuda</h4>
-                <a href="contact.html">Contacto</a>
-                <a href="faq.html">Preguntas Frecuentes</a>
-            </div>
+            <div class="footer-col"><h4>Explora</h4><a href="index.html">La App</a><a href="targets.html">Destinos</a><a class="active">Audioguías</a></div>
+            <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacidad</a><a href="terms.html">Términos</a><a href="cookies.html">Cookies</a></div>
+            <div class="footer-col"><h4>Ayuda</h4><a href="contact.html">Contacto</a><a href="faq.html">FAQ</a></div>
         </div>
-
-        <div class="legal">
-            <div class="legal-disclaimer">
-                <strong>Nota legal:</strong> El uso de las audioguías requiere el uso de auriculares para una mejor experiencia. Respeta el entorno y las normas de silencio de monumentos y museos.
-            </div>
-            <div class="legal-bottom">
-                &copy; <span id="current-year"></span> 
-                <strong>TourAI App</strong> - 
-                <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a> 
-                - Todos los derechos reservados.
-            </div>
+        <div class="legal-bottom">
+            &copy; <span id="current-year"></span> <strong>TourAI App</strong> - <a href="mailto:info@tourai.es" style="color:var(--accent); text-decoration:none;">info@tourai.es</a><br>
+            <small style="opacity: 0.6;">Usa auriculares para una mejor experiencia y respeta las normas de silencio de cada monumento.</small>
         </div>
     </footer>
 
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
+    <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
