@@ -132,17 +132,37 @@
     </div>
 
     <footer>
-        <div style="text-align: center; margin-bottom: 40px;"><img src="img/tourai_logo.png" alt="TourAI Logo" style="height: 60px;"></div>
         <div class="footer-grid">
-            <div class="footer-col"><h4>Explora</h4><a href="index.html">La App</a><a class="active">Blog</a></div>
-            <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacidad</a></div>
-            <div class="footer-col"><h4>Ayuda</h4><a href="faq.html">FAQ</a></div>
+            <div class="footer-col">
+                <h4>Explora</h4>
+                <a href="index.html">La App</a>
+                <a href="targets.html">Destinos 2026</a>
+                <a href="guides.html">Audioguías</a>
+                <a class="active">Blog / Noticias</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="privacy.html">Privacidad</a>
+                <a href="terms.html">Términos</a>
+                <a href="cookies.html">Cookies</a>
+            </div>
+            <div class="footer-col">
+                <h4>Ayuda</h4>
+                <a href="contact.html">Contacto</a>
+                <a href="faq.html">Preguntas Frecuentes</a>
+            </div>
         </div>
-        <div class="legal">
-            <p>&copy; <span id="current-year"></span> <strong>TourAI App</strong> - Todos los derechos reservados.</p>
-            <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+
+        <div class="legal-bottom">
+            &copy; <span id="current-year"></span> <strong>TourAI App</strong> - 
+            <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a> 
+            - Todos los derechos reservados.
         </div>
     </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 
     <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 25px; border-radius: 15px; z-index: 9999; border: 1px solid var(--accent);">
         <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
