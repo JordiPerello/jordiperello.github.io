@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TourAI - El Portal Líder en Turismo Inteligente y Guías 2026</title>
-    
+      
+    <link rel="icon" type="image/png" href="/img/tourai_logo.png">
+    <link rel="apple-touch-icon" href="/img/tourai_logo.png">
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        
+        if (localStorage.getItem('cookies-aceptadas') === 'true') {
+            gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'wait_for_update': 500 });
+        } else {
+            gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'wait_for_update': 500 });
+        }
+    </script>
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
 
     <style>
@@ -71,20 +85,93 @@
 
         .newsletter-box { background: #0A2A43; color: white; padding: 30px; border-radius: 12px; margin-top: 40px; text-align: center; }
         .newsletter-box input { width: 90%; padding: 12px; margin: 15px 0; border-radius: 5px; border: none; }
+       
         
-        footer { background-color: #0A2A43; color: #ccc; text-align: center; padding: 80px 0; margin-top: 100px; }
-        footer a { color: white; text-decoration: none; margin: 0 20px; font-weight: bold; }
-        footer .legal { font-size: 0.85em; margin-top: 30px; line-height: 2; max-width: 800px; margin-left: auto; margin-right: auto; }
+        footer {
+            background-color: #051622;
+            color: #ffffff;
+            padding: 80px 20px 40px 20px;
+            margin-top: 100px;
+            border-top: 4px solid var(--accent);
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto 60px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--accent);
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+
+        .footer-col a {
+            display: block;
+            color: #ccc;
+            text-decoration: none;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col a:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .footer-col a.active {
+            color: var(--accent);
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        .legal {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .legal-disclaimer {
+            font-size: 0.85em;
+            color: #777;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+        }
+
+        .legal-bottom {
+            font-size: 0.9em;
+            color: #aaa;
+        }
+
+        .footer-email {
+            color: var(--accent) !important;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
         @media (max-width: 1000px) {
-            .main-layout { grid-template-columns: 1fr; }
-            .article-img { height: 300px; }
+            .feature-block { grid-template-columns: 1fr; gap: 30px; }
             h1 { font-size: 2.5em; }
-            .sidebar { position: static; max-height: none; } /* En móviles quitamos el sticky */
+            .footer-grid { text-align: center; }
+            .footer-col a:hover { transform: none; }
         }
     </style>
 </head>
 <body>
+
+    <div class="floating-logo" onclick="window.scrollTo(0,0)" title="Volver arriba">
+        <img src="/img/tourai_logo.png" alt="Icono TourAI">
+    </div>
 
     <nav>
         <a href="index.html">La App</a>
@@ -218,6 +305,44 @@
             </script>
         </div>
     </footer>
+
+    <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 25px; border-radius: 15px; z-index: 9999; border: 1px solid var(--accent);">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+            <p style="margin: 0; font-size: 0.9em; flex: 1;">Utilizamos cookies propias y de terceros para mejorar tu experiencia. Al aceptar, consientes su uso. <a href="cookies.html" style="color: var(--accent);">Más info</a>.</p>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="rechazarCookies()" style="background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Rechazar</button>
+                <button onclick="aceptarCookies()" style="background: var(--accent); border: none; color: #0A2A43; padding: 10px 30px; border-radius: 8px; cursor: pointer; font-weight: bold;">Aceptar Todo</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const banner = document.getElementById('cookie-banner');
+        window.onload = function() {
+            if (!localStorage.getItem('cookies-aceptadas')) banner.style.display = 'block';
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        };
+        function aceptarCookies() {
+            localStorage.setItem('cookies-aceptadas', 'true');
+            if (typeof gtag === 'function') gtag('consent', 'update', { 'ad_storage': 'granted', 'analytics_storage': 'granted' });
+            banner.style.display = 'none';
+        }
+        function rechazarCookies() {
+            localStorage.setItem('cookies-aceptadas', 'false');
+            if (typeof gtag === 'function') gtag('consent', 'update', { 'ad_storage': 'denied', 'analytics_storage': 'denied' });
+            banner.style.display = 'none';
+        }
+        function openModal(p) { document.getElementById('platform').innerText = p; document.getElementById('subModal').style.display = "block"; }
+        function closeModal() { document.getElementById('subModal').style.display = "none"; }
+        function handleSubscription(e) {
+            e.preventDefault();
+            const email = document.getElementById('userEmail').value;
+            const platform = document.getElementById('platform').innerText;
+            window.location.href = "mailto:info@tourai.es?subject=Aviso Lanzamiento " + platform + "&body=Email: " + email;
+            closeModal();
+        }
+        window.onclick = function(event) { if (event.target == document.getElementById('subModal')) closeModal(); }
+    </script>
 
 </body>
 </html>
