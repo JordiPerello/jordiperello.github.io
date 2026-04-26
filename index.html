@@ -11,7 +11,6 @@
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-        
         if (localStorage.getItem('cookies-aceptadas') === 'true') {
             gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'wait_for_update': 500 });
         } else {
@@ -26,41 +25,12 @@
         :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
         
-        /* NAVEGACIÓN LIMPIA: Sin logo que desplace el menú */
-        nav { 
-            background-color: var(--secondary); 
-            padding: 20px 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
-        }
-        .nav-links { display: flex; align-items: center; }
+        nav { background-color: var(--secondary); padding: 20px 0; display: flex; justify-content: center; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; }
         nav a:hover { color: var(--accent); }
         nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; }
 
-        /* ICONO FLOTANTE: Alternativa estética en la esquina inferior */
-        .floating-logo {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: var(--white);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            z-index: 999;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            border: 2px solid var(--accent);
-        }
+        .floating-logo { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--white); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(0,0,0,0.2); z-index: 999; cursor: pointer; transition: transform 0.3s ease; border: 2px solid var(--accent); }
         .floating-logo img { width: 35px; height: auto; }
         .floating-logo:hover { transform: scale(1.1); }
 
@@ -68,109 +38,45 @@
         h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
         
         .ads-banner-container { width: 100%; height: 60px; background-color: #87CEEB; display: flex; justify-content: center; align-items: center; overflow: hidden; margin: 20px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
-        .content-wrapper { max-width: 1200px; margin: 0 auto; padding: 60px 20px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 30px; }
+        .content-wrapper { max-width: 1200px; margin: 30px auto; padding: 60px 20px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         
         h2 { color: var(--primary); border-left: 8px solid var(--accent); padding-left: 20px; margin: 60px 0 30px 0; font-size: 2.2em; background: #f9f9f9; padding: 10px 20px; }
         h3 { color: var(--secondary); font-size: 1.8em; margin-bottom: 15px; }
         
-        .feature-block { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 60px; }
+        .feature-block { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 80px; }
         .feature-block.reverse { direction: rtl; }
         .feature-block.reverse .text-content { direction: ltr; }
-        .app-img { width: 100%; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); height: 350px; object-fit: cover; }
+        .app-img { width: 100%; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); height: 400px; object-fit: cover; }
 
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 40px 0; }
-        .service-card { background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; }
-        .price-tag { color: var(--accent); font-weight: 800; font-size: 0.9em; text-transform: uppercase; display: block; margin-bottom: 10px; }
-        
-        .badge-future { background: #e3f2fd; color: #1976d2; padding: 4px 12px; border-radius: 20px; font-size: 0.75em; font-weight: bold; margin-left: 10px; vertical-align: middle; border: 1px solid #1976d2; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin: 40px 0; }
+        .service-card { background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
+        .service-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .price-tag { color: var(--accent); font-weight: 800; font-size: 0.85em; text-transform: uppercase; display: block; margin-bottom: 10px; }
+        .badge-future { background: #e3f2fd; color: #1976d2; padding: 2px 10px; border-radius: 10px; font-size: 0.7em; font-weight: bold; border: 1px solid #1976d2; }
 
         .download-zone { background: var(--white); padding: 80px 20px; text-align: center; border-top: 1px solid #ddd; margin-top: 60px; }
-        .badges-container { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-top: 30px; }
-        .badges-container img { height: 50px; cursor: pointer; transition: 0.3s; }
+        .badges-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+        .badges-container img { height: 45px; cursor: pointer; transition: 0.3s; }
 
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(10, 42, 67, 0.95); }
-        .modal-content { background-color: var(--white); margin: 10% auto; padding: 40px; border-radius: 25px; width: 90%; max-width: 500px; text-align: center; position: relative; }
-        .close { position: absolute; right: 25px; top: 20px; font-size: 30px; cursor: pointer; }
-        
-        
-        footer {
-            background-color: #051622;
-            color: #ffffff;
-            padding: 80px 20px 40px 20px;
-            margin-top: 100px;
-            border-top: 4px solid var(--accent);
-        }
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(10, 42, 67, 0.9); }
+        .modal-content { background-color: var(--white); margin: 10% auto; padding: 40px; border-radius: 15px; width: 90%; max-width: 450px; text-align: center; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .close { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; color: #999; }
+        .modal input { width: 100%; padding: 15px; margin: 20px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .modal button { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
 
-        .footer-grid {
-            max-width: 1200px;
-            margin: 0 auto 60px auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-        }
+        footer { background-color: #051622; color: #ffffff; padding: 60px 20px 40px; border-top: 4px solid var(--accent); text-align: center; }
+        .footer-grid { max-width: 1200px; margin: 40px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; }
+        .footer-col h4 { color: var(--accent); text-transform: uppercase; margin-bottom: 20px; font-size: 1em; }
+        .footer-col a { display: block; color: #ccc; text-decoration: none; margin-bottom: 10px; transition: 0.3s; }
+        .footer-col a:hover { color: #fff; transform: translateX(5px); }
+        .footer-col a.active { color: var(--accent); font-weight: bold; pointer-events: none; }
+        .legal-bottom { font-size: 0.9em; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
 
-        .footer-col h4 {
-            color: var(--accent);
-            font-size: 1.1em;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 25px;
-            font-weight: 800;
-        }
+        #cookie-banner { position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 20px; border-radius: 12px; z-index: 9999; border: 1px solid var(--accent); display: none; }
+        .cookie-btns { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
+        .cookie-btns button { padding: 8px 20px; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; }
 
-        .footer-col a {
-            display: block;
-            color: #ccc;
-            text-decoration: none;
-            margin-bottom: 12px;
-            font-size: 0.95em;
-            transition: all 0.3s ease;
-        }
-
-        .footer-col a:hover {
-            color: #fff;
-            transform: translateX(5px);
-        }
-
-        .footer-col a.active {
-            color: var(--accent);
-            font-weight: bold;
-            pointer-events: none;
-        }
-
-        .legal {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
-
-        .legal-disclaimer {
-            font-size: 0.85em;
-            color: #777;
-            line-height: 1.8;
-            max-width: 900px;
-            margin: 0 auto 30px auto;
-        }
-
-        .legal-bottom {
-            font-size: 0.9em;
-            color: #aaa;
-        }
-
-        .footer-email {
-            color: var(--accent) !important;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        @media (max-width: 1000px) {
-            .feature-block { grid-template-columns: 1fr; gap: 30px; }
-            h1 { font-size: 2.5em; }
-            .footer-grid { text-align: center; }
-            .footer-col a:hover { transform: none; }
-        }
+        @media (max-width: 1000px) { .feature-block { grid-template-columns: 1fr; gap: 30px; } h1 { font-size: 2.5em; } .footer-grid { text-align: center; } }
     </style>
 </head>
 <body>
@@ -180,13 +86,11 @@
     </div>
 
     <nav>
-        <div class="nav-links">
-            <a class="active">La App</a>
-            <a href="targets.html">Destinos 2026</a>
-            <a href="guides.html">Audioguías</a>
-            <a href="blog.html">Blog / Noticias</a>
-            <a href="contact.html">Contacto</a>
-        </div>
+        <a class="active">La App</a>
+        <a href="targets.html">Destinos 2026</a>
+        <a href="guides.html">Audioguías</a>
+        <a href="blog.html">Blog / Noticias</a>
+        <a href="contact.html">Contacto</a>
     </nav>
 
     <div class="ads-banner-container">
@@ -195,109 +99,74 @@
     </div>
 
     <header>
-        <h1>TourAI: La Definición del Turismo Inteligente</h1>
-        <p style="font-size: 1.4em; max-width: 900px; margin: 20px auto;">Tu guía turístico privado con Inteligencia Artificial. La experiencia de viaje más personalizada del mundo.</p>
+        <h1>TourAI: Turismo Inteligente</h1>
+        <p style="font-size: 1.3em; max-width: 800px; margin: 20px auto 0;">Tu guía turístico privado con IA. La experiencia de viaje más personalizada del mundo.</p>
     </header>
 
-    <div class="content-wrapper">
-        
+    <main class="content-wrapper">
         <section class="feature-block">
             <div class="text-content">
                 <h3>Tu Guía Turístico Privado</h3>
-                <p>TourAI no es solo una app, es como tener un <strong>guía turístico privado exclusivo para ti</strong>. Olvídate de los grupos masificados; disfruta de una guía turística 100% personalizada con IA que se adapta a tu ritmo y curiosidad.</p>
-                <ul>
-                    <li>Rutas totalmente personalizadas según tus gustos.</li>
-                    <li>Información detallada de monumentos y palacios que encuentres a tu paso.</li>
-                    <li>Posibilidad de ampliar cualquier dato en tiempo real.</li>
+                <p>TourAI no es solo una app, es como tener un <strong>experto local exclusivo</strong>. Olvídate de los grupos masificados y disfruta de rutas 100% adaptadas a tu ritmo y curiosidad.</p>
+                <ul style="padding-left: 20px;">
+                    <li>Rutas dinámicas según tus intereses personales.</li>
+                    <li>Historias detalladas de cada monumento que visites.</li>
+                    <li>Resolución de dudas históricas en tiempo real.</li>
                 </ul>
             </div>
-            <div class="image-content">
-                <img src="https://images.unsplash.com/photo-1517736996303-4eec4a66bb17?q=80&w=800" alt="Guía Privado" class="app-img">
-            </div>
+            <img src="https://images.unsplash.com/photo-1517736996303-4eec4a66bb17?q=80&w=800" alt="Guía Privado" class="app-img">
         </section>
 
         <section class="feature-block reverse">
             <div class="text-content">
                 <h3>Interactúa con el Entorno</h3>
                 <p>La comunicación es la clave. Con TourAI puedes:</p>
-                <ul>
-                    <li><strong>Chatear con la IA:</strong> Pregunta detalles específicos sobre lo que estás viendo.</li>
-                    <li><strong>Hablar con la IA:</strong> Realiza consultas por voz sobre cualquier necesidad que tengas durante tu viaje (restaurantes, transporte, historia).</li>
+                <ul style="padding-left: 20px;">
+                    <li><strong>Chat Inteligente:</strong> Pregunta detalles específicos sobre lo que ves.</li>
+                    <li><strong>Consultas por Voz:</strong> Busca restaurantes, transporte o datos históricos hablando naturalmente con la IA.</li>
                 </ul>
             </div>
-            <div class="image-content">
-                <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?q=80&w=800" alt="IA Chat" class="app-img">
-            </div>
+            <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?q=80&w=800" alt="IA Chat" class="app-img">
         </section>
 
-        <h2>Próximamente en TourAI <span class="badge-future">Futuras Versiones</span></h2>
+        <h2>Próximas Funcionalidades <span class="badge-future">Roadmap 2026</span></h2>
         <div class="services-grid">
             <div class="service-card">
                 <h4>Audioguías Globales</h4>
-                <p>Acceso a audioguías de cualquier rincón del mundo, actualizadas constantemente para garantizar la veracidad histórica.</p>
+                <p>Acceso a una red mundial de guías narrativas validadas por historiadores.</p>
             </div>
             <div class="service-card">
-                <h4>Comunidad y Rutas</h4>
-                <p>Genera tus propias rutas y publícalas. Valora y comenta las experiencias de otros usuarios para ayudar a la comunidad viajera.</p>
+                <h4>Comunidad de Rutas</h4>
+                <p>Crea tus propios itinerarios y compártelos con viajeros de todo el mundo.</p>
             </div>
             <div class="service-card">
-                <h4>Sincronización Colectiva</h4>
-                <p>Funcionalidad especial para grupos: disfruta de audioguías compartidas donde todos los miembros del grupo escuchan la explicación al mismo tiempo en sus propios dispositivos.</p>
+                <h4>Audio Compartido</h4>
+                <p>Sincroniza tu audioguía con tus acompañantes para escuchar lo mismo al unísono.</p>
             </div>
         </div>
 
         <h2>Soluciones a Medida</h2>
         <div class="services-grid">
             <div class="service-card">
-                <span class="price-tag">Turistas Individuales</span>
-                <h4>Viajeros de a pie</h4>
-                <p>La libertad total para explorar ciudades con un guía experto en el bolsillo.</p>
+                <span class="price-tag">Individual</span>
+                <h4>Viajeros Libres</h4>
+                <p>Libertad total para explorar la ciudad con un experto en el bolsillo.</p>
             </div>
             <div class="service-card">
-                <span class="price-tag">Agencias y Gru <small class="badge-future">Próximamente</small></span>
-                <h4>Gestión de Grupos</h4>
-                <p>Herramientas para agencias turísticas que desean ofrecer contenido exclusivo a sus clientes.</p>
+                <span class="price-tag">B2B <small class="badge-future">Próximamente</small></span>
+                <h4>Agencias Turísticas</h4>
+                <p>Herramientas de gestión para ofrecer contenido exclusivo a sus clientes.</p>
             </div>
             <div class="service-card">
-                <span class="price-tag">Entidades Oficiales <small class="badge-future">Próximamente</small></span>
-                <h4>Oficinas de Turismo</h4>
-                <p>Las Oficinas de Información podrán añadir y compartir su contenido personalizado directamente con los visitantes.</p>
-            </div>
-            <div class="service-card">
-                <span class="price-tag">Monumentos y Patrimonio <small class="badge-future">Próximamente</small></span>
-                <h4>Acceso por Código QR</h4>
-                <p>Iglesias y palacios podrán ofrecer sus propias audioguías mediante QR, permitiendo que el turista use su propio móvil sin alquilar dispositivos externos.</p>
+                <span class="price-tag">Patrimonio <small class="badge-future">Próximamente</small></span>
+                <h4>Acceso QR</h4>
+                <p>Digitalización de monumentos para consulta directa sin dispositivos externos.</p>
             </div>
         </div>
-
-        <h2>Paquetes de Visita Personalizados</h2>
-        <p>Elige el plan que mejor se adapte a tu escapada o estilo de vida:</p>
-        <div class="services-grid">
-            <div class="service-card" style="text-align: center;">
-                <span class="price-tag">Explorador</span>
-                <h4>Un día / Fin de Semana</h4>
-                <p>Ideal para escapadas rápidas y City Breaks.</p>
-            </div>
-            <div class="service-card" style="text-align: center; border: 2px solid var(--accent);">
-                <span class="price-tag">Viajero</span>
-                <h4>Mensual / Trimestral</h4>
-                <p>Para quienes disfrutan de viajes largos o nómadas digitales.</p>
-            </div>
-            <div class="service-card" style="text-align: center;">
-                <span class="price-tag">Residente</span>
-                <h4>Semestral / Anual</h4>
-                <p>Acceso ilimitado para los amantes de la cultura y la historia.</p>
-            </div>
-        </div>
-
-        <section style="margin-top: 40px; padding: 20px; background: #f0f8ff; border-radius: 10px; text-align: center;">
-            <p><strong>Y mucho más:</strong> Estamos trabajando en nuevas funcionalidades que se informarán en futuras actualizaciones.</p>
-        </section>
-
-    </div>
+    </main>
 
     <section class="download-zone">
-        <h2>Descarga TourAI App hoy mismo</h2>
+        <h2>Disponible próximamente en</h2>
         <div class="badges-container">
             <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" onclick="openModal('iOS')">
             <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" onclick="openModal('Android')">
@@ -308,89 +177,53 @@
     <div id="subModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h3>Reserva de Acceso Anticipado</h3>
-            <p>La versión para <strong id="platform"></strong> está en fase de despliegue. Déjanos tu email para avisarte.</p>
-            <form id="subscriptionForm" onsubmit="handleSubscription(event)">
-                <input type="email" id="userEmail" placeholder="Su correo electrónico" required style="width: 90%; padding: 12px; margin: 15px 0; border: 1px solid #ddd; border-radius: 5px;">
-                <button type="submit" style="background: var(--accent); color: var(--primary); border: none; padding: 15px 30px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 95%;">SOLICITAR AVISO</button>
+            <h3>Acceso Anticipado</h3>
+            <p>La versión para <strong id="platform"></strong> está en despliegue. Déjanos tu email para avisarte.</p>
+            <form onsubmit="handleSubscription(event)">
+                <input type="email" id="userEmail" placeholder="Tu email" required>
+                <button type="submit">SOLICITAR AVISO</button>
             </form>
         </div>
     </div>
 
-    <footer>
-        <div style="text-align: center; margin-bottom: 40px;">
-            <img src="img/tourai_logo.png" alt="TourAI Logo" style="height: 60px; opacity: 1;">
-        </div>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4>Explora</h4>
-                <a class="active">La App</a>
-                <a href="targets.html">Destinos 2026</a>
-                <a href="guides.html">Audioguías</a>
-                <a href="blog.html">Blog / Noticias</a>
-            </div>
-            <div class="footer-col">
-                <h4>Legal</h4>
-                <a href="privacy.html">Privacidad</a>
-                <a href="terms.html">Términos</a>
-                <a href="cookies.html">Cookies</a>
-            </div>
-            <div class="footer-col">
-                <h4>Ayuda</h4>
-                <a href="contact.html">Contacto</a>
-                <a href="faq.html">Preguntas Frecuentes</a>
-            </div>
-        </div>
-        <div class="legal">
-            <div class="legal-disclaimer">
-                <strong>Nota legal:</strong> La información de TourAI es orientativa. El uso implica la aceptación de cookies publicitarias y de análisis.
-            </div>
-            <div class="legal-bottom">
-                &copy; <span id="current-year"></span> <strong>TourAI App</strong> - <a href="mailto:info@tourai.es" class="footer-email" style="color:var(--accent)">info@tourai.es</a> - Todos los derechos reservados.
-            </div>
-        </div>
-
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
-    </footer>
-
-    <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 25px; border-radius: 15px; z-index: 9999; border: 1px solid var(--accent);">
-        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
-            <p style="margin: 0; font-size: 0.9em; flex: 1;">Utilizamos cookies propias y de terceros para mejorar tu experiencia. Al aceptar, consientes su uso. <a href="cookies.html" style="color: var(--accent);">Más info</a>.</p>
-            <div style="display: flex; gap: 10px;">
-                <button onclick="rechazarCookies()" style="background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Rechazar</button>
-                <button onclick="aceptarCookies()" style="background: var(--accent); border: none; color: #0A2A43; padding: 10px 30px; border-radius: 8px; cursor: pointer; font-weight: bold;">Aceptar Todo</button>
-            </div>
+    <div id="cookie-banner">
+        <p style="margin:0; font-size:0.9em; text-align:center;">Usamos cookies para mejorar tu experiencia. <a href="cookies.html" style="color:var(--accent);">Saber más</a>.</p>
+        <div class="cookie-btns">
+            <button onclick="rechazarCookies()" style="background:#444; color:white;">Rechazar</button>
+            <button onclick="aceptarCookies()" style="background:var(--accent); color:var(--primary);">Aceptar</button>
         </div>
     </div>
 
+    <footer>
+        <img src="img/tourai_logo.png" alt="Logo" style="height:50px; margin-bottom:30px;">
+        <div class="footer-grid">
+            <div class="footer-col"><h4>Explora</h4><a class="active">La App</a><a href="targets.html">Destinos</a><a href="guides.html">Audioguías</a></div>
+            <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacidad</a><a href="terms.html">Términos</a><a href="cookies.html">Cookies</a></div>
+            <div class="footer-col"><h4>Ayuda</h4><a href="contact.html">Contacto</a><a href="faq.html">FAQ</a></div>
+        </div>
+        <div class="legal-bottom">
+            &copy; <span id="current-year"></span> <strong>TourAI App</strong> - <a href="mailto:info@tourai.es" style="color:var(--accent); text-decoration:none;">info@tourai.es</a>
+        </div>
+    </footer>
+
     <script>
         const banner = document.getElementById('cookie-banner');
-        window.onload = function() {
+        window.onload = () => {
             if (!localStorage.getItem('cookies-aceptadas')) banner.style.display = 'block';
             document.getElementById('current-year').textContent = new Date().getFullYear();
         };
-        function aceptarCookies() {
-            localStorage.setItem('cookies-aceptadas', 'true');
-            if (typeof gtag === 'function') gtag('consent', 'update', { 'ad_storage': 'granted', 'analytics_storage': 'granted' });
-            banner.style.display = 'none';
-        }
-        function rechazarCookies() {
-            localStorage.setItem('cookies-aceptadas', 'false');
-            if (typeof gtag === 'function') gtag('consent', 'update', { 'ad_storage': 'denied', 'analytics_storage': 'denied' });
-            banner.style.display = 'none';
-        }
+        function aceptarCookies() { localStorage.setItem('cookies-aceptadas', 'true'); banner.style.display = 'none'; }
+        function rechazarCookies() { localStorage.setItem('cookies-aceptadas', 'false'); banner.style.display = 'none'; }
         function openModal(p) { document.getElementById('platform').innerText = p; document.getElementById('subModal').style.display = "block"; }
         function closeModal() { document.getElementById('subModal').style.display = "none"; }
         function handleSubscription(e) {
             e.preventDefault();
             const email = document.getElementById('userEmail').value;
             const platform = document.getElementById('platform').innerText;
-            window.location.href = "mailto:info@tourai.es?subject=Aviso Lanzamiento " + platform + "&body=Email: " + email;
+            window.location.href = `mailto:info@tourai.es?subject=Lanzamiento ${platform}&body=Email: ${email}`;
             closeModal();
         }
-        window.onclick = function(event) { if (event.target == document.getElementById('subModal')) closeModal(); }
+        window.onclick = (e) => { if (e.target.className == 'modal') closeModal(); }
     </script>
 </body>
 </html>
