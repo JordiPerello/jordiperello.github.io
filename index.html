@@ -8,59 +8,83 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
 
     <style>
+        /* CSS UNIFICADO BASADO EN MODELO BLOG */
+        html { scroll-behavior: smooth; }
         :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
         
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
         
-        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 100px 0; text-align: center; border-bottom: 5px solid var(--accent); }
+        /* HEADER UNIFICADO */
+        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid var(--accent); }
+        h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
+        
+        /* NAV UNIFICADO */
         nav { background-color: var(--secondary); padding: 18px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 1.1em; text-transform: uppercase; }
         nav a:hover { color: var(--accent); border-bottom: 2px solid var(--accent); }
+        nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; opacity: 0.9; }
 
-        .content-wrapper { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
+        /* ADSENSE BANNER UNIFICADO */
+        .ads-banner-container { width: 100%; height: 60px; background-color: #87CEEB; display: flex; justify-content: center; align-items: center; overflow: hidden; margin: 20px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
 
-        h1 { margin: 0; font-size: 4em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
-        h2 { color: var(--primary); border-left: 8px solid var(--accent); padding-left: 20px; margin: 80px 0 40px 0; font-size: 2.8em; background: #f9f9f9; padding-top: 15px; padding-bottom: 15px; }
+        /* LAYOUT ESPECÍFICO DE ESTA PÁGINA */
+        .content-wrapper { max-width: 1200px; margin: 0 auto; padding: 60px 20px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 30px; }
+        h2 { color: var(--primary); border-left: 8px solid var(--accent); padding-left: 20px; margin: 60px 0 30px 0; font-size: 2.5em; background: #f9f9f9; padding-top: 10px; padding-bottom: 10px; }
         
-        .feature-block { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 120px; }
+        .feature-block { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 80px; }
         .feature-block.reverse { direction: rtl; }
         .feature-block.reverse .text-content { direction: ltr; }
         
         .text-content h3 { font-size: 2.2em; color: var(--secondary); margin-bottom: 20px; border-left: 5px solid var(--accent); padding-left: 15px; line-height: 1.2; }
-        .text-content p { font-size: 1.15em; color: #444; }
+        .app-img { width: 100%; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 1px solid #eee; height: 400px; object-fit: cover; }
         .badge-future { display: inline-block; background: #e0e0e0; color: #666; font-size: 0.7em; padding: 2px 10px; border-radius: 5px; vertical-align: middle; margin-left: 10px; font-weight: bold; text-transform: uppercase; }
 
-        .app-img { width: 100%; border-radius: 30px; box-shadow: 0 25px 60px rgba(0,0,0,0.15); border: 1px solid #eee; transition: 0.5s; object-fit: cover; height: 400px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 40px 0; }
+        .service-card { background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; text-align: center; }
+        .price-tag { color: var(--accent); font-weight: 800; font-size: 1.1em; text-transform: uppercase; display: block; margin-bottom: 5px; }
 
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin: 40px 0; }
-        .service-card { background: var(--white); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee; text-align: center; display: flex; flex-direction: column; justify-content: center; }
-        .service-card h4 { color: var(--primary); font-size: 1.4em; margin-bottom: 10px; }
-        .price-tag { color: var(--accent); font-weight: 800; font-size: 1.1em; text-transform: uppercase; display: block; margin-bottom: 10px; }
-
+        /* MODAL Y DOWNLOAD ZONE */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(10, 42, 67, 0.95); }
         .modal-content { background-color: var(--white); margin: 10% auto; padding: 40px; border-radius: 25px; width: 90%; max-width: 500px; text-align: center; position: relative; }
         .close { position: absolute; right: 25px; top: 20px; font-size: 30px; cursor: pointer; color: var(--primary); }
-        .modal input[type="email"] { width: 100%; padding: 15px; margin: 20px 0; border: 2px solid #ddd; border-radius: 10px; }
-        .modal button { background: var(--accent); color: var(--primary); border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 1px; }
+        .modal input[type="email"] { width: 90%; padding: 12px; margin: 15px 0; border: 2px solid #ddd; border-radius: 5px; }
+        .modal button { background: var(--accent); color: var(--primary); border: none; padding: 15px 30px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 95%; text-transform: uppercase; }
 
-        .download-zone { background: var(--white); padding: 80px 20px; text-align: center; border-top: 1px solid #ddd; }
+        .download-zone { background: var(--white); padding: 80px 20px; text-align: center; border-top: 1px solid #ddd; margin-top: 60px; }
         .badges-container { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-top: 30px; }
-        .badges-container img { height: 60px; cursor: pointer; transition: transform 0.3s ease; }
+        .badges-container img { height: 50px; cursor: pointer; transition: 0.3s; }
         .badges-container img:hover { transform: scale(1.05); }
 
-        footer { background-color: var(--primary); color: #ccc; text-align: center; padding: 60px 0; }
+        /* FOOTER UNIFICADO */
+        footer { background-color: var(--primary); color: #ccc; text-align: center; padding: 80px 0; margin-top: 100px; }
         footer a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
+        footer .legal { font-size: 0.85em; margin-top: 30px; line-height: 2; max-width: 800px; margin-left: auto; margin-right: auto; }
+
+        @media (max-width: 1000px) {
+            .feature-block { grid-template-columns: 1fr; gap: 30px; }
+            h1 { font-size: 2.5em; }
+        }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html">La App</a>
-        <a href="destinos.html">Destinos 2026</a>
-        <a href="guias.html">Guías IA</a>
-        <a href="privacy.html">Privacidad</a>
-        <a href="contacto.html">Contacto</a>
+        <a class="active">La App</a>
+        <a href="targets.html">Destinos 2026</a>
+        <a href="guides.html">Guías IA</a>
+        <a href="blog.html">Blog / Noticias</a>
+        <a href="privacy.html">Política de Privacidad</a>
+        <a href="terms.html">Términos y Condiciones</a>
+        <a href="contact.html">Contacto</a>
     </nav>
+
+    <div class="ads-banner-container">
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:728px;height:60px"
+             data-ad-client="ca-pub-8251840058544269"
+             data-ad-slot="2107333980"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
 
     <header>
         <h1>TourAI: La Definición del Turismo Inteligente</h1>
@@ -183,12 +207,25 @@
     </div>
 
     <footer>
-        <p><strong>TourAI 2026 - Inteligencia Aplicada al Viajero</strong></p>
-        <p>
-            <a href="index.html">Inicio</a> | 
-            <a href="privacy.html">Privacidad</a> | 
-            <a href="contacto.html">Contacto</a>
+        <p><strong>TourAI App</strong> - La autoridad mundial en información de viajes inteligente.</p>
+        <p>Barcelona, España.</p>
+
+        <p style="margin-top: 30px;">
+            <a class="active">La App</a> | 
+            <a href="targets.html">Destinos 2026</a> |
+            <a href="guides.html">Guías IA</a> |
+            <a href="blog.html">Blog / Noticias</a> | 
+            <a href="privacy.html">Política de Privacidad</a> | 
+            <a href="terms.html">Términos y Condiciones</a> | 
+            <a href="contact.html">Contacto</a>
         </p>
+        <div class="legal">
+            <p>Advertencia Legal: Todo el contenido de este sitio ha sido verificado por expertos humanos y sistemas de análisis de datos. TourAI no se hace responsable de cambios de última hora en normativas gubernamentales. El uso de este sitio web implica la aceptación de nuestras políticas de cookies para personalización publicitaria a través de Google AdSense.</p>
+            <p>&copy; <span id="current-year"></span> <a href="mailto:info@tourai.es" style="color: white; text-decoration: none;">info@tourai.es</a> - Todos los derechos reservados.</p>
+            <script>
+                document.getElementById('current-year').textContent = new Date().getFullYear();
+            </script>
+        </div>
     </footer>
 
     <script>
@@ -199,16 +236,13 @@
         function closeModal() {
             document.getElementById('subModal').style.display = "none";
         }
-        
         function handleSubscription(e) {
             e.preventDefault();
             const email = document.getElementById('userEmail').value;
             const platform = document.getElementById('platform').innerText;
             const subject = encodeURIComponent("Solicitud de Lanzamiento TourAI - " + platform);
             const body = encodeURIComponent("Deseo recibir aviso para la plataforma: " + platform + "\nEmail del usuario: " + email);
-            
             window.location.href = "mailto:info@tourai.es?subject=" + subject + "&body=" + body;
-            
             closeModal();
         }
     </script>
