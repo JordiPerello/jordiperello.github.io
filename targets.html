@@ -3,84 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Destinos Globales 2026 - TourAI</title>
+    <title>Destinos 2026 - TourAI</title>
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
 
     <style>
-        /* ESTILOS HEREDADOS DEL MODELO CORPORATIVO */
+        /* ESTILOS UNIFICADOS TOURAI 2026 */
         html { scroll-behavior: smooth; }
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f4f7f9; line-height: 1.8; }
+        :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
         
-        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid #4db8ff; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
         
-        nav { background-color: #0d3b5e; padding: 18px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        /* HEADER CORPORATIVO */
+        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid var(--accent); }
+        h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
+        
+        /* NAVEGACIÓN */
+        nav { background-color: var(--secondary); padding: 18px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 1.1em; text-transform: uppercase; }
-        nav a:hover { color: #4db8ff; border-bottom: 2px solid #4db8ff; }
-        
-        .ads-banner-container {
-            width: 100%;
-            height: 60px;
-            background-color: #87CEEB;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            margin: 20px 0;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-        }
+        nav a:hover { color: var(--accent); border-bottom: 2px solid var(--accent); }
+        nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; opacity: 0.9; }
 
+        /* ADS BANNER */
+        .ads-banner-container { width: 100%; height: 60px; background-color: #87CEEB; display: flex; justify-content: center; align-items: center; overflow: hidden; margin: 20px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
+
+        /* LAYOUT PRINCIPAL */
         .main-layout { max-width: 1300px; margin: 30px auto; display: grid; grid-template-columns: 2.8fr 1.2fr; gap: 40px; padding: 0 20px; }
         .container { background-color: white; padding: 50px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         
-        .sidebar { 
-            background-color: white; 
-            padding: 30px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
-            height: fit-content; 
-            position: sticky; 
-            top: 100px;
-            max-height: calc(100vh - 120px);
-            overflow-y: auto;
-        }
+        .sidebar { background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 100px; }
         
-        h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
-        h2 { color: #0A2A43; border-left: 8px solid #4db8ff; padding-left: 20px; margin: 0 0 30px 0; font-size: 2.5em; background: #f9f9f9; padding-top: 10px; padding-bottom: 10px; }
-        h3 { color: #0d3b5e; margin-top: 0; font-size: 1.6em; font-weight: 700; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+        h2 { color: var(--primary); border-left: 8px solid var(--accent); padding-left: 20px; margin: 0 0 30px 0; font-size: 2.5em; background: #f9f9f9; padding-top: 10px; padding-bottom: 10px; }
+        h3 { color: var(--secondary); margin-top: 0; font-size: 1.6em; font-weight: 700; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
         
-        /* GRID DE DESTINOS ADAPTADO */
-        .grid-destinos { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 25px; 
-            margin-top: 30px;
-        }
+        /* GRID DE DESTINOS */
+        .grid-destinos { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 30px; }
         .destino-card { 
-            background: #fff;
-            border: 1px solid #eef2f5; 
-            padding: 25px; 
-            border-radius: 12px; 
-            transition: 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            background: #fff; border: 1px solid #eef2f5; padding: 25px; border-radius: 12px; transition: 0.3s; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02); 
         }
-        .destino-card:hover { 
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            border-color: #4db8ff;
-        }
-        .destino-card p { font-size: 1.1em; color: #555; margin: 0; }
+        .destino-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-color: var(--accent); }
+        .destino-card p { font-size: 1.05em; color: #555; margin: 0; }
 
+        /* SIDEBAR ITEMS */
         .trending-item { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee; display: flex; flex-direction: column; }
-        .trending-item span { color: #4db8ff; font-size: 0.8em; font-weight: bold; }
+        .trending-item span { color: var(--accent); font-size: 0.8em; font-weight: bold; }
         .trending-item a { text-decoration: none; color: #333; font-weight: 700; font-size: 1.1em; line-height: 1.3; }
 
-        .newsletter-box { background: #0A2A43; color: white; padding: 30px; border-radius: 12px; margin-top: 40px; text-align: center; }
-        .newsletter-box input { width: 90%; padding: 12px; margin: 15px 0; border-radius: 5px; border: none; }
+        /* NEWSLETTER BOX */
+        .newsletter-box { background: var(--primary); color: white; padding: 30px; border-radius: 12px; margin-top: 40px; text-align: center; }
+        .newsletter-box input { 
+            width: 100%; padding: 12px; margin: 15px 0; border-radius: 8px; border: none; 
+            box-sizing: border-box; font-size: 1em;
+        }
+        .newsletter-btn { 
+            background: var(--accent); color: var(--primary); border: none; padding: 15px; 
+            border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s;
+        }
+        .newsletter-btn:hover { background: #fff; transform: scale(1.02); }
         
-        footer { background-color: #0A2A43; color: #ccc; text-align: center; padding: 80px 0; margin-top: 100px; }
-        footer a { color: white; text-decoration: none; margin: 0 20px; font-weight: bold; }
-        footer .legal { font-size: 0.85em; margin-top: 30px; line-height: 2; max-width: 800px; margin-left: auto; margin-right: auto; }
+        /* FOOTER CORPORATIVO */
+        footer { background-color: var(--primary); color: #ccc; text-align: center; padding: 80px 0; margin-top: 100px; }
+        footer a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
+        footer .legal { font-size: 0.85em; margin-top: 30px; line-height: 2; max-width: 800px; margin-left: auto; margin-right: auto; padding: 0 20px; }
 
         @media (max-width: 1000px) {
             .main-layout { grid-template-columns: 1fr; }
@@ -94,9 +79,9 @@
 
     <nav>
         <a href="index.html">La App</a>
-        <a href="destinos.html">Destinos 2026</a>
+        <a class="active">Destinos 2026</a>
         <a href="guias.html">Guías IA</a>
-        <a>Blog / Noticias</a>
+        <a href="blog.html">Blog / Noticias</a>
         <a href="privacy.html">Privacidad</a>
         <a href="contacto.html">Contacto</a>
     </nav>
@@ -111,36 +96,36 @@
 
     <header>
         <h1>Explora el Mundo en 2026</h1>
-        <p>Destinos seleccionados por inteligencia de datos para el viajero consciente y tecnológico.</p>
+        <p>Destinos seleccionados por inteligencia de datos para el viajero consciente.</p>
     </header>
 
     <div class="main-layout">
         <main class="container">
             <h2>Catálogo de Destinos Inteligentes</h2>
-            <p style="font-size: 1.2em; color: #666; margin-bottom: 40px;">Nuestra IA ha seleccionado los siguientes destinos basándose en sostenibilidad, seguridad y relación calidad-precio para este trimestre.</p>
+            <p style="font-size: 1.2em; color: #666; margin-bottom: 40px;">Nuestra IA ha seleccionado estos enclaves basándose en sostenibilidad, seguridad y flujos de turismo en tiempo real.</p>
             
             <div class="grid-destinos">
                 <div class="destino-card">
                     <h3>Kyoto, Japón</h3>
-                    <p>La ciudad de los mil templos ha implementado rutas de realidad aumentada. Ideal para viajes culturales en primavera. Recomendamos visitar el barrio de Gion entre las 6:00 y las 8:00 AM.</p>
+                    <p>La ciudad de los mil templos. Ideal para viajes culturales en primavera. Recomendamos utilizar la guía RA de TourAI para evitar aglomeraciones en Gion.</p>
                 </div>
                 <div class="destino-card">
                     <h3>Reikiavik, Islandia</h3>
-                    <p>El destino número uno para ver auroras boreales con predicción cuántica. Disfrute de las aguas termales de Blue Lagoon con reservas gestionadas por TourAI.</p>
+                    <p>Predicción de auroras boreales mediante computación cuántica. Disfrute de experiencias geotérmicas con huella de carbono neutral.</p>
                 </div>
                 <div class="destino-card">
                     <h3>Cusco, Perú</h3>
-                    <p>Machu Picchu estrena su nuevo sistema de acceso biométrico. Una joya arqueológica que ahora es más accesible y sostenible que nunca.</p>
+                    <p>Machu Picchu estrena acceso biométrico. Una joya arqueológica que ahora es más accesible y sostenible que nunca gracias a la gestión de datos.</p>
                 </div>
                 <div class="destino-card">
                     <h3>Lagos, Portugal</h3>
-                    <p>El hub favorito de los nómadas digitales en Europa. Playas de ensueño y una conectividad 6G líder en el continente.</p>
+                    <p>El hub favorito de los nómadas digitales en 2026. Playas de ensueño con conectividad 6G de alta velocidad en todo el litoral.</p>
                 </div>
             </div>
 
             <div style="margin-top: 50px; padding: 40px; background: #f8f9fa; border-radius: 15px; border: 1px solid #eee;">
-                <h3 style="color: #0A2A43; border: none; font-size: 1.8em;">Análisis de Tendencias por Continente</h3>
-                <p>En Europa, el enfoque es el turismo ferroviario de alta velocidad. En Asia, la digitalización total de los pagos. En América, la recuperación de los parques nacionales mediante cupos inteligentes.</p>
+                <h3 style="color: var(--primary); border: none; font-size: 1.8em;">Análisis de Tendencias por Continente</h3>
+                <p>En 2026, Europa lidera el turismo ferroviario de ultra-alta velocidad. Asia se consolida como líder en digitalización total, mientras que América destaca por la gestión inteligente de sus parques nacionales.</p>
             </div>
         </main>
 
@@ -149,19 +134,19 @@
             
             <div class="trending-item">
                 <span>TIEMPO REAL</span>
-                <a href="#">🇯🇵 Japón flexibiliza visados tecnológicos.</a>
+                <a href="#">🇯🇵 Japón flexibiliza visados para talentos tecnológicos.</a>
             </div>
             <div class="trending-item">
                 <span>ALERTA</span>
-                <a href="#">🇮🇸 Islandia: Nueva actividad geotérmica en Grindavík.</a>
+                <a href="#">🇮🇸 Islandia: Nueva actividad geotérmica monitorizada en Grindavík.</a>
             </div>
             <div class="trending-item">
                 <span>TENDENCIA</span>
-                <a href="#">🇵🇹 Algarve lidera reservas para nómadas.</a>
+                <a href="#">🇵🇹 Algarve lidera reservas para nómadas digitales.</a>
             </div>
 
-            <div style="margin-top: 50px; background: #e3f2fd; padding: 25px; border-radius: 10px; text-align: center; border: 1px solid #4db8ff;">
-                <p style="font-size: 12px; color: #0A2A43; font-weight: bold;">OFERTAS DE VUELO IA</p>
+            <div style="margin-top: 50px; background: #e3f2fd; padding: 25px; border-radius: 10px; text-align: center; border: 1px solid var(--accent);">
+                <p style="font-size: 11px; color: var(--primary); font-weight: bold; margin-bottom: 10px;">OFERTAS DE VUELO IA</p>
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-8251840058544269"
@@ -172,29 +157,31 @@
             </div>
 
             <div class="newsletter-box">
-                <h4>Alertas de Destinos</h4>
-                <p>Sé el primero en saber cuándo bajan los precios a estos destinos.</p>
+                <h4 style="margin:0;">Alertas de Destinos</h4>
+                <p style="font-size: 0.9em; margin: 10px 0;">Sé el primero en saber cuándo bajan los precios a estos destinos.</p>
                 <input type="email" placeholder="tu@email.com">
-                <button style="background: #4db8ff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 90%;">ACTIVAR ALERTAS</button>
+                <button class="newsletter-btn">ACTIVAR ALERTAS</button>
             </div>
         </aside>
     </div>
 
     <footer>
         <p><strong>TourAI Media Group</strong> - La autoridad mundial en información de viajes inteligente.</p>
-        <p>Calle Ficticia 123, Hub Tecnológico, Barcelona, España.</p>
+        <p>Barcelona, España.</p>
         <p style="margin-top: 30px;">
             <a href="index.html">Inicio</a> | 
-            <a href="privacy.html">Política de Privacidad</a> | 
-            <a href="https://es.wikipedia.org/wiki/T%C3%A9rminos_de_servicio" target="_blank">Términos y Condiciones</a> | 
-            <a href="destinos.html">Mapa del Sitio</a> | 
+            <a href="privacy.html">Privacidad</a> | 
+            <a href="https://es.wikipedia.org/wiki/T%C3%A9rminos_de_servicio" target="_blank">Términos</a> | 
+            <a class="active">Mapa del Sitio</a> | 
             <a href="contacto.html">Contacto</a>
         </p>
         <div class="legal">
-            <p>Advertencia Legal: Todo el contenido de este sitio ha sido verificado por expertos humanos y sistemas de análisis de datos. TourAI no se hace responsable de cambios de última hora en normativas gubernamentales. El uso de este sitio web implica la aceptación de nuestras políticas de cookies.</p>
-            <p>&copy; 2026 jordiperello.github.io - Todos los derechos reservados.</p>
+            <p>&copy; <span id="year"></span> jordiperello.github.io - Todos los derechos reservados.</p>
         </div>
     </footer>
 
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
