@@ -28,7 +28,7 @@
         
         /* Ajuste de Nav para Logo y Menu */
         nav { 
-            background-color: var(--secondary); 
+            background-color: white;
             padding: 10px 40px; 
             display: flex; 
             justify-content: space-between; 
@@ -41,7 +41,7 @@
         .nav-logo-container { width: 50px; height: 50px; flex-shrink: 0; }
         .nav-logo-container img { width: 50px; height: 50px; object-fit: contain; }
         .nav-links { display: flex; align-items: center; justify-content: center; flex-grow: 1; }
-        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; }
+        nav a { color: var(--primary); margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; }
         nav a:hover { color: var(--accent); }
         nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; }
 
@@ -91,7 +91,7 @@
 
      <nav>
         <div class="nav-logo-container">
-            <img src="img/tourai_logo.png" alt="TourAI Logo">
+            <img src="img/tourai_logo_inline.png" alt="TourAI Logo">
         </div>
         <div class="nav-links">
             <a href="index.html">La App</a>
