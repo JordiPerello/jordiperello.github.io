@@ -25,10 +25,12 @@
         #cookie-banner { position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 20px; border-radius: 12px; z-index: 9999; border: 1px solid var(--accent); display: none; }
         .cookie-btns { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
         .cookie-btns button { padding: 8px 20px; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; }
-        
-        nav { background-color: var(--secondary); padding: 20px 0; display: flex; justify-content: center; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .nav-links { display: flex; align-items: center; }
-        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; }
+          
+        nav { background-color: #fff; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px #0000004d }
+        .nav-logo-container { width: 150px; height: 50px; flex-shrink: 0; }
+        .nav-logo-container img { width: 150px; height: 50px; object-fit: contain; }
+        .nav-links { display: flex; align-items: center; justify-content: center; flex-grow: 1; }
+        nav a { color: var(--primary); margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; }
         nav a:hover { color: var(--accent); }
         nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; }
 
@@ -76,11 +78,16 @@
     </div>
 
     <nav>
-        <a href="index.html">La App</a>
-        <a href="targets.html">Destinos 2026</a>
-        <a href="guides.html">Audioguías</a>
-        <a href="blog.html">Blog / Noticias</a>
-        <a href="contact.html">Contacto</a>
+        <div class="nav-logo-container">
+            <img src="img/tourai_logo_inline.png" alt="TourAI Logo">
+        </div>
+        <div class="nav-links">
+            <a href="index.html">La App</a>
+            <a href="targets.html">Destinos 2026</a>
+            <a href="guides.html">Audioguías</a>
+            <a href="blog.html">Blog / Noticias</a>
+            <a href="contact.html">Contacto</a>
+        </div>
     </nav>
 
     <div class="ads-banner-container">
