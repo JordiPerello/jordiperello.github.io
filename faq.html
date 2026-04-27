@@ -193,7 +193,7 @@
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const isEmailValid = emailPattern.test(email);
 
-            btn.disabled = !(isEmailValid && consent);
+            btn.disabled = !(isEmailValid && privacy);
         }
 
         function openModal(p) { 
