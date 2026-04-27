@@ -66,6 +66,9 @@
         .footer-email { color: var(--accent) !important; text-decoration: none; font-weight: bold; }
 
         @media (max-width: 1000px) { .main-layout { grid-template-columns: 1fr; } h1 { font-size: 2.5em; } .sidebar { position: static; } .footer-grid { text-align: center; } }
+
+        /* Estilos específicos para los links de la respuesta */
+        .faq-answer a.platform-link { color: var(--accent); font-weight: bold; text-decoration: underline; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -97,8 +100,14 @@
         <div class="faq-item">
             <div class="faq-question">¿Cuándo estará disponible la aplicación para descarga?</div>
             <div class="faq-answer">
-                <p>Nuestro equipo de ingeniería está finalizando los protocolos de despliegue. La publicación en <strong>iOS, Android y Windows</strong> es inminente.</p>
-                <p>Para ser el primero en probarla, suscríbete a nuestra alerta preferente enviando un correo a <a href="mailto:info@tourai.es?subject=Suscripción%20Alerta%20Lanzamiento" style="color: var(--accent); font-weight: bold;">info@tourai.es</a>. Recibirás un aviso automático en cuanto sea liberada globalmente.</p>
+                <p>Nuestro equipo de ingeniería está finalizando los protocolos de despliegue. La publicación en tiendas oficiales es inminente.</p>
+                <p>Para recibir una <strong>notificación automática</strong> en el mismo instante en que la app sea publicada y esté lista para descarga e instalación, por favor activa tu alerta preferente seleccionando tu plataforma:</p>
+                <p style="text-align: center; font-size: 1.2em;">
+                    <a class="platform-link" onclick="openModal('iOS')">Suscripción iOS</a> | 
+                    <a class="platform-link" onclick="openModal('Android')">Suscripción Android</a> | 
+                    <a class="platform-link" onclick="openModal('Windows')">Suscripción Windows</a>
+                </p>
+                <p>Al introducir tu email en la plataforma elegida, quedarás registrado en nuestro sistema de acceso anticipado.</p>
             </div>
         </div>
     </main>
