@@ -101,13 +101,13 @@
             
             <form id="contactForm">
                 <label>Nombre Completo</label>
-                <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required>
+                <input type="text" id="name" placeholder="Ej: Juan Pérez" required>
                 
                 <label>Correo Electrónico</label>
                 <input type="email" id="email" placeholder="tu@email.com" required>
                 
                 <label>Mensaje</label>
-                <textarea id="mensaje" placeholder="¿En qué podemos ayudarte?..." rows="6" required></textarea>
+                <textarea id="message" placeholder="¿En qué podemos ayudarte?..." rows="6" required></textarea>
                 
                 <button type="button" onclick="enviarMailto()">ENVIAR CONSULTA AL EQUIPO TÉCNICO</button>
             </form>
@@ -167,11 +167,11 @@
 
     <script>
         async function enviarMailto() {
-            const nombre = document.getElementById('nombre').value;
+            const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            const mensaje = document.getElementById('mensaje').value;
+            const message = document.getElementById('message').value;
 
-            if(!nombre || !email || !mensaje) { 
+            if(!name || !email || !message) { 
                 alert("Por favor, rellena todos los campos."); 
                 return; 
             }
@@ -189,9 +189,9 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        nombre: nombre,
+                        name: name,
                         email: email,
-                        mensaje: mensaje
+                        message: message
                     })
                 });
 
