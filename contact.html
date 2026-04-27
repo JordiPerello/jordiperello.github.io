@@ -183,7 +183,7 @@
                 button.disabled = true;
                 button.textContent = "ENVIANDO...";
 
-                const response = await fetch('https://tu-endpoint-aqui.com/api/contacto', {
+                const response = await fetch('https://us-central1-tourai-1f3d9.cloudfunctions.net/sendContactForm', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
