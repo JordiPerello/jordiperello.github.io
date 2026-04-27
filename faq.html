@@ -49,11 +49,14 @@
         .badges-container img:hover { transform: translateY(-3px); }
 
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(10, 42, 67, 0.9); }
-        .modal-content { background-color: var(--white); margin: 10% auto; padding: 40px; border-radius: 15px; width: 90%; max-width: 450px; text-align: center; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .modal-content { background-color: var(--white); margin: 5% auto; padding: 40px; border-radius: 15px; width: 90%; max-width: 450px; text-align: center; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; }
         .close { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; color: #999; }
-        .modal input { width: 100%; padding: 15px; margin: 20px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .modal input[type="email"] { width: 100%; padding: 15px; margin: 20px 0 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
         .modal button { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; }
         .modal button:hover { background: var(--accent); }
+        
+        /* Estilo para botón deshabilitado */
+        .modal button:disabled { background: #ccc; cursor: not-allowed; opacity: 0.7; }
 
         footer { background-color: #051622; color: #ffffff; padding: 80px 20px 40px 20px; margin-top: 100px; border-top: 4px solid var(--accent); text-align: center; }
         .footer-grid { max-width: 1200px; margin: 0 auto 60px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; }
@@ -67,8 +70,12 @@
 
         @media (max-width: 1000px) { .main-layout { grid-template-columns: 1fr; } h1 { font-size: 2.5em; } .sidebar { position: static; } .footer-grid { text-align: center; } }
 
-        /* Estilos específicos para los links de la respuesta */
         .faq-answer a.platform-link { color: var(--accent); font-weight: bold; text-decoration: underline; cursor: pointer; }
+
+        .consent-container { text-align: left; font-size: 0.85em; margin-bottom: 20px; color: #666; }
+        .consent-container input { margin-right: 8px; }
+        .terms-box { display: none; background: #f9f9f9; border: 1px solid #eee; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: left; font-size: 0.8em; max-height: 150px; overflow-y: scroll; }
+        .toggle-terms { color: var(--accent); text-decoration: underline; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -126,9 +133,22 @@
             <span class="close" onclick="closeModal()">&times;</span>
             <h3 style="color: var(--primary);">Acceso Anticipado</h3>
             <p>La versión para <strong id="platform"></strong> está casi lista. Suscríbete para recibir el enlace de descarga directa.</p>
+            
             <form onsubmit="handleSubscription(event)">
-                <input type="email" id="userEmail" placeholder="Tu correo electrónico" required>
-                <button type="submit">Activar Alerta</button>
+                <input type="email" id="userEmail" placeholder="Tu correo electrónico" required oninput="validateForm()">
+                
+                <div class="consent-container">
+                    <label>
+                        <input type="checkbox" id="consentCheck" required onchange="validateForm()"> 
+                        Acepto recibir la notificación de lanzamiento y la <span class="toggle-terms" onclick="toggleTerms()">política de privacidad</span>.
+                    </label>
+                    <div id="termsBox" class="terms-box">
+                        <strong>Información básica sobre protección de datos:</strong><br>
+                        TourAI utilizará su correo exclusivamente para enviarle el aviso de disponibilidad de la aplicación en la plataforma seleccionada. No compartiremos sus datos con terceros. Puede solicitar la baja en cualquier momento escribiendo a info@tourai.es. Al marcar la casilla, confirma que es mayor de 16 años.
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" disabled>Activar Alerta</button>
             </form>
         </div>
     </div>
@@ -164,20 +184,46 @@
 
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
 
-    <script>
-        function openModal(p) { document.getElementById('platform').innerText = p; document.getElementById('subModal').style.display = "block"; }
-        function closeModal() { document.getElementById('subModal').style.display = "none"; }
+        function validateForm() {
+            const email = document.getElementById('userEmail').value;
+            const consent = document.getElementById('consentCheck').checked;
+            const btn = document.getElementById('submitBtn');
+            
+            // Regex para validación de email estándar
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isEmailValid = emailPattern.test(email);
+
+            btn.disabled = !(isEmailValid && consent);
+        }
+
+        function openModal(p) { 
+            document.getElementById('platform').innerText = p; 
+            document.getElementById('subModal').style.display = "block"; 
+            validateForm(); // Reset validación al abrir
+        }
+        
+        function closeModal() { 
+            document.getElementById('subModal').style.display = "none"; 
+            document.getElementById('termsBox').style.display = "none";
+        }
+        
+        function toggleTerms() {
+            const box = document.getElementById('termsBox');
+            box.style.display = box.style.display === "block" ? "none" : "block";
+        }
+        
         function handleSubscription(e) {
             e.preventDefault();
             const email = document.getElementById('userEmail').value;
             const platform = document.getElementById('platform').innerText;
+            
             const subject = encodeURIComponent("Alerta Lanzamiento - " + platform);
-            const body = encodeURIComponent("Deseo suscribirme a la alerta para " + platform + ".\nEmail: " + email);
+            const body = encodeURIComponent("Deseo suscribirme a la alerta para " + platform + ".\nEmail: " + email + "\nConsentimiento: Aceptado");
             window.location.href = "mailto:info@tourai.es?subject=" + subject + "&body=" + body;
             closeModal();
         }
+        
         window.onclick = function(event) { if (event.target == document.getElementById('subModal')) closeModal(); }
     </script>
     
