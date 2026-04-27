@@ -212,7 +212,7 @@
         function openModal() { document.getElementById('privacyModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('privacyModal').style.display = 'none'; }
 
-        // --- LÓGICA DE ACTIVACIÓN CORREGIDA ---
+        // --- LÓGICA DE ACTIVACIÓN ACTUALIZADA CON REGEX ---
         function validarForm() {
             const n = document.getElementById('name').value.trim();
             const e = document.getElementById('email').value.trim();
@@ -220,15 +220,19 @@
             const p = document.getElementById('privacy').checked;
             const b = document.getElementById('submitBtn');
 
-            // Se activa si los 3 campos tienen algo y el checkbox está OK
-            if (n.length > 0 && e.includes('@') && m.length > 0 && p) {
+            // Regex de validación estricta
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isEmailValid = emailPattern.test(e);
+
+            // Se activa si los campos requeridos están llenos, el email es válido y el checkbox está aceptado
+            if (n.length > 0 && isEmailValid && m.length > 0 && p) {
                 b.disabled = false;
             } else {
                 b.disabled = true;
             }
         }
 
-        // Listeners individuales para máxima compatibilidad
+        // Listeners individuales
         document.getElementById('name').addEventListener('input', validarForm);
         document.getElementById('email').addEventListener('input', validarForm);
         document.getElementById('message').addEventListener('input', validarForm);
