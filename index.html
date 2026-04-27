@@ -57,14 +57,16 @@
         .badge-future { background: #e3f2fd; color: #1976d2; padding: 2px 10px; border-radius: 10px; font-size: 0.7em; font-weight: bold; border: 1px solid #1976d2; }
 
         .download-zone { background: var(--white); padding: 80px 20px; text-align: center; border-top: 1px solid #ddd; margin-top: 60px; }
-        .badges-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+        .badges-container { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-top: 30px; }
         .badges-container img { height: 45px; cursor: pointer; transition: 0.3s; }
+        .badges-container img:hover { transform: translateY(-3px); }
 
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(10, 42, 67, 0.9); }
         .modal-content { background-color: var(--white); margin: 10% auto; padding: 40px; border-radius: 15px; width: 90%; max-width: 450px; text-align: center; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
         .close { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; color: #999; }
         .modal input { width: 100%; padding: 15px; margin: 20px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        .modal button { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
+        .modal button { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; }
+        .modal button:hover { background: var(--accent); }
 
         footer { background-color: #051622; color: #ffffff; padding: 80px 20px 40px 20px; margin-top: 100px; border-top: 4px solid var(--accent); text-align: center; }
         .footer-grid { max-width: 1200px; margin: 0 auto 60px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; }
@@ -167,7 +169,7 @@
     </main>
 
     <section class="download-zone">
-        <h2>Disponible próximamente en</h2>
+        <h2>Próximamente disponible en</h2>
         <div class="badges-container">
             <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" onclick="openModal('iOS')">
             <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" onclick="openModal('Android')">
@@ -178,11 +180,11 @@
     <div id="subModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h3>Acceso Anticipado</h3>
-            <p>La versión para <strong id="platform"></strong> está en despliegue. Déjanos tu email para avisarte.</p>
+            <h3 style="color: var(--primary);">Acceso Anticipado</h3>
+            <p>La versión para <strong id="platform"></strong> está casi lista. Suscríbete para recibir el enlace de descarga directa.</p>
             <form onsubmit="handleSubscription(event)">
-                <input type="email" id="userEmail" placeholder="Tu email" required>
-                <button type="submit">SOLICITAR AVISO</button>
+                <input type="email" id="userEmail" placeholder="Tu correo electrónico" required>
+                <button type="submit">Activar Alerta</button>
             </form>
         </div>
     </div>
@@ -218,6 +220,21 @@
 
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+    
+    <script>
+        function openModal(p) { document.getElementById('platform').innerText = p; document.getElementById('subModal').style.display = "block"; }
+        function closeModal() { document.getElementById('subModal').style.display = "none"; }
+        function handleSubscription(e) {
+            e.preventDefault();
+            const email = document.getElementById('userEmail').value;
+            const platform = document.getElementById('platform').innerText;
+            const subject = encodeURIComponent("Alerta Lanzamiento - " + platform);
+            const body = encodeURIComponent("Deseo suscribirme a la alerta para " + platform + ".\nEmail: " + email);
+            window.location.href = "mailto:info@tourai.es?subject=" + subject + "&body=" + body;
+            closeModal();
+        }
+        window.onclick = function(event) { if (event.target == document.getElementById('subModal')) closeModal(); }
     </script>
 
     <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 25px; border-radius: 15px; z-index: 9999; border: 1px solid var(--accent);">
