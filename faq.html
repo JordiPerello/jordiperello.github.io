@@ -135,11 +135,11 @@
             <p>La versión para <strong id="platform"></strong> está casi lista. Suscríbete para recibir el enlace de descarga directa.</p>
             
             <form onsubmit="handleSubscription(event)">
-                <input type="email" id="userEmail" placeholder="Tu correo electrónico" required oninput="validateForm()">
+                <input type="email" id="email" placeholder="Tu correo electrónico" required oninput="validateForm()">
                 
                 <div class="consent-container">
                     <label>
-                        <input type="checkbox" id="consentCheck" required onchange="validateForm()"> 
+                        <input type="checkbox" id="privacy" required onchange="validateForm()"> 
                         Acepto recibir la notificación de lanzamiento y la <span class="toggle-terms" onclick="toggleTerms()">política de privacidad</span>.
                     </label>
                     <div id="termsBox" class="terms-box">
@@ -186,8 +186,8 @@
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
         function validateForm() {
-            const email = document.getElementById('userEmail').value;
-            const consent = document.getElementById('consentCheck').checked;
+            const email = document.getElementById('email').value;
+            const privacy = document.getElementById('privacy').checked;
             const btn = document.getElementById('submitBtn');
             
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -214,7 +214,8 @@
         
         async function handleSubscription(e) {
             e.preventDefault();
-            const email = document.getElementById('userEmail').value;
+            const email = document.getElementById('email').value;
+            const privacy = document.getElementById('privacy').checked;
             const platform = document.getElementById('platform').innerText;
             const button = document.getElementById("submitBtn");
             const originalText = button.textContent;
@@ -232,7 +233,7 @@
                         subject: "Alerta Lanzamiento - " + platform, 
                         platform: platform,
                         message: "Deseo recibir el aviso para la plataforma: " + platform,
-                        privacy: true 
+                        privacy: privacy 
                     })
                 });
 
