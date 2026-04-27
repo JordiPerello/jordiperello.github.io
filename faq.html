@@ -190,7 +190,6 @@
             const consent = document.getElementById('consentCheck').checked;
             const btn = document.getElementById('submitBtn');
             
-            // Regex para validación de email estándar
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const isEmailValid = emailPattern.test(email);
 
@@ -200,7 +199,7 @@
         function openModal(p) { 
             document.getElementById('platform').innerText = p; 
             document.getElementById('subModal').style.display = "block"; 
-            validateForm(); // Reset validación al abrir
+            validateForm();
         }
         
         function closeModal() { 
@@ -213,15 +212,40 @@
             box.style.display = box.style.display === "block" ? "none" : "block";
         }
         
-        function handleSubscription(e) {
+        async function handleSubscription(e) {
             e.preventDefault();
             const email = document.getElementById('userEmail').value;
             const platform = document.getElementById('platform').innerText;
-            
-            const subject = encodeURIComponent("Alerta Lanzamiento - " + platform);
-            const body = encodeURIComponent("Deseo suscribirme a la alerta para " + platform + ".\nEmail: " + email + "\nConsentimiento: Aceptado");
-            window.location.href = "mailto:info@tourai.es?subject=" + subject + "&body=" + body;
-            closeModal();
+            const button = document.getElementById("submitBtn");
+            const originalText = button.textContent;
+
+            try {
+                button.disabled = true;
+                button.textContent = "ACTIVANDO...";
+                
+                const response = await fetch('https://us-central1-tourai-1f3d9.cloudfunctions.net/sendSubscribeNotificationsForm', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        name: "Suscripción Alerta",
+                        email: email, 
+                        subject: "Alerta Lanzamiento - " + platform, 
+                        platform: platform,
+                        message: "Deseo recibir el aviso para la plataforma: " + platform,
+                        privacy: true 
+                    })
+                });
+
+                if (response.ok) {
+                    alert("¡Alerta activada con éxito! Te avisaremos en cuanto esté disponible.");
+                    closeModal();
+                } else { throw new Error(); }
+            } catch (error) {
+                alert("Hubo un error al procesar tu suscripción. Inténtalo de nuevo.");
+            } finally {
+                button.textContent = originalText;
+                validateForm();
+            }
         }
         
         window.onclick = function(event) { if (event.target == document.getElementById('subModal')) closeModal(); }
