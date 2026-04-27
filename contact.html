@@ -64,6 +64,14 @@
         button { background: var(--primary); color: white; padding: 18px 40px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1.1em; transition: 0.3s; width: 100%; }
         button:hover { background: var(--accent); transform: translateY(-2px); }
 
+        /* Estilos Modal Privacidad */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 40px; border-radius: 15px; max-width: 500px; width: 90%; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .modal-content h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
+        .modal-content ul { padding-left: 20px; font-size: 0.9em; }
+        .modal-content li { margin-bottom: 10px; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; color: #999; }
+
         .info-box { margin-top: 40px; padding: 25px; background: #f0f7ff; border-radius: 12px; border: 1px solid #e3f2fd; }
         .trending-item { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee; display: flex; flex-direction: column; }
         .trending-item span { color: var(--accent); font-size: 0.8em; font-weight: bold; }
@@ -123,10 +131,25 @@
                 
                 <label>Correo Electrónico</label>
                 <input type="email" id="email" placeholder="tu@email.com" required>
+
+                <label>Asunto de la consulta</label>
+                <input type="text" id="subject" placeholder="Ej: Error en la app, Información comercial...">
                 
                 <label>Mensaje</label>
                 <textarea id="message" placeholder="¿En qué podemos ayudarte?..." rows="6" required></textarea>
                 
+                <div style="margin-bottom: 25px; background: #f4f7f9; padding: 20px; border-radius: 12px; border: 1px solid #e1e8ed;">
+                    <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                        <input type="checkbox" id="privacy" style="width: 20px; height: 20px; margin-top: 2px; cursor: pointer;" required>
+                        <label for="privacy" style="font-weight: 600; font-size: 0.9em; color: var(--primary); cursor: pointer; line-height: 1.2;">
+                            He leído y acepto la <a href="javascript:void(0)" onclick="openModal()" style="color: var(--accent); text-decoration: underline;">Información de Protección de Datos</a>.
+                        </label>
+                    </div>
+                    <div style="font-size: 0.8em; color: #666; line-height: 1.4; padding-left: 32px;">
+                        <strong>Compromiso TourAI:</strong> Usaremos su email <u>exclusivamente</u> para responder esta duda. No recibirá publicidad ni spam.
+                    </div>
+                </div>
+
                 <button type="button" onclick="enviarMailto()">ENVIAR CONSULTA AL EQUIPO TÉCNICO</button>
             </form>
 
@@ -148,6 +171,21 @@
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
         </aside>
+    </div>
+
+    <div id="privacyModal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3>Protección de Datos</h3>
+            <ul>
+                <li><strong>Responsable:</strong> TourAI App.</li>
+                <li><strong>Finalidad:</strong> Gestión y respuesta de la consulta enviada. No se usarán los datos para fines publicitarios.</li>
+                <li><strong>Legitimación:</strong> Consentimiento al marcar la casilla.</li>
+                <li><strong>Destinatarios:</strong> No se cederán datos a terceros, salvo obligación legal.</li>
+                <li><strong>Derechos:</strong> Acceso, rectificación y supresión escribiendo a info@tourai.es.</li>
+            </ul>
+            <p style="font-size: 0.8em; color: #888; margin-top: 20px;">Para más detalles, consulte nuestra Política de Privacidad completa.</p>
+        </div>
     </div>
 
     <footer>
@@ -181,17 +219,28 @@
 
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Funciones Modal
+        function openModal() { document.getElementById('privacyModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('privacyModal').style.display = 'none'; }
     </script>
 
     <script>
         async function enviarMailto() {
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
+            const privacy = document.getElementById('privacy').checked;
 
             if(!name || !email || !message) { 
-                alert("Por favor, rellena todos los campos."); 
+                alert("Por favor, rellena los campos obligatorios."); 
                 return; 
+            }
+
+            if(!privacy) {
+                alert("Debes aceptar la política de protección de datos.");
+                return;
             }
 
             const button = document.querySelector("form button");
@@ -209,6 +258,7 @@
                     body: JSON.stringify({
                         name: name,
                         email: email,
+                        subject: subject, // Enviamos también el asunto
                         message: message
                     })
                 });
