@@ -96,6 +96,12 @@
             nav { padding: 10px 20px; }
         }
 
+        /* Responsive Cookie Banner */
+        @media (max-width: 768px) {
+            #cookie-banner > div { flex-direction: column; text-align: center; }
+            #cookie-banner .cookie-btns-container { width: 100%; justify-content: center; }
+        }
+
         .faq-answer a.platform-link { color: var(--accent); font-weight: bold; text-decoration: underline; cursor: pointer; }
 
         .consent-container { text-align: left; font-size: 0.85em; margin-bottom: 20px; color: #666; }
@@ -291,10 +297,10 @@
     </script>
     
     <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 25px; border-radius: 15px; z-index: 9999; border: 1px solid var(--accent);">
-        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
-            <p style="margin: 0; font-size: 0.9em;">Utilizamos cookies para mejorar tu experiencia. <a href="cookies.html" style="color: var(--accent);">Más info</a>.</p>
-            <div style="display: flex; gap: 10px;">
-                <button onclick="rechazarCookies()" style="background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Rechazar</button>
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+            <p style="margin: 0; font-size: 0.9em; flex: 1; min-width: 250px;">Utilizamos cookies para mejorar tu experiencia. <a href="cookies.html" style="color: var(--accent);">Más info</a>.</p>
+            <div class="cookie-btns-container" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button onclick="rechazarCookies()" style="background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">Rechazar</button>
                 <button onclick="aceptarCookies()" style="background: var(--accent); border: none; color: #0A2A43; padding: 10px 30px; border-radius: 8px; cursor: pointer; font-weight: bold;">Aceptar</button>
             </div>
         </div>
