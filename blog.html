@@ -10,257 +10,214 @@
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-        if (localStorage.getItem('cookies-aceptadas') === 'true') { gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'wait_for_update': 500 }); } 
-        else { gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'wait_for_update': 500 }); }
+        if (localStorage.getItem('cookies-aceptadas') === 'true') {
+            gtag('consent', 'default', {
+                'ad_storage': 'granted',
+                'analytics_storage': 'granted',
+                'wait_for_update': 500
+            });
+        } else {
+            gtag('consent', 'default', {
+                'ad_storage': 'denied',
+                'analytics_storage': 'denied',
+                'wait_for_update': 500
+            });
+        }
     </script>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
+    <script async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269"
+        crossorigin="anonymous">
+    </script>
 
     <style>
         html { scroll-behavior: smooth; }
-        :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
-
-        /* ESTILOS COOKIE-BANNER RESPONSIVE */
-        #cookie-banner { 
-            position: fixed; 
-            bottom: 20px; 
-            left: 20px; 
-            right: 20px; 
-            background: #0A2A43; 
-            color: white; 
-            padding: 25px; 
-            border-radius: 15px; 
-            z-index: 9999; 
-            border: 1px solid var(--accent); 
-            display: none; 
+        :root {
+            --primary: #0A2A43;
+            --secondary: #0d3b5e;
+            --accent: #4db8ff;
+            --text: #333;
+            --light: #f4f7f9;
+            --white: #ffffff;
         }
-        .cookie-content { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            gap: 20px; 
-        }
-        .cookie-content p { margin: 0; font-size: 0.9em; }
-        .cookie-btns-group { display: flex; gap: 10px; }
-        .cookie-btns-group button { 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            padding: 10px 20px;
-            white-space: nowrap;
-        }
-
-        /* Ajustes para móviles */
-        @media (max-width: 768px) {
-            #cookie-banner { bottom: 10px; left: 10px; right: 10px; padding: 20px; }
-            .cookie-content { flex-direction: column; text-align: center; }
-            .cookie-btns-group { width: 100%; }
-            .cookie-btns-group button { flex: 1; }
-        }
-        
-        nav { background-color: #fff; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px #0000004d }
-        .nav-logo-container { width: 150px; height: 50px; flex-shrink: 0; }
-        .nav-logo-container img { width: 150px; height: 50px; object-fit: contain; }
-        .nav-links { display: flex; align-items: center; justify-content: center; flex-grow: 1; }
-        nav a { color: var(--primary); margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; }
-        nav a:hover { color: var(--accent); }
-        nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; }
-
-        /* Estilos botón hamburguesa */
-        .menu-icon { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
-        .menu-icon span { width: 30px; height: 3px; background: var(--primary); border-radius: 3px; transition: 0.3s; }
-
-        .floating-logo { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--white); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(0,0,0,0.2); z-index: 999; cursor: pointer; transition: transform 0.3s ease; border: 2px solid var(--accent); }
-        .floating-logo img { width: 35px; height: auto; }
-        .floating-logo:hover { transform: scale(1.1); }
-        .app-img { width: 100%; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); height: 350px; object-fit: cover; }
-
-        .ads-banner-container { width: 100%; height: 60px; background-color: #87CEEB; display: flex; justify-content: center; align-items: center; overflow: hidden; margin: 20px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
-        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid var(--accent); }
-
-        .main-layout { max-width: 1300px; margin: 30px auto; display: grid; grid-template-columns: 2.8fr 1.2fr; gap: 40px; padding: 0 20px; }
-        .container { background-color: white; padding: 50px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .sidebar { background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 100px; max-height: calc(100vh - 120px); overflow-y: auto; }
-
-        h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
-        h2 { color: #0A2A43; border-left: 8px solid #4db8ff; padding-left: 20px; margin: 50px 0 30px 0; font-size: 2.5em; background: #f9f9f9; padding-top: 10px; padding-bottom: 10px; }
-        h3 { color: #0d3b5e; margin-top: 40px; font-size: 1.8em; font-weight: 700; }
-
-        .article { margin-bottom: 80px; border-bottom: 2px solid #f0f0f0; padding-bottom: 50px; transition: 0.3s; }
-        .article-img { width: 100%; height: 500px; object-fit: cover; border-radius: 20px; margin-bottom: 30px; filter: brightness(0.9); transition: 0.5s; }
-        .article-img:hover { filter: brightness(1.1); }
-        .article-title { font-size: 2.4em; margin: 15px 0; color: #1a1a1a; text-decoration: none; display: block; font-weight: 800; line-height: 1.2; }
-        .article-title:hover { color: #0d3b5e; }
-        .article-meta { color: #999; font-size: 0.95em; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; }
-        .tag { background: #0A2A43; color: #fff; padding: 6px 18px; border-radius: 50px; font-weight: bold; margin-right: 15px; font-size: 0.8em; }
-
-        .article-content p { margin-bottom: 25px; font-size: 1.2em; color: #3d3d3d; text-align: justify; }
-        .article-content strong { color: #0A2A43; }
-
-        .trending-item { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee; display: flex; flex-direction: column; }
-        .trending-item span { color: #4db8ff; font-size: 0.8em; font-weight: bold; }
-        .trending-item a { text-decoration: none; color: #333; font-weight: 700; font-size: 1.1em; line-height: 1.3; }
-
-        .newsletter-box { background: #0A2A43; color: white; padding: 30px; border-radius: 12px; margin-top: 40px; text-align: center; }
-        .newsletter-box input { width: 90%; padding: 12px; margin: 15px 0; border-radius: 5px; border: none; }
-
-        footer { background-color: #051622; color: #ffffff; padding: 80px 20px 40px 20px; margin-top: 100px; border-top: 4px solid var(--accent); text-align: center; }
-        .footer-grid { max-width: 1200px; margin: 0 auto 60px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; }
-        .footer-col h4 { color: var(--accent); font-size: 1.1em; text-transform: uppercase; margin-bottom: 25px; font-weight: 800; }
-        .footer-col a { display: block; color: #ccc; text-decoration: none; margin-bottom: 12px; transition: 0.3s; }
-        .footer-col a:hover { color: #fff; transform: translateX(5px); }
-        .footer-col a.active { color: var(--accent); font-weight: bold; pointer-events: none; }
-        
-        .legal-bottom { font-size: 0.9em; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; }
-        .footer-email { color: var(--accent) !important; text-decoration: none; font-weight: bold; }
-
-        @media (max-width: 1000px) { 
-            .main-layout { grid-template-columns: 1fr; } 
-            h1 { font-size: 2.5em; } 
-            .sidebar { position: static; } 
-            .footer-grid { text-align: center; } 
-            
-            /* Lógica menú móvil */
-            .menu-icon { display: flex; }
-            .nav-links { 
-                display: none; 
-                flex-direction: column; 
-                position: absolute; 
-                top: 70px; 
-                left: 0; 
-                width: 100%; 
-                background: white; 
-                padding: 20px 0; 
-                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-            }
-            .nav-links.show { display: flex; }
-            nav a { margin: 10px 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text);
+            background-color: var(--light);
+            line-height: 1.8;
         }
     </style>
 </head>
-<body>
 
-    <div class="floating-logo" onclick="window.scrollTo(0,0)" title="Volver arriba">
-        <img src="img/tourai_logo.png" alt="Icono TourAI">
-    </div>
+<body>
 
     <nav>
         <div class="nav-logo-container">
             <img src="img/tourai_logo_inline.png" alt="TourAI Logo">
         </div>
-        
-        <div class="menu-icon" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <div class="nav-links" id="nav-links">
-            <a href="index.html">La App</a>
-            <a href="targets.html">Destinos 2026</a>
-            <a href="guides.html">Audioguías</a>
-            <a class="active">Blog / Noticias</a>
-            <a href="contact.html">Contacto</a>
-        </div>
     </nav>
-
-    <div class="ads-banner-container">
-        <ins class="adsbygoogle" style="display:inline-block;width:728px;height:60px" data-ad-client="ca-pub-8251840058544269" data-ad-slot="2107333980"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
 
     <header>
         <h1>TourAI: Tu Guía Inteligente Personal</h1>
-        <p>Explora el mundo en 2026 con la aplicación que redefine la planificación de viajes mediante IA y datos en tiempo real.</p>
     </header>
 
     <div class="main-layout">
+
         <main class="container">
             <h2>Artículos Destacados y Análisis 2026</h2>
 
+            <!-- NOTICIAS NUEVAS -->
+
             <article class="article">
-                <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1000" alt="Viaje por carretera" class="article-img">
-                <span class="article-meta"><span class="tag">TECNOLOGÍA</span> 02 de Abril, 2026</span>
-                <a href="https://www.technologyreview.es/" target="_blank" class="article-title">La Planificación Algorítmica: El fin de las agencias de viaje tradicionales</a>
+                <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?q=80&w=1000" class="article-img">
+                <span class="article-meta">
+                    <span class="tag">TURISMO</span> 29 abril 2026
+                </span>
+                <a href="https://elpais.com/economia/2026-03-31/el-turismo-que-viene-en-2026-mucho-mas-caro-masivo-y-con-limites.html"
+                   target="_blank"
+                   class="article-title">
+                    El turismo en 2026: más caro, masivo y con nuevas restricciones
+                </a>
                 <div class="article-content">
-                    <p>En este 2026, la industria del turismo ha experimentado una metamorfosis sin precedentes. La llegada de modelos de lenguaje multimodales aplicados específicamente al sector viajes, como el motor principal de <strong>TourAI</strong>, ha permitido que cualquier usuario pueda diseñar una vuelta al mundo en menos de diez minutos.</p>
-                    <p>Estos sistemas no solo reservan vuelos; analizan en tiempo real factores como la estabilidad sociopolítica del destino, las previsiones meteorológicas extremas mediante satélites meteorológicos de nueva generación y, lo más importante, el sentimiento social local para evitar zonas masificadas.</p>
+                    <p>
+                        España encara un nuevo modelo turístico con precios más altos y regulaciones
+                        para evitar la saturación en destinos clave como Barcelona, Baleares o Canarias.
+                    </p>
                 </div>
             </article>
 
             <article class="article">
-                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000" alt="Playa paradisíaca" class="article-img">
-                <span class="article-meta"><span class="tag">DESTINOS</span> 31 de Marzo, 2026</span>
-                <a href="https://www.nationalgeographic.com.es/temas/maldivas" target="_blank" class="article-title">Islas Maldivas 2026: Cómo el turismo regenerativo está salvando el atolón</a>
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000" class="article-img">
+                <span class="article-meta">
+                    <span class="tag">DESTINOS</span> Abril 2026
+                </span>
+                <a href="https://www.lavanguardia.com/viajes/20260401/ibiza-turismo-sostenible.html"
+                   target="_blank"
+                   class="article-title">
+                    Ibiza impulsa un modelo de turismo sostenible para reducir la masificación
+                </a>
                 <div class="article-content">
-                    <p>Las Maldivas ya no solo venden sol y arena blanca. Bajo la nueva normativa ambiental de 2026, cada resort debe funcionar como una planta de energía limpia.</p>
+                    <p>
+                        El gobierno local apuesta por limitar el turismo de excesos y potenciar
+                        experiencias sostenibles y culturales en la isla.
+                    </p>
                 </div>
             </article>
+
+            <article class="article">
+                <img src="https://images.unsplash.com/photo-1526779259212-939e64788e3c?q=80&w=1000" class="article-img">
+                <span class="article-meta">
+                    <span class="tag">RURAL</span> Abril 2026
+                </span>
+                <a href="https://cadenaser.com/aragon/2026/04/28/huesca-supera-los-227000-turistas-segun-el-ine-en-2025-radio-huesca/"
+                   target="_blank"
+                   class="article-title">
+                    El turismo rural se dispara en Aragón con récord de visitantes
+                </a>
+                <div class="article-content">
+                    <p>
+                        La provincia de Huesca se consolida como uno de los destinos naturales
+                        favoritos para turistas internacionales.
+                    </p>
+                </div>
+            </article>
+
+            <article class="article">
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1000" class="article-img">
+                <span class="article-meta">
+                    <span class="tag">EVENTOS</span> Abril 2026
+                </span>
+                <a href="https://cadenaser.com/comunitat-valenciana/2026/04/29/el-sos-de-olivares-para-que-les-fogueres-no-mueran-de-exito-de-que-sirve-atraer-tanto-turismo-si-el-foguerer-no-recibe-nada-radio-alicante/"
+                   target="_blank"
+                   class="article-title">
+                    Las Hogueras de Alicante temen el impacto del turismo masivo
+                </a>
+                <div class="article-content">
+                    <p>
+                        El crecimiento turístico pone en riesgo el equilibrio económico y cultural
+                        de una de las fiestas más importantes de la Comunidad Valenciana.
+                    </p>
+                </div>
+            </article>
+
+            <article class="article">
+                <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1000" class="article-img">
+                <span class="article-meta">
+                    <span class="tag">ESCAPADAS</span> Abril 2026
+                </span>
+                <a href="https://elpais.com/elviajero/escapadas/espana/2026-04-29/santa-eularia-des-riu-el-municipio-de-ibiza-que-dijo-no-a-los-beach-clubs-y-si-a-los-chiringuitos.html"
+                   target="_blank"
+                   class="article-title">
+                    Santa Eulària apuesta por un turismo tranquilo y sostenible
+                </a>
+                <div class="article-content">
+                    <p>
+                        El municipio balear se posiciona como alternativa al turismo masivo con un
+                        modelo basado en naturaleza y cultura local.
+                    </p>
+                </div>
+            </article>
+
+            <article class="article">
+                <img src="https://images.unsplash.com/photo-1494475673543-6a6a27143b53?q=80&w=1000" class="article-img">
+                <span class="article-meta">
+                    <span class="tag">DATOS</span> Abril 2026
+                </span>
+                <a href="https://cadenaser.com/andalucia/2026/04/29/la-ocupacion-turistica-del-puente-del-1-de-mayo-en-jaen-sube-respecto-al-ano-pasado-radio-jaen/"
+                   target="_blank"
+                   class="article-title">
+                    El puente de mayo impulsa el turismo interior en España
+                </a>
+                <div class="article-content">
+                    <p>
+                        Las reservas turísticas alcanzan niveles muy altos en destinos rurales y
+                        ciudades Patrimonio de la Humanidad.
+                    </p>
+                </div>
+            </article>
+
         </main>
 
         <aside class="sidebar">
             <h3>Noticias de Última Hora</h3>
-            <div class="trending-item"><span>HACE 2 HORAS</span><a href="https://elpais.com/noticias/manhattan/" target="_blank">⚠️ Nueva York prohíbe taxis de combustión.</a></div>
-            <div class="trending-item"><span>HACE 5 HORAS</span><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2013-10074" target="_blank">🛂 Visado nómadas digitales España.</a></div>
+
+            <div class="trending-item">
+                <span>HACE 1 HORA</span>
+                <a href="https://elpais.com/economia/2026-03-31/el-turismo-que-viene-en-2026-mucho-mas-caro-masivo-y-con-limites.html"
+                   target="_blank">
+                    📊 El turismo en España sube precios en 2026
+                </a>
+            </div>
+
+            <div class="trending-item">
+                <span>HACE 2 HORAS</span>
+                <a href="https://cadenaser.com/andalucia/2026/04/29/la-ocupacion-turistica-del-puente-del-1-de-mayo-en-jaen-sube-respecto-al-ano-pasado-radio-jaen/"
+                   target="_blank">
+                    📈 Récord de ocupación en el puente de mayo
+                </a>
+            </div>
+
+            <div class="trending-item">
+                <span>HACE 4 HORAS</span>
+                <a href="https://cadenaser.com/aragon/2026/04/28/huesca-supera-los-227000-turistas-segun-el-ine-en-2025-radio-huesca/"
+                   target="_blank">
+                    🏔️ Aumenta el turismo rural en Aragón
+                </a>
+            </div>
+
+            <div class="trending-item">
+                <span>HACE 6 HORAS</span>
+                <a href="https://cadenaser.com/comunitat-valenciana/2026/04/29/el-sos-de-olivares-para-que-les-fogueres-no-mueran-de-exito-de-que-sirve-atraer-tanto-turismo-si-el-foguerer-no-recibe-nada-radio-alicante/"
+                   target="_blank">
+                    ⚠️ Impacto del turismo en fiestas locales
+                </a>
+            </div>
+
         </aside>
+
     </div>
 
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4>Explora</h4>
-                <a href="index.html">La App</a>
-                <a href="targets.html">Destinos 2026</a>
-                <a href="guides.html">Audioguías</a>
-                <a class="active">Blog / Noticias</a>
-            </div>
-            <div class="footer-col">
-                <h4>Legal</h4>
-                <a href="privacy.html">Privacidad</a>
-                <a href="terms.html">Términos</a>
-                <a href="cookies.html">Cookies</a>
-            </div>
-            <div class="footer-col">
-                <h4>Ayuda</h4>
-                <a href="contact.html">Contacto</a>
-                <a href="faq.html">Preguntas Frecuentes</a>
-            </div>
-        </div>
-
-        <div class="legal-bottom">
-            &copy; <span id="current-year"></span> <strong>TourAI App</strong> - 
-            <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a> 
-            - Todos los derechos reservados.
-        </div>
-    </footer>
-
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-        
-        function toggleMenu() {
-            const links = document.getElementById('nav-links');
-            links.classList.toggle('show');
-        }
-    </script>
-
-    <div id="cookie-banner">
-        <div class="cookie-content">
-            <p>Utilizamos cookies para mejorar tu experiencia. <a href="cookies.html" style="color: var(--accent);">Más info</a>.</p>
-            <div class="cookie-btns-group">
-                <button onclick="rechazarCookies()" style="background: transparent; border: 1px solid #666; color: #aaa;">Rechazar</button>
-                <button onclick="aceptarCookies()" style="background: var(--accent); border: none; color: #0A2A43;">Aceptar</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const banner = document.getElementById('cookie-banner');
-        window.onload = function() { if (!localStorage.getItem('cookies-aceptadas')) banner.style.display = 'block'; };
-        function aceptarCookies() { localStorage.setItem('cookies-aceptadas', 'true'); banner.style.display = 'none'; }
-        function rechazarCookies() { localStorage.setItem('cookies-aceptadas', 'false'); banner.style.display = 'none'; }
-    </script>
 </body>
 </html>
