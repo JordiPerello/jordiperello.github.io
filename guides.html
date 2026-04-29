@@ -34,6 +34,10 @@
         nav a:hover { color: var(--accent); }
         nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; }
 
+        /* Estilos Menu Hamburguesa */
+        .menu-icon { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 1001; }
+        .menu-icon div { width: 25px; height: 3px; background-color: var(--primary); transition: 0.3s; }
+
         .floating-logo { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--white); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(0,0,0,0.2); z-index: 999; cursor: pointer; transition: transform 0.3s ease; border: 2px solid var(--accent); }
         .floating-logo img { width: 35px; height: auto; }
         .floating-logo:hover { transform: scale(1.1); }
@@ -66,7 +70,30 @@
         .legal-bottom { font-size: 0.9em; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; }
         .footer-email { color: var(--accent) !important; text-decoration: none; font-weight: bold; }
 
-        @media (max-width: 1000px) { .main-layout { grid-template-columns: 1fr; } h1 { font-size: 2.5em; } .sidebar { position: static; } .footer-grid { text-align: center; } }
+        @media (max-width: 1000px) { 
+            .main-layout { grid-template-columns: 1fr; } 
+            h1 { font-size: 2.5em; } 
+            .sidebar { position: static; } 
+            .footer-grid { text-align: center; } 
+
+            /* Lógica Visual Nav Responsive */
+            .menu-icon { display: flex; }
+            .nav-links { 
+                display: none; 
+                flex-direction: column; 
+                position: absolute; 
+                top: 70px; 
+                left: 0; 
+                width: 100%; 
+                background: white; 
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1); 
+                padding: 20px 0;
+                text-align: center;
+            }
+            .nav-links.active { display: flex; }
+            nav a { margin: 10px 0; }
+            nav { padding: 10px 20px; }
+        }
     </style>
 </head>
 <body>
@@ -79,7 +106,14 @@
         <div class="nav-logo-container">
             <img src="img/tourai_logo_inline.png" alt="TourAI Logo">
         </div>
-        <div class="nav-links">
+
+        <div class="menu-icon" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="nav-links" id="navLinks">
             <a href="index.html">La App</a>
             <a href="targets.html">Destinos 2026</a>
             <a class="active">Audioguías</a>
@@ -173,6 +207,11 @@
 
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
     </script>
     
     <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 25px; border-radius: 15px; z-index: 9999; border: 1px solid var(--accent);">
