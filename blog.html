@@ -21,9 +21,45 @@
         :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
 
-        #cookie-banner { position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 20px; border-radius: 12px; z-index: 9999; border: 1px solid var(--accent); display: none; }
-        .cookie-btns { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
-        .cookie-btns button { padding: 8px 20px; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; }
+        /* ESTILOS COOKIE-BANNER RESPONSIVE */
+        #cookie-banner { 
+            position: fixed; 
+            bottom: 20px; 
+            left: 20px; 
+            right: 20px; 
+            background: #0A2A43; 
+            color: white; 
+            padding: 25px; 
+            border-radius: 15px; 
+            z-index: 9999; 
+            border: 1px solid var(--accent); 
+            display: none; 
+        }
+        .cookie-content { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            gap: 20px; 
+        }
+        .cookie-content p { margin: 0; font-size: 0.9em; }
+        .cookie-btns-group { display: flex; gap: 10px; }
+        .cookie-btns-group button { 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            padding: 10px 20px;
+            white-space: nowrap;
+        }
+
+        /* Ajustes para móviles */
+        @media (max-width: 768px) {
+            #cookie-banner { bottom: 10px; left: 10px; right: 10px; padding: 20px; }
+            .cookie-content { flex-direction: column; text-align: center; }
+            .cookie-btns-group { width: 100%; }
+            .cookie-btns-group button { flex: 1; }
+        }
         
         nav { background-color: #fff; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px #0000004d }
         .nav-logo-container { width: 150px; height: 50px; flex-shrink: 0; }
@@ -210,12 +246,12 @@
         }
     </script>
 
-    <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 25px; border-radius: 15px; z-index: 9999; border: 1px solid var(--accent);">
-        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
-            <p style="margin: 0; font-size: 0.9em;">Utilizamos cookies para mejorar tu experiencia. <a href="cookies.html" style="color: var(--accent);">Más info</a>.</p>
-            <div style="display: flex; gap: 10px;">
-                <button onclick="rechazarCookies()" style="background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Rechazar</button>
-                <button onclick="aceptarCookies()" style="background: var(--accent); border: none; color: #0A2A43; padding: 10px 30px; border-radius: 8px; cursor: pointer; font-weight: bold;">Aceptar</button>
+    <div id="cookie-banner">
+        <div class="cookie-content">
+            <p>Utilizamos cookies para mejorar tu experiencia. <a href="cookies.html" style="color: var(--accent);">Más info</a>.</p>
+            <div class="cookie-btns-group">
+                <button onclick="rechazarCookies()" style="background: transparent; border: 1px solid #666; color: #aaa;">Rechazar</button>
+                <button onclick="aceptarCookies()" style="background: var(--accent); border: none; color: #0A2A43;">Aceptar</button>
             </div>
         </div>
     </div>
