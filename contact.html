@@ -34,6 +34,10 @@
         nav a:hover { color: var(--accent); }
         nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; }
 
+        /* Estilos botón hamburguesa */
+        .menu-icon { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 1001; }
+        .menu-icon span { width: 30px; height: 3px; background: var(--primary); border-radius: 3px; transition: 0.3s; }
+
         .floating-logo { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--white); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(0,0,0,0.2); z-index: 999; cursor: pointer; transition: transform 0.3s ease; border: 2px solid var(--accent); }
         .floating-logo img { width: 35px; height: auto; }
         .floating-logo:hover { transform: scale(1.1); }
@@ -77,7 +81,28 @@
         .legal-bottom { font-size: 0.9em; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; }
         .footer-email { color: var(--accent) !important; text-decoration: none; font-weight: bold; }
 
-        @media (max-width: 1000px) { .main-layout { grid-template-columns: 1fr; } h1 { font-size: 2.5em; } .sidebar { position: static; } .footer-grid { text-align: center; } nav { flex-direction: column; padding: 20px; } .nav-links { flex-direction: column; margin-top: 15px; } nav a { margin: 5px 0; } }
+        @media (max-width: 1000px) { 
+            .main-layout { grid-template-columns: 1fr; } 
+            h1 { font-size: 2.5em; } 
+            .sidebar { position: static; } 
+            .footer-grid { text-align: center; } 
+            
+            nav { padding: 10px 20px; }
+            .menu-icon { display: flex; }
+            .nav-links { 
+                display: none; 
+                flex-direction: column; 
+                position: absolute; 
+                top: 70px; 
+                left: 0; 
+                width: 100%; 
+                background: #fff; 
+                padding: 20px 0; 
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            }
+            .nav-links.active { display: flex; }
+            nav a { margin: 10px 0; }
+        }
 
     </style>
 </head>
@@ -91,7 +116,14 @@
         <div class="nav-logo-container">
             <img src="img/tourai_logo_inline.png" alt="TourAI Logo">
         </div>
-        <div class="nav-links">
+
+        <div class="menu-icon" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="nav-links" id="navLinks">
             <a href="index.html">La App</a>
             <a href="targets.html">Destinos 2026</a>
             <a href="guides.html">Audioguías</a>
@@ -149,19 +181,6 @@
                 </p>
             </div>
         </main>
-
-        <!--
-        <aside class="sidebar">
-            <h3>Soporte Rápido</h3>
-            <div class="trending-item"><span>RESPUESTA MEDIA</span><a href="#">⏱️ Menos de 15 minutos para usuarios Pro.</a></div>
-            <div class="trending-item"><span>ESTADO DEL SERVICIO</span><a href="#">✅ Todos los sistemas operativos activos.</a></div>
-
-            <div style="margin-top: 30px; text-align: center;">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8251840058544269" data-ad-slot="2107333980" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            </div>
-        </aside>
-        -->
     </div>
 
     <div id="privacyModal" class="modal-overlay" onclick="closeModal()">
@@ -209,6 +228,12 @@
     </footer>
 
     <script>
+        // Lógica del menú hamburguesa
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
         document.getElementById('current-year').textContent = new Date().getFullYear();
         function openModal() { document.getElementById('privacyModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('privacyModal').style.display = 'none'; }
