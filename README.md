@@ -2,7 +2,7 @@
 
 ![Licencia](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Version](https://img.shields.io/badge/version-2026.1.0-green.svg)
-![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20Android%20%7C%20Windows-lightgrey)
+![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20Android)
 
 **TourAI** es el portal oficial y landing page de la aplicación líder en turismo inteligente. Este repositorio aloja el sitio web desarrollado con GitHub Pages, diseñado para la promoción de la App y la difusión de artículos sobre tecnología de viajes, sostenibilidad y guías algorítmicas.
 
