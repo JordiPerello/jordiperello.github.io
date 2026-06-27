@@ -11,7 +11,7 @@
 - **Planificación Algorítmica:** Itinerarios dinámicos basados en datos en tiempo real (clima, tráfico, sentimiento social).
 - **Realidad Aumentada (RA):** Guías inmersivas directamente desde la cámara de tu móvil.
 - **Turismo Regenerativo:** Herramientas para medir y compensar la huella de carbono del viajero.
-- **Sincronización Multiplataforma:** Disponible en Windows Store, Google Play e iOS.
+- **Sincronización Multiplataforma:** Google Play e iOS.
 
 ## 📂 Estructura del Repositorio
 
