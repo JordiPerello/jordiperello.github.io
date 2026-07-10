@@ -1,64 +1,22 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-ES">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TourAI: guía turística con inteligencia artificial. Chat, voz, mapas y audioguías para viajar a tu ritmo con la app TourAI." data-i18n-meta="doc.meta.index">
+    <link rel="canonical" href="https://tourai.es/">
     <meta name="google-adsense-account" content="ca-pub-8251840058544269">
-    <title>TourAI - El Futuro del Turismo Inteligente 2026</title>
+    <title data-i18n-doc-title="doc.title.index">TourAI - El Futuro del Turismo Inteligente 2026</title>
       
     <link rel="icon" type="image/png" href="img/tourai_logo.png">
     <link rel="apple-touch-icon" href="img/tourai_logo.png">
-
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        if (localStorage.getItem('cookies-aceptadas') === 'true') { gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'wait_for_update': 500 }); } 
-        else { gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'wait_for_update': 500 }); }
-    </script>
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/site.css">
+    <script src="js/cookie-consent-init.js"></script>
 
     <style>
         html { scroll-behavior: smooth; }
         :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
-      
-        /* --- CORRECCIÓN COOKIE BANNER RESPONSIVE --- */
-        #cookie-banner { 
-            position: fixed; 
-            bottom: 20px; 
-            left: 20px; 
-            right: 20px; 
-            background: #0A2A43; 
-            color: white; 
-            padding: 20px; 
-            border-radius: 12px; 
-            z-index: 9999; 
-            border: 1px solid var(--accent); 
-            display: none; 
-        }
-        .cookie-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-        .cookie-text { margin: 0; font-size: 0.9em; }
-        .cookie-btns { display: flex; gap: 10px; flex-shrink: 0; }
-        .cookie-btns button { padding: 10px 20px; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; white-space: nowrap; transition: 0.3s; }
-        .btn-rechazar { background: transparent; border: 1px solid #666 !important; color: #aaa; }
-        .btn-aceptar { background: var(--accent); color: #0A2A43; }
-
-        /* Media Query específica para el banner */
-        @media (max-width: 768px) {
-            .cookie-container { flex-direction: column; text-align: center; }
-            #cookie-banner { bottom: 10px; left: 10px; right: 10px; padding: 15px; }
-            .cookie-btns { width: 100%; justify-content: center; }
-            .cookie-btns button { flex: 1; }
-        }
-        /* --- FIN CORRECCIÓN --- */
           
         nav { background-color: #fff; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px #0000004d }
         .nav-logo-container { width: 150px; height: 50px; flex-shrink: 0; }
@@ -78,7 +36,6 @@
         header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid var(--accent); }
         h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
         
-        .ads-banner-container { width: 100%; height: 60px; background-color: #87CEEB; display: flex; justify-content: center; align-items: center; overflow: hidden; margin: 20px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
         .content-wrapper { max-width: 1200px; margin: 30px auto; padding: 60px 20px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         
         h2 { color: var(--primary); border-left: 8px solid var(--accent); padding-left: 20px; margin: 60px 0 30px 0; font-size: 2.2em; background: #f9f9f9; padding: 10px 20px; }
@@ -95,15 +52,10 @@
         .price-tag { color: var(--accent); font-weight: 800; font-size: 0.85em; text-transform: uppercase; display: block; margin-bottom: 10px; }
         .badge-future { background: #e3f2fd; color: #1976d2; padding: 2px 10px; border-radius: 10px; font-size: 0.7em; font-weight: bold; border: 1px solid #1976d2; }
 
-        .download-zone { background: var(--white); padding: 80px 20px; text-align: center; border-top: 1px solid #ddd; margin-top: 60px; }
-        .badges-container { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-top: 30px; }
-        .badges-container img { height: 45px; cursor: pointer; transition: 0.3s; }
-        .badges-container img:hover { transform: translateY(-3px); }
-
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(10, 42, 67, 0.9); }
         .modal-content { background-color: var(--white); margin: 10% auto; padding: 40px; border-radius: 15px; width: 90%; max-width: 450px; text-align: center; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
         .close { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; color: #999; }
-        .modal input { width: 100%; padding: 15px; margin: 20px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .modal input:not([type="checkbox"]) { width: 100%; padding: 15px; margin: 20px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
         .modal button { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; }
         .modal button:hover { background: var(--accent); }
 
@@ -159,25 +111,24 @@
         </div>
 
         <div class="nav-links" id="nav-links">
-            <a class="active">La App</a>
-            <a href="targets.html">Destinos 2026</a>
-            <a href="guides.html">Audioguías</a>
-            <a href="blog.html">Blog / Noticias</a>
-            <a href="contact.html">Contacto</a>
+            <a class="active" data-i18n="nav.app">La App</a>
+            <a href="targets.html" data-i18n="nav.targets">Destinos 2026</a>
+            <a href="guides.html" data-i18n="nav.guides">Audioguías</a>
+            <a href="blog.html" data-i18n="nav.blog">Blog</a>
+            <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+            <div class="lang-switch">
+                <button type="button" data-set-locale="es-ES">ES</button>
+                <button type="button" data-set-locale="en-GB">EN</button>
+            </div>
         </div>
     </nav>
 
-    <div class="ads-banner-container">
-        <ins class="adsbygoogle" style="display:inline-block;width:728px;height:60px" data-ad-client="ca-pub-8251840058544269" data-ad-slot="2107333980"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
-
     <header>
-        <h1>TourAI: Turismo Inteligente</h1>
-        <p style="font-size: 1.3em; max-width: 800px; margin: 20px auto 0;">Tu guía turístico privado con IA. La experiencia de viaje más personalizada del mundo.</p>
+        <h1 data-i18n="index.hero.title">TourAI: Turismo Inteligente</h1>
+        <p style="font-size: 1.3em; max-width: 800px; margin: 20px auto 0;" data-i18n="index.hero.subtitle">Tu guía turístico privado con IA. La experiencia de viaje más personalizada del mundo.</p>
     </header>
 
-    <main class="content-wrapper">
+    <main class="content-wrapper" data-i18n-html="page.index.content">
         <section class="feature-block">
             <div class="text-content">
                 <h3>Tu Guía Turístico Privado</h3>
@@ -203,58 +154,79 @@
             <img src="https://img.freepik.com/premium-photo/young-female-tourist-using-smartphone-platform-applications-helping-tourism-about-travel-map-gps_35674-17150.jpg?w=2000" alt="IA Chat" class="app-img">
         </section>
 
-        <h2>Próximas Funcionalidades <span class="badge-future">Roadmap 2026</span></h2>
+        <h2>Funcionalidades de la app</h2>
         <div class="services-grid">
             <div class="service-card">
-                <h4>Audioguías Globales</h4>
-                <p>Acceso a una red mundial de guías narrativas validadas por historiadores.</p>
+                <h4>Chat con IA</h4>
+                <p>Pregunta sobre monumentos, historia o curiosidades locales y recibe respuestas contextualizadas según tu visita.</p>
             </div>
             <div class="service-card">
-                <h4>Comunidad de Rutas</h4>
-                <p>Crea tus propios itinerarios y compártelos con viajeros de todo el mundo.</p>
+                <h4>Asistente de voz MAX</h4>
+                <p>Controla el recorrido y haz consultas hablando con naturalidad, sin detenerte a escribir.</p>
             </div>
             <div class="service-card">
-                <h4>Audio Compartido</h4>
-                <p>Sincroniza tu audioguía con tus acompañantes para escuchar lo mismo al unísono.</p>
+                <h4>Mapa y ruta guiada</h4>
+                <p>Visualiza puntos de interés cercanos y camina una ruta guiada por GPS con narración en cada parada.</p>
+            </div>
+            <div class="service-card">
+                <h4>Audioguías por ubicación</h4>
+                <p>Al acercarte a un punto de interés, escucha narraciones generadas para ese lugar.</p>
             </div>
         </div>
 
-        <h2>Soluciones a Medida</h2>
+        <h2>Modelo Freemium y Premium</h2>
         <div class="services-grid">
             <div class="service-card">
-                <span class="price-tag">Individual</span>
-                <h4>Viajeros Libres</h4>
-                <p>Libertad total para explorar la ciudad con un experto en el bolsillo.</p>
+                <span class="price-tag">Freemium</span>
+                <h4>Acceso gratuito</h4>
+                <p>Usa la app con un cupo diario de tokens. Sostenida mediante publicidad responsable (AdMob).</p>
             </div>
             <div class="service-card">
-                <span class="price-tag">B2B <small class="badge-future">Próximamente</small></span>
-                <h4>Agencias Turísticas</h4>
-                <p>Herramientas de gestión para ofrecer contenido exclusivo a sus clientes.</p>
+                <span class="price-tag">Premium</span>
+                <h4>Planes temporales</h4>
+                <p>Contrata planes de 1 día, fin de semana u otros periodos para más tokens y experiencia sin publicidad.</p>
             </div>
             <div class="service-card">
-                <span class="price-tag">Patrimonio <small class="badge-future">Próximamente</small></span>
-                <h4>Acceso QR</h4>
-                <p>Digitalización de monumentos para consulta directa sin dispositivos externos.</p>
+                <span class="price-tag">Idiomas</span>
+                <h4>Español e inglés</h4>
+                <p>Interfaz y contenido disponibles en español (España) e inglés (Reino Unido).</p>
             </div>
         </div>
     </main>
 
     <section class="download-zone">
-        <h2>Próximamente disponible en</h2>
+        <h2 data-i18n="index.download.title">Próximamente disponible en</h2>
         <div class="badges-container">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" onclick="openModal('iOS')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" onclick="openModal('Android')">         
+            <img data-store-badge="ios" src="img/store-badges/ios_es.svg" alt="App Store" onclick="openModal('iOS')">
+            <img data-store-badge="android" src="img/store-badges/android_es.png" alt="Google Play" onclick="openModal('Android')">         
         </div>
+        <p class="download-manage-link">
+            <button type="button" class="link-button" onclick="openStoreUnsubscribe()" data-i18n="index.download.unsubscribe">Gestionar o cancelar alertas de lanzamiento</button>
+        </p>
     </section>
 
     <div id="subModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h3 style="color: var(--primary);">Acceso Anticipado</h3>
-            <p>La versión para <strong id="platform"></strong> está casi lista. Suscríbete para recibir el enlace de descarga directa.</p>
-            <form onsubmit="handleSubscription(event)">
-                <input type="email" id="userEmail" placeholder="Tu correo electrónico" required>
-                <button type="submit">Activar Alerta</button>
+            <span class="close" role="button" aria-label="Cerrar">&times;</span>
+            <h3 style="color: var(--primary);" data-i18n="index.modal.title">Acceso Anticipado</h3>
+            <p id="modalIntro" data-default-text="La versión {platform} está casi lista. Suscríbete para recibir el enlace de descarga directa.">La versión {platform} está casi lista. Suscríbete para recibir el enlace de descarga directa.</p>
+            <strong id="platform" style="display:none"></strong>
+            <form id="subscriptionForm" onsubmit="handleSubscription(event)" novalidate>
+                <input type="email" id="userEmail" name="email" data-i18n-placeholder="index.modal.email" placeholder="Tu correo electrónico" required autocomplete="email">
+                <div id="subEmailVerificationBox" class="verification-box">
+                    <p id="subEmailVerificationMessage" data-i18n="contact.verify.prompt">Verifica tu correo para continuar.</p>
+                    <div class="verification-actions">
+                        <button type="button" id="subSendVerificationBtn" data-i18n="contact.verify.button">VERIFICAR CORREO</button>
+                    </div>
+                </div>
+                <label style="display:flex;gap:10px;align-items:flex-start;font-size:0.9em;margin:10px 0 15px;text-align:left;">
+                    <input type="checkbox" id="subPrivacy" name="privacy" required onchange="validateSubscriptionForm()" style="width:auto;margin-top:3px;">
+                    <span data-i18n="index.modal.privacy">Acepto recibir la notificación de lanzamiento y la política de privacidad.</span>
+                </label>
+                <button type="submit" id="subSubmitBtn" disabled data-i18n="index.modal.submit">Activar Alerta</button>
+                <p class="subscription-manage-link">
+                    <button type="button" class="link-button" onclick="openStoreUnsubscribe()" data-i18n="index.modal.unsubscribeLink">¿Quieres darte de baja de las alertas?</button>
+                </p>
             </form>
         </div>
     </div>
@@ -262,29 +234,30 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <h4>Explora</h4>
-                <a class="active">La App</a>
-                <a href="targets.html">Destinos 2026</a>
-                <a href="guides.html">Audioguías</a>
-                <a href="blog.html">Blog / Noticias</a>
+                <h4 data-i18n="footer.explore">Explora</h4>
+                <a class="active" data-i18n="nav.app">La App</a>
+                <a href="targets.html" data-i18n="nav.targets">Destinos 2026</a>
+                <a href="guides.html" data-i18n="nav.guides">Audioguías</a>
+                <a href="blog.html" data-i18n="nav.blog">Blog</a>
             </div>
             <div class="footer-col">
-                <h4>Legal</h4>
-                <a href="privacy.html">Privacidad</a>
-                <a href="terms.html">Términos</a>
-                <a href="cookies.html">Cookies</a>
+                <h4 data-i18n="footer.legal">Legal</h4>
+                <a href="privacy.html" data-i18n="footer.privacy">Privacidad</a>
+                <a href="terms.html" data-i18n="footer.terms">Términos</a>
+                <a href="cookies.html" data-i18n="footer.cookies">Cookies</a>
             </div>
             <div class="footer-col">
-                <h4>Ayuda</h4>
-                <a href="contact.html">Contacto</a>
-                <a href="faq.html">Preguntas Frecuentes</a>
+                <h4 data-i18n="footer.help">Ayuda</h4>
+                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+                <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+                <a href="faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a>
             </div>
         </div>
 
         <div class="legal-bottom">
             &copy; <span id="current-year"></span> <strong>TourAI App</strong> - 
             <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a> 
-            - Todos los derechos reservados.
+            - <span data-i18n="footer.rights">Todos los derechos reservados.</span>
         </div>
     </footer>
 
@@ -296,37 +269,39 @@
             links.classList.toggle('show');
         }
     </script>
-    
+<script src="js/site-config.js"></script>
+    <script src="js/locales/en-GB.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/loading-overlay.js"></script>
+    <script src="js/feedback-modal.js"></script>
+    <script src="js/forms.js"></script>
+    <script src="js/store-subscription.js"></script>
+    <script src="js/store-unsubscribe.js"></script>
     <script>
-        function openModal(p) { document.getElementById('platform').innerText = p; document.getElementById('subModal').style.display = "block"; }
-        function closeModal() { document.getElementById('subModal').style.display = "none"; }
-        function handleSubscription(e) {
-            e.preventDefault();
-            const email = document.getElementById('userEmail').value;
-            const platform = document.getElementById('platform').innerText;
-            const subject = encodeURIComponent("Alerta Lanzamiento - " + platform);
-            const body = encodeURIComponent("Deseo suscribirme a la alerta para " + platform + ".\nEmail: " + email);
-            window.location.href = "mailto:info@tourai.es?subject=" + subject + "&body=" + body;
-            closeModal();
-        }
-        window.onclick = function(event) { if (event.target == document.getElementById('subModal')) closeModal(); }
+        TourAiStoreSubscription.init({
+            modalId: 'subModal',
+            formId: 'subscriptionForm',
+            platformId: 'platform',
+            introId: 'modalIntro',
+            emailInputId: 'userEmail',
+            privacyInputId: 'subPrivacy',
+            submitBtnId: 'subSubmitBtn',
+            verificationBoxId: 'subEmailVerificationBox',
+            verificationMessageId: 'subEmailVerificationMessage',
+            sendVerificationBtnId: 'subSendVerificationBtn',
+        });
+        TourAiStoreUnsubscribe.init();
     </script>
 
-    <div id="cookie-banner">
-        <div class="cookie-container">
-            <p class="cookie-text">Utilizamos cookies para mejorar tu experiencia. <a href="cookies.html" style="color: var(--accent);">Más info</a>.</p>
-            <div class="cookie-btns">
-                <button onclick="rechazarCookies()" class="btn-rechazar">Rechazar</button>
-                <button onclick="aceptarCookies()" class="btn-aceptar">Aceptar</button>
+    <div id="cookie-banner" class="site-cookie-banner" hidden aria-live="polite">
+        <div class="site-cookie-banner__inner">
+            <p class="site-cookie-banner__text"><span data-i18n="cookie.text">Utilizamos cookies para mejorar tu experiencia.</span> <a href="cookies.html" data-i18n="cookie.more">Más info</a>.</p>
+            <div class="site-cookie-banner__actions">
+                <button type="button" class="site-cookie-banner__reject" data-cookie-reject data-i18n="cookie.reject">Rechazar</button>
+                <button type="button" class="site-cookie-banner__accept" data-cookie-accept data-i18n="cookie.accept">Aceptar</button>
             </div>
         </div>
     </div>
-
-    <script>
-        const banner = document.getElementById('cookie-banner');
-        window.onload = function() { if (!localStorage.getItem('cookies-aceptadas')) banner.style.display = 'block'; };
-        function aceptarCookies() { localStorage.setItem('cookies-aceptadas', 'true'); banner.style.display = 'none'; }
-        function rechazarCookies() { localStorage.setItem('cookies-aceptadas', 'false'); banner.style.display = 'none'; }
-    </script>
+    <script src="js/cookie-consent.js"></script>
 </body>
 </html>

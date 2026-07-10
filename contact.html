@@ -1,24 +1,18 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-ES">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-adsense-account" content="ca-pub-8251840058544269">
-    <title>Contacto - TourAI</title>
+            <meta name="description" content="Contacta con el equipo de TourAI para soporte técnico, consultas comerciales o información sobre la app de turismo inteligente." data-i18n-meta="doc.meta.contact">
+<link rel="canonical" href="https://tourai.es/contact.html">
+<meta name="google-adsense-account" content="ca-pub-8251840058544269">
+    <title data-i18n-doc-title="doc.title.contact">Contacto - TourAI</title>
     
     <link rel="icon" type="image/png" href="img/tourai_logo.png">
     <link rel="apple-touch-icon" href="img/tourai_logo.png">
-
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        if (localStorage.getItem('cookies-aceptadas') === 'true') { gtag('consent', 'default', { 'ad_storage': 'granted', 'analytics_storage': 'granted', 'wait_for_update': 500 }); } 
-        else { gtag('consent', 'default', { 'ad_storage': 'denied', 'analytics_storage': 'denied', 'wait_for_update': 500 }); }
-    </script>
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8251840058544269" crossorigin="anonymous"></script>
-
-    <style>
+    <link rel="stylesheet" href="css/site.css">
+        <script src="js/cookie-consent-init.js"></script>
+<style>
         html { scroll-behavior: smooth; }
         :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
@@ -76,15 +70,28 @@
 
         header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid var(--accent); }
         h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
-        .ads-banner-container { width: 100%; height: 60px; background-color: #87CEEB; display: flex; justify-content: center; align-items: center; overflow: hidden; margin: 20px 0; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
-
         .main-layout { max-width: 1300px; margin: 30px auto; display: grid; grid-template-columns: 2.8fr 1.2fr; gap: 40px; padding: 0 20px; }
         .container { background-color: white; padding: 50px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .sidebar { background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 100px; }
         h2 { color: var(--primary); border-left: 8px solid var(--accent); padding-left: 20px; margin: 0 0 30px 0; font-size: 2.5em; background: #f9f9f9; padding-top: 10px; padding-bottom: 10px; }
         
         label { font-weight: bold; color: var(--primary); display: block; margin-bottom: 5px; }
-        input, textarea { width: 100%; padding: 15px; margin: 5px 0 20px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1em; background: #fbfbfb; transition: 0.3s; }
+        input, textarea { width: 100%; padding: 15px; margin: 5px 0 20px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: inherit; font-size: 1em; background: #fbfbfb; transition: 0.3s; }
+        input.input-invalid { border-color: #c0392b; background: #fff8f8; }
+        .field-error { color: #c0392b; font-size: 0.85em; margin: -12px 0 16px 0; }
+        .verification-box { display: none; margin: -8px 0 20px 0; padding: 18px; border-radius: 12px; border: 1px solid #cfe8ff; background: #f4faff; }
+        .verification-box.visible { display: block; }
+        .verification-box.verified { border-color: #b7dfc3; background: #f3fbf5; }
+        .verification-box p { margin: 0 0 12px 0; font-size: 0.92em; color: #35566f; }
+        .verification-box.verified p { color: #1f6b3b; }
+        .verification-box.button-only { border: none; background: transparent; padding: 0 0 15px 0; }
+        .verification-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .verification-actions button { width: auto; padding: 12px 18px; font-size: 0.95em; }
+        .verification-code-input { letter-spacing: 6px; text-align: center; font-size: 1.4em; font-weight: bold; }
+        .verification-hint { font-size: 0.85em; color: #666; margin-top: 12px; }
+        .verification-status { font-size: 0.9em; margin-top: 10px; }
+        .verification-status.error { color: #c0392b; }
+        .verification-status.success { color: #1f6b3b; }
         input:focus, textarea:focus { outline: none; border-color: var(--accent); background: #fff; box-shadow: 0 0 8px rgba(77, 184, 255, 0.2); }
         
         button { background: var(--primary); color: white; padding: 18px 40px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1.1em; transition: 0.3s; width: 100%; }
@@ -156,68 +163,92 @@
         </div>
 
         <div class="nav-links" id="navLinks">
-            <a href="index.html">La App</a>
-            <a href="targets.html">Destinos 2026</a>
-            <a href="guides.html">Audioguías</a>
-            <a href="blog.html">Blog / Noticias</a>
-            <a class="active">Contacto</a>
+            <a href="index.html" data-i18n="nav.app">La App</a>
+            <a href="targets.html" data-i18n="nav.targets">Destinos 2026</a>
+            <a href="guides.html" data-i18n="nav.guides">Audioguías</a>
+            <a href="blog.html" data-i18n="nav.blog">Blog</a>
+            <a class="active" data-i18n="nav.contact">Contacto</a>
+            <div class="lang-switch">
+                <button type="button" data-set-locale="es-ES">ES</button>
+                <button type="button" data-set-locale="en-GB">EN</button>
+            </div>
         </div>
     </nav>
 
-    <div class="ads-banner-container">
-        <ins class="adsbygoogle" style="display:inline-block;width:728px;height:60px" data-ad-client="ca-pub-8251840058544269" data-ad-slot="2107333980"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
-
     <header>
-        <h1>Contacto y Soporte TourAI</h1>
-        <p>Estamos aquí para ayudarte a navegar por el futuro del turismo inteligente.</p>
+        <h1 data-i18n="contact.title">Contacto y Soporte TourAI</h1>
+        <p data-i18n="contact.subtitle">Estamos aquí para ayudarte a navegar por el futuro del turismo inteligente.</p>
     </header>
 
     <div class="main-layout">
         <main class="container">
-            <h2>¿Tienes alguna duda técnica?</h2>
-            <p style="color: #666; margin-bottom: 30px;">Nuestro equipo técnico te responderá a la mayor brevedad posible.</p>
+            <h2 data-i18n="contact.heading">¿Tienes alguna duda técnica?</h2>
+            <p style="color: #666; margin-bottom: 30px;" data-i18n="contact.intro">Nuestro equipo técnico te responderá a la mayor brevedad posible.</p>
             
             <form id="contactForm">
-                <label>Nombre Completo</label>
-                <input type="text" id="name" placeholder="Ej: Juan Pérez" required>
+                <label data-i18n="contact.name">Nombre Completo</label>
+                <input type="text" id="name" name="name" data-i18n-placeholder="contact.name.placeholder" placeholder="Ej: Juan Pérez" required>
                 
-                <label>Correo Electrónico</label>
-                <input type="email" id="email" placeholder="tu@email.com" required>
+                <label data-i18n="contact.email">Correo Electrónico</label>
+                <input type="email" id="email" name="email" data-i18n-placeholder="contact.email.placeholder" placeholder="tu@email.com" required autocomplete="email">
+                <p id="emailError" class="field-error" data-i18n="contact.email.invalid" hidden>Introduce una dirección de correo válida (ejemplo: nombre@dominio.com).</p>
 
-                <label>Asunto de la consulta</label>
-                <input type="text" id="subject" placeholder="Ej: Error en la app, Información comercial...">
-                
-                <label>Mensaje</label>
-                <textarea id="message" placeholder="¿En qué podemos ayudarte?..." rows="6" required></textarea>
-                
-                <div style="margin-bottom: 25px; background: #f4f7f9; padding: 20px; border-radius: 12px; border: 1px solid #e1e8ed;">
-                    <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
-                        <input type="checkbox" id="privacy" style="width: 20px; height: 20px; margin-top: 2px; cursor: pointer;" required>
-                        <label for="privacy" style="font-weight: 600; font-size: 0.9em; color: var(--primary); cursor: pointer; line-height: 1.2;">
-                            He leído y acepto la <a href="javascript:void(0)" onclick="openModal()" style="color: var(--accent); text-decoration: underline;">Información de Protección de Datos</a>.
-                        </label>
-                    </div>
-                    <div style="font-size: 0.8em; color: #666; line-height: 1.4; padding-left: 32px;">
-                        <strong>Compromiso TourAI:</strong> Usaremos su email <u>exclusivamente</u> para responder esta duda. No recibirá publicidad ni spam.
+                <div id="emailVerificationBox" class="verification-box">
+                    <p id="emailVerificationMessage" data-i18n="contact.verify.prompt">Verifica tu correo para poder enviar la consulta.</p>
+                    <div class="verification-actions">
+                        <button type="button" id="sendVerificationBtn" onclick="startEmailVerification()" data-i18n="contact.verify.button">VERIFICAR CORREO</button>
                     </div>
                 </div>
 
-                <button type="button" id="submitBtn" onclick="enviarMailto()" disabled>ENVIAR CONSULTA AL EQUIPO TÉCNICO</button>
+                <label data-i18n="contact.subject">Asunto de la consulta</label>
+                <input type="text" id="subject" name="subject" data-i18n-placeholder="contact.subject.placeholder" placeholder="Ej: Error en la app, Información comercial...">
+                
+                <label data-i18n="contact.message">Mensaje</label>
+                <textarea id="message" name="message" data-i18n-placeholder="contact.message.placeholder" placeholder="¿En qué podemos ayudarte?..." rows="6" required></textarea>
+                
+                <div style="margin-bottom: 25px; background: #f4f7f9; padding: 20px; border-radius: 12px; border: 1px solid #e1e8ed;">
+                    <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                        <input type="checkbox" id="privacy" name="privacy" style="width: 20px; height: 20px; margin-top: 2px; cursor: pointer;" required>
+                        <label for="privacy" style="font-weight: 600; font-size: 0.9em; color: var(--primary); cursor: pointer; line-height: 1.2;">
+                            <span data-i18n="contact.privacy">He leído y acepto la Información de Protección de Datos.</span>
+                            <a href="javascript:void(0)" onclick="openModal()" style="color: var(--accent); text-decoration: underline;"> </a>
+                        </label>
+                    </div>
+                    <div style="font-size: 0.8em; color: #666; line-height: 1.4; padding-left: 32px;" data-i18n="contact.privacy.note">
+                        Usaremos su email exclusivamente para responder esta duda. No recibirá publicidad ni spam.
+                    </div>
+                </div>
+
+                <button type="button" id="submitBtn" onclick="submitContactForm()" disabled data-i18n="contact.submit">ENVIAR CONSULTA AL EQUIPO TÉCNICO</button>
             </form>
 
             <div class="info-box">
                 <p style="margin: 0; font-size: 0.95em; color: var(--primary);">
-                    <strong>Email Directo:</strong> <a href="mailto:info@tourai.es" style="color: var(--secondary); font-weight: bold;">info@tourai.es</a>
+                    <strong data-i18n="contact.direct">Email Directo:</strong> <a href="mailto:info@tourai.es" style="color: var(--secondary); font-weight: bold;">info@tourai.es</a>
                 </p>
             </div>
         </main>
     </div>
 
+    <div id="emailVerificationModal" class="modal-overlay" onclick="closeEmailVerificationModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-modal" role="button" aria-label="Cerrar">&times;</span>
+            <h3 data-i18n="contact.verify.title">Verifica tu correo</h3>
+            <p data-i18n="contact.verify.intro">Te hemos enviado un código de 6 dígitos. Introdúcelo para confirmar tu dirección antes de enviar la consulta.</p>
+            <label for="verificationCode" data-i18n="contact.verify.code">Código de verificación</label>
+            <input type="text" id="verificationCode" class="verification-code-input" inputmode="numeric" pattern="[0-9]*" maxlength="6" data-i18n-placeholder="contact.verify.code.placeholder" placeholder="000000" autocomplete="one-time-code">
+            <p id="verificationModalStatus" class="verification-status" hidden></p>
+            <button type="button" id="verifyCodeBtn" onclick="confirmVerificationCode()" data-i18n="contact.verify.submit">Confirmar código</button>
+            <p class="verification-hint">
+                <button type="button" id="resendVerificationBtn" onclick="resendVerificationCode()" style="background: transparent; color: var(--accent); padding: 0; width: auto; font-size: 0.9em;" data-i18n="contact.verify.resend">Reenviar código</button>
+            </p>
+        </div>
+    </div>
+
     <div id="privacyModal" class="modal-overlay" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <span class="close-modal" role="button" aria-label="Cerrar">&times;</span>
+            <div data-i18n-html="page.contact.privacyModal">
             <h3>Protección de Datos</h3>
             <ul>
                 <li><strong>Responsable:</strong> TourAI App.</li>
@@ -227,35 +258,37 @@
                 <li><strong>Derechos:</strong> Acceso, rectificación y supresión escribiendo a info@tourai.es.</li>
             </ul>
             <p style="font-size: 0.8em; color: #888; margin-top: 20px;">Para más detalles, consulte nuestra Política de Privacidad completa.</p>
+            </div>
         </div>
     </div>
 
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <h4>Explora</h4>
-                <a href="index.html">La App</a>
-                <a href="targets.html">Destinos 2026</a>
-                <a href="guides.html">Audioguías</a>
-                <a href="blog.html">Blog / Noticias</a>
+                <h4 data-i18n="footer.explore">Explora</h4>
+                <a href="index.html" data-i18n="nav.app">La App</a>
+                <a href="targets.html" data-i18n="nav.targets">Destinos 2026</a>
+                <a href="guides.html" data-i18n="nav.guides">Audioguías</a>
+                <a href="blog.html" data-i18n="nav.blog">Blog</a>
             </div>
             <div class="footer-col">
-                <h4>Legal</h4>
-                <a href="privacy.html">Privacidad</a>
-                <a href="terms.html">Términos</a>
-                <a href="cookies.html">Cookies</a>
+                <h4 data-i18n="footer.legal">Legal</h4>
+                <a href="privacy.html" data-i18n="footer.privacy">Privacidad</a>
+                <a href="terms.html" data-i18n="footer.terms">Términos</a>
+                <a href="cookies.html" data-i18n="footer.cookies">Cookies</a>
             </div>
             <div class="footer-col">
-                <h4>Ayuda</h4>
-                <a class="active">Contacto</a>
-                <a href="faq.html">Preguntas Frecuentes</a>
+                <h4 data-i18n="footer.help">Ayuda</h4>
+                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+                <a class="active" data-i18n="nav.contact">Contacto</a>
+                <a href="faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a>
             </div>
         </div>
 
         <div class="legal-bottom">
             &copy; <span id="current-year"></span> <strong>TourAI App</strong> - 
             <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a> 
-            - Todos los derechos reservados.
+            - <span data-i18n="footer.rights">Todos los derechos reservados.</span>
         </div>
     </footer>
 
@@ -270,80 +303,312 @@
         function openModal() { document.getElementById('privacyModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('privacyModal').style.display = 'none'; }
 
-        // --- LÓGICA DE ACTIVACIÓN ACTUALIZADA CON REGEX ---
+        function tContact(key, fallback) {
+            const locale = window.TourAiI18n?.getLocale() ?? 'es-ES';
+            return window.TourAiI18n?.tOr(key, locale, null, fallback) ?? fallback;
+        }
+
+        function setVerificationBoxState({ visible, verified, showVerifyButton }) {
+            window.TourAiForms?.renderEmailVerificationBox(
+                {
+                    boxId: 'emailVerificationBox',
+                    messageId: 'emailVerificationMessage',
+                    sendButtonId: 'sendVerificationBtn',
+                },
+                { visible, verified, showVerifyButton }
+            );
+        }
+
+        function applyContactVerificationBox(email) {
+            window.TourAiForms?.applyEmailVerificationBox(
+                email,
+                {
+                    boxId: 'emailVerificationBox',
+                    messageId: 'emailVerificationMessage',
+                    sendButtonId: 'sendVerificationBtn',
+                },
+                'contact'
+            );
+        }
+
+        function openEmailVerificationModal() {
+            document.getElementById('emailVerificationModal').style.display = 'flex';
+            const status = document.getElementById('verificationModalStatus');
+            status.hidden = true;
+            status.className = 'verification-status';
+            document.getElementById('verificationCode').value = '';
+            document.getElementById('verificationCode').focus();
+        }
+
+        function closeEmailVerificationModal() {
+            document.getElementById('emailVerificationModal').style.display = 'none';
+        }
+
+        function showVerificationModalStatus(message, type) {
+            const status = document.getElementById('verificationModalStatus');
+            status.textContent = message;
+            status.className = 'verification-status ' + (type ?? '');
+            status.hidden = false;
+        }
+
+        async function startEmailVerification() {
+            if (window.TourAiLoading?.isVisible()) {
+                return;
+            }
+
+            const email = document.getElementById('email').value.trim();
+            const button = document.getElementById('sendVerificationBtn');
+            const originalText = tContact('contact.verify.button', button.textContent);
+            try {
+                button.disabled = true;
+                button.textContent = tContact('contact.verify.sending', 'Enviando código...');
+                const result = await window.TourAiForms.sendContactVerificationCode(email);
+                if (!result.ok) {
+                    if (result.error === 'rate_limited') {
+                        throw new Error(tContact('contact.verify.rateLimited', 'Demasiados intentos. Espera unos minutos.'));
+                    }
+                    throw new Error(tContact('contact.verify.sendError', 'No se pudo enviar el código.'));
+                }
+                openEmailVerificationModal();
+                showVerificationModalStatus(
+                    tContact('contact.verify.sent', 'Código enviado. Revisa tu bandeja de entrada y spam.'),
+                    'success'
+                );
+            } catch (error) {
+                window.TourAiFeedback?.show({
+                    type: 'error',
+                    message: error.message || tContact('contact.verify.sendError', 'No se pudo enviar el código.'),
+                });
+            } finally {
+                button.textContent = originalText;
+                button.disabled = false;
+                validarForm();
+            }
+        }
+
+        async function resendVerificationCode() {
+            if (window.TourAiLoading?.isVisible()) {
+                return;
+            }
+
+            const button = document.getElementById('resendVerificationBtn');
+            const originalText = tContact('contact.verify.resend', button.textContent);
+            try {
+                button.disabled = true;
+                const result = await window.TourAiForms.sendContactVerificationCode(
+                    document.getElementById('email').value.trim()
+                );
+                if (!result.ok) {
+                    if (result.error === 'rate_limited') {
+                        throw new Error(tContact('contact.verify.rateLimited', 'Demasiados intentos. Espera unos minutos.'));
+                    }
+                    throw new Error(tContact('contact.verify.sendError', 'No se pudo enviar el código.'));
+                }
+                showVerificationModalStatus(
+                    tContact('contact.verify.resent', 'Se ha enviado un nuevo código.'),
+                    'success'
+                );
+            } catch (error) {
+                showVerificationModalStatus(error.message, 'error');
+            } finally {
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        }
+
+        async function confirmVerificationCode() {
+            if (window.TourAiLoading?.isVisible()) {
+                return;
+            }
+
+            const email = document.getElementById('email').value.trim();
+            const code = document.getElementById('verificationCode').value.trim();
+            const button = document.getElementById('verifyCodeBtn');
+            const originalText = tContact('contact.verify.submit', button.textContent);
+            try {
+                button.disabled = true;
+                button.textContent = tContact('contact.verify.verifying', 'VERIFICANDO...');
+                const result = await window.TourAiForms.verifyContactCode(email, code);
+                if (!result.ok) {
+                    const errorKey = {
+                        invalid_code: ['contact.verify.invalidCode', 'El código no es correcto. Inténtalo de nuevo.'],
+                        expired: ['contact.verify.expired', 'El código ha caducado. Solicita uno nuevo.'],
+                        too_many_attempts: ['contact.verify.rateLimited', 'Demasiados intentos. Espera unos minutos.'],
+                        not_found: ['contact.verify.invalidCode', 'El código no es correcto. Inténtalo de nuevo.'],
+                    }[result.error] ?? ['contact.verify.invalidCode', 'El código no es correcto. Inténtalo de nuevo.'];
+                    showVerificationModalStatus(tContact(errorKey[0], errorKey[1]), 'error');
+                    return;
+                }
+                closeEmailVerificationModal();
+                applyContactVerificationBox(email);
+                validarForm();
+            } catch (error) {
+                showVerificationModalStatus(
+                    tContact('contact.verify.invalidCode', 'El código no es correcto. Inténtalo de nuevo.'),
+                    'error'
+                );
+            } finally {
+                button.textContent = originalText;
+                button.disabled = false;
+            }
+        }
+
+        // --- Validación del formulario con feedback visual en email ---
         function validarForm() {
             const n = document.getElementById('name').value.trim();
             const e = document.getElementById('email').value.trim();
             const m = document.getElementById('message').value.trim();
             const p = document.getElementById('privacy').checked;
             const b = document.getElementById('submitBtn');
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
 
-            // Regex de validación estricta
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const isEmailValid = emailPattern.test(e);
+            const isEmailValid = window.TourAiForms?.isValidEmail(e) ?? false;
+            const showEmailError = e.length > 0 && !isEmailValid;
+            const isEmailVerified = window.TourAiForms?.isContactEmailVerified(e) ?? false;
 
-            // Se activa si los campos requeridos están llenos, el email es válido y el checkbox está aceptado
-            if (n.length > 0 && isEmailValid && m.length > 0 && p) {
-                b.disabled = false;
-            } else {
-                b.disabled = true;
+            emailInput.classList.toggle('input-invalid', showEmailError);
+            if (emailError) {
+                emailError.hidden = !showEmailError;
+                if (showEmailError && window.TourAiI18n) {
+                const msg = window.TourAiI18n.tOr(
+                    'contact.email.invalid',
+                    window.TourAiI18n.getLocale(),
+                    null,
+                    emailError.getAttribute('data-default-text') ?? ''
+                );
+                if (msg) emailError.textContent = msg;
             }
+            }
+
+            if (!isEmailValid) {
+                window.TourAiForms?.clearContactEmailVerification();
+                window.TourAiForms?.resetEmailRegistrationCheck();
+                setVerificationBoxState({ visible: false, verified: false, showVerifyButton: false });
+            } else {
+                applyContactVerificationBox(e);
+            }
+
+            b.disabled = !(n.length > 0 && isEmailValid && isEmailVerified && m.length > 0 && p);
         }
 
-        // Listeners individuales
+        function scheduleContactEmailCheck() {
+            window.TourAiForms?.scheduleEmailRegistrationCheck(
+                document.getElementById('email').value,
+                {
+                    context: 'contact',
+                    getEmail: () => document.getElementById('email').value,
+                    onStateChange: validarForm,
+                }
+            );
+        }
+
+        document.getElementById('email').addEventListener('input', function () {
+            window.TourAiForms?.onContactEmailInput(this.value);
+            validarForm();
+            scheduleContactEmailCheck();
+        });
         document.getElementById('name').addEventListener('input', validarForm);
-        document.getElementById('email').addEventListener('input', validarForm);
+        document.getElementById('email').addEventListener('blur', scheduleContactEmailCheck);
+        document.getElementById('verificationCode').addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '').slice(0, 6);
+        });
+        document.getElementById('verificationCode').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                confirmVerificationCode();
+            }
+        });
         document.getElementById('message').addEventListener('input', validarForm);
         document.getElementById('privacy').addEventListener('change', validarForm);
+
+        function bindOverlayClose(modalId, closeFn) {
+            const modal = document.getElementById(modalId);
+            if (!modal || modal.dataset.closeBound === 'true') {
+                return;
+            }
+
+            modal.dataset.closeBound = 'true';
+            modal.querySelector('.close-modal')?.addEventListener('click', (event) => {
+                event.preventDefault();
+                closeFn();
+            });
+        }
+
+        bindOverlayClose('privacyModal', closeModal);
+        bindOverlayClose('emailVerificationModal', closeEmailVerificationModal);
     </script>
 
     <script>
-        async function enviarMailto() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            const privacy = document.getElementById('privacy').checked;
-            const button = document.getElementById("submitBtn");
-            const originalText = button.textContent;
+        async function submitContactForm() {
+            if (window.TourAiLoading?.isVisible()) {
+                return;
+            }
+
+            const form = document.getElementById('contactForm');
+            const button = document.getElementById('submitBtn');
+            const email = document.getElementById('email').value.trim();
+            const locale = window.TourAiI18n?.getLocale() ?? 'es-ES';
+            const originalText = window.TourAiI18n?.t('contact.submit', locale) ?? button.textContent;
+
+            if (!window.TourAiForms.isContactEmailVerified(email)) {
+                window.TourAiFeedback?.show({
+                    type: 'info',
+                    message: tContact('contact.error.notVerified', 'Debes verificar tu correo antes de enviar la consulta.'),
+                    onClose: () => startEmailVerification(),
+                });
+                return;
+            }
 
             try {
                 button.disabled = true;
-                button.textContent = "ENVIANDO...";
-                const response = await fetch('https://us-central1-tourai-1f3d9.cloudfunctions.net/sendContactForm', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, subject, message, privacy })
-                });
-                if (response.ok) {
-                    alert("¡Mensaje enviado con éxito!");
-                    document.getElementById('contactForm').reset();
-                    validarForm(); 
-                } else { throw new Error(); }
+                button.textContent = tContact('contact.submitting', 'ENVIANDO...');
+                const result = await window.TourAiForms.submitContact(form);
+                if (result.ok) {
+                    form.reset();
+                    window.TourAiForms.clearContactEmailVerification();
+                    validarForm();
+                    window.TourAiFeedback?.show({
+                        type: 'success',
+                        title: tContact('contact.success.title', '¡Mensaje enviado!'),
+                        message: tContact('contact.success', 'Nuestro equipo técnico responderá a la mayor brevedad posible.'),
+                    });
+                } else {
+                    const errorMessages = {
+                        email_not_verified: tContact('contact.error.notVerified', 'Debes verificar tu correo antes de enviar la consulta.'),
+                        smtp_not_configured: tContact('contact.error.smtp', 'El servicio de envío no está disponible temporalmente. Inténtalo más tarde o escribe a info@tourai.es.'),
+                    };
+                    throw new Error(errorMessages[result.error] ?? tContact('contact.error', 'No se pudo enviar. Inténtalo de nuevo.'));
+                }
             } catch (e) {
-                alert("Error al enviar. Inténtalo de nuevo.");
+                const shouldVerify = (e.message || '').toLowerCase().includes('verificar');
+                window.TourAiFeedback?.show({
+                    type: 'error',
+                    message: e.message || tContact('contact.error', 'No se pudo enviar. Inténtalo de nuevo.'),
+                    onClose: shouldVerify ? () => startEmailVerification() : undefined,
+                });
             } finally {
                 button.textContent = originalText;
                 validarForm();
             }
         }
     </script>
+<script src="js/site-config.js"></script>
+    <script src="js/locales/en-GB.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/loading-overlay.js"></script>
+    <script src="js/feedback-modal.js"></script>
+    <script src="js/forms.js"></script>
 
-    <div id="cookie-banner">
-        <div class="cookie-content">
-            <p style="margin: 0; font-size: 0.9em;">Utilizamos cookies para mejorar tu experiencia. <a href="cookies.html" style="color: var(--accent);">Más info</a>.</p>
-            <div class="cookie-btns-group">
-                <button onclick="rechazarCookies()" style="background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Rechazar</button>
-                <button onclick="aceptarCookies()" style="background: var(--accent); border: none; color: #0A2A43; padding: 10px 30px; border-radius: 8px; cursor: pointer; font-weight: bold;">Aceptar</button>
+    <div id="cookie-banner" class="site-cookie-banner" hidden aria-live="polite">
+        <div class="site-cookie-banner__inner">
+            <p class="site-cookie-banner__text"><span data-i18n="cookie.text">Utilizamos cookies para mejorar tu experiencia.</span> <a href="cookies.html" data-i18n="cookie.more">Más info</a>.</p>
+            <div class="site-cookie-banner__actions">
+                <button type="button" class="site-cookie-banner__reject" data-cookie-reject data-i18n="cookie.reject">Rechazar</button>
+                <button type="button" class="site-cookie-banner__accept" data-cookie-accept data-i18n="cookie.accept">Aceptar</button>
             </div>
         </div>
     </div>
-
-    <script>
-        const banner = document.getElementById('cookie-banner');
-        window.onload = function() { if (!localStorage.getItem('cookies-aceptadas')) banner.style.display = 'block'; };
-        function aceptarCookies() { localStorage.setItem('cookies-aceptadas', 'true'); banner.style.display = 'none'; }
-        function rechazarCookies() { localStorage.setItem('cookies-aceptadas', 'false'); banner.style.display = 'none'; }
-    </script>
+    <script src="js/cookie-consent.js"></script>
 </body>
 </html>
