@@ -5,100 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta name="description" content="Audioguías inteligentes de TourAI: narraciones por GPS, contenido curado e inteligencia artificial para explorar ciudades." data-i18n-meta="doc.meta.guides">
 <link rel="canonical" href="https://tourai.es/guides.html">
+
+    <link rel="alternate" hreflang="es-ES" href="https://tourai.es/guides.html">
+    <link rel="alternate" hreflang="en-GB" href="https://tourai.es/guides.html">
+    <link rel="alternate" hreflang="x-default" href="https://tourai.es/guides.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TourAI">
+    <meta property="og:title" content="TourAI">
+    <meta property="og:description" content="Audioguías inteligentes de TourAI: narraciones por GPS, contenido curado e inteligencia artificial para explorar ciudades.">
+    <meta property="og:url" content="https://tourai.es/guides.html">
+    <meta property="og:image" content="https://tourai.es/img/tourai_logo.png">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:locale:alternate" content="en_GB">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="TourAI">
+    <meta name="twitter:description" content="Audioguías inteligentes de TourAI: narraciones por GPS, contenido curado e inteligencia artificial para explorar ciudades.">
+    <meta name="twitter:image" content="https://tourai.es/img/tourai_logo.png">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"TourAI","url":"https://tourai.es","logo":"https://tourai.es/img/tourai_logo.png","email":"info@tourai.es","founder":{"@type":"Person","name":"Jordi Perelló"},"address":{"@type":"PostalAddress","addressCountry":"ES"}}</script>
 <meta name="google-adsense-account" content="ca-pub-8251840058544269">
     <title data-i18n-doc-title="doc.title.guides">Audioguías Inteligentes - TourAI</title>
       
     <link rel="icon" type="image/png" href="img/tourai_logo.png">
     <link rel="apple-touch-icon" href="img/tourai_logo.png">
     <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="css/legal-layout.css">
         <script src="js/cookie-consent-init.js"></script>
-<style>
-        html { scroll-behavior: smooth; }
-        :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
-      
-        #cookie-banner { position: fixed; bottom: 20px; left: 20px; right: 20px; background: #0A2A43; color: white; padding: 20px; border-radius: 12px; z-index: 9999; border: 1px solid var(--accent); display: none; }
-        .cookie-btns { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
-        .cookie-btns button { padding: 8px 20px; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; }
-         
-        nav { background-color: #fff; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px #0000004d }
-        .nav-logo-container { width: 150px; height: 50px; flex-shrink: 0; }
-        .nav-logo-container img { width: 150px; height: 50px; object-fit: contain; }
-        .nav-links { display: flex; align-items: center; justify-content: center; flex-grow: 1; }
-        nav a { color: var(--primary); margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; }
-        nav a:hover { color: var(--accent); }
-        nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; }
-
-        /* Estilos Menu Hamburguesa */
-        .menu-icon { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 1001; }
-        .menu-icon div { width: 25px; height: 3px; background-color: var(--primary); transition: 0.3s; }
-
-        .floating-logo { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--white); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(0,0,0,0.2); z-index: 999; cursor: pointer; transition: transform 0.3s ease; border: 2px solid var(--accent); }
-        .floating-logo img { width: 35px; height: auto; }
-        .floating-logo:hover { transform: scale(1.1); }
-
-        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid var(--accent); }
-        h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
-        .main-layout { max-width: 1300px; margin: 30px auto; display: grid; grid-template-columns: 2.8fr 1.2fr; gap: 40px; padding: 0 20px; }
-        .container { background-color: white; padding: 50px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .sidebar { background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 100px; }
-        
-        h2 { color: var(--primary); border-left: 8px solid var(--accent); padding-left: 20px; margin: 40px 0 20px 0; font-size: 2.2em; background: #f9f9f9; padding-top: 10px; padding-bottom: 10px; }
-        .feature-box { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
-        .feature-box:last-child { border-bottom: none; }
-        .feature-box h3 { color: var(--secondary); font-size: 1.6em; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-        .feature-box p { font-size: 1.1em; color: #555; margin: 0; }
-
-        .sidebar-info { background: #f0f7ff; padding: 20px; border-radius: 10px; border-left: 4px solid var(--accent); margin-bottom: 20px; }
-        .sidebar-info h4 { margin-top: 0; color: var(--primary); margin-bottom: 10px; }
-        .sidebar-info p { font-size: 0.95em; margin: 0; line-height: 1.5; }
-
-        footer { background-color: #051622; color: #ffffff; padding: 80px 20px 40px 20px; margin-top: 100px; border-top: 4px solid var(--accent); text-align: center; }
-        .footer-grid { max-width: 1200px; margin: 0 auto 60px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; }
-        .footer-col h4 { color: var(--accent); font-size: 1.1em; text-transform: uppercase; margin-bottom: 25px; font-weight: 800; }
-        .footer-col a { display: block; color: #ccc; text-decoration: none; margin-bottom: 12px; transition: 0.3s; }
-        .footer-col a:hover { color: #fff; transform: translateX(5px); }
-        .footer-col a.active { color: var(--accent); font-weight: bold; pointer-events: none; }
-        
-        .legal-bottom { font-size: 0.9em; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; }
-        .footer-email { color: var(--accent) !important; text-decoration: none; font-weight: bold; }
-
-        @media (max-width: 1000px) { 
-            .main-layout { grid-template-columns: 1fr; } 
-            h1 { font-size: 2.5em; } 
-            .sidebar { position: static; } 
-            .footer-grid { text-align: center; } 
-
-            /* Lógica Visual Nav Responsive */
-            .menu-icon { display: flex; }
-            .nav-links { 
-                display: none; 
-                flex-direction: column; 
-                position: absolute; 
-                top: 70px; 
-                left: 0; 
-                width: 100%; 
-                background: white; 
-                box-shadow: 0 10px 15px rgba(0,0,0,0.1); 
-                padding: 20px 0;
-                text-align: center;
-            }
-            .nav-links.active { display: flex; }
-            nav a { margin: 10px 0; }
-            nav { padding: 10px 20px; }
-        }
-    </style>
 </head>
-<body>
+<body class="site-legal-page">
 
     <div class="floating-logo" onclick="window.scrollTo(0,0)" title="Volver arriba">
         <img src="img/tourai_logo.png" alt="Icono TourAI">
     </div>
 
     <nav>
-        <div class="nav-logo-container">
-            <img src="img/tourai_logo_inline.png" alt="TourAI Logo">
-        </div>
+        <div class="nav-logo-container"><a href="index.html"><img src="img/tourai_logo_inline.png" alt="TourAI"></a></div>
 
         <div class="menu-icon" onclick="toggleMenu()">
             <div></div>
@@ -111,6 +51,7 @@
             <a href="targets.html" data-i18n="nav.targets">Destinos 2026</a>
             <a class="active" data-i18n="nav.guides">Audioguías</a>
             <a href="blog.html" data-i18n="nav.blog">Blog</a>
+            <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
             <a href="contact.html" data-i18n="nav.contact">Contacto</a>
             <div class="lang-switch">
                 <button type="button" data-set-locale="es-ES">ES</button>
@@ -205,16 +146,6 @@
 <script src="js/site-config.js"></script>
     <script src="js/locales/en-GB.js"></script>
     <script src="js/i18n.js"></script>
-
-    <div id="cookie-banner" class="site-cookie-banner" hidden aria-live="polite">
-        <div class="site-cookie-banner__inner">
-            <p class="site-cookie-banner__text"><span data-i18n="cookie.text">Utilizamos cookies técnicas y, si aceptas, cookies publicitarias de terceros (Google AdSense).</span> <a href="cookies.html" data-i18n="cookie.more">Más info</a>.</p>
-            <div class="site-cookie-banner__actions">
-                <button type="button" class="site-cookie-banner__reject" data-cookie-reject data-i18n="cookie.reject">Rechazar</button>
-                <button type="button" class="site-cookie-banner__accept" data-cookie-accept data-i18n="cookie.accept">Aceptar</button>
-            </div>
-        </div>
-    </div>
-    <script src="js/cookie-consent.js"></script>
+<script src="js/cookie-consent.js"></script>
 </body>
 </html>

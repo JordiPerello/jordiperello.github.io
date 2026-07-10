@@ -174,7 +174,7 @@ window.TourAiEnGBMessages = {
                     <li>Real-time answers to historical questions.</li>
                 </ul>
             </div>
-            <img src="https://img.freepik.com/fotos-premium/foto-de-uma-guia-turistica-compartilhando-informacoes-e-apontando-para-um-mapa_762026-84753.jpg" alt="Private guide" class="app-img">
+            <img src="https://img.freepik.com/fotos-premium/foto-de-uma-guia-turistica-compartilhando-informacoes-e-apontando-para-um-mapa_762026-84753.jpg" alt="Private guide" class="app-img" loading="lazy" width="800" height="400">
         </section>
 
         <section class="feature-block reverse">
@@ -186,7 +186,7 @@ window.TourAiEnGBMessages = {
                     <li><strong>Voice Queries:</strong> Search for restaurants, transport or historical facts by speaking naturally with the AI.</li>
                 </ul>
             </div>
-            <img src="https://img.freepik.com/premium-photo/young-female-tourist-using-smartphone-platform-applications-helping-tourism-about-travel-map-gps_35674-17150.jpg?w=2000" alt="AI chat" class="app-img">
+            <img src="https://img.freepik.com/premium-photo/young-female-tourist-using-smartphone-platform-applications-helping-tourism-about-travel-map-gps_35674-17150.jpg?w=2000" alt="AI chat" class="app-img" loading="lazy" width="800" height="400">
         </section>
 
         <h2>Planned app features</h2>

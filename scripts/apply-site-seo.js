@@ -171,6 +171,57 @@ function removeLegacyCookieBanner(content) {
   return updated;
 }
 
+function buildSeoExtras(page) {
+  const description = page.metaDescription;
+  const canonical = page.canonical;
+  const isHome = page.file === "index.html";
+
+  const organizationJson = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "TourAI",
+    url: "https://tourai.es",
+    logo: "https://tourai.es/img/tourai_logo.png",
+    email: "info@tourai.es",
+    founder: { "@type": "Person", name: "Jordi Perelló" },
+    address: { "@type": "PostalAddress", addressCountry: "ES" },
+  };
+
+  const schemas = [organizationJson];
+  if (isHome) {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "TourAI",
+      url: "https://tourai.es",
+      inLanguage: ["es-ES", "en-GB"],
+      publisher: { "@type": "Organization", name: "TourAI" },
+    });
+  }
+
+  const jsonLd = schemas
+    .map((entry) => `<script type="application/ld+json">${JSON.stringify(entry)}</script>`)
+    .join("\n    ");
+
+  return `
+    <link rel="alternate" hreflang="es-ES" href="${canonical}">
+    <link rel="alternate" hreflang="en-GB" href="${canonical}">
+    <link rel="alternate" hreflang="x-default" href="${canonical}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TourAI">
+    <meta property="og:title" content="TourAI">
+    <meta property="og:description" content="${description}">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:image" content="https://tourai.es/img/tourai_logo.png">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:locale:alternate" content="en_GB">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="TourAI">
+    <meta name="twitter:description" content="${description}">
+    <meta name="twitter:image" content="https://tourai.es/img/tourai_logo.png">
+    ${jsonLd}`;
+}
+
 function ensureHead(content, page) {
   const prefix = assetPrefix(depthFor(page.file));
   let updated = removeInlineConsentScript(content);
@@ -208,6 +259,13 @@ function ensureHead(content, page) {
           `${match}    <meta name="description" content="${page.metaDescription}" data-i18n-meta="${page.i18nMeta}">\n`
       );
     }
+  }
+
+  if (!updated.includes('hreflang="es-ES"')) {
+    updated = updated.replace(
+      /<link rel="canonical" href="[^"]*">\s*/i,
+      (match) => `${match}${buildSeoExtras(page)}\n`
+    );
   }
 
   return updated;

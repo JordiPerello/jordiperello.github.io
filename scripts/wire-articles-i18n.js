@@ -15,8 +15,8 @@ const slugs = [
 const footer = `    <footer>
         <div class="footer-grid">
             <div class="footer-col"><h4 data-i18n="footer.explore">Explora</h4><a href="../index.html" data-i18n="nav.app">La App</a><a href="../blog.html" data-i18n="nav.blog">Blog</a><a href="../about.html" data-i18n="footer.about">Sobre nosotros</a></div>
-            <div class="footer-col"><h4 data-i18n="footer.legal">Legal</h4><a href="../privacy.html" data-i18n="footer.privacy">Privacidad</a><a href="../terms.html" data-i18n="footer.terms">Términos</a></div>
-            <div class="footer-col"><h4 data-i18n="footer.help">Ayuda</h4><a href="../contact.html" data-i18n="nav.contact">Contacto</a><a href="mailto:info@tourai.es">info@tourai.es</a></div>
+            <div class="footer-col"><h4 data-i18n="footer.legal">Legal</h4><a href="../privacy.html" data-i18n="footer.privacy">Privacidad</a><a href="../terms.html" data-i18n="footer.terms">Términos</a><a href="../cookies.html" data-i18n="footer.cookies">Cookies</a></div>
+            <div class="footer-col"><h4 data-i18n="footer.help">Ayuda</h4><a href="../contact.html" data-i18n="nav.contact">Contacto</a><a href="../faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a><a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a></div>
         </div>
         <div class="legal-bottom">&copy; <span id="y"></span> TourAI App - <span data-i18n="footer.rights">Todos los derechos reservados.</span></div>
     </footer>

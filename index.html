@@ -3,95 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TourAI: blog de viajes, destinos y audioguías. App de guía turística con IA, chat, voz, mapas y narración por GPS." data-i18n-meta="doc.meta.index">
+    <meta name="description" content="TourAI: guía turística con inteligencia artificial. Chat, voz, mapas y audioguías para viajar a tu ritmo con la app TourAI." data-i18n-meta="doc.meta.index">
     <link rel="canonical" href="https://tourai.es/">
-    <meta name="google-adsense-account" content="ca-pub-8251840058544269">
+    
+    <link rel="alternate" hreflang="es-ES" href="https://tourai.es/">
+    <link rel="alternate" hreflang="en-GB" href="https://tourai.es/">
+    <link rel="alternate" hreflang="x-default" href="https://tourai.es/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TourAI">
+    <meta property="og:title" content="TourAI">
+    <meta property="og:description" content="TourAI: guía turística con inteligencia artificial. Chat, voz, mapas y audioguías para viajar a tu ritmo con la app TourAI.">
+    <meta property="og:url" content="https://tourai.es/">
+    <meta property="og:image" content="https://tourai.es/img/tourai_logo.png">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:locale:alternate" content="en_GB">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="TourAI">
+    <meta name="twitter:description" content="TourAI: guía turística con inteligencia artificial. Chat, voz, mapas y audioguías para viajar a tu ritmo con la app TourAI.">
+    <meta name="twitter:image" content="https://tourai.es/img/tourai_logo.png">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"TourAI","url":"https://tourai.es","logo":"https://tourai.es/img/tourai_logo.png","email":"info@tourai.es","founder":{"@type":"Person","name":"Jordi Perelló"},"address":{"@type":"PostalAddress","addressCountry":"ES"}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"TourAI","url":"https://tourai.es","inLanguage":["es-ES","en-GB"],"publisher":{"@type":"Organization","name":"TourAI"}}</script>
+<meta name="google-adsense-account" content="ca-pub-8251840058544269">
     <title data-i18n-doc-title="doc.title.index">TourAI - El Futuro del Turismo Inteligente 2026</title>
       
     <link rel="icon" type="image/png" href="img/tourai_logo.png">
     <link rel="apple-touch-icon" href="img/tourai_logo.png">
     <link rel="stylesheet" href="css/site.css">
     <script src="js/cookie-consent-init.js"></script>
-
-    <style>
-        html { scroll-behavior: smooth; }
-        :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
-          
-        nav { background-color: #fff; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px #0000004d }
-        .nav-logo-container { width: 150px; height: 50px; flex-shrink: 0; }
-        .nav-logo-container img { width: 150px; height: 50px; object-fit: contain; }
-        .nav-links { display: flex; align-items: center; justify-content: center; flex-grow: 1; }
-        nav a { color: var(--primary); margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95em; text-transform: uppercase; }
-        nav a:hover { color: var(--accent); }
-        nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); cursor: default; pointer-events: none; }
-
-        .menu-icon { display: none; cursor: pointer; font-size: 24px; color: var(--primary); flex-direction: column; gap: 5px; }
-        .menu-icon span { width: 30px; height: 3px; background: var(--primary); border-radius: 3px; transition: 0.3s; }
-
-        .floating-logo { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--white); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(0,0,0,0.2); z-index: 999; cursor: pointer; transition: transform 0.3s ease; border: 2px solid var(--accent); }
-        .floating-logo img { width: 35px; height: auto; }
-        .floating-logo:hover { transform: scale(1.1); }
-
-        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 0; text-align: center; border-bottom: 5px solid var(--accent); }
-        h1 { margin: 0; font-size: 3.5em; letter-spacing: -2px; line-height: 1.1; font-weight: 900; }
-        
-        .content-wrapper { max-width: 1200px; margin: 30px auto; padding: 60px 20px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        
-        h2 { color: var(--primary); border-left: 8px solid var(--accent); padding-left: 20px; margin: 60px 0 30px 0; font-size: 2.2em; background: #f9f9f9; padding: 10px 20px; }
-        h3 { color: var(--secondary); font-size: 1.8em; margin-bottom: 15px; }
-        
-        .feature-block { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 80px; }
-        .feature-block.reverse { direction: rtl; }
-        .feature-block.reverse .text-content { direction: ltr; }
-        .app-img { width: 100%; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); height: 400px; object-fit: cover; }
-
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin: 40px 0; }
-        .service-card { background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
-        .service-card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .price-tag { color: var(--accent); font-weight: 800; font-size: 0.85em; text-transform: uppercase; display: block; margin-bottom: 10px; }
-        .badge-future { background: #e3f2fd; color: #1976d2; padding: 2px 10px; border-radius: 10px; font-size: 0.7em; font-weight: bold; border: 1px solid #1976d2; }
-
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(10, 42, 67, 0.9); }
-        .modal-content { background-color: var(--white); margin: 10% auto; padding: 40px; border-radius: 15px; width: 90%; max-width: 450px; text-align: center; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
-        .close { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; color: #999; }
-        .modal input:not([type="checkbox"]) { width: 100%; padding: 15px; margin: 20px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        .modal button { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; }
-        .modal button:hover { background: var(--accent); }
-
-        footer { background-color: #051622; color: #ffffff; padding: 80px 20px 40px 20px; margin-top: 100px; border-top: 4px solid var(--accent); text-align: center; }
-        .footer-grid { max-width: 1200px; margin: 0 auto 60px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; }
-        .footer-col h4 { color: var(--accent); font-size: 1.1em; text-transform: uppercase; margin-bottom: 25px; font-weight: 800; }
-        .footer-col a { display: block; color: #ccc; text-decoration: none; margin-bottom: 12px; transition: 0.3s; }
-        .footer-col a:hover { color: #fff; transform: translateX(5px); }
-        .footer-col a.active { color: var(--accent); font-weight: bold; pointer-events: none; }
-        
-        .legal-bottom { font-size: 0.9em; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; }
-        .footer-email { color: var(--accent) !important; text-decoration: none; font-weight: bold; }
-
-        @media (max-width: 1000px) { 
-            .main-layout { grid-template-columns: 1fr; } 
-            h1 { font-size: 2.5em; } 
-            .sidebar { position: static; } 
-            .footer-grid { text-align: center; } 
-            
-            .menu-icon { display: flex; }
-            .nav-links { 
-                display: none; 
-                flex-direction: column; 
-                position: absolute; 
-                top: 70px; 
-                left: 0; 
-                width: 100%; 
-                background: #fff; 
-                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-                padding: 20px 0;
-            }
-            .nav-links.show { display: flex; }
-            nav a { margin: 10px 0; }
-        }
-        
-    </style>
 </head>
 <body>
 
@@ -100,9 +38,7 @@
     </div>
 
     <nav>
-        <div class="nav-logo-container">
-            <img src="img/tourai_logo_inline.png" alt="TourAI Logo">
-        </div>
+        <div class="nav-logo-container"><a href="index.html"><img src="img/tourai_logo_inline.png" alt="TourAI"></a></div>
         
         <div class="menu-icon" onclick="toggleMenu()">
             <span></span>
@@ -115,6 +51,7 @@
             <a href="targets.html" data-i18n="nav.targets">Destinos 2026</a>
             <a href="guides.html" data-i18n="nav.guides">Audioguías</a>
             <a href="blog.html" data-i18n="nav.blog">Blog</a>
+            <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
             <a href="contact.html" data-i18n="nav.contact">Contacto</a>
             <div class="lang-switch">
                 <button type="button" data-set-locale="es-ES">ES</button>
@@ -163,7 +100,7 @@
                     <li>Resolución de dudas históricas en tiempo real.</li>
                 </ul>
             </div>
-            <img src="https://img.freepik.com/fotos-premium/foto-de-uma-guia-turistica-compartilhando-informacoes-e-apontando-para-um-mapa_762026-84753.jpg" alt="Guía Privado" class="app-img">
+            <img src="https://img.freepik.com/fotos-premium/foto-de-uma-guia-turistica-compartilhando-informacoes-e-apontando-para-um-mapa_762026-84753.jpg" alt="Guía Privado" class="app-img" loading="lazy" width="800" height="400">
         </section>
 
         <section class="feature-block reverse">
@@ -175,7 +112,7 @@
                     <li><strong>Consultas por Voz:</strong> Busca restaurantes, transporte o datos históricos hablando naturalmente con la IA.</li>
                 </ul>
             </div>
-            <img src="https://img.freepik.com/premium-photo/young-female-tourist-using-smartphone-platform-applications-helping-tourism-about-travel-map-gps_35674-17150.jpg?w=2000" alt="IA Chat" class="app-img">
+            <img src="https://img.freepik.com/premium-photo/young-female-tourist-using-smartphone-platform-applications-helping-tourism-about-travel-map-gps_35674-17150.jpg?w=2000" alt="IA Chat" class="app-img" loading="lazy" width="800" height="400">
         </section>
 
         <h2>Funcionalidades previstas de la app</h2>
@@ -317,16 +254,6 @@
         });
         TourAiStoreUnsubscribe.init();
     </script>
-
-    <div id="cookie-banner" class="site-cookie-banner" hidden aria-live="polite">
-        <div class="site-cookie-banner__inner">
-            <p class="site-cookie-banner__text"><span data-i18n="cookie.text">Utilizamos cookies técnicas y, si aceptas, cookies publicitarias de terceros (Google AdSense).</span> <a href="cookies.html" data-i18n="cookie.more">Más info</a>.</p>
-            <div class="site-cookie-banner__actions">
-                <button type="button" class="site-cookie-banner__reject" data-cookie-reject data-i18n="cookie.reject">Rechazar</button>
-                <button type="button" class="site-cookie-banner__accept" data-cookie-accept data-i18n="cookie.accept">Aceptar</button>
-            </div>
-        </div>
-    </div>
-    <script src="js/cookie-consent.js"></script>
+<script src="js/cookie-consent.js"></script>
 </body>
 </html>
