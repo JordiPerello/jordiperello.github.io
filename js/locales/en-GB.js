@@ -13,7 +13,7 @@ window.TourAiEnGBMessages = {
   "footer.about": "About us",
   "footer.faq": "FAQ",
   "footer.rights": "All rights reserved.",
-  "cookie.text": "We use cookies to improve your experience.",
+  "cookie.text": "We use technical cookies and, if you accept, third-party advertising cookies (Google AdSense).",
   "cookie.more": "More info",
   "cookie.reject": "Reject",
   "cookie.accept": "Accept",
@@ -513,8 +513,18 @@ window.TourAiEnGBMessages = {
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
             <p><strong>Last updated:</strong> 26 April 2026.</p>
             <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we consider our users' privacy a fundamental pillar. This policy details how we manage information to ensure that using our smart audio guides is safe and transparent.</p>
+
+            <h2>2. Data Controller</h2>
+            <p>The data controller for personal data collected through <strong>tourai.es</strong> and associated TourAI project services is:</p>
+            <ul>
+                <li><strong>Controller:</strong> Jordi Perelló (TourAI project / TourAI App)</li>
+                <li><strong>Country:</strong> Spain</li>
+                <li><strong>Contact email:</strong> <a href="mailto:info@tourai.es">info@tourai.es</a></li>
+                <li><strong>Website:</strong> <a href="https://tourai.es">https://tourai.es</a></li>
+            </ul>
+            <p>You can find more information about the project on our <a href="about.html">About us</a> page or contact us via <a href="contact.html">Contact</a> for any privacy-related enquiry.</p>
             
-            <h2>2. Information We Collect</h2>
+            <h2>3. Information We Collect</h2>
             <p>We only process technical and functional information necessary to operate the service:</p>
             <ul>
                 <li><strong>Geographic Location:</strong> Used with your permission to offer you audio guides for the monuments right in front of you. We do not store a history of your movements.</li>
@@ -522,7 +532,7 @@ window.TourAiEnGBMessages = {
                 <li><strong>Technical Preferences:</strong> We store your preferred language locally so you do not have to configure it on every visit.</li>
             </ul>
             
-            <h2>3. Responsible Advertising</h2>
+            <h2>4. Responsible Advertising</h2>
             <p>TourAI is funded through Google advertising to remain free for all travellers:</p>
             <ul>
                 <li><strong>AdSense (Web):</strong> Uses cookies to show you useful adverts based on your general browsing interests.</li>
@@ -530,7 +540,7 @@ window.TourAiEnGBMessages = {
             </ul>
             <p>You can manage or disable personalisation of these adverts at any time through <a href="https://adssettings.google.com/" target="_blank">Google Ads Settings</a>.</p>
             
-            <h2 id="delete-account">4. Your Rights (GDPR)</h2>
+            <h2 id="delete-account">5. Your Rights (GDPR)</h2>
             <p>Under current regulations, you have full control over your information:</p>
             <ul>
                 <li>Right to know what data we process.</li>
@@ -538,7 +548,7 @@ window.TourAiEnGBMessages = {
                 <li>Right to withdraw geolocation consent at any time from your device settings.</li>
             </ul>
             
-            <h3>4.1. Account and associated data deletion</h3>
+            <h3>5.1. Account and associated data deletion</h3>
             <p>
                 If you wish to delete your TourAI account and associated personal data, you may request this at any time
                 by sending an email to

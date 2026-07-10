@@ -1,4 +1,4 @@
-const fs = require("fs");
+﻿const fs = require("fs");
 const path = require("path");
 
 const root = path.join(__dirname, "..");
@@ -138,7 +138,7 @@ function cookieBannerMarkup(depth) {
   return `
     <div id="cookie-banner" class="site-cookie-banner" hidden aria-live="polite">
         <div class="site-cookie-banner__inner">
-            <p class="site-cookie-banner__text"><span data-i18n="cookie.text">Utilizamos cookies para mejorar tu experiencia.</span> <a href="${prefix}cookies.html" data-i18n="cookie.more">Más info</a>.</p>
+            <p class="site-cookie-banner__text"><span data-i18n="cookie.text">Utilizamos cookies técnicas y, si aceptas, cookies publicitarias de terceros (Google AdSense).</span> <a href="${prefix}cookies.html" data-i18n="cookie.more">Más info</a>.</p>
             <div class="site-cookie-banner__actions">
                 <button type="button" class="site-cookie-banner__reject" data-cookie-reject data-i18n="cookie.reject">Rechazar</button>
                 <button type="button" class="site-cookie-banner__accept" data-cookie-accept data-i18n="cookie.accept">Aceptar</button>
