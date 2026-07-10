@@ -17,8 +17,12 @@ window.TourAiEnGBMessages = {
   "cookie.more": "More info",
   "cookie.reject": "Reject",
   "cookie.accept": "Accept",
-  "index.hero.title": "TourAI: Smart Tourism",
-  "index.hero.subtitle": "Your private AI tour guide. The most personalised travel experience in the world.",
+  "index.hero.title": "TourAI: Travel guides and smart tourism",
+  "index.hero.subtitle": "Blog, destinations and audio guides to plan your trips. Discover the AI app reinventing how you explore every city.",
+  "index.waitlist.title": "Get the launch notification",
+  "index.waitlist.intro": "The TourAI app will be published on the App Store and Google Play. Leave your email and we will notify you as soon as it is available to download.",
+  "index.waitlist.ios": "Notify me on the App Store (iOS)",
+  "index.waitlist.android": "Notify me on Google Play (Android)",
   "index.download.title": "Coming soon on",
   "index.modal.title": "Early Access",
   "index.modal.text": "The {platform} version is almost ready. Subscribe to receive the direct download link.",
@@ -98,7 +102,7 @@ window.TourAiEnGBMessages = {
   "contact.success.title": "Message sent!",
   "contact.direct": "Direct email:",
   "faq.title": "Frequently Asked Questions",
-  "faq.subtitle": "We answer your questions about the new era of cognitive tourism.",
+  "faq.subtitle": "Help about the website, the app, privacy, launch alerts and contact.",
 
   "doc.title.index": "TourAI - The Future of Smart Tourism 2026",
   "doc.title.about": "About us - TourAI",
@@ -119,11 +123,11 @@ window.TourAiEnGBMessages = {
   "doc.title.lisbon-algarve-spring": "Lisbon and the Algarve: spring getaway in Portugal",
 
   "doc.meta.about": "Meet the team behind TourAI, the smart tourism app with personalised guides and artificial intelligence.",
-  "doc.meta.index": "TourAI: AI-powered tour guide app with chat, voice, maps and audio guides to travel at your own pace.",
+  "doc.meta.index": "TourAI: travel blog, destinations and audio guides. AI-powered tour guide app with chat, voice, maps and GPS narration.",
   "doc.meta.blog": "TourAI blog: travel guides, smart tourism tips, destinations and news about our AI-powered app.",
   "doc.meta.contact": "Contact the TourAI team for technical support, business enquiries or information about the smart tourism app.",
   "doc.meta.cookies": "TourAI cookie policy: cookie types, responsible advertising, Google AdSense and consent management.",
-  "doc.meta.faq": "TourAI FAQ: download, launch alerts, privacy, app features and support.",
+  "doc.meta.faq": "TourAI FAQ: website, app, launch alerts, privacy, cookies, contact and support.",
   "doc.meta.guides": "TourAI smart audio guides: GPS narrations, curated content and AI to explore cities.",
   "doc.meta.privacy": "TourAI privacy policy: data processing, geolocation, advertising, GDPR rights and contact.",
   "doc.meta.terms": "TourAI terms and conditions for the website and mobile smart tourism app.",
@@ -136,7 +140,31 @@ window.TourAiEnGBMessages = {
   "doc.meta.mobile-travel-gps-privacy": "Guide to using your mobile when travelling: data, GPS, eSIM, battery saving and location privacy abroad.",
   "doc.meta.lisbon-algarve-spring": "Spring getaway to Lisbon and the Algarve: neighbourhoods, beaches, gastronomy and a 5-day route through Portugal.",
 
-  "page.index.content": `<section class="feature-block">
+  "page.index.content": `<section class="editorial-highlights">
+            <h2>Explore tourai.es today</h2>
+            <p>Whilst we prepare the app, this site offers guides, destinations and articles to help you plan your trips calmly.</p>
+            <div class="editorial-grid">
+                <a href="blog.html" class="editorial-card">
+                    <span class="editorial-card__tag">Blog</span>
+                    <h3>Travel guides and tips</h3>
+                    <p>Routes, AI planning, mobile privacy and tricks for visiting monuments without crowds.</p>
+                </a>
+                <a href="guides.html" class="editorial-card">
+                    <span class="editorial-card__tag">Audio guides</span>
+                    <h3>How smart audio guides work</h3>
+                    <p>Discover the GPS narration model and TourAI's freemium approach.</p>
+                </a>
+                <a href="targets.html" class="editorial-card">
+                    <span class="editorial-card__tag">Destinations</span>
+                    <h3>Destinations 2026</h3>
+                    <p>Inspiration for Kyoto, Lisbon, Iceland and other routes for independent travellers.</p>
+                </a>
+            </div>
+        </section>
+
+        <p class="app-coming-note">The TourAI mobile app is in its final development phase. This website already offers useful editorial content today; below you can join the waitlist to receive the launch notification.</p>
+
+        <section class="feature-block">
             <div class="text-content">
                 <h3>Your Private Tour Guide</h3>
                 <p>TourAI is not just an app — it is like having an <strong>exclusive local expert</strong>. Forget crowded group tours and enjoy routes 100% adapted to your pace and curiosity.</p>
@@ -161,7 +189,7 @@ window.TourAiEnGBMessages = {
             <img src="https://img.freepik.com/premium-photo/young-female-tourist-using-smartphone-platform-applications-helping-tourism-about-travel-map-gps_35674-17150.jpg?w=2000" alt="AI chat" class="app-img">
         </section>
 
-        <h2>App features</h2>
+        <h2>Planned app features</h2>
         <div class="services-grid">
             <div class="service-card">
                 <h4>AI chat</h4>
@@ -402,15 +430,74 @@ window.TourAiEnGBMessages = {
   "page.blog.lisbon-algarve-spring.description": "Five-day route through the Portuguese capital and the southern coast: neighbourhoods, beaches, gastronomy and how to get around.",
 
   "page.faq.content": `<div class="faq-item">
-            <div class="faq-question">When will the app be available for download?</div>
+            <div class="faq-question">What is TourAI?</div>
             <div class="faq-answer">
-                <p>Our engineering team is finalising the deployment protocols. Publication in the official stores is imminent.</p>
-                <p>To receive an <strong>automatic notification</strong> the moment the app is published and ready to download and install, please enable your preferred alert by selecting your platform:</p>
-                <p style="text-align: center; font-size: 1.2em;">
-                    <a class="platform-link" onclick="openModal('iOS')">iOS subscription</a> | 
-                    <a class="platform-link" onclick="openModal('Android')">Android subscription</a>                    
-                </p>
-                <p>By entering your email on the platform you choose, you will be registered in our early access system.</p>
+                <p><strong>TourAI</strong> is a digital tourism project that combines a <strong>mobile app with artificial intelligence</strong> (chat, voice, maps and GPS audio guides) with this website featuring <a href="blog.html">travel articles</a>, <a href="guides.html">audio guide information</a> and <a href="targets.html">recommended destinations</a>.</p>
+                <p>Read more on <a href="about.html">About us</a> or in the article <a href="articles/what-is-tourai.html">What is TourAI?</a></p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Can I use tourai.es without downloading the app?</div>
+            <div class="faq-answer">
+                <p>Yes. This site offers useful editorial content even before the app is published: guides on the <a href="blog.html">blog</a>, inspiration in <a href="targets.html">Destinations 2026</a> and an explanation of <a href="guides.html">smart audio guides</a>.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">When will the app be available?</div>
+            <div class="faq-answer">
+                <p>The iOS and Android app is in its final development phase. When it is published in the official stores, we will also announce it on this website.</p>
+                <p>If you want to receive an <strong>automatic email</strong> at launch, join the waitlist at the bottom of this page or from the <a href="index.html">home page</a>.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How do launch alerts work?</div>
+            <div class="faq-answer">
+                <p>Choose your platform (iOS or Android), enter your email, verify your identity and agree to receive only the availability notice. We do not share your email with third parties. See our <a href="privacy.html">privacy policy</a> for details.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How do I unsubscribe from launch alerts?</div>
+            <div class="faq-answer">
+                <p>You can cancel App Store or Google Play alerts using the <strong>“Manage or cancel launch alerts”</strong> link on the home page or at the bottom of this page. You can also write to <a href="mailto:info@tourai.es">info@tourai.es</a>.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How does TourAI protect my personal data?</div>
+            <div class="faq-answer">
+                <p>We only collect information necessary to operate the service and comply with GDPR. You can exercise your rights, request account deletion or read about data processing in our <a href="privacy.html">privacy policy</a>.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Does tourai.es use cookies or advertising?</div>
+            <div class="faq-answer">
+                <p>Yes. We use technical cookies and, with your consent, advertising cookies managed by Google (AdSense on the web and AdMob in the app). See our <a href="cookies.html">cookie policy</a> and manage your preferences from the banner when you enter the site.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How can I contact the team?</div>
+            <div class="faq-answer">
+                <p>Use the <a href="contact.html">contact form</a> or write directly to <a href="mailto:info@tourai.es">info@tourai.es</a>. We answer technical, business and privacy enquiries.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Which languages does TourAI support?</div>
+            <div class="faq-answer">
+                <p>The website and app are designed in <strong>Spanish (Spain)</strong> and <strong>English (United Kingdom)</strong>. You can switch language using the ES / EN buttons in the top menu.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Will TourAI be free?</div>
+            <div class="faq-answer">
+                <p>Yes, with a <strong>freemium</strong> model: free access with a daily token allowance, supported through responsible advertising. Temporary Premium plans will offer more tokens and an advert-free experience. More details on the <a href="index.html">home page</a> and in the <a href="terms.html">terms of use</a>.</p>
             </div>
         </div>`,
 

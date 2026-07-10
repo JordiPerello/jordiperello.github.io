@@ -28,6 +28,53 @@
   margin-top: 60px;
 }
 
+.waitlist-zone .waitlist-intro {
+  max-width: 640px;
+  margin: 16px auto 0;
+  color: #555;
+  font-size: 1.05em;
+  line-height: 1.7;
+}
+
+.waitlist-actions {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.waitlist-btn {
+  background: var(--primary, #0A2A43);
+  color: #fff;
+  border: 2px solid var(--primary, #0A2A43);
+  border-radius: 10px;
+  padding: 14px 22px;
+  font-size: 0.95em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s;
+  min-width: 240px;
+}
+
+.waitlist-btn:hover {
+  background: var(--accent, #4db8ff);
+  border-color: var(--accent, #4db8ff);
+  transform: translateY(-2px);
+}
+
+.editorial-highlights { margin-bottom: 60px; }
+.editorial-highlights > p { font-size: 1.1em; color: #555; max-width: 800px; }
+.editorial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 30px; }
+.editorial-card { display: block; background: #f8fbff; border: 1px solid #d9ecff; border-radius: 14px; padding: 24px; text-decoration: none; color: inherit; transition: 0.25s; }
+.editorial-card:hover { transform: translateY(-4px); border-color: var(--accent, #4db8ff); box-shadow: 0 10px 24px rgba(77, 184, 255, 0.15); }
+.editorial-card__tag { display: inline-block; color: var(--accent, #4db8ff); font-size: 0.75em; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+.editorial-card h3 { margin: 0 0 10px 0; color: var(--primary, #0A2A43); font-size: 1.25em; }
+.editorial-card p { margin: 0; font-size: 0.95em; color: #555; line-height: 1.6; }
+
+.app-coming-note { background: #f0f7ff; border-left: 4px solid var(--accent, #4db8ff); padding: 16px 20px; border-radius: 8px; margin: 0 0 40px 0; font-size: 1.05em; color: #35566f; }
+
 .badges-container {
   display: flex;
   justify-content: center;
