@@ -1,0 +1,12 @@
+---
+description: All code identifiers and module names must be in English; Spanish only for user-facing copy
+alwaysApply: true
+---
+
+# English code, localized user copy
+
+See the same convention as the TourAI monorepo: internal code in English; Spanish only for user-visible web copy and `es-ES` i18n strings.
+
+- **English:** script names, CSS classes used by layout code, JS identifiers, `scripts/*.js`, export tooling, commit messages.
+- **Spanish allowed:** HTML body text on Spanish pages, `page.*` content in default HTML, Spanish sidebar/help copy meant for end users.
+- **Not Spanish:** script names, module paths, and internal tooling filenames; Spanish only in user-facing document bodies when the audience is Spanish-speaking.
