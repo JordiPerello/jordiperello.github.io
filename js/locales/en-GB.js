@@ -12,6 +12,43 @@ window.TourAiEnGBMessages = {
   "footer.cookies": "Cookies",
   "footer.about": "About us",
   "footer.faq": "FAQ",
+  "footer.deleteAccount": "Delete account",
+  "doc.title.deleteAccount": "Delete account - TourAI",
+  "doc.meta.deleteAccount": "Delete your TourAI account and linked personal data with email verification.",
+  "deleteAccount.title": "Delete TourAI account",
+  "deleteAccount.subtitle": "Request permanent deletion of your account and linked personal data.",
+  "deleteAccount.warning": "This action is irreversible. Only data directly linked to your account will be deleted. Shared catalogue content (e.g. cached narrations) will not be removed.",
+  "deleteAccount.email": "Your TourAI account email",
+  "deleteAccount.email.placeholder": "you@email.com",
+  "deleteAccount.email.invalid": "Enter a valid email address.",
+  "deleteAccount.verify.prompt": "Verify your email with the code we will send you.",
+  "deleteAccount.verify.button": "SEND CODE",
+  "deleteAccount.verify.title": "Verify your email",
+  "deleteAccount.verify.intro": "We sent you a 6-digit code. Enter it to confirm you own the account.",
+  "deleteAccount.verify.code": "Verification code",
+  "deleteAccount.verify.code.placeholder": "000000",
+  "deleteAccount.verify.submit": "CONFIRM CODE",
+  "deleteAccount.verify.resend": "Resend code",
+  "deleteAccount.verify.success": "Email verified successfully.",
+  "deleteAccount.verify.sending": "Sending code...",
+  "deleteAccount.verify.sent": "Code sent. Check your inbox and spam folder.",
+  "deleteAccount.verify.resent": "A new code has been sent.",
+  "deleteAccount.verify.verifying": "VERIFYING...",
+  "deleteAccount.verify.invalidCode": "The code is not correct.",
+  "deleteAccount.verify.expired": "The code has expired.",
+  "deleteAccount.verify.rateLimited": "Too many attempts. Please wait a few minutes.",
+  "deleteAccount.verify.sendError": "Could not send the code.",
+  "deleteAccount.confirm": "I understand this action is permanent and I want to delete my account and linked personal data.",
+  "deleteAccount.submit": "DELETE MY ACCOUNT",
+  "deleteAccount.deleting": "DELETING...",
+  "deleteAccount.finalConfirm": "Are you sure you want to permanently delete your account?",
+  "deleteAccount.success": "Your account has been deleted. You will receive a confirmation email.",
+  "deleteAccount.error.notFound": "No TourAI account exists with that email.",
+  "deleteAccount.error.notVerified": "You must verify your email with the code.",
+  "deleteAccount.error.failed": "Could not delete the account.",
+  "deleteAccount.help": "Need help?",
+  "deleteAccount.help.link": "Contact support",
+  "deleteAccount.privacy.link": "Privacy policy",
   "footer.rights": "All rights reserved.",
   "cookie.text": "We use technical cookies and, if you accept, third-party advertising cookies (Google AdSense).",
   "cookie.more": "More info",
@@ -511,7 +548,7 @@ window.TourAiEnGBMessages = {
 
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
-            <p><strong>Last updated:</strong> 26 April 2026.</p>
+            <p><strong>Last updated:</strong> 11 July 2026.</p>
             <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we consider our users' privacy a fundamental pillar. This policy details how we manage information to ensure that using our smart audio guides is safe and transparent.</p>
 
             <h2>2. Data Controller</h2>
@@ -528,8 +565,19 @@ window.TourAiEnGBMessages = {
             <p>We only process technical and functional information necessary to operate the service:</p>
             <ul>
                 <li><strong>Geographic Location:</strong> Used with your permission to offer you audio guides for the monuments right in front of you. We do not store a history of your movements.</li>
+                <li><strong>Account and in-app plans:</strong> Registration data, purchased plans, usage history and preferences linked to your profile.</li>
+                <li><strong>Bonuses and promotional codes:</strong> Record of the code redeemed, redemption date, associated plan and internal campaign identifier, to manage free Premium access (including the automatic welcome bonus on first sign-in when active), prevent duplicate use per user and prevent fraud. If you redeem a bonus by scanning a QR code, the camera is used on your device to read the code; <strong>we do not store QR images or video recordings</strong>.</li>
                 <li><strong>Usage Metrics:</strong> Anonymous data on which guides are most listened to, to improve our catalogue.</li>
                 <li><strong>Technical Preferences:</strong> We store your preferred language locally so you do not have to configure it on every visit.</li>
+            </ul>
+
+            <h2>3.1. Legal basis for processing (summary)</h2>
+            <p>In general terms, we process your data on the following bases, depending on the type of information:</p>
+            <ul>
+                <li><strong>Performance of contract / provision of the service:</strong> account, plans, bonus redemption, preferences and app features.</li>
+                <li><strong>Consent:</strong> geolocation, microphone, camera (profile photo or bonus QR scanning), personalised advertising where required by law.</li>
+                <li><strong>Legitimate interest:</strong> security, prevention of fraud in promotional codes, service improvement and aggregated metrics.</li>
+                <li><strong>Legal obligation:</strong> retention of billing data where applicable.</li>
             </ul>
             
             <h2>4. Responsible Advertising</h2>
@@ -550,20 +598,32 @@ window.TourAiEnGBMessages = {
             
             <h3>5.1. Account and associated data deletion</h3>
             <p>
-                If you wish to delete your TourAI account and associated personal data, you may request this at any time
-                by sending an email to
-                <a href="mailto:info@tourai.es">info@tourai.es</a>
-                with the subject <strong>"TourAI account deletion"</strong> and indicating the email address you used to register in the application.
+                If you wish to delete your TourAI account and associated personal data, you may do so at any time
+                from the app (<strong>Edit account → Delete my account</strong>) or from the
+                <a href="delete-account.html">Delete account</a> web page.
             </p>
-            <p>After verifying your identity, we will delete or anonymise, where appropriate, the following data:</p>
+            <p>
+                In both cases you must verify your identity with a <strong>6-digit code</strong> sent to your account email.
+                Entering the email alone is not enough — you must confirm the code received.
+            </p>
+            <p>You may also email <a href="mailto:info@tourai.es">info@tourai.es</a> <strong>only if you cannot access</strong> the app or the web deletion page.</p>
+            <p>After verification, we delete personal data directly linked to your account:</p>
             <ul>
-                <li>Account data (email address and user identifier).</li>
-                <li>User plans, usage history and preferences linked to your profile.</li>
-                <li>Payment data associated with your account stored in our systems (records required by legal or billing obligations may be retained for the legally established period).</li>
+                <li>Authentication account and profile (email, identifier, photo, preferences).</li>
+                <li>User plans, usage history, bonus or promo redemptions and assistant messages.</li>
+                <li>Payment data associated with your account stored in our systems.</li>
             </ul>
             <p>
-                We will process your request within a maximum of <strong>30 days</strong>.
-                You will receive email confirmation when deletion has been completed.
+                <strong>We do not delete</strong> global service content without a direct link to your user, such as
+                cached narrations (<code>AIResponses</code>), place catalogues, commercial plans or other shared data.
+            </p>
+            <p>
+                Deletion is immediate after you confirm the code. You will receive a confirmation email when it completes.
+                Records required by legal or billing obligations may be retained in anonymised form for the legally established period.
+            </p>
+            <p>
+                We may retain <strong>aggregated and anonymous statistics</strong> on account deletions (date and counters by app/web channel),
+                without data that could identify any user.
             </p>
             <p>
                 Withdrawal of geolocation consent can be done at any time from your device settings;
@@ -588,7 +648,7 @@ window.TourAiEnGBMessages = {
 
   "page.terms.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Acceptance of Terms</h2>
-            <p><strong>Last updated:</strong> 26 April 2026.</p>
+            <p><strong>Last updated:</strong> 11 July 2026.</p>
             <p>By accessing or using the TourAI website and mobile application, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our audio guide services or our information platform.</p>
             
             <h2>2. Description of the Service</h2>
@@ -597,6 +657,7 @@ window.TourAiEnGBMessages = {
                 <li>AI chat, voice queries and geolocated audio narrations (require an internet connection).</li>
                 <li>Geolocation for real-time point-of-interest suggestions.</li>
                 <li>Interactive map with guided walks on foot (not turn-by-turn navigation).</li>
+                <li>Redemption of bonuses or promotional codes in the mobile app (manual entry or QR scanning with the device camera on supported platforms).</li>
             </ul>
 
             <h2>3. Responsible Use and Safety</h2>
@@ -611,15 +672,33 @@ window.TourAiEnGBMessages = {
             <h2>4. Intellectual Property</h2>
             <p>All content on TourAI, including AI-generated guide texts, audio, logos, designs and source code, is the exclusive property of TourAI or is used under the appropriate licences. Reproduction or distribution without express authorisation is prohibited.</p>
 
-           <h2>5. Advertising and Premium Plans</h2>
-            <p>To guarantee universal access to culture, TourAI offers a hybrid model:</p>
+           <h2>5. Advertising, Premium Plans and Promotional Bonuses</h2>
+            <p>To guarantee universal access to culture, TourAI offers a hybrid model in the mobile application (full contractual details are set out in the terms embedded in the app):</p>
             <ul>
-                <li><strong>Free Access:</strong> Supported through third-party advertising (Google AdSense and AdMob).</li>
-                <li><strong>Premium Plans:</strong> Users who purchase temporary plans (1 day, weekend) will enjoy more usage tokens and an advert-free experience.</li>
+                <li><strong>Free Access (Freemium):</strong> Supported through third-party advertising (Google AdSense on the web and AdMob in the app). May include rewarded ads that temporarily extend your usage allowance.</li>
+                <li><strong>Premium Plans:</strong> Temporary paid plans (for example, 1 day or weekend) with a higher service usage allowance and an advert-free experience while the plan is active.</li>
+                <li><strong>Promotional bonuses:</strong> TourAI may grant free Premium access through alphanumeric codes or QR codes distributed in campaigns (automatic welcome bonus on first registration, campaign codes, influencer actions, etc.). In particular:
+                    <ul>
+                        <li>Bonuses are <strong>linked to the user's account</strong>; they are not transferable, resalable or redeemable for cash.</li>
+                        <li>Each bonus has a <strong>consumption period</strong> (duration in days) and internal service usage limits.</li>
+                        <li>The same code may allow <strong>multiple total redemptions</strong> (by different users), but <strong>each user may redeem the same code only once</strong>.</li>
+                        <li>Redemption is done in the app (<strong>Profile → Redeem bonus / code</strong>), by entering the code manually or <strong>scanning the QR with the device camera</strong> when the platform allows it (Android/iOS). Scanning uses the live camera; QR images and video recordings are not stored.</li>
+                        <li>Valid QR codes contain a code or a TourAI domain URL (for example, <code>tourai.es/promo?code=...</code> or an internal <code>TOURAI:PROMO:...</code> payload).</li>
+                        <li>Plan history distinguishes them as <strong>BONUS</strong> versus paid purchases (<strong>PURCHASE</strong>).</li>
+                        <li>TourAI may limit, suspend or withdraw codes in cases of fraud, abuse, technical error, breach of terms or end of campaign.</li>
+                    </ul>
+                </li>
             </ul>
+            <p>Fraudulent or automated code redemption, forgery of codes or QR payloads, or attempts to bypass per-user or per-code limits are prohibited.</p>
 
-            <h2>6. Limitation of Liability</h2>
+            <h2>6. Device permissions (mobile app)</h2>
+            <p>The application may request location, microphone, camera (profile photo and bonus QR scanning), gallery and optional biometrics permissions. Denying access may limit functionality. See the full app terms for details.</p>
+
+            <h2>7. Limitation of Liability</h2>
             <p>TourAI strives to offer accurate historical information; however, we do not guarantee that the content is free of errors or omissions. The platform is provided "as is" and its use is at the user's own risk.</p>
+
+            <h2>8. Account deletion</h2>
+            <p>You may delete your account and linked personal data from the app (<strong>Edit account → Delete my account</strong>) or from the <a href="delete-account.html">Delete account</a> web page. In both cases you must verify your email with a 6-digit code. Only if you cannot access those channels may you email <a href="mailto:info@tourai.es">info@tourai.es</a>. See the <a href="privacy.html#delete-account">Privacy Policy</a> for details.</p>
         </main>
 
         <aside class="sidebar">
@@ -639,7 +718,7 @@ window.TourAiEnGBMessages = {
 
   "page.cookies.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. What are Cookies?</h2>
-            <p><strong>Last updated:</strong> 26 April 2026.</p>
+            <p><strong>Last updated:</strong> 11 July 2026.</p>
             <p>Cookies are small text files that websites store in your browser to remember information about your visit. In our mobile app, we use equivalent advertising identifiers (IDFA or AAID).</p>
             
             <h2>2. Types of Cookies We Use</h2>
@@ -679,7 +758,7 @@ window.TourAiEnGBMessages = {
                 <li><strong>Purpose:</strong> Management and response to the enquiry submitted. Data will not be used for advertising purposes.</li>
                 <li><strong>Legal basis:</strong> Consent when ticking the box.</li>
                 <li><strong>Recipients:</strong> Data will not be shared with third parties, except where legally required.</li>
-                <li><strong>Rights:</strong> Access, rectification and erasure by writing to info@tourai.es.</li>
+                <li><strong>Rights:</strong> Access and rectification by writing to <a href="mailto:info@tourai.es">info@tourai.es</a>. <strong>Account deletion</strong> is automatic from the app or the <a href="delete-account.html">Delete account</a> page.</li>
             </ul>
             <p style="font-size: 0.8em; color: #888; margin-top: 20px;">For more details, please see our full Privacy Policy.</p>`,
 

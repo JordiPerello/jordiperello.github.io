@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Elimina tu cuenta de TourAI y los datos personales vinculados, con verificación por correo electrónico." data-i18n-meta="doc.meta.deleteAccount">
+    <link rel="canonical" href="https://tourai.es/delete-account.html">
+    <link rel="alternate" hreflang="es-ES" href="https://tourai.es/delete-account.html">
+    <link rel="alternate" hreflang="en-GB" href="https://tourai.es/delete-account.html">
+    <link rel="alternate" hreflang="x-default" href="https://tourai.es/delete-account.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TourAI">
+    <meta property="og:title" content="TourAI">
+    <meta property="og:description" content="Elimina tu cuenta de TourAI y los datos personales vinculados, con verificación por correo electrónico.">
+    <meta property="og:url" content="https://tourai.es/delete-account.html">
+    <meta property="og:image" content="https://tourai.es/img/tourai_logo.png">
+    <title data-i18n-doc-title="doc.title.deleteAccount">Eliminar cuenta - TourAI</title>
+    <link rel="icon" type="image/png" href="img/tourai_logo.png">
+    <link rel="apple-touch-icon" href="img/tourai_logo.png">
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="css/legal-layout.css">
+    <script src="js/cookie-consent-init.js"></script>
+</head>
+<body class="site-legal-page">
+
+    <div class="floating-logo" onclick="window.scrollTo(0,0)" title="Volver arriba">
+        <img src="img/tourai_logo.png" alt="Icono TourAI">
+    </div>
+
+    <nav>
+        <div class="nav-logo-container"><a href="index.html"><img src="img/tourai_logo_inline.png" alt="TourAI"></a></div>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html" data-i18n="nav.app">La App</a>
+            <a href="targets.html" data-i18n="nav.targets">Destinos 2026</a>
+            <a href="guides.html" data-i18n="nav.guides">Audioguías</a>
+            <a href="blog.html" data-i18n="nav.blog">Blog</a>
+            <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+            <div class="lang-switch">
+                <button type="button" data-set-locale="es-ES">ES</button>
+                <button type="button" data-set-locale="en-GB">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <h1 data-i18n="deleteAccount.title">Eliminar cuenta TourAI</h1>
+        <p data-i18n="deleteAccount.subtitle">Solicita la eliminación permanente de tu cuenta y de los datos personales vinculados a ella.</p>
+    </header>
+
+    <div class="main-layout">
+        <main class="container">
+            <div class="info-box" style="margin-bottom: 24px;">
+                <p style="margin: 0; font-size: 0.95em; color: var(--primary);" data-i18n="deleteAccount.warning">
+                    Esta acción es irreversible. Solo se eliminarán los datos directamente vinculados a tu cuenta. El contenido compartido del catálogo (por ejemplo, narraciones en caché) no se borrará.
+                </p>
+            </div>
+
+            <form id="deleteAccountForm">
+                <label data-i18n="deleteAccount.email">Correo de tu cuenta TourAI</label>
+                <input type="email" id="email" name="email" data-i18n-placeholder="deleteAccount.email.placeholder" placeholder="tu@email.com" required autocomplete="email">
+                <p id="emailError" class="field-error" data-i18n="deleteAccount.email.invalid" hidden>Introduce una dirección de correo válida.</p>
+
+                <div id="emailVerificationBox" class="verification-box">
+                    <p id="emailVerificationMessage" data-i18n="deleteAccount.verify.prompt">Verifica tu correo con el código que te enviaremos.</p>
+                    <div class="verification-actions">
+                        <button type="button" id="sendVerificationBtn" onclick="startEmailVerification()" data-i18n="deleteAccount.verify.button">ENVIAR CÓDIGO</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 25px; background: #fff5f5; padding: 20px; border-radius: 12px; border: 1px solid #f3c0c0;">
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <input type="checkbox" id="confirmDelete" name="confirmDelete" style="width: 20px; height: 20px; margin-top: 2px; cursor: pointer;" required>
+                        <label for="confirmDelete" style="font-weight: 600; font-size: 0.9em; color: var(--primary); cursor: pointer; line-height: 1.4;" data-i18n="deleteAccount.confirm">
+                            Entiendo que esta acción es permanente y deseo eliminar mi cuenta y los datos personales vinculados.
+                        </label>
+                    </div>
+                </div>
+
+                <button type="button" id="submitBtn" onclick="submitDeleteAccount()" disabled data-i18n="deleteAccount.submit">ELIMINAR MI CUENTA</button>
+            </form>
+
+            <div class="info-box" style="margin-top: 24px;">
+                <p style="margin: 0; font-size: 0.95em; color: var(--primary);">
+                    <span data-i18n="deleteAccount.help">¿Necesitas ayuda?</span>
+                    <a href="contact.html" style="color: var(--secondary); font-weight: bold;" data-i18n="deleteAccount.help.link">Contacta con soporte</a>
+                    · <a href="privacy.html#delete-account" style="color: var(--secondary); font-weight: bold;" data-i18n="deleteAccount.privacy.link">Política de privacidad</a>
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <div id="emailVerificationModal" class="modal-overlay" onclick="closeEmailVerificationModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-modal" role="button" aria-label="Cerrar" onclick="closeEmailVerificationModal()">&times;</span>
+            <h3 data-i18n="deleteAccount.verify.title">Verifica tu correo</h3>
+            <p data-i18n="deleteAccount.verify.intro">Te hemos enviado un código de 6 dígitos. Introdúcelo para confirmar que eres el titular de la cuenta.</p>
+            <label for="verificationCode" data-i18n="deleteAccount.verify.code">Código de verificación</label>
+            <input type="text" id="verificationCode" class="verification-code-input" inputmode="numeric" pattern="[0-9]*" maxlength="6" data-i18n-placeholder="deleteAccount.verify.code.placeholder" placeholder="000000" autocomplete="one-time-code">
+            <p id="verificationModalStatus" class="verification-status" hidden></p>
+            <button type="button" id="verifyCodeBtn" onclick="confirmVerificationCode()" data-i18n="deleteAccount.verify.submit">CONFIRMAR CÓDIGO</button>
+            <p class="verification-hint">
+                <button type="button" id="resendVerificationBtn" onclick="resendVerificationCode()" style="background: transparent; color: var(--accent); padding: 0; width: auto; font-size: 0.9em;" data-i18n="deleteAccount.verify.resend">Reenviar código</button>
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 data-i18n="footer.explore">Explora</h4>
+                <a href="index.html" data-i18n="nav.app">La App</a>
+                <a href="targets.html" data-i18n="nav.targets">Destinos 2026</a>
+                <a href="guides.html" data-i18n="nav.guides">Audioguías</a>
+                <a href="blog.html" data-i18n="nav.blog">Blog</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.legal">Legal</h4>
+                <a href="privacy.html" data-i18n="footer.privacy">Privacidad</a>
+                <a href="terms.html" data-i18n="footer.terms">Términos</a>
+                <a href="cookies.html" data-i18n="footer.cookies">Cookies</a>
+                <a class="active" href="delete-account.html" data-i18n="footer.deleteAccount">Eliminar cuenta</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.help">Ayuda</h4>
+                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+                <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+                <a href="faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a>
+            </div>
+        </div>
+        <div class="legal-bottom">
+            &copy; <span id="current-year"></span> <strong>TourAI App</strong> -
+            <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a>
+            - <span data-i18n="footer.rights">Todos los derechos reservados.</span>
+        </div>
+    </footer>
+
+    <script src="js/site-config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/locales/en-GB.js"></script>
+    <script src="js/loading-overlay.js"></script>
+    <script src="js/feedback-modal.js"></script>
+    <script src="js/forms.js"></script>
+    <script src="js/delete-account.js"></script>
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        function tDelete(key, fallback) {
+            return window.TourAiDeleteAccount?.tOr(key, fallback) ?? fallback;
+        }
+
+        function setVerificationBoxState({ visible, verified, showVerifyButton }) {
+            const box = document.getElementById('emailVerificationBox');
+            const message = document.getElementById('emailVerificationMessage');
+            const sendBtn = document.getElementById('sendVerificationBtn');
+            const actions = box?.querySelector('.verification-actions');
+            if (!box) return;
+
+            if (!visible) {
+                box.classList.remove('visible', 'verified', 'button-only');
+                return;
+            }
+
+            box.classList.add('visible');
+            box.classList.toggle('verified', !!verified);
+            box.classList.toggle('button-only', !!showVerifyButton && !verified);
+            if (message) message.hidden = !verified;
+            if (actions) actions.style.display = showVerifyButton ? 'flex' : 'none';
+            if (sendBtn) sendBtn.style.display = showVerifyButton ? 'inline-block' : 'none';
+            if (verified && message) {
+                message.textContent = tDelete('deleteAccount.verify.success', 'Correo verificado correctamente.');
+            }
+        }
+
+        function validateForm() {
+            const email = document.getElementById('email').value.trim();
+            const confirmDelete = document.getElementById('confirmDelete').checked;
+            const submitBtn = document.getElementById('submitBtn');
+            const emailError = document.getElementById('emailError');
+            const isEmailValid = window.TourAiForms?.isValidEmail(email) ?? false;
+            const showEmailError = email.length > 0 && !isEmailValid;
+            const isVerified = window.TourAiDeleteAccount?.isEmailVerified(email) ?? false;
+
+            document.getElementById('email').classList.toggle('input-invalid', showEmailError);
+            if (emailError) emailError.hidden = !showEmailError;
+
+            if (!isEmailValid) {
+                setVerificationBoxState({ visible: false, verified: false, showVerifyButton: false });
+            } else {
+                setVerificationBoxState({
+                    visible: true,
+                    verified: isVerified,
+                    showVerifyButton: !isVerified,
+                });
+            }
+
+            submitBtn.disabled = !(isEmailValid && isVerified && confirmDelete);
+        }
+
+        document.getElementById('email').addEventListener('input', function () {
+            window.TourAiDeleteAccount?.onEmailInput(this.value);
+            validateForm();
+        });
+        document.getElementById('confirmDelete').addEventListener('change', validateForm);
+
+        function openEmailVerificationModal() {
+            document.getElementById('emailVerificationModal').style.display = 'flex';
+            const status = document.getElementById('verificationModalStatus');
+            status.hidden = true;
+            document.getElementById('verificationCode').value = '';
+            document.getElementById('verificationCode').focus();
+        }
+
+        function closeEmailVerificationModal() {
+            document.getElementById('emailVerificationModal').style.display = 'none';
+        }
+
+        function showVerificationModalStatus(message, type) {
+            const status = document.getElementById('verificationModalStatus');
+            status.textContent = message;
+            status.className = 'verification-status ' + (type ?? '');
+            status.hidden = false;
+        }
+
+        async function startEmailVerification() {
+            const email = document.getElementById('email').value.trim();
+            const button = document.getElementById('sendVerificationBtn');
+            const originalText = tDelete('deleteAccount.verify.button', button.textContent);
+            try {
+                button.disabled = true;
+                button.textContent = tDelete('deleteAccount.verify.sending', 'Enviando código...');
+                const result = await window.TourAiDeleteAccount.sendVerificationCode(email);
+                if (!result.ok) {
+                    if (result.status === 404 || result.error === 'account_not_found') {
+                        throw new Error(tDelete('deleteAccount.error.notFound', 'No existe ninguna cuenta TourAI con ese correo.'));
+                    }
+                    if (result.error === 'rate_limited') {
+                        throw new Error(tDelete('deleteAccount.verify.rateLimited', 'Demasiados intentos. Espera unos minutos.'));
+                    }
+                    throw new Error(tDelete('deleteAccount.verify.sendError', 'No se pudo enviar el código.'));
+                }
+                openEmailVerificationModal();
+                showVerificationModalStatus(tDelete('deleteAccount.verify.sent', 'Código enviado. Revisa tu bandeja de entrada y spam.'), 'success');
+            } catch (error) {
+                window.TourAiFeedback?.show({ type: 'error', message: error.message });
+            } finally {
+                button.textContent = originalText;
+                button.disabled = false;
+                validateForm();
+            }
+        }
+
+        async function resendVerificationCode() {
+            const button = document.getElementById('resendVerificationBtn');
+            const originalText = tDelete('deleteAccount.verify.resend', button.textContent);
+            try {
+                button.disabled = true;
+                const result = await window.TourAiDeleteAccount.sendVerificationCode(document.getElementById('email').value.trim());
+                if (!result.ok) {
+                    throw new Error(tDelete('deleteAccount.verify.sendError', 'No se pudo enviar el código.'));
+                }
+                showVerificationModalStatus(tDelete('deleteAccount.verify.resent', 'Se ha enviado un nuevo código.'), 'success');
+            } catch (error) {
+                showVerificationModalStatus(error.message, 'error');
+            } finally {
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        }
+
+        async function confirmVerificationCode() {
+            const email = document.getElementById('email').value.trim();
+            const code = document.getElementById('verificationCode').value.trim();
+            const button = document.getElementById('verifyCodeBtn');
+            const originalText = tDelete('deleteAccount.verify.submit', button.textContent);
+            try {
+                button.disabled = true;
+                button.textContent = tDelete('deleteAccount.verify.verifying', 'VERIFICANDO...');
+                const result = await window.TourAiDeleteAccount.verifyCode(email, code);
+                if (!result.ok) {
+                    const errorMap = {
+                        invalid_code: tDelete('deleteAccount.verify.invalidCode', 'El código no es correcto.'),
+                        expired: tDelete('deleteAccount.verify.expired', 'El código ha caducado.'),
+                        too_many_attempts: tDelete('deleteAccount.verify.rateLimited', 'Demasiados intentos.'),
+                        not_found: tDelete('deleteAccount.verify.invalidCode', 'El código no es correcto.'),
+                    };
+                    showVerificationModalStatus(errorMap[result.error] ?? errorMap.invalid_code, 'error');
+                    return;
+                }
+                closeEmailVerificationModal();
+                validateForm();
+            } finally {
+                button.textContent = originalText;
+                button.disabled = false;
+            }
+        }
+
+        async function submitDeleteAccount() {
+            const email = document.getElementById('email').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = tDelete('deleteAccount.submit', submitBtn.textContent);
+            const confirmModal = confirm(tDelete('deleteAccount.finalConfirm', '¿Seguro que quieres eliminar tu cuenta de forma permanente?'));
+            if (!confirmModal) return;
+
+            try {
+                submitBtn.disabled = true;
+                submitBtn.textContent = tDelete('deleteAccount.deleting', 'ELIMINANDO...');
+                const result = await window.TourAiDeleteAccount.deleteAccount(email);
+                if (!result.ok) {
+                    if (result.error === 'email_not_verified') {
+                        throw new Error(tDelete('deleteAccount.error.notVerified', 'Debes verificar tu correo con el código.'));
+                    }
+                    throw new Error(tDelete('deleteAccount.error.failed', 'No se pudo eliminar la cuenta.'));
+                }
+                window.TourAiFeedback?.show({
+                    type: 'success',
+                    message: tDelete('deleteAccount.success', 'Tu cuenta ha sido eliminada. Recibirás un correo de confirmación.'),
+                });
+                document.getElementById('deleteAccountForm').reset();
+                validateForm();
+            } catch (error) {
+                window.TourAiFeedback?.show({ type: 'error', message: error.message });
+            } finally {
+                submitBtn.textContent = originalText;
+                validateForm();
+            }
+        }
+
+        validateForm();
+    </script>
+</body>
+</html>

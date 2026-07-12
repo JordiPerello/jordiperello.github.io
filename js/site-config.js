@@ -22,6 +22,18 @@ window.TourAiSite.config = {
 
     "https://us-central1-tourai-production-7dabf.cloudfunctions.net/unsubscribeWebStoreNotifications",
 
+  accountDeletionSendVerificationUrl:
+
+    "https://us-central1-tourai-production-7dabf.cloudfunctions.net/sendAccountDeletionVerificationCode",
+
+  accountDeletionVerifyCodeUrl:
+
+    "https://us-central1-tourai-production-7dabf.cloudfunctions.net/verifyAccountDeletionVerificationCode",
+
+  accountDeletionDeleteUrl:
+
+    "https://us-central1-tourai-production-7dabf.cloudfunctions.net/deleteUserAccountWeb",
+
   defaultLocale: "es-ES",
 
   supportedLocales: ["es-ES", "en-GB"],
