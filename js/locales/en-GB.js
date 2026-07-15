@@ -565,8 +565,8 @@ window.TourAiEnGBMessages = {
             <p>We only process technical and functional information necessary to operate the service:</p>
             <ul>
                 <li><strong>Geographic Location:</strong> Used with your permission to offer you audio guides for the monuments right in front of you. We do not store a history of your movements.</li>
-                <li><strong>Account and in-app plans:</strong> Registration data, purchased plans, usage history and preferences linked to your profile.</li>
-                <li><strong>Bonuses and promotional codes:</strong> Record of the code redeemed, redemption date, associated plan and internal campaign identifier, to manage free Premium access (including the automatic welcome bonus on first sign-in when active), prevent duplicate use per user and prevent fraud. If you redeem a bonus by scanning a QR code, the camera is used on your device to read the code; <strong>we do not store QR images or video recordings</strong>.</li>
+                <li><strong>Account and in-app plans:</strong> Registration data, purchased plans, usage history and preferences linked to your profile. <strong>Date of birth</strong> is optional and only requested if you wish to take part in promotions such as birthday bonuses (BIRTHDATE campaign); if you do not provide it, that type of bonus will not be applied automatically.</li>
+                <li><strong>Bonuses and promotional codes:</strong> Record of the code redeemed, redemption date, associated plan and promotional campaign reference (for example WELCOME, BIRTHDATE), to manage free Premium access (including the automatic welcome bonus on first sign-in when applicable, email pre-assigned bonuses with priority over the WELCOME bonus), prevent duplicate use per user and prevent fraud. Bonuses must be activated within 30 days; purchased plans within 60 days from acquisition. If you redeem a bonus by scanning a QR code, the camera is used on your device to read the code; <strong>we do not store QR images or video recordings</strong>.</li>
                 <li><strong>Usage Metrics:</strong> Anonymous data on which guides are most listened to, to improve our catalogue.</li>
                 <li><strong>Technical Preferences:</strong> We store your preferred language locally so you do not have to configure it on every visit.</li>
             </ul>
@@ -615,7 +615,8 @@ window.TourAiEnGBMessages = {
             </ul>
             <p>
                 <strong>We do not delete</strong> global service content without a direct link to your user, such as
-                cached narrations (<code>AIResponses</code>), place catalogues, commercial plans or other shared data.
+                place texts or narrations reused in the shared catalogue, points-of-interest catalogues, general commercial plans
+                or other data shared between users.
             </p>
             <p>
                 Deletion is immediate after you confirm the code. You will receive a confirmation email when it completes.
@@ -677,19 +678,25 @@ window.TourAiEnGBMessages = {
             <ul>
                 <li><strong>Free Access (Freemium):</strong> Supported through third-party advertising (Google AdSense on the web and AdMob in the app). May include rewarded ads that temporarily extend your usage allowance.</li>
                 <li><strong>Premium Plans:</strong> Temporary paid plans (for example, 1 day or weekend) with a higher service usage allowance and an advert-free experience while the plan is active.</li>
-                <li><strong>Promotional bonuses:</strong> TourAI may grant free Premium access through alphanumeric codes or QR codes distributed in campaigns (automatic welcome bonus on first registration, campaign codes, influencer actions, etc.). In particular:
+                <li><strong>Promotional bonuses:</strong> TourAI may grant free Premium access through alphanumeric codes or QR codes distributed in campaigns (WELCOME campaign on first registration, BIRTHDATE campaign for birthdays, email pre-assigned bonuses or other campaign codes). In particular:
                     <ul>
                         <li>Bonuses are <strong>linked to the user's account</strong>; they are not transferable, resalable or redeemable for cash.</li>
-                        <li>Each bonus has a <strong>consumption period</strong> (duration in days) and internal service usage limits.</li>
+                        <li>An <strong>email pre-assigned bonus</strong> (a campaign other than WELCOME, such as BIRTHDATE or another active promotion) takes <strong>priority</strong> over the automatic welcome bonus. If the user redeems another promotional bonus after first sign-in, the WELCOME bonus is paused.</li>
+                        <li>For birthday bonuses (<strong>BIRTHDATE</strong>), the user may optionally provide their date of birth in their profile. If they do not, they cannot receive that type of bonus automatically.</li>
+                        <li>Bonuses must be <strong>activated or consumed within 30 days</strong> from redemption or automatic assignment.</li>
+                        <li><strong>Purchased plans</strong> must be activated within <strong>60 days (2 months)</strong> from acquisition, unless otherwise stated on the purchase screen.</li>
                         <li>The same code may allow <strong>multiple total redemptions</strong> (by different users), but <strong>each user may redeem the same code only once</strong>.</li>
                         <li>Redemption is done in the app (<strong>Profile → Redeem bonus / code</strong>), by entering the code manually or <strong>scanning the QR with the device camera</strong> when the platform allows it (Android/iOS). Scanning uses the live camera; QR images and video recordings are not stored.</li>
-                        <li>Valid QR codes contain a code or a TourAI domain URL (for example, <code>tourai.es/promo?code=...</code> or an internal <code>TOURAI:PROMO:...</code> payload).</li>
-                        <li>Plan history distinguishes them as <strong>BONUS</strong> versus paid purchases (<strong>PURCHASE</strong>).</li>
-                        <li>TourAI may limit, suspend or withdraw codes in cases of fraud, abuse, technical error, breach of terms or end of campaign.</li>
+                        <li>Valid QR codes contain a promotional code or a TourAI domain link (for example, <code>tourai.es/promo?code=...</code>).</li>
+                        <li>Plan history distinguishes bonuses obtained through promotional codes from plans acquired through purchase.</li>
+                        <li>TourAI may limit, suspend or withdraw codes in cases of fraud, abuse, breach of terms or end of campaign.</li>
                     </ul>
                 </li>
             </ul>
-            <p>Fraudulent or automated code redemption, forgery of codes or QR payloads, or attempts to bypass per-user or per-code limits are prohibited.</p>
+            <p>Fraudulent or automated code redemption, forgery of codes or QR codes, or attempts to bypass per-user or per-code limits are prohibited.</p>
+
+            <h2>5.1. Account suspension</h2>
+            <p>TourAI may <strong>suspend or block</strong> accounts for fraud, abuse, breach of terms or risk to service security. If your account is blocked, you will not be able to sign in until the suspension is lifted. You may contact <a href="mailto:info@tourai.es">info@tourai.es</a> to submit a complaint.</p>
 
             <h2>6. Device permissions (mobile app)</h2>
             <p>The application may request location, microphone, camera (profile photo and bonus QR scanning), gallery and optional biometrics permissions. Denying access may limit functionality. See the full app terms for details.</p>

@@ -98,19 +98,25 @@
             <ul>
                 <li><strong>Acceso Gratuito (Freemium):</strong> Sostenido mediante publicidad de terceros (Google AdSense en web y AdMob en app). Puede incluir anuncios recompensados que amplían temporalmente el cupo de uso.</li>
                 <li><strong>Planes Premium:</strong> Planes temporales de pago (por ejemplo, 1 día o fin de semana) con mayor cupo de uso del servicio y experiencia sin publicidad mientras el plan esté activo.</li>
-                <li><strong>Bonos promocionales:</strong> TourAI puede otorgar acceso Premium gratuito mediante códigos alfanuméricos o códigos QR distribuidos en campañas (bono de bienvenida al registrarse por primera vez, códigos de campaña, acciones con influencers, etc.). En particular:
+                <li><strong>Bonos promocionales:</strong> TourAI puede otorgar acceso Premium gratuito mediante códigos alfanuméricos o códigos QR distribuidos en campañas (campaña WELCOME al registrarse por primera vez, campaña BIRTHDATE por cumpleaños, bonos pre-asignados al correo del usuario u otros códigos de campaña). En particular:
                     <ul>
                         <li>Los bonos quedan <strong>asociados a la cuenta del usuario</strong>; no son transferibles, revendibles ni canjeables por dinero.</li>
-                        <li>Cada bono tiene un <strong>plazo para consumirlo</strong> (duración en días) y límites internos de uso del servicio.</li>
+                        <li>Si existe un <strong>bono pre-asignado al email</strong> del usuario (campaña distinta de WELCOME, por ejemplo BIRTHDATE u otra promoción activa), tiene <strong>prioridad</strong> sobre el bono de bienvenida. Si el usuario canjea otro bono promocional después del primer acceso, el bono WELCOME queda en pausa.</li>
+                        <li>Para bonos de cumpleaños (<strong>BIRTHDATE</strong>), el usuario puede indicar opcionalmente su fecha de nacimiento en el perfil. Si no la facilita, no podrá recibir automáticamente ese tipo de bono.</li>
+                        <li>Los bonos tienen un <strong>plazo máximo de activación o consumo de 30 días</strong> desde el canje o la asignación automática.</li>
+                        <li>Los <strong>planes de compra</strong> tienen un plazo de activación de <strong>60 días (2 meses)</strong> desde la adquisición, salvo indicación distinta en la pantalla de compra.</li>
                         <li>Un mismo código puede admitir <strong>varios canjes totales</strong> (distintos usuarios), pero <strong>cada usuario solo puede canjear un mismo código una vez</strong>.</li>
                         <li>El canje se realiza en la app (<strong>Perfil → Canjear bono / código</strong>), introduciendo el código manualmente o <strong>escaneando el QR con la cámara</strong> del dispositivo cuando la plataforma lo permita (Android/iOS). El escaneo utiliza la cámara en vivo; no se almacenan imágenes del QR ni grabaciones de vídeo.</li>
-                        <li>Los QR válidos contienen un código o una URL del dominio TourAI (por ejemplo, <code>tourai.es/promo?code=...</code> o un payload interno <code>TOURAI:PROMO:...</code>).</li>
-                        <li>En el historial de planes se distinguen como <strong>BONO</strong> frente a las compras de pago (<strong>COMPRA</strong>).</li>
-                        <li>TourAI puede limitar, suspender o retirar códigos por fraude, abuso, error técnico, incumplimiento de los términos o finalización de la campaña.</li>
+                        <li>Los QR válidos contienen un código promocional o un enlace del dominio TourAI (por ejemplo, <code>tourai.es/promo?code=...</code>).</li>
+                        <li>En el historial de planes se distinguen los obtenidos mediante bono o código promocional de los adquiridos mediante compra.</li>
+                        <li>TourAI puede limitar, suspender o retirar códigos por fraude, abuso, incumplimiento de los términos o finalización de la campaña.</li>
                     </ul>
                 </li>
             </ul>
             <p>Queda prohibido el canje fraudulento o automatizado de códigos, la falsificación de códigos o QR, o el intento de superar los límites de uso por usuario o por código.</p>
+
+            <h2>5.1. Suspensión de cuentas</h2>
+            <p>TourAI puede <strong>suspender o bloquear</strong> cuentas por fraude, abuso, incumplimiento de los términos o riesgo para la seguridad del servicio. Si tu cuenta queda bloqueada, no podrás iniciar sesión hasta que se revoque la suspensión. Puedes contactar con <a href="mailto:info@tourai.es">info@tourai.es</a> para presentar una reclamación.</p>
 
             <h2>6. Permisos del dispositivo (app móvil)</h2>
             <p>La aplicación puede solicitar permisos de ubicación, micrófono, cámara (foto de perfil y escaneo de QR de bonos), galería y biometría opcional. La denegación puede limitar funcionalidades. Consulte los términos completos de la app para el detalle.</p>

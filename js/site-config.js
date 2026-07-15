@@ -34,6 +34,12 @@ window.TourAiSite.config = {
 
     "https://us-central1-tourai-production-7dabf.cloudfunctions.net/deleteUserAccountWeb",
 
+  firebaseAuth: {
+    apiKey: "AIzaSyBkdRh9qZiAL_WIaX8Nsv4PcrCk6C7IRTs",
+    authDomain: "tourai-production-7dabf.firebaseapp.com",
+    projectId: "tourai-production-7dabf",
+  },
+
   defaultLocale: "es-ES",
 
   supportedLocales: ["es-ES", "en-GB"],
