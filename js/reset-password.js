@@ -2,6 +2,7 @@
   const config = window.TourAiSite?.config;
   const statusEl = document.getElementById("resetStatus");
   const form = document.getElementById("resetPasswordForm");
+  const successEl = document.getElementById("resetSuccess");
 
   const firebaseConfig = config?.firebaseAuth;
   if (!config || !firebaseConfig?.apiKey) {
@@ -32,6 +33,16 @@
 
   function readQueryParam(name) {
     return new URLSearchParams(window.location.search).get(name) ?? "";
+  }
+
+  function showSuccess() {
+    if (form) {
+      form.style.display = "none";
+    }
+    if (successEl) {
+      successEl.hidden = false;
+    }
+    setStatus("", false);
   }
 
   const mode = readQueryParam("mode");
@@ -68,8 +79,7 @@
 
     try {
       await auth.confirmPasswordReset(oobCode, newPassword);
-      setStatus("Contraseña actualizada. Ya puedes volver a la app e iniciar sesión.", false);
-      form.style.display = "none";
+      showSuccess();
     } catch (error) {
       const message =
         error?.code === "auth/expired-action-code"
