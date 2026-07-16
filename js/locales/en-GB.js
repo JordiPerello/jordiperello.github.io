@@ -548,7 +548,7 @@ window.TourAiEnGBMessages = {
 
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
-            <p><strong>Last updated:</strong> 11 July 2026.</p>
+            <p><strong>Last updated:</strong> 16 July 2026.</p>
             <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we consider our users' privacy a fundamental pillar. This policy details how we manage information to ensure that using our smart audio guides is safe and transparent.</p>
 
             <h2>2. Data Controller</h2>
@@ -567,6 +567,7 @@ window.TourAiEnGBMessages = {
                 <li><strong>Geographic Location:</strong> Used with your permission to offer you audio guides for the monuments right in front of you. We do not store a history of your movements.</li>
                 <li><strong>Account and in-app plans:</strong> Registration data, purchased plans, usage history and preferences linked to your profile. <strong>Date of birth</strong> is optional and only requested if you wish to take part in promotions such as birthday bonuses (BIRTHDATE campaign); if you do not provide it, that type of bonus will not be applied automatically.</li>
                 <li><strong>Bonuses and promotional codes:</strong> Record of the code redeemed, redemption date, associated plan and promotional campaign reference (for example WELCOME, BIRTHDATE), to manage free Premium access (including the automatic welcome bonus on first sign-in when applicable, email pre-assigned bonuses with priority over the WELCOME bonus), prevent duplicate use per user and prevent fraud. Bonuses must be activated within 30 days; purchased plans within 60 days from acquisition. If you redeem a bonus by scanning a QR code, the camera is used on your device to read the code; <strong>we do not store QR images or video recordings</strong>.</li>
+                <li><strong>Device identifier and session:</strong> We use a device identifier and a presence signal while you use the app to keep <strong>a single active session per account</strong> and to manage closing the previous session when you sign in from a new device. It is not used to build advertising profiles.</li>
                 <li><strong>Usage Metrics:</strong> Anonymous data on which guides are most listened to, to improve our catalogue.</li>
                 <li><strong>Technical Preferences:</strong> We store your preferred language locally so you do not have to configure it on every visit.</li>
             </ul>
@@ -649,7 +650,7 @@ window.TourAiEnGBMessages = {
 
   "page.terms.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Acceptance of Terms</h2>
-            <p><strong>Last updated:</strong> 11 July 2026.</p>
+            <p><strong>Last updated:</strong> 16 July 2026.</p>
             <p>By accessing or using the TourAI website and mobile application, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our audio guide services or our information platform.</p>
             
             <h2>2. Description of the Service</h2>
@@ -697,6 +698,9 @@ window.TourAiEnGBMessages = {
 
             <h2>5.1. Account suspension</h2>
             <p>TourAI may <strong>suspend or block</strong> accounts for fraud, abuse, breach of terms or risk to service security. If your account is blocked, you will not be able to sign in until the suspension is lifted. You may contact <a href="mailto:info@tourai.es">info@tourai.es</a> to submit a complaint.</p>
+
+            <h2>5.2. Single active session per device</h2>
+            <p>Each account keeps <strong>a single active session</strong>, tied to the device you are signed in on. If you try to sign in from another device, you can choose to close the open session to continue; the previous device will be signed out as soon as it detects the change. Signing out cleanly frees the session instantly; if the app is force-closed or the device is switched off, the session is freed automatically after a short period of inactivity. Do not share your credentials: if someone else wants to use TourAI, we recommend creating a separate free Freemium account. See the full details in the mobile app terms.</p>
 
             <h2>6. Device permissions (mobile app)</h2>
             <p>The application may request location, microphone, camera (profile photo and bonus QR scanning), gallery and optional biometrics permissions. Denying access may limit functionality. See the full app terms for details.</p>
