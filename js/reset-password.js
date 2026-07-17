@@ -19,10 +19,18 @@
 
   let passwordsVisible = false;
 
+  function t(key, fallback) {
+    const locale = window.TourAiI18n?.getLocale?.();
+    return window.TourAiI18n?.tOr?.(key, locale, null, fallback) ?? fallback;
+  }
+
   const firebaseConfig = config?.firebaseAuth;
   if (!config || !firebaseConfig?.apiKey) {
     if (statusEl) {
-      statusEl.textContent = "Configuración de Firebase no disponible.";
+      statusEl.textContent = t(
+        "resetPassword.status.configMissing",
+        "Configuración de Firebase no disponible."
+      );
       statusEl.classList.add("error");
     }
     if (form) {
@@ -75,7 +83,12 @@
   function setPasswordsVisible(visible) {
     passwordsVisible = visible;
     const type = visible ? "text" : "password";
-    const label = visible ? "Ocultar" : "Mostrar";
+    const label = visible
+      ? t("resetPassword.hide", "Ocultar")
+      : t("resetPassword.show", "Mostrar");
+    const aria = visible
+      ? t("resetPassword.hide.aria", "Ocultar contraseña")
+      : t("resetPassword.show.aria", "Mostrar contraseña");
 
     if (newPasswordInput) {
       newPasswordInput.type = type;
@@ -86,10 +99,7 @@
 
     toggleButtons.forEach((button) => {
       button.textContent = label;
-      button.setAttribute(
-        "aria-label",
-        visible ? "Ocultar contraseña" : "Mostrar contraseña"
-      );
+      button.setAttribute("aria-label", aria);
     });
   }
 
@@ -114,18 +124,18 @@
 
     if (level === strength.Level.Weak) {
       strengthBars[0].classList.add("is-active", "is-weak");
-      strengthLabel.textContent = "Débil";
+      strengthLabel.textContent = t("resetPassword.strength.weak", "Débil");
       strengthLabel.className = "auth-password-strength__label is-weak";
     } else if (level === strength.Level.Medium) {
       strengthBars[0].classList.add("is-active", "is-medium");
       strengthBars[1].classList.add("is-active", "is-medium");
-      strengthLabel.textContent = "Media";
+      strengthLabel.textContent = t("resetPassword.strength.medium", "Media");
       strengthLabel.className = "auth-password-strength__label is-medium";
     } else {
       strengthBars[0].classList.add("is-active", "is-strong");
       strengthBars[1].classList.add("is-active", "is-strong");
       strengthBars[2].classList.add("is-active", "is-strong");
-      strengthLabel.textContent = "Fuerte";
+      strengthLabel.textContent = t("resetPassword.strength.strong", "Fuerte");
       strengthLabel.className = "auth-password-strength__label is-strong";
     }
   }
@@ -153,7 +163,10 @@
 
   if (mode !== "resetPassword" || !oobCode) {
     setStatus(
-      "Este enlace no es válido o ha caducado. Solicita un nuevo restablecimiento desde la app TourAI.",
+      t(
+        "resetPassword.status.invalidLink",
+        "Este enlace no es válido o ha caducado. Solicita un nuevo restablecimiento desde la app TourAI."
+      ),
       true
     );
     if (form) {
@@ -189,6 +202,11 @@
     setStatus("", false);
   });
 
+  document.addEventListener("tourai:locale-changed", () => {
+    setPasswordsVisible(passwordsVisible);
+    updateFieldErrors();
+  });
+
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -199,18 +217,24 @@
 
     if (!strength?.meetsMinimum(newPassword)) {
       setStatus(
-        "La contraseña es demasiado débil. Usa al menos 8 caracteres con mayúsculas, minúsculas y números.",
+        t(
+          "resetPassword.error.weak",
+          "La contraseña es demasiado débil. Usa al menos 8 caracteres con mayúsculas, minúsculas y números."
+        ),
         true
       );
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setStatus("Las contraseñas no coinciden.", true);
+      setStatus(
+        t("resetPassword.error.mismatch", "Las contraseñas no coinciden."),
+        true
+      );
       return;
     }
 
-    setStatus("Guardando contraseña...", false);
+    setStatus(t("resetPassword.status.saving", "Guardando contraseña..."), false);
 
     try {
       await auth.confirmPasswordReset(oobCode, newPassword);
@@ -218,8 +242,14 @@
     } catch (error) {
       const message =
         error?.code === "auth/expired-action-code"
-          ? "El enlace ha caducado. Solicita uno nuevo desde la app."
-          : "No se pudo actualizar la contraseña. Solicita un nuevo enlace.";
+          ? t(
+              "resetPassword.status.expired",
+              "El enlace ha caducado. Solicita uno nuevo desde la app."
+            )
+          : t(
+              "resetPassword.status.failed",
+              "No se pudo actualizar la contraseña. Solicita un nuevo enlace."
+            );
       setStatus(message, true);
     }
   });

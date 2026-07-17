@@ -10,8 +10,16 @@
 
   const messages = {
     [SPANISH_LOCALE]: {},
-    [ENGLISH_LOCALE]: window.TourAiEnGBMessages ?? {},
+    [ENGLISH_LOCALE]: {},
   };
+
+  function syncEnglishMessages() {
+    if (window.TourAiEnGBMessages && typeof window.TourAiEnGBMessages === "object") {
+      messages[ENGLISH_LOCALE] = window.TourAiEnGBMessages;
+    }
+  }
+
+  syncEnglishMessages();
 
   function isSpanishLocale(locale) {
     return locale === SPANISH_LOCALE || locale === "es";
@@ -41,6 +49,7 @@
   }
 
   function t(key, locale, vars) {
+    syncEnglishMessages();
     const normalized = normalizeLocale(locale);
     if (isSpanishLocale(normalized)) {
       return null;
@@ -96,6 +105,7 @@
   }
 
   function applyTranslations(locale) {
+    syncEnglishMessages();
     const normalized = normalizeLocale(locale);
     document.documentElement.lang = isSpanishLocale(normalized) ? SPANISH_LOCALE : ENGLISH_LOCALE;
 

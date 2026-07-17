@@ -15,6 +15,34 @@ window.TourAiEnGBMessages = {
   "footer.deleteAccount": "Delete account",
   "doc.title.deleteAccount": "Delete account - TourAI",
   "doc.meta.deleteAccount": "Delete your TourAI account and linked personal data with email verification.",
+  "doc.title.resetPassword": "Reset password - TourAI",
+  "doc.meta.resetPassword": "Reset your TourAI account password from a secure link sent by email.",
+  "resetPassword.title": "Reset password",
+  "resetPassword.subtitle": "Choose a new password to keep exploring with your smart travel guide.",
+  "resetPassword.newPassword": "New password",
+  "resetPassword.newPassword.placeholder": "New password",
+  "resetPassword.confirmPassword": "Confirm password",
+  "resetPassword.confirmPassword.placeholder": "Repeat the password",
+  "resetPassword.show": "Show",
+  "resetPassword.hide": "Hide",
+  "resetPassword.show.aria": "Show password",
+  "resetPassword.hide.aria": "Hide password",
+  "resetPassword.generate": "Generate secure password",
+  "resetPassword.hint": "At least 8 characters with uppercase, lowercase and numbers. Add a symbol for stronger security.",
+  "resetPassword.error.weak": "The password is too weak. Use at least 8 characters with uppercase, lowercase and numbers.",
+  "resetPassword.error.mismatch": "Passwords do not match.",
+  "resetPassword.submit": "Save password",
+  "resetPassword.success.title": "Password updated",
+  "resetPassword.success.body": "You can return to the TourAI app and sign in with your new password.",
+  "resetPassword.success.cta": "Go to TourAI",
+  "resetPassword.strength.weak": "Weak",
+  "resetPassword.strength.medium": "Medium",
+  "resetPassword.strength.strong": "Strong",
+  "resetPassword.status.invalidLink": "This link is not valid or has expired. Request a new reset from the TourAI app.",
+  "resetPassword.status.saving": "Saving password...",
+  "resetPassword.status.expired": "The link has expired. Request a new one from the app.",
+  "resetPassword.status.failed": "Could not update the password. Request a new link.",
+  "resetPassword.status.configMissing": "Firebase configuration is not available.",
   "deleteAccount.title": "Delete TourAI account",
   "deleteAccount.subtitle": "Request permanent deletion of your account and linked personal data.",
   "deleteAccount.warning": "This action is irreversible. Only data directly linked to your account will be deleted. Shared catalogue content (e.g. cached narrations) will not be removed.",
@@ -548,7 +576,7 @@ window.TourAiEnGBMessages = {
 
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
-            <p><strong>Last updated:</strong> 16 July 2026.</p>
+            <p><strong>Last updated:</strong> 17 July 2026.</p>
             <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we consider our users' privacy a fundamental pillar. This policy details how we manage information to ensure that using our smart audio guides is safe and transparent.</p>
 
             <h2>2. Data Controller</h2>
@@ -566,6 +594,8 @@ window.TourAiEnGBMessages = {
             <ul>
                 <li><strong>Geographic Location:</strong> Used with your permission to offer you audio guides for the monuments right in front of you. We do not store a history of your movements.</li>
                 <li><strong>Account and in-app plans:</strong> Registration data, purchased plans, usage history and preferences linked to your profile. <strong>Date of birth</strong> is optional and only requested if you wish to take part in promotions such as birthday bonuses (BIRTHDATE campaign); if you do not provide it, that type of bonus will not be applied automatically.</li>
+                <li><strong>Account security and password reset:</strong> If you request “Forgot your password?” from the app, we send an email with a secure link to <a href="reset-password.html">tourai.es/reset-password.html</a> so you can set a new password. We do not send your current password by email.</li>
+                <li><strong>Registration abuse prevention:</strong> We keep a history of sign-ups and deletions linked to the same email (email lifecycle) to limit abusive re-registration (currently a maximum of <strong>3 registrations in 180 days</strong>). An administrator may unlock the email when appropriate.</li>
                 <li><strong>Bonuses and promotional codes:</strong> Record of the code redeemed, redemption date, associated plan and promotional campaign reference (for example WELCOME, BIRTHDATE), to manage free Premium access (including the automatic welcome bonus on first sign-in when applicable, email pre-assigned bonuses with priority over the WELCOME bonus), prevent duplicate use per user and prevent fraud. Bonuses must be activated within 30 days; purchased plans within 60 days from acquisition. If you redeem a bonus by scanning a QR code, the camera is used on your device to read the code; <strong>we do not store QR images or video recordings</strong>.</li>
                 <li><strong>Device identifier and session:</strong> We use a device identifier and a presence signal while you use the app to keep <strong>a single active session per account</strong> and to manage closing the previous session when you sign in from a new device. It is not used to build advertising profiles.</li>
                 <li><strong>Usage Metrics:</strong> Anonymous data on which guides are most listened to, to improve our catalogue.</li>
@@ -577,7 +607,7 @@ window.TourAiEnGBMessages = {
             <ul>
                 <li><strong>Performance of contract / provision of the service:</strong> account, plans, bonus redemption, preferences and app features.</li>
                 <li><strong>Consent:</strong> geolocation, microphone, camera (profile photo or bonus QR scanning), personalised advertising where required by law.</li>
-                <li><strong>Legitimate interest:</strong> security, prevention of fraud in promotional codes, service improvement and aggregated metrics.</li>
+                <li><strong>Legitimate interest:</strong> security, prevention of fraud in promotional codes and abusive re-registration, service improvement and aggregated metrics.</li>
                 <li><strong>Legal obligation:</strong> retention of billing data where applicable.</li>
             </ul>
             
@@ -650,7 +680,7 @@ window.TourAiEnGBMessages = {
 
   "page.terms.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Acceptance of Terms</h2>
-            <p><strong>Last updated:</strong> 16 July 2026.</p>
+            <p><strong>Last updated:</strong> 17 July 2026.</p>
             <p>By accessing or using the TourAI website and mobile application, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our audio guide services or our information platform.</p>
             
             <h2>2. Description of the Service</h2>
@@ -729,7 +759,7 @@ window.TourAiEnGBMessages = {
 
   "page.cookies.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. What are Cookies?</h2>
-            <p><strong>Last updated:</strong> 11 July 2026.</p>
+            <p><strong>Last updated:</strong> 17 July 2026.</p>
             <p>Cookies are small text files that websites store in your browser to remember information about your visit. In our mobile app, we use equivalent advertising identifiers (IDFA or AAID).</p>
             
             <h2>2. Types of Cookies We Use</h2>
