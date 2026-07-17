@@ -84,6 +84,119 @@
   background: #fff;
 }
 
+.auth-action-page .auth-password-field {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.auth-action-page .auth-password-field input {
+  margin-bottom: 0;
+  padding-right: 88px;
+}
+
+.auth-action-page .auth-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: #2f7a98;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.auth-action-page .auth-password-toggle:hover {
+  color: #0a2a43;
+}
+
+.auth-action-page .auth-password-strength {
+  margin: 0 0 8px;
+}
+
+.auth-action-page .auth-password-strength__bars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.auth-action-page .auth-password-strength__bar {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: #ddd;
+}
+
+.auth-action-page .auth-password-strength__bar.is-weak {
+  background: #ff3b30;
+}
+
+.auth-action-page .auth-password-strength__bar.is-medium {
+  background: #ff9500;
+}
+
+.auth-action-page .auth-password-strength__bar.is-strong {
+  background: #34c759;
+}
+
+.auth-action-page .auth-password-strength__label {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #6e6e73;
+}
+
+.auth-action-page .auth-password-strength__label.is-weak {
+  color: #ff3b30;
+}
+
+.auth-action-page .auth-password-strength__label.is-medium {
+  color: #ff9500;
+}
+
+.auth-action-page .auth-password-strength__label.is-strong {
+  color: #34c759;
+}
+
+.auth-action-page .auth-password-field-error {
+  margin: 0 0 8px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: #ff3b30;
+}
+
+.auth-action-page .auth-password-generate {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #2f7a98;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+}
+
+.auth-action-page .auth-password-generate:hover {
+  color: #0a2a43;
+  text-decoration: underline;
+}
+
+.auth-action-page .auth-password-hint {
+  margin: 0 0 18px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #6e6e73;
+}
+
+.auth-action-page .auth-action-form label[for="confirmPassword"] {
+  margin-top: 4px;
+}
+
 .auth-action-page .auth-action-submit {
   width: 100%;
   margin-top: 8px;
