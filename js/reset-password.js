@@ -31,8 +31,24 @@
     return;
   }
 
+  function readQueryParam(name) {
+    return new URLSearchParams(window.location.search).get(name) ?? "";
+  }
+
+  // Prefer apiKey/authDomain from the email link so Development reset codes
+  // (tourai-1f3d9) work on the public Production-hosted page.
+  const queryApiKey = readQueryParam("apiKey");
+  const queryAuthDomain = readQueryParam("authDomain");
+  const resolvedFirebaseConfig = {
+    apiKey: queryApiKey || firebaseConfig.apiKey,
+    authDomain: queryAuthDomain || firebaseConfig.authDomain,
+    projectId:
+      (queryAuthDomain && queryAuthDomain.replace(/\.firebaseapp\.com$/i, "")) ||
+      firebaseConfig.projectId,
+  };
+
   if (!window.firebase?.apps?.length) {
-    firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(resolvedFirebaseConfig);
   }
 
   const auth = firebase.auth();
@@ -44,10 +60,6 @@
 
     statusEl.textContent = message ?? "";
     statusEl.classList.toggle("error", !!isError);
-  }
-
-  function readQueryParam(name) {
-    return new URLSearchParams(window.location.search).get(name) ?? "";
   }
 
   function showSuccess() {
