@@ -576,7 +576,7 @@ window.TourAiEnGBMessages = {
 
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
-            <p><strong>Last updated:</strong> 17 July 2026.</p>
+            <p><strong>Last updated:</strong> 18 July 2026.</p>
             <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we consider our users' privacy a fundamental pillar. This policy details how we manage information to ensure that using our smart audio guides is safe and transparent.</p>
 
             <h2>2. Data Controller</h2>
@@ -592,32 +592,37 @@ window.TourAiEnGBMessages = {
             <h2>3. Information We Collect</h2>
             <p>We only process technical and functional information necessary to operate the service:</p>
             <ul>
-                <li><strong>Geographic Location:</strong> Used with your permission to offer you audio guides for the monuments right in front of you. We do not store a history of your movements.</li>
-                <li><strong>Account and in-app plans:</strong> Registration data, purchased plans, usage history and preferences linked to your profile. <strong>Date of birth</strong> is optional and only requested if you wish to take part in promotions such as birthday bonuses (BIRTHDATE campaign); if you do not provide it, that type of bonus will not be applied automatically.</li>
+                <li><strong>Geographic location:</strong> Used with your permission to offer audio guides and contextual content for nearby points of interest. We do not store a history of your movements or a permanent route.</li>
+                <li><strong>Account and in-app plans:</strong> Registration data (email and password), optional profile photo, purchased plans, plan usage-allowance history and preferences linked to your profile. <strong>Date of birth</strong> is optional and only requested if you wish to take part in promotions such as birthday bonuses (BIRTHDATE campaign); if you do not provide it, that type of bonus will not be applied automatically.</li>
+                <li><strong>Assistant messages:</strong> We temporarily keep the message history linked to your account to provide the chat service. These messages are deleted automatically after <strong>14 days</strong> and also when you delete your account.</li>
                 <li><strong>Account security and password reset:</strong> If you request “Forgot your password?” from the app, we send an email with a secure link to <a href="reset-password.html">tourai.es/reset-password.html</a> so you can set a new password. We do not send your current password by email.</li>
                 <li><strong>Registration abuse prevention:</strong> We keep a history of sign-ups and deletions linked to the same email (email lifecycle) to limit abusive re-registration (currently a maximum of <strong>3 registrations in 180 days</strong>). An administrator may unlock the email when appropriate.</li>
                 <li><strong>Bonuses and promotional codes:</strong> Record of the code redeemed, redemption date, associated plan and promotional campaign reference (for example WELCOME, BIRTHDATE), to manage free Premium access (including the automatic welcome bonus on first sign-in when applicable, email pre-assigned bonuses with priority over the WELCOME bonus), prevent duplicate use per user and prevent fraud. Bonuses must be activated within 30 days; purchased plans within 60 days from acquisition. If you redeem a bonus by scanning a QR code, the camera is used on your device to read the code; <strong>we do not store QR images or video recordings</strong>.</li>
                 <li><strong>Device identifier and session:</strong> We use a device identifier and a presence signal while you use the app to keep <strong>a single active session per account</strong> and to manage closing the previous session when you sign in from a new device. It is not used to build advertising profiles.</li>
-                <li><strong>Usage Metrics:</strong> Anonymous data on which guides are most listened to, to improve our catalogue.</li>
-                <li><strong>Technical Preferences:</strong> We store your preferred language locally so you do not have to configure it on every visit.</li>
+                <li><strong>Website forms:</strong> If you write via <a href="contact.html">Contact</a> or subscribe to store availability notices, we process the name (if provided), email, message or selected platform and related verification, solely to handle that request.</li>
+                <li><strong>Local device data:</strong> The phone or PC may store local preferences (language, app privacy/advertising consent), previously used emails to help you sign in and, if you enable it, biometrics to unlock an already signed-in session. Voice recognition for the assistant is preferably processed <strong>on the device</strong>.</li>
+                <li><strong>Technical diagnostics:</strong> If the app detects a serious error, a technical report may be sent to our team (device, OS, screen and, if signed in, identifier or email) to fix faults. It is not used for advertising.</li>
             </ul>
 
             <h2>3.1. Legal basis for processing (summary)</h2>
             <p>In general terms, we process your data on the following bases, depending on the type of information:</p>
             <ul>
-                <li><strong>Performance of contract / provision of the service:</strong> account, plans, bonus redemption, preferences and app features.</li>
-                <li><strong>Consent:</strong> geolocation, microphone, camera (profile photo or bonus QR scanning), personalised advertising where required by law.</li>
-                <li><strong>Legitimate interest:</strong> security, prevention of fraud in promotional codes and abusive re-registration, service improvement and aggregated metrics.</li>
+                <li><strong>Performance of contract / provision of the service:</strong> account, plans, bonus redemption, assistant messages, preferences and app features.</li>
+                <li><strong>Consent:</strong> geolocation, microphone, camera or photo gallery/library (profile photo or bonus QR scanning), contact or notice forms, personalised advertising where required by law.</li>
+                <li><strong>Legitimate interest:</strong> security, prevention of fraud in promotional codes and abusive re-registration, service stability and technical error reports.</li>
                 <li><strong>Legal obligation:</strong> retention of billing data where applicable.</li>
             </ul>
             
             <h2>4. Responsible Advertising</h2>
-            <p>TourAI is funded through Google advertising to remain free for all travellers:</p>
+            <p>TourAI may be funded through Google advertising to keep Freemium access available:</p>
             <ul>
-                <li><strong>AdSense (Web):</strong> Uses cookies to show you useful adverts based on your general browsing interests.</li>
-                <li><strong>AdMob (App):</strong> In our mobile applications, we use standard industry identifiers (IDFA/AAID) to prevent you from seeing the same advert repeatedly.</li>
+                <li><strong>AdSense (Web):</strong> When web advertising is enabled and you have accepted advertising cookies, cookies may be used to show adverts based on general browsing interests.</li>
+                <li><strong>AdMob (App):</strong> In the free app version we use standard industry identifiers (IDFA/AAID). Users with active Premium do not see advertising while the plan is valid.</li>
             </ul>
             <p>You can manage or disable personalisation of these adverts at any time through <a href="https://adssettings.google.com/" target="_blank">Google Ads Settings</a>.</p>
+
+            <h2>4.1. Providers and transfers</h2>
+            <p>To provide the service we use common providers (cloud authentication and storage, transactional email, maps, artificial intelligence models, text-to-speech, app stores, payment gateways and advertising). Some processing may take place outside the European Economic Area. In those cases we apply the safeguards required by applicable law (for example standard contractual clauses or other appropriate measures). Categories of processors and transfers may be expanded after legal review.</p>
             
             <h2 id="delete-account">5. Your Rights (GDPR)</h2>
             <p>Under current regulations, you have full control over your information:</p>
@@ -641,7 +646,7 @@ window.TourAiEnGBMessages = {
             <p>After verification, we delete personal data directly linked to your account:</p>
             <ul>
                 <li>Authentication account and profile (email, identifier, photo, preferences).</li>
-                <li>User plans, usage history, bonus or promo redemptions and assistant messages.</li>
+                <li>User plans, usage history, bonus or promo redemptions and assistant messages (if they have not already expired under the automatic 14-day period).</li>
                 <li>Payment data associated with your account stored in our systems.</li>
             </ul>
             <p>
@@ -650,8 +655,10 @@ window.TourAiEnGBMessages = {
                 or other data shared between users.
             </p>
             <p>
+                Where necessary, we may retain abuse-prevention records linked to the email (email lifecycle) and records required by legal or billing obligations, anonymised where appropriate, for the legally established period.
+            </p>
+            <p>
                 Deletion is immediate after you confirm the code. You will receive a confirmation email when it completes.
-                Records required by legal or billing obligations may be retained in anonymised form for the legally established period.
             </p>
             <p>
                 We may retain <strong>aggregated and anonymous statistics</strong> on account deletions (date and counters by app/web channel),
@@ -666,12 +673,12 @@ window.TourAiEnGBMessages = {
         <aside class="sidebar">
             <div class="sidebar-card">
                 <h3>🛡️ Secure Browsing</h3>
-                <p>Our website uses 256-bit SSL encryption to protect all communication between your device and our servers.</p>
+                <p>Our website uses HTTPS/TLS encryption to protect communication between your device and our servers.</p>
             </div>
 
             <div class="sidebar-card" style="background: #eefdf3; border-color: #4caf50;">
                 <h3>⚖️ 2026 Standard</h3>
-                <p>Platform fully adapted to updated European GDPR directives and California CCPA.</p>
+                <p>Designed in line with the European GDPR. If you reside in California, you may exercise equivalent rights to the extent the CCPA applies.</p>
             </div>
         </aside>`,
 
@@ -680,9 +687,13 @@ window.TourAiEnGBMessages = {
 
   "page.terms.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Acceptance of Terms</h2>
-            <p><strong>Last updated:</strong> 17 July 2026.</p>
+            <p><strong>Last updated:</strong> 18 July 2026.</p>
             <p>By accessing or using the TourAI website and mobile application, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our audio guide services or our information platform.</p>
+            <p>Using the mobile application also implies acceptance of the <strong>full terms embedded in the app</strong> at registration (including age eligibility, payments and permissions). If there is any difference regarding the mobile service, the app terms prevail.</p>
             
+            <h2>1.1. Minimum age (app)</h2>
+            <p>To create an app account you must declare that you are at least <strong>16 years old</strong>, or the minimum age required in your country with parental consent where applicable. TourAI does not technically verify age. Details and the minors notice are set out in the application terms.</p>
+
             <h2>2. Description of the Service</h2>
             <p>TourAI provides a tourism assistance service through immersive, geolocated audio guides. The service includes:</p>
             <ul>
@@ -733,7 +744,7 @@ window.TourAiEnGBMessages = {
             <p>Each account keeps <strong>a single active session</strong>, tied to the device you are signed in on. If you try to sign in from another device, you can choose to close the open session to continue; the previous device will be signed out as soon as it detects the change. Signing out cleanly frees the session instantly; if the app is force-closed or the device is switched off, the session is freed automatically after a short period of inactivity. Do not share your credentials: if someone else wants to use TourAI, we recommend creating a separate free Freemium account. See the full details in the mobile app terms.</p>
 
             <h2>6. Device permissions (mobile app)</h2>
-            <p>The application may request location, microphone, camera (profile photo and bonus QR scanning), gallery and optional biometrics permissions. Denying access may limit functionality. See the full app terms for details.</p>
+            <p>The application may request location, microphone, camera, photo gallery/library (profile photo) and optional biometrics permissions. Denying access may limit functionality. See the full app terms for details.</p>
 
             <h2>7. Limitation of Liability</h2>
             <p>TourAI strives to offer accurate historical information; however, we do not guarantee that the content is free of errors or omissions. The platform is provided "as is" and its use is at the user's own risk.</p>
@@ -759,7 +770,7 @@ window.TourAiEnGBMessages = {
 
   "page.cookies.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. What are Cookies?</h2>
-            <p><strong>Last updated:</strong> 17 July 2026.</p>
+            <p><strong>Last updated:</strong> 18 July 2026.</p>
             <p>Cookies are small text files that websites store in your browser to remember information about your visit. In our mobile app, we use equivalent advertising identifiers (IDFA or AAID).</p>
             
             <h2>2. Types of Cookies We Use</h2>
@@ -768,14 +779,15 @@ window.TourAiEnGBMessages = {
                     <tr><th>Category</th><th>Purpose</th><th>Persistence</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Technical</strong></td><td>Essential for operation and remembering consent.</td><td>Session / 1 year</td></tr>
-                    <tr><td><strong>Preference</strong></td><td>Remember volume settings and last destination viewed.</td><td>6 months</td></tr>
-                    <tr><td><strong>Advertising</strong></td><td>Managed by Google to show relevant adverts.</td><td>Variable</td></tr>
+                    <tr><td><strong>Technical</strong></td><td>Essential for operation: remembering cookie consent, interface language and, during the browser session, technical form states (for example, email verification on contact or account deletion).</td><td>Session / up to 1 year</td></tr>
+                    <tr><td><strong>Preference</strong></td><td>Website language chosen by the user (stored locally in the browser).</td><td>Until you change it or clear site data</td></tr>
+                    <tr><td><strong>Advertising</strong></td><td>Managed by Google (AdSense) to show relevant adverts <strong>when web advertising is enabled</strong> and you have accepted advertising cookies.</td><td>Variable</td></tr>
                 </tbody>
             </table>
+            <p>Volume settings or the last destination viewed in the <strong>app</strong> are stored on the device as local app preferences; they are <strong>not website cookies</strong>.</p>
 
             <h2>3. Advertising and Third Parties (Google)</h2>
-            <p>We use <strong>Google AdSense</strong> and <strong>AdMob</strong>. These platforms use cookies to show adverts based on your interests. Users with an <strong>active Premium Plan</strong> will not trigger these advertising tracking cookies.</p>
+            <p>On the website we may use <strong>Google AdSense</strong> when enabled; in the app we use <strong>AdMob</strong>. These platforms may use cookies or advertising identifiers to show interest-based adverts, subject to your consent where required by law. Users with an <strong>active Premium Plan</strong> will not see advertising in the app while the plan is valid.</p>
 
             <h2>4. How to Manage Cookies</h2>
             <p>You can block or delete them in your browser settings (Chrome, Safari, etc.) or reset your advertising ID in your smartphone's privacy settings (iOS/Android).</p>
@@ -795,7 +807,7 @@ window.TourAiEnGBMessages = {
 
   "page.contact.privacyModal": `<h3>Data Protection</h3>
             <ul>
-                <li><strong>Controller:</strong> TourAI App.</li>
+                <li><strong>Controller:</strong> Jordi Perelló (TourAI project / TourAI App).</li>
                 <li><strong>Purpose:</strong> Management and response to the enquiry submitted. Data will not be used for advertising purposes.</li>
                 <li><strong>Legal basis:</strong> Consent when ticking the box.</li>
                 <li><strong>Recipients:</strong> Data will not be shared with third parties, except where legally required.</li>

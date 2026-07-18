@@ -1,2 +1,15 @@
 # Firebase client secrets (see docs-touraiweb/Secrets/site-config.secrets.js)
 js/site-config.secrets.js
+js/site-config.secrets.local.js
+
+# Environment / credentials (defense in depth)
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*serviceAccount*.json
+*ServiceAccount*.json
+credentials*.json
+**/config-app-secrets*.json
+!**/config-app-secrets.example.json
