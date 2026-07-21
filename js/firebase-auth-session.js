@@ -159,13 +159,27 @@
             "login.error.unauthorizedDomain",
             "Este dominio no está autorizado en Firebase Authentication."
           );
+        case "auth/invalid-api-key":
+        case "auth/api-key-not-valid.-please-pass-a-valid-api-key.":
+          return this.t(
+            "login.error.apiKey",
+            "La clave de acceso web no es válida. Revisa la configuración de Firebase."
+          );
         case "permission-denied":
           return this.t("account.error.permission", "No tienes permiso para leer estos datos.");
-        default:
+        default: {
+          const raw = `${code} ${error?.message || ""}`.toLowerCase();
+          if (raw.includes("referer") || raw.includes("referrer") || raw.includes("api_key_http_referrer_blocked")) {
+            return this.t(
+              "login.error.referrer",
+              "Este origen no está permitido para la clave de Firebase. Prueba en https://tourai.es o añade el dominio en Google Cloud (restricciones HTTP)."
+            );
+          }
           if (String(code).includes("permission")) {
             return this.t("account.error.permission", "No tienes permiso para leer estos datos.");
           }
           return this.t("login.error.generic", "No se pudo iniciar sesión. Inténtalo de nuevo.");
+        }
       }
     },
   };

@@ -146,9 +146,58 @@
   font-weight: 600;
 }
 
+.account-card .login-status {
+  color: #0a2a43;
+  margin: 14px 0 0;
+}
+
+.account-card .login-status.is-visible {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #eef6ff;
+  border: 1px solid #cfe3f7;
+}
+
 .account-status.error,
-.login-status.error {
+.login-status.error,
+.account-card .login-status.error {
   color: #b42318;
+}
+
+.account-card .login-status.error.is-visible {
+  background: #fdecec;
+  border-color: #f3c1c1;
+}
+
+.login-form .btn-primary {
+  position: relative;
+}
+
+.login-form .btn-primary.is-loading {
+  cursor: wait;
+  opacity: 0.92;
+}
+
+.login-form .btn-primary .btn-spinner {
+  display: none;
+  width: 1.05em;
+  height: 1.05em;
+  margin-right: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  vertical-align: -0.15em;
+  animation: tourai-spin 0.8s linear infinite;
+}
+
+.login-form .btn-primary.is-loading .btn-spinner {
+  display: inline-block;
+}
+
+.login-form .btn-primary.is-loading:hover {
+  background: #0a2a43;
+  border-color: #0a2a43;
+  color: #fff;
 }
 
 .login-shell {
