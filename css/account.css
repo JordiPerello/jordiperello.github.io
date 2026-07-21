@@ -315,3 +315,105 @@
 .register-terms a {
   color: #0d6efd;
 }
+
+.login-remember {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 16px 0 4px !important;
+  font-weight: 500 !important;
+  color: #35566f !important;
+  font-size: 0.92em;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.login-remember input {
+  width: auto !important;
+  margin: 3px 0 0 !important;
+}
+
+.account-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 18px;
+}
+
+.account-subnav a {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #c9d7e3;
+  color: #0a2a43;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.92em;
+  background: #fff;
+}
+
+.account-subnav a:hover {
+  border-color: #4db8ff;
+  color: #0a2a43;
+}
+
+.account-subnav a.active {
+  background: #0a2a43;
+  border-color: #0a2a43;
+  color: #fff;
+  pointer-events: none;
+}
+
+.account-accordion {
+  padding: 0;
+  overflow: hidden;
+}
+
+.account-accordion__toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  border: 0;
+  background: transparent;
+  color: #0a2a43;
+  font: inherit;
+  font-size: 1.15em;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+
+.account-accordion__toggle:hover {
+  background: #f7fbff;
+}
+
+.account-accordion__chevron {
+  width: 0.65em;
+  height: 0.65em;
+  border-right: 2px solid #0a2a43;
+  border-bottom: 2px solid #0a2a43;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.account-accordion.is-open .account-accordion__chevron {
+  transform: rotate(-135deg);
+}
+
+.account-accordion__panel {
+  padding: 0 22px 22px;
+  border-top: 1px solid #e6eef5;
+}
+
+.account-accordion__body {
+  padding-top: 16px;
+}
+
+.account-empty--error {
+  color: #b42318;
+  font-weight: 600;
+}

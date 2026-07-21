@@ -83,7 +83,7 @@
 
   passwordInput?.addEventListener("input", updateStrengthUI);
 
-  auth.redirectIfSignedIn("account.html").catch(function (err) {
+  auth.redirectIfSignedIn("dashboard.html").catch(function (err) {
     setStatus(auth.mapAuthError(err), true);
   });
 
@@ -168,10 +168,10 @@
         });
 
       setStatus(t("register.status.success", "Cuenta creada. Entrando..."), false);
-      window.location.replace("account.html");
+      window.location.replace("dashboard.html");
     } catch (err) {
       console.error(err);
-      // Auth may have succeeded while profile write failed — keep session and open account.
+      // Auth may have succeeded while profile write failed — keep session and open dashboard.
       if (auth.currentUser()) {
         setStatus(
           t(
@@ -181,7 +181,7 @@
           true
         );
         setTimeout(function () {
-          window.location.replace("account.html");
+          window.location.replace("dashboard.html");
         }, 1800);
         return;
       }

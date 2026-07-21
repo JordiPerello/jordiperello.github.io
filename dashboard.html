@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Perfil de TourAI: consulta tu nombre, correo y tipo de cuenta." data-i18n-meta="doc.meta.account">
+    <meta name="description" content="Panel de TourAI: consulta planes, cupo de uso e historial de pagos cuando lo necesites." data-i18n-meta="doc.meta.dashboard">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="canonical" href="https://tourai.es/account.html">
-    <title data-i18n-doc-title="doc.title.account">Perfil - TourAI</title>
+    <link rel="canonical" href="https://tourai.es/dashboard.html">
+    <title data-i18n-doc-title="doc.title.dashboard">Panel - TourAI</title>
     <link rel="icon" type="image/png" href="img/tourai_logo.png">
     <link rel="apple-touch-icon" href="img/tourai_logo.png">
     <link rel="stylesheet" href="css/site.css">
@@ -30,38 +30,63 @@
     </nav>
 
     <header class="account-hero">
-        <h1 data-i18n="account.title">Perfil</h1>
-        <p data-i18n="account.subtitle">Datos básicos de tu cuenta TourAI. Los planes y pagos están en el panel.</p>
+        <h1 data-i18n="dashboard.title">Panel</h1>
+        <p data-i18n="dashboard.subtitle">Abre solo la sección que necesites: los datos se cargan al expandirla.</p>
     </header>
 
     <main class="account-shell">
-        <div id="accountLoading" class="account-card">
+        <div id="dashboardLoading" class="account-card">
             <p data-i18n="account.loading">Comprobando sesión...</p>
         </div>
 
-        <div id="accountSignedIn" hidden>
+        <div id="dashboardSignedIn" hidden>
             <nav class="account-subnav" aria-label="Cuenta">
-                <a class="active" href="account.html" data-i18n="account.subnav.profile">Perfil</a>
-                <a href="dashboard.html" data-i18n="account.subnav.dashboard">Panel</a>
+                <a href="account.html" data-i18n="account.subnav.profile">Perfil</a>
+                <a class="active" href="dashboard.html" data-i18n="account.subnav.dashboard">Panel</a>
             </nav>
 
-            <div class="account-card">
-                <h2 data-i18n="account.profile.title">Tu perfil</h2>
-                <p data-i18n="account.profile.intro">Has iniciado sesión con la misma cuenta que usas en la app TourAI.</p>
-                <dl class="account-meta">
-                    <dt data-i18n="account.profile.name">Nombre</dt>
-                    <dd id="accountDisplayName">—</dd>
-                    <dt data-i18n="account.profile.email">Correo</dt>
-                    <dd id="accountEmail">—</dd>
-                    <dt data-i18n="account.profile.type">Tipo de cuenta</dt>
-                    <dd id="accountType">—</dd>
-                </dl>
-                <div class="account-actions">
-                    <a class="btn-primary" href="dashboard.html" data-i18n="account.subnav.dashboard">Ir al panel</a>
-                    <button type="button" id="accountLogout" class="btn-secondary" data-i18n="account.logout">Cerrar sesión</button>
-                    <a class="btn-secondary" href="delete-account.html" data-i18n="footer.deleteAccount">Eliminar cuenta</a>
+            <section class="account-card account-accordion" data-section="activePlan" data-load-state="idle">
+                <button type="button" class="account-accordion__toggle" aria-expanded="false">
+                    <span data-i18n="account.plan.activeTitle">Plan en uso</span>
+                    <span class="account-accordion__chevron" aria-hidden="true"></span>
+                </button>
+                <div class="account-accordion__panel" hidden>
+                    <div class="account-accordion__body" data-section-body>
+                        <p class="account-empty" data-i18n="dashboard.section.collapsed">Expande para cargar esta información.</p>
+                    </div>
                 </div>
-                <p id="accountStatus" class="account-status" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="account-card account-accordion" data-section="plans" data-load-state="idle">
+                <button type="button" class="account-accordion__toggle" aria-expanded="false">
+                    <span data-i18n="account.plan.listTitle">Tus planes</span>
+                    <span class="account-accordion__chevron" aria-hidden="true"></span>
+                </button>
+                <div class="account-accordion__panel" hidden>
+                    <div class="account-accordion__body" data-section-body>
+                        <p class="account-empty" data-i18n="dashboard.section.collapsed">Expande para cargar esta información.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="account-card account-accordion" data-section="payments" data-load-state="idle">
+                <button type="button" class="account-accordion__toggle" aria-expanded="false">
+                    <span data-i18n="account.payment.listTitle">Historial de pagos</span>
+                    <span class="account-accordion__chevron" aria-hidden="true"></span>
+                </button>
+                <div class="account-accordion__panel" hidden>
+                    <div class="account-accordion__body" data-section-body>
+                        <p class="account-empty" data-i18n="dashboard.section.collapsed">Expande para cargar esta información.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="account-card">
+                <div class="account-actions">
+                    <button type="button" id="dashboardLogout" class="btn-secondary" data-i18n="account.logout">Cerrar sesión</button>
+                    <a class="btn-secondary" href="account.html" data-i18n="account.subnav.profile">Perfil</a>
+                </div>
+                <p id="dashboardStatus" class="account-status" role="status" aria-live="polite"></p>
             </div>
         </div>
     </main>
@@ -104,7 +129,7 @@
     <script src="js/i18n.js"></script>
     <script src="js/firebase-auth-session.js"></script>
     <script src="js/account-data.js"></script>
-    <script src="js/account.js"></script>
+    <script src="js/dashboard.js"></script>
     <script src="js/cookie-consent.js"></script>
 </body>
 </html>

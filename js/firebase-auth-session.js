@@ -73,8 +73,15 @@
       return global.firebase?.auth?.()?.currentUser ?? null;
     },
 
-    async signIn(email, password) {
+    async signIn(email, password, options) {
       const auth = await this.ensureFirebase();
+      const remember = options?.remember !== false;
+      if (global.firebase?.auth?.Auth?.Persistence) {
+        const persistence = remember
+          ? global.firebase.auth.Auth.Persistence.LOCAL
+          : global.firebase.auth.Auth.Persistence.SESSION;
+        await auth.setPersistence(persistence);
+      }
       return auth.signInWithEmailAndPassword(email, password);
     },
 
@@ -98,7 +105,52 @@
 
     async sendPasswordReset(email) {
       const auth = await this.ensureFirebase();
-      return auth.sendPasswordResetEmail(email);
+      const continueUrl = `${global.location.origin}/reset-password.html`;
+      return auth.sendPasswordResetEmail(email, {
+        url: continueUrl,
+        handleCodeInApp: false,
+      });
+    },
+
+    getRememberedEmail() {
+      try {
+        return global.localStorage.getItem("tourai-login-email") || "";
+      } catch {
+        return "";
+      }
+    },
+
+    setRememberedEmail(email) {
+      try {
+        const value = (email || "").trim();
+        if (value) {
+          global.localStorage.setItem("tourai-login-email", value);
+        } else {
+          global.localStorage.removeItem("tourai-login-email");
+        }
+      } catch {
+        /* ignore quota / private mode */
+      }
+    },
+
+    getRememberPreference() {
+      try {
+        const raw = global.localStorage.getItem("tourai-login-remember");
+        if (raw === null) {
+          return true;
+        }
+        return raw === "1";
+      } catch {
+        return true;
+      }
+    },
+
+    setRememberPreference(remember) {
+      try {
+        global.localStorage.setItem("tourai-login-remember", remember ? "1" : "0");
+      } catch {
+        /* ignore */
+      }
     },
 
     requireUser({ loginUrl = "login.html", next } = {}) {
@@ -113,7 +165,7 @@
       });
     },
 
-    redirectIfSignedIn(url = "account.html") {
+    redirectIfSignedIn(url = "dashboard.html") {
       return this.onAuthStateChanged((user) => {
         if (user) {
           global.location.replace(url);

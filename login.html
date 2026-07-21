@@ -51,12 +51,17 @@
                 <label for="loginPassword" data-i18n="login.password">Contraseña</label>
                 <input id="loginPassword" type="password" required autocomplete="current-password" data-i18n-placeholder="login.password.placeholder" placeholder="Tu contraseña">
 
+                <label class="login-remember" for="loginRemember">
+                    <input id="loginRemember" type="checkbox" checked>
+                    <span data-i18n="login.remember">Recordarme en este dispositivo</span>
+                </label>
+
                 <button type="submit" id="loginSubmit" class="btn-primary" aria-busy="false">
                     <span class="btn-spinner" aria-hidden="true"></span>
                     <span id="loginSubmitLabel" data-i18n="login.submit">Entrar</span>
                 </button>
                 <p class="login-note">
-                    <button type="button" class="link-button" id="forgotPasswordBtn" data-i18n="login.forgot">¿Olvidaste tu contraseña?</button>
+                    <button type="button" class="link-button" id="forgotPasswordBtn" data-i18n="login.forgot">Recuperar contraseña</button>
                 </p>
                 <p id="loginStatus" class="login-status" role="status" aria-live="polite" hidden></p>
             </form>
@@ -102,6 +107,7 @@
     <script src="js/locales/en-GB.js"></script>
     <script src="js/i18n.js"></script>
     <script src="js/loading-overlay.js"></script>
+    <script src="js/feedback-modal.js"></script>
     <script src="js/firebase-auth-session.js"></script>
     <script src="js/login.js"></script>
     <script src="js/cookie-consent.js"></script>
