@@ -11,8 +11,6 @@ const LEGAL_PAGES = new Set([
   "terms.html",
   "cookies.html",
   "faq.html",
-  "guides.html",
-  "targets.html",
   "contact.html",
 ]);
 

@@ -579,6 +579,10 @@ html { scroll-behavior: smooth; }
   --text: #333;
   --light: #f4f7f9;
   --white: #ffffff;
+  /* Shared page hero / title band (login, home, legal, account, etc.) */
+  --hero-bg:
+    radial-gradient(ellipse at top, rgba(77, 184, 255, 0.28), transparent 55%),
+    linear-gradient(165deg, #0A2A43 0%, #0d3b5e 48%, #123f5c 100%);
 }
 
 body {
@@ -616,7 +620,7 @@ body {
 .floating-logo:hover { transform: scale(1.1); }
 
 header {
-  background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%);
+  background: var(--hero-bg);
   color: white;
   padding: 80px 0;
   text-align: center;

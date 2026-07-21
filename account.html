@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zona privada de TourAI: consulta tu perfil, planes, cupo de uso e historial de pagos." data-i18n-meta="doc.meta.account">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://tourai.es/account.html">
+    <title data-i18n-doc-title="doc.title.account">Mi cuenta - TourAI</title>
+    <link rel="icon" type="image/png" href="img/tourai_logo.png">
+    <link rel="apple-touch-icon" href="img/tourai_logo.png">
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="css/account.css">
+    <script src="js/cookie-consent-init.js"></script>
+</head>
+<body class="account-page">
+    <nav>
+        <div class="nav-logo-container"><a href="index.html"><img src="img/tourai_logo_inline.png" alt="TourAI"></a></div>
+        <div class="menu-icon" onclick="document.getElementById('nav-links').classList.toggle('show')"><span></span><span></span><span></span></div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html" data-i18n="nav.app">La App</a>
+            <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+            <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+            <a class="active" href="account.html" data-i18n="nav.account">Mi cuenta</a>
+            <div class="lang-switch">
+                <button type="button" data-set-locale="es-ES">ES</button>
+                <button type="button" data-set-locale="en-GB">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="account-hero">
+        <h1 data-i18n="account.title">Mi cuenta</h1>
+        <p data-i18n="account.subtitle">Zona privada sincronizada con tu cuenta de la app: perfil, planes y pagos.</p>
+    </header>
+
+    <main class="account-shell">
+        <div id="accountLoading" class="account-card">
+            <p data-i18n="account.loading">Comprobando sesión...</p>
+        </div>
+
+        <div id="accountSignedIn" hidden>
+            <div class="account-card">
+                <h2 data-i18n="account.profile.title">Tu perfil</h2>
+                <p data-i18n="account.profile.intro">Has iniciado sesión con la misma cuenta que usas en la app TourAI.</p>
+                <dl class="account-meta">
+                    <dt data-i18n="account.profile.name">Nombre</dt>
+                    <dd id="accountDisplayName">—</dd>
+                    <dt data-i18n="account.profile.email">Correo</dt>
+                    <dd id="accountEmail">—</dd>
+                    <dt data-i18n="account.profile.type">Tipo de cuenta</dt>
+                    <dd id="accountType">—</dd>
+                </dl>
+                <div class="account-actions">
+                    <button type="button" id="accountLogout" class="btn-secondary" data-i18n="account.logout">Cerrar sesión</button>
+                    <a class="btn-secondary" href="delete-account.html" data-i18n="footer.deleteAccount">Eliminar cuenta</a>
+                </div>
+                <p id="accountStatus" class="account-status" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="account-card">
+                <h2 data-i18n="account.plan.activeTitle">Plan en uso</h2>
+                <div id="activePlanSummary"></div>
+            </div>
+
+            <div class="account-card">
+                <h2 data-i18n="account.plan.listTitle">Tus planes</h2>
+                <div id="plansList"></div>
+            </div>
+
+            <div class="account-card">
+                <h2 data-i18n="account.payment.listTitle">Historial de pagos</h2>
+                <div id="paymentsList"></div>
+                <p class="account-note" data-i18n="account.payment.buyNote">La compra de planes desde la web llegará en la siguiente fase.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 data-i18n="footer.explore">Explora</h4>
+                <a href="index.html" data-i18n="nav.app">La App</a>
+                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+                <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+                <a class="active" href="account.html" data-i18n="nav.account">Mi cuenta</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.legal">Legal</h4>
+                <a href="privacy.html" data-i18n="footer.privacy">Privacidad</a>
+                <a href="terms.html" data-i18n="footer.terms">Términos</a>
+                <a href="cookies.html" data-i18n="footer.cookies">Cookies</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.help">Ayuda</h4>
+                <a href="faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a>
+                <a href="delete-account.html" data-i18n="footer.deleteAccount">Eliminar cuenta</a>
+            </div>
+        </div>
+        <div class="legal-bottom">
+            &copy; <span id="current-year"></span> <strong>TourAI App</strong> -
+            <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a> -
+            <span data-i18n="footer.rights">Todos los derechos reservados.</span>
+        </div>
+    </footer>
+
+    <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <script src="js/site-config.js"></script>
+    <script src="js/site-config.secrets.js"></script>
+    <script src="js/locales/en-GB.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/firebase-auth-session.js"></script>
+    <script src="js/account.js"></script>
+    <script src="js/cookie-consent.js"></script>
+</body>
+</html>

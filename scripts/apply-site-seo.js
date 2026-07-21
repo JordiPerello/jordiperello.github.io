@@ -19,13 +19,6 @@ const pages = [
     i18nMeta: "doc.meta.about",
   },
   {
-    file: "blog.html",
-    canonical: "https://tourai.es/blog.html",
-    metaDescription:
-      "Blog de TourAI: guías de viaje, consejos de turismo inteligente, destinos y novedades sobre nuestra app con inteligencia artificial.",
-    i18nMeta: "doc.meta.blog",
-  },
-  {
     file: "contact.html",
     canonical: "https://tourai.es/contact.html",
     metaDescription:
@@ -36,7 +29,7 @@ const pages = [
     file: "cookies.html",
     canonical: "https://tourai.es/cookies.html",
     metaDescription:
-      "Política de cookies de TourAI: tipos de cookies, publicidad responsable, Google AdSense y cómo gestionar tu consentimiento.",
+      "Política de cookies de TourAI: cookies técnicas de la web y publicidad AdMob en la app.",
     i18nMeta: "doc.meta.cookies",
   },
   {
@@ -47,11 +40,11 @@ const pages = [
     i18nMeta: "doc.meta.faq",
   },
   {
-    file: "guides.html",
-    canonical: "https://tourai.es/guides.html",
+    file: "login.html",
+    canonical: "https://tourai.es/login.html",
     metaDescription:
-      "Audioguías inteligentes de TourAI: narraciones por GPS, contenido curado e inteligencia artificial para explorar ciudades.",
-    i18nMeta: "doc.meta.guides",
+      "Inicia sesión en TourAI para acceder a tu cuenta, planes y zona privada en la web.",
+    i18nMeta: "doc.meta.login",
   },
   {
     file: "privacy.html",
@@ -66,62 +59,6 @@ const pages = [
     metaDescription:
       "Términos y condiciones de uso de TourAI para la web y la aplicación móvil de turismo inteligente.",
     i18nMeta: "doc.meta.terms",
-  },
-  {
-    file: "targets.html",
-    canonical: "https://tourai.es/targets.html",
-    metaDescription:
-      "Destinos TourAI 2026: rutas recomendadas y tendencias de viaje para planificar tu próximo viaje.",
-    i18nMeta: "doc.meta.targets",
-  },
-  {
-    file: "articles/what-is-tourai.html",
-    canonical: "https://tourai.es/articles/what-is-tourai.html",
-    metaDescription:
-      "Descubre qué es TourAI, cómo funciona su guía turística con IA y qué la diferencia de una app de mapas convencional.",
-    i18nMeta: "doc.meta.what-is-tourai",
-  },
-  {
-    file: "articles/plan-trip-with-ai.html",
-    canonical: "https://tourai.es/articles/plan-trip-with-ai.html",
-    metaDescription:
-      "Guía práctica para planificar un viaje con inteligencia artificial: itinerarios, presupuesto, documentación y consejos.",
-    i18nMeta: "doc.meta.plan-trip-with-ai",
-  },
-  {
-    file: "articles/audio-guides-vs-group-tours.html",
-    canonical: "https://tourai.es/articles/audio-guides-vs-group-tours.html",
-    metaDescription:
-      "Comparativa entre audioguías móviles y tours en grupo: libertad, precio, profundidad cultural y cuándo elegir cada opción.",
-    i18nMeta: "doc.meta.audio-guides-vs-group-tours",
-  },
-  {
-    file: "articles/kyoto-7-days.html",
-    canonical: "https://tourai.es/articles/kyoto-7-days.html",
-    metaDescription:
-      "Itinerario de 7 días en Kioto para viajeros independientes: templos, Gion, Arashiyama, Nara y consejos de temporada.",
-    i18nMeta: "doc.meta.kyoto-7-days",
-  },
-  {
-    file: "articles/visit-monuments-without-crowds.html",
-    canonical: "https://tourai.es/articles/visit-monuments-without-crowds.html",
-    metaDescription:
-      "Consejos prácticos para visitar monumentos y museos sin aglomeraciones: horarios, reservas, rutas alternativas y tecnología.",
-    i18nMeta: "doc.meta.visit-monuments-without-crowds",
-  },
-  {
-    file: "articles/mobile-travel-gps-privacy.html",
-    canonical: "https://tourai.es/articles/mobile-travel-gps-privacy.html",
-    metaDescription:
-      "Guía para viajar con el móvil: datos, GPS, eSIM, ahorro de batería y privacidad de ubicación en el extranjero.",
-    i18nMeta: "doc.meta.mobile-travel-gps-privacy",
-  },
-  {
-    file: "articles/lisbon-algarve-spring.html",
-    canonical: "https://tourai.es/articles/lisbon-algarve-spring.html",
-    metaDescription:
-      "Escapada de primavera a Lisboa y el Algarve: barrios, playas, gastronomía y ruta de cinco días por Portugal.",
-    i18nMeta: "doc.meta.lisbon-algarve-spring",
   },
 ];
 
@@ -138,7 +75,7 @@ function cookieBannerMarkup(depth) {
   return `
     <div id="cookie-banner" class="site-cookie-banner" hidden aria-live="polite">
         <div class="site-cookie-banner__inner">
-            <p class="site-cookie-banner__text"><span data-i18n="cookie.text">Utilizamos cookies técnicas y, si aceptas, cookies publicitarias de terceros (Google AdSense).</span> <a href="${prefix}cookies.html" data-i18n="cookie.more">Más info</a>.</p>
+            <p class="site-cookie-banner__text"><span data-i18n="cookie.text">Utilizamos cookies técnicas necesarias para el sitio (idioma y preferencias). Esta web no muestra publicidad.</span> <a href="${prefix}cookies.html" data-i18n="cookie.more">Más info</a>.</p>
             <div class="site-cookie-banner__actions">
                 <button type="button" class="site-cookie-banner__reject" data-cookie-reject data-i18n="cookie.reject">Rechazar</button>
                 <button type="button" class="site-cookie-banner__accept" data-cookie-accept data-i18n="cookie.accept">Aceptar</button>

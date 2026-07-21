@@ -21,7 +21,6 @@
     <meta name="twitter:description" content="Conoce quién está detrás de TourAI, la aplicación de turismo inteligente con guías personalizadas e inteligencia artificial.">
     <meta name="twitter:image" content="https://tourai.es/img/tourai_logo.png">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"TourAI","url":"https://tourai.es","logo":"https://tourai.es/img/tourai_logo.png","email":"info@tourai.es","founder":{"@type":"Person","name":"Jordi Perelló"},"address":{"@type":"PostalAddress","addressCountry":"ES"}}</script>
-<meta name="google-adsense-account" content="ca-pub-8251840058544269">
     <meta name="description" content="Conoce quién está detrás de TourAI, la aplicación de turismo inteligente con guías personalizadas e inteligencia artificial." data-i18n-meta="doc.meta.about">
     <title data-i18n-doc-title="doc.title.about">Sobre nosotros - TourAI</title>
     <link rel="icon" type="image/png" href="img/tourai_logo.png">
@@ -29,7 +28,7 @@
     <link rel="stylesheet" href="css/site.css">
         <script src="js/cookie-consent-init.js"></script>
 <style>
-        :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; }
+        :root { --primary: #0A2A43; --secondary: #0d3b5e; --accent: #4db8ff; --text: #333; --light: #f4f7f9; --white: #ffffff; --hero-bg: radial-gradient(ellipse at top, rgba(77, 184, 255, 0.28), transparent 55%), linear-gradient(165deg, #0A2A43 0%, #0d3b5e 48%, #123f5c 100%); }
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: var(--text); background-color: var(--light); line-height: 1.8; }
         nav { background-color: #fff; padding: 10px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px #0000004d; }
         .nav-logo-container { width: 150px; height: 50px; flex-shrink: 0; }
@@ -40,7 +39,7 @@
         nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); pointer-events: none; }
         .menu-icon { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
         .menu-icon span { width: 30px; height: 3px; background: var(--primary); border-radius: 3px; }
-        header { background: linear-gradient(135deg, #0A2A43 0%, #0d3b5e 100%); color: white; padding: 80px 20px; text-align: center; border-bottom: 5px solid var(--accent); }
+        header { background: var(--hero-bg); color: white; padding: 80px 20px; text-align: center; border-bottom: 5px solid var(--accent); }
         h1 { margin: 0; font-size: 3em; font-weight: 900; }
         .container { max-width: 900px; margin: 40px auto 80px; padding: 50px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         footer { background-color: #051622; color: #fff; padding: 60px 20px 40px; margin-top: 60px; border-top: 4px solid var(--accent); text-align: center; }
@@ -60,11 +59,9 @@
         <div class="menu-icon" onclick="document.getElementById('nav-links').classList.toggle('show')"><span></span><span></span><span></span></div>
         <div class="nav-links" id="nav-links">
             <a href="index.html" data-i18n="nav.app">La App</a>
-            <a href="targets.html" data-i18n="nav.targets">Destinos 2026</a>
-            <a href="guides.html" data-i18n="nav.guides">Audioguías</a>
-            <a href="blog.html" data-i18n="nav.blog">Blog</a>
             <a class="active" data-i18n="footer.about">Sobre nosotros</a>
             <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+            <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
             <div class="lang-switch">
                 <button type="button" data-set-locale="es-ES">ES</button>
                 <button type="button" data-set-locale="en-GB">EN</button>
@@ -80,7 +77,7 @@
     <main class="container" data-i18n-html="page.about.content">
         <h2>¿Quiénes somos?</h2>
         <p><strong>TourAI</strong> es un proyecto independiente de turismo digital creado por <strong>Jordi Perelló</strong>, desarrollador y apasionado de los viajes con sede en España. Nacimos con una idea sencilla: que cualquier persona pueda explorar una ciudad con la misma profundidad que tendría con un guía local, pero a su ritmo, en su idioma y desde el móvil.</p>
-        <p>Este sitio web, <strong>tourai.es</strong>, es el portal oficial del proyecto. Aquí publicamos información sobre la aplicación, guías de viaje, consejos prácticos y novedades del sector turístico.</p>
+        <p>Este sitio web, <strong>tourai.es</strong>, es el portal oficial del proyecto: información sobre la app, contacto, soporte y acceso a la zona privada de cuenta para usuarios registrados.</p>
         <h2>¿Qué hace TourAI?</h2>
         <p>TourAI es una aplicación móvil que combina <strong>inteligencia artificial</strong>, <strong>geolocalización</strong> y <strong>audioguías</strong> para ofrecer una experiencia de viaje personalizada:</p>
         <ul>
@@ -88,11 +85,11 @@
             <li><strong>Consultas por voz:</strong> interactúa con la app mientras caminas, sin detenerte a escribir.</li>
             <li><strong>Mapas interactivos:</strong> descubre puntos de interés cercanos e inicia recorridos guiados a pie por GPS.</li>
             <li><strong>Audioguías inmersivas:</strong> escucha narraciones activadas por tu ubicación al acercarte a cada punto.</li>
-            <li><strong>Modelo Freemium y Premium:</strong> acceso gratuito con tokens diarios o planes de pago sin publicidad.</li>
+            <li><strong>Modelo Freemium y Premium:</strong> acceso gratuito con cupo diario de uso, o planes de pago sin publicidad.</li>
         </ul>
         <p>La aplicación se encuentra actualmente en fase de desarrollo y pruebas. Las versiones para iOS y Android se publicarán en las tiendas oficiales cuando estén listas.</p>
         <h2>Nuestra misión</h2>
-        <p>Queremos democratizar el acceso a información cultural de calidad. Creemos que viajar no debería depender de contratar tours caros ni de llevar guías impresas obsoletas. TourAI ofrece un modelo freemium con planes Premium opcionales, sostenido de forma transparente mediante publicidad responsable.</p>
+        <p>Queremos democratizar el acceso a información cultural de calidad. Creemos que viajar no debería depender de contratar tours caros ni de llevar guías impresas obsoletas. TourAI ofrece un modelo freemium en la app con planes Premium opcionales.</p>
         <div class="info-box">
             <strong>Contacto directo</strong><br>
             Correo electrónico: <a href="mailto:info@tourai.es">info@tourai.es</a><br>
@@ -108,9 +105,9 @@
             <div class="footer-col">
                 <h4 data-i18n="footer.explore">Explora</h4>
                 <a href="index.html" data-i18n="nav.app">La App</a>
-                <a href="targets.html" data-i18n="nav.targets">Destinos 2026</a>
-                <a href="guides.html" data-i18n="nav.guides">Audioguías</a>
-                <a href="blog.html" data-i18n="nav.blog">Blog</a>
+                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+                <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+                <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
             </div>
             <div class="footer-col">
                 <h4 data-i18n="footer.legal">Legal</h4>

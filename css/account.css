@@ -1,0 +1,268 @@
+.account-page .account-hero {
+  background: var(--hero-bg);
+  color: #fff;
+  padding: 64px 20px 48px;
+  text-align: center;
+  border-bottom: 5px solid var(--accent, #4db8ff);
+}
+
+.account-page .account-hero h1 {
+  margin: 0;
+  font-size: 2.4em;
+  font-weight: 900;
+}
+
+.account-page .account-hero p {
+  max-width: 640px;
+  margin: 14px auto 0;
+  opacity: 0.95;
+  font-size: 1.1em;
+}
+
+.account-shell {
+  max-width: 960px;
+  margin: 40px auto 80px;
+  padding: 0 20px;
+}
+
+.account-card {
+  background: #fff;
+  border: 1px solid #e6eef5;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(10, 42, 67, 0.06);
+  margin-bottom: 20px;
+}
+
+.account-card h2 {
+  margin: 0 0 12px;
+  color: #0a2a43;
+  font-size: 1.25em;
+}
+
+.account-card p {
+  margin: 0 0 10px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.account-meta {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.account-meta dt {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #7a8fa3;
+  margin: 0;
+}
+
+.account-meta dd {
+  margin: 0 0 8px;
+  color: #0a2a43;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.account-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.account-tile {
+  background: #f7fbff;
+  border: 1px solid #d9ecff;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.account-tile h3 {
+  margin: 0 0 8px;
+  color: #0a2a43;
+  font-size: 1.05em;
+}
+
+.account-tile p {
+  margin: 0;
+  font-size: 0.95em;
+}
+
+.account-tile .coming-soon {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.75em;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #4db8ff;
+}
+
+.account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.account-actions .btn-primary,
+.account-actions .btn-secondary,
+.login-form .btn-primary {
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid #0a2a43;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.account-actions .btn-primary,
+.login-form .btn-primary {
+  background: #0a2a43;
+  color: #fff;
+}
+
+.account-actions .btn-secondary {
+  background: #fff;
+  color: #0a2a43;
+}
+
+.account-actions .btn-primary:hover,
+.login-form .btn-primary:hover {
+  background: #4db8ff;
+  border-color: #4db8ff;
+  color: #0a2a43;
+}
+
+.account-status,
+.login-status {
+  margin-top: 14px;
+  min-height: 1.4em;
+  color: #0a2a43;
+  font-weight: 600;
+}
+
+.account-status.error,
+.login-status.error {
+  color: #b42318;
+}
+
+.login-shell {
+  max-width: 480px;
+  margin: 40px auto 80px;
+  padding: 0 20px;
+}
+
+.login-form label {
+  display: block;
+  margin: 14px 0 6px;
+  font-weight: 600;
+  color: #0a2a43;
+}
+
+.login-form input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #c9d7e3;
+  border-radius: 10px;
+  font-size: 1em;
+}
+
+.login-form .btn-primary {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.login-form .link-button {
+  background: none;
+  border: none;
+  color: #0d6efd;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  text-decoration: underline;
+}
+
+.login-note {
+  margin-top: 18px;
+  font-size: 0.95em;
+  color: #555;
+  line-height: 1.6;
+}
+
+.account-empty,
+.account-note {
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.account-note {
+  margin-top: 16px;
+  font-size: 0.92em;
+}
+
+.account-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.8em;
+  font-weight: 700;
+  background: #e8f4ff;
+  color: #0a2a43;
+}
+
+.account-badge--active {
+  background: #d9f7e8;
+  color: #0b6b3a;
+}
+
+.account-table-wrap {
+  overflow-x: auto;
+}
+
+.account-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+
+.account-table th,
+.account-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e6eef5;
+  vertical-align: top;
+}
+
+.account-table th {
+  color: #7a8fa3;
+  font-size: 0.78em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.register-terms {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 16px 0 8px !important;
+  font-weight: 500 !important;
+  color: #35566f !important;
+  font-size: 0.92em;
+  line-height: 1.45;
+}
+
+.register-terms input {
+  width: auto !important;
+  margin: 3px 0 0 !important;
+}
+
+.register-terms a {
+  color: #0d6efd;
+}

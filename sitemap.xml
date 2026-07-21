@@ -2,19 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://tourai.es/</loc></url>
   <url><loc>https://tourai.es/about.html</loc></url>
-  <url><loc>https://tourai.es/blog.html</loc></url>
   <url><loc>https://tourai.es/contact.html</loc></url>
-  <url><loc>https://tourai.es/cookies.html</loc></url>
   <url><loc>https://tourai.es/faq.html</loc></url>
-  <url><loc>https://tourai.es/guides.html</loc></url>
+  <url><loc>https://tourai.es/login.html</loc></url>
+  <url><loc>https://tourai.es/register.html</loc></url>
+  <url><loc>https://tourai.es/cookies.html</loc></url>
   <url><loc>https://tourai.es/privacy.html</loc></url>
   <url><loc>https://tourai.es/terms.html</loc></url>
-  <url><loc>https://tourai.es/targets.html</loc></url>
-  <url><loc>https://tourai.es/articles/what-is-tourai.html</loc></url>
-  <url><loc>https://tourai.es/articles/plan-trip-with-ai.html</loc></url>
-  <url><loc>https://tourai.es/articles/audio-guides-vs-group-tours.html</loc></url>
-  <url><loc>https://tourai.es/articles/kyoto-7-days.html</loc></url>
-  <url><loc>https://tourai.es/articles/visit-monuments-without-crowds.html</loc></url>
-  <url><loc>https://tourai.es/articles/mobile-travel-gps-privacy.html</loc></url>
-  <url><loc>https://tourai.es/articles/lisbon-algarve-spring.html</loc></url>
+  <url><loc>https://tourai.es/delete-account.html</loc></url>
 </urlset>

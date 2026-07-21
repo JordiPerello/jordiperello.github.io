@@ -8,8 +8,6 @@ const LEGAL_LAYOUT_PAGES = [
   "terms.html",
   "cookies.html",
   "faq.html",
-  "guides.html",
-  "targets.html",
   "contact.html",
 ];
 

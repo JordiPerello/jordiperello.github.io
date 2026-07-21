@@ -1,42 +1,30 @@
-# 🌍 TourAI: Inteligencia Colectiva para el Viajero Global
+﻿# TourAI — Official website
 
-![Licencia](https://img.shields.io/badge/license-MIT-blue.svg)
-![Version](https://img.shields.io/badge/version-2026.1.0-green.svg)
-![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20Android)
+Static site for **tourai.es** (GitHub Pages): product landing, support pages, and authenticated account area.
 
-**TourAI** es el portal oficial y landing page de la aplicación líder en turismo inteligente. Este repositorio aloja el sitio web desarrollado con GitHub Pages, diseñado para la promoción de la App y la difusión de artículos sobre tecnología de viajes, sostenibilidad y guías algorítmicas.
+## Pages
 
-## 🚀 Características de la App
+- `index.html` — App landing and launch waitlist
+- `about.html`, `contact.html`, `faq.html` — Product info and support
+- `login.html` / `account.html` — Account sign-in and private zone (Firebase Auth)
+- `privacy.html`, `terms.html`, `cookies.html` — Legal
+- `delete-account.html`, `reset-password.html` — Account self-service
 
-- **Planificación Algorítmica:** Itinerarios dinámicos basados en datos en tiempo real (clima, tráfico, sentimiento social).
-- **Realidad Aumentada (RA):** Guías inmersivas directamente desde la cámara de tu móvil.
-- **Turismo Regenerativo:** Herramientas para medir y compensar la huella de carbono del viajero.
-- **Sincronización Multiplataforma:** Google Play e iOS.
+## Deploy
 
-## 📂 Estructura del Repositorio
+GitHub Actions deploys on push to `main`. Firebase client config is injected from the repository secret `TOURAI_SITE_CONFIG_SECRETS` (see `docs-touraiweb`).
 
-- `index.html`: Página principal (Landing Page) enfocada en la descarga de la App.
-- `blog.html`: Archivo de artículos, noticias y guías de viaje actualizadas.
-- `privacy.html`: Política de privacidad necesaria para la integración con Google AdSense.
-- `/img`: Directorio de recursos gráficos y capturas de pantalla de la aplicación.
+Live site: https://tourai.es
 
-## 🌐 Despliegue
+## Local secrets
 
-La página está desplegada automáticamente mediante **GitHub Pages**. Puedes visitarla en:
-👉 [https://jordiperello.github.io](https://jordiperello.github.io)
+Copy `D:\Proyectos\Documents\docs-touraiweb\Secrets\site-config.secrets.js` to `js/site-config.secrets.js` (gitignored) before testing login locally.
 
-## 🛠️ Tecnologías utilizadas
+## Notes
 
-- **HTML5 / CSS3:** Estructura y diseño responsive sin dependencias externas pesadas.
-- **JavaScript:** Integración de Google AdSense y optimización de carga.
-- **GitHub Actions:** Automatización del despliegue.
-
-## 📝 Notas para el Desarrollador
-
-Si deseas realizar cambios locales:
-1. Clona el repositorio: `git clone https://github.com/jordiperello/jordiperello.github.io.git`
-2. Realiza tus cambios en los archivos `.html` o `.css`.
-3. Haz un `push` a la rama `main` para que los cambios se reflejen en el sitio en vivo.
+- The website does **not** show advertising (AdMob is app-only).
+- App freemium ads use AdMob in the mobile app only.
+- Forum / community features are planned for a later phase.
 
 ---
-© 2026 TourAI Media Group. Todos los derechos reservados.
+© TourAI. All rights reserved.

@@ -3,10 +3,11 @@
 .auth-action-page .auth-action-hero {
   text-align: center;
   padding: 48px 24px 28px;
-  background:
+  background: var(--hero-bg,
     radial-gradient(ellipse at top, rgba(77, 184, 255, 0.28), transparent 55%),
-    linear-gradient(165deg, #0A2A43 0%, #0d3b5e 48%, #123f5c 100%);
+    linear-gradient(165deg, #0A2A43 0%, #0d3b5e 48%, #123f5c 100%));
   color: #fff;
+  border-bottom: 5px solid var(--accent, #4db8ff);
 }
 
 .auth-action-page .auth-action-hero__logo {
@@ -134,11 +135,23 @@
   background: #ff3b30;
 }
 
+.auth-action-page .auth-password-strength__bar.is-active.is-weak {
+  background: #ff3b30;
+}
+
 .auth-action-page .auth-password-strength__bar.is-medium {
   background: #ff9500;
 }
 
+.auth-action-page .auth-password-strength__bar.is-active.is-medium {
+  background: #ff9500;
+}
+
 .auth-action-page .auth-password-strength__bar.is-strong {
+  background: #34c759;
+}
+
+.auth-action-page .auth-password-strength__bar.is-active.is-strong {
   background: #34c759;
 }
 

@@ -1,9 +1,102 @@
-window.TourAiEnGBMessages = {
+﻿window.TourAiEnGBMessages = {
   "nav.app": "The App",
-  "nav.targets": "Destinations 2026",
-  "nav.guides": "Audio Guides",
-  "nav.blog": "Blog",
   "nav.contact": "Contact",
+  "nav.account": "My account",
+  "doc.title.login": "Sign in - TourAI",
+  "doc.meta.login": "Sign in to TourAI to access your account, plans and private web area.",
+  "doc.title.account": "My account - TourAI",
+  "doc.meta.account": "TourAI private area: view your account, plans and upcoming web services.",
+  "login.title": "Sign in",
+  "login.subtitle": "Sign in with your TourAI account (the same as in the app) to open your private area.",
+  "login.email": "Email address",
+  "login.email.placeholder": "you@email.com",
+  "login.password": "Password",
+  "login.password.placeholder": "Your password",
+  "login.submit": "Sign in",
+  "login.forgot": "Forgot your password?",
+  "login.createHint": "Don't have an account yet? <a href=\"register.html\">Create one here</a>. You can also <a href=\"delete-account.html\">delete an account</a>.",
+  "login.error.required": "Enter your email and password.",
+  "login.error.invalidEmail": "Enter a valid email address.",
+  "login.error.disabled": "This account is disabled.",
+  "login.error.credentials": "Incorrect email or password.",
+  "login.error.rateLimited": "Too many attempts. Please wait a few minutes.",
+  "login.error.network": "Network error. Check your connection.",
+  "login.error.config": "Sign-in configuration is not available. For local testing, copy js/site-config.secrets.js and serve the site over http://localhost (do not open the HTML file directly).",
+  "login.error.fileProtocol": "Firebase Auth does not work with file://. Open the site with a local server (e.g. npx serve) or on https://tourai.es after deploy.",
+  "login.error.unauthorizedDomain": "This domain is not authorised in Firebase Authentication.",
+  "login.error.generic": "Could not sign in. Please try again.",
+  "login.error.forgotEmail": "Enter your email so we can send a reset link.",
+  "login.status.signingIn": "Signing in...",
+  "login.status.resetSending": "Sending reset link...",
+  "login.status.resetSent": "If an account exists for that email, you will receive a password reset link.",
+  "doc.title.register": "Create account - TourAI",
+  "doc.meta.register": "Create your TourAI account from the website to access the private area.",
+  "register.title": "Create account",
+  "register.subtitle": "Sign up with email and password. You can use the same account in the TourAI app.",
+  "register.name": "Name",
+  "register.name.placeholder": "Your name",
+  "register.email": "Email address",
+  "register.email.placeholder": "you@email.com",
+  "register.password": "Password",
+  "register.password.placeholder": "New password",
+  "register.confirm": "Confirm password",
+  "register.confirm.placeholder": "Repeat the password",
+  "register.terms": "I accept the <a href=\"terms.html\" target=\"_blank\" rel=\"noopener\">terms of use</a> and the <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">privacy policy</a>.",
+  "register.submit": "Create account",
+  "register.loginHint": "Already have an account? <a href=\"login.html\">Sign in</a>. You can also <a href=\"delete-account.html\">delete an existing account</a>.",
+  "register.error.required": "Please fill in all fields.",
+  "register.error.terms": "You must accept the terms of use.",
+  "register.error.emailInUse": "An account with that email already exists.",
+  "register.error.weakPassword": "The password is too weak.",
+  "register.error.notAllowed": "Email/password registration is not enabled.",
+  "register.error.profile": "The account was created, but saving the profile failed. Open My account or try again later.",
+  "register.status.creating": "Creating account...",
+  "register.status.success": "Account created. Signing you in...",
+  "account.title": "My account",
+  "account.subtitle": "Private area synced with your app account: profile, plans and payments.",
+  "account.loading": "Checking session...",
+  "account.profile.title": "Your profile",
+  "account.profile.intro": "You are signed in with the same account you use in the TourAI app.",
+  "account.profile.email": "Email",
+  "account.profile.uid": "Account ID",
+  "account.logout": "Sign out",
+  "account.status.signingOut": "Signing out...",
+  "account.comingSoon": "Coming soon",
+  "account.profile.name": "Name",
+  "account.profile.noName": "No name",
+  "account.profile.type": "Account type",
+  "account.profile.type.premium": "Premium",
+  "account.profile.type.freemium": "Freemium",
+  "account.loadingData": "Loading your data...",
+  "account.error.load": "Could not load account data.",
+  "account.error.permission": "You do not have permission to read this data.",
+  "account.plan.activeTitle": "Active plan",
+  "account.plan.listTitle": "Your plans",
+  "account.plan.name": "Plan",
+  "account.plan.allowance": "Usage allowance",
+  "account.plan.period": "Period",
+  "account.plan.status": "Status",
+  "account.plan.start": "Start",
+  "account.plan.end": "End",
+  "account.plan.state.active": "In use",
+  "account.plan.state.pending": "Pending activation",
+  "account.plan.state.consumed": "Allowance used up",
+  "account.plan.state.expired": "Expired",
+  "account.plan.state.other": "Other",
+  "account.plan.freemium": "You are currently on Freemium in the app. The free daily usage allowance is managed on the device (rewarded ads) and does not appear here.",
+  "account.plan.empty": "You do not have any Premium plans saved on the account yet.",
+  "account.payment.listTitle": "Payment history",
+  "account.payment.date": "Date",
+  "account.payment.amount": "Amount",
+  "account.payment.method": "Method",
+  "account.payment.status": "Status",
+  "account.payment.status.paid": "Paid",
+  "account.payment.status.pending": "Pending",
+  "account.payment.status.failed": "Failed",
+  "account.payment.status.free": "Free",
+  "account.payment.method.promo": "Promotion",
+  "account.payment.empty": "There are no payments recorded yet.",
+  "account.payment.buyNote": "Buying plans from the website will arrive in the next phase.",
   "footer.explore": "Explore",
   "footer.legal": "Legal",
   "footer.help": "Help",
@@ -78,12 +171,12 @@ window.TourAiEnGBMessages = {
   "deleteAccount.help.link": "Contact support",
   "deleteAccount.privacy.link": "Privacy policy",
   "footer.rights": "All rights reserved.",
-  "cookie.text": "We use technical cookies and, if you accept, third-party advertising cookies (Google AdSense).",
+  "cookie.text": "We use technical cookies needed for the site (language and preferences). This website does not show advertising.",
   "cookie.more": "More info",
   "cookie.reject": "Reject",
   "cookie.accept": "Accept",
-  "index.hero.title": "TourAI: Travel guides and smart tourism",
-  "index.hero.subtitle": "Blog, destinations and audio guides to plan your trips. Discover the AI app reinventing how you explore every city.",
+  "index.hero.title": "TourAI: your AI-powered travel guide",
+  "index.hero.subtitle": "Chat, voice, maps and GPS audio guides to explore every city at your pace. This website is the gateway to the app and your account.",
   "index.waitlist.title": "Get the launch notification",
   "index.waitlist.intro": "The TourAI app will be published on the App Store and Google Play. Leave your email and we will notify you as soon as it is available to download.",
   "index.waitlist.ios": "Notify me on the App Store (iOS)",
@@ -188,10 +281,10 @@ window.TourAiEnGBMessages = {
   "doc.title.lisbon-algarve-spring": "Lisbon and the Algarve: spring getaway in Portugal",
 
   "doc.meta.about": "Meet the team behind TourAI, the smart tourism app with personalised guides and artificial intelligence.",
-  "doc.meta.index": "TourAI: travel blog, destinations and audio guides. AI-powered tour guide app with chat, voice, maps and GPS narration.",
+  "doc.meta.index": "TourAI: AI-powered travel guide app with chat, voice, maps and GPS narration. Official website and account access.",
   "doc.meta.blog": "TourAI blog: travel guides, smart tourism tips, destinations and news about our AI-powered app.",
   "doc.meta.contact": "Contact the TourAI team for technical support, business enquiries or information about the smart tourism app.",
-  "doc.meta.cookies": "TourAI cookie policy: cookie types, responsible advertising, Google AdSense and consent management.",
+  "doc.meta.cookies": "TourAI cookie policy: technical website cookies and AdMob advertising in the app.",
   "doc.meta.faq": "TourAI FAQ: website, app, launch alerts, privacy, cookies, contact and support.",
   "doc.meta.guides": "TourAI smart audio guides: GPS narrations, curated content and AI to explore cities.",
   "doc.meta.privacy": "TourAI privacy policy: data processing, geolocation, advertising, GDPR rights and contact.",
@@ -205,71 +298,51 @@ window.TourAiEnGBMessages = {
   "doc.meta.mobile-travel-gps-privacy": "Guide to using your mobile when travelling: data, GPS, eSIM, battery saving and location privacy abroad.",
   "doc.meta.lisbon-algarve-spring": "Spring getaway to Lisbon and the Algarve: neighbourhoods, beaches, gastronomy and a 5-day route through Portugal.",
 
-  "page.index.content": `<section class="editorial-highlights">
-            <h2>Explore tourai.es today</h2>
-            <p>Whilst we prepare the app, this site offers guides, destinations and articles to help you plan your trips calmly.</p>
-            <div class="editorial-grid">
-                <a href="blog.html" class="editorial-card">
-                    <span class="editorial-card__tag">Blog</span>
-                    <h3>Travel guides and tips</h3>
-                    <p>Routes, AI planning, mobile privacy and tricks for visiting monuments without crowds.</p>
-                </a>
-                <a href="guides.html" class="editorial-card">
-                    <span class="editorial-card__tag">Audio guides</span>
-                    <h3>How smart audio guides work</h3>
-                    <p>Discover the GPS narration model and TourAI's freemium approach.</p>
-                </a>
-                <a href="targets.html" class="editorial-card">
-                    <span class="editorial-card__tag">Destinations</span>
-                    <h3>Destinations 2026</h3>
-                    <p>Inspiration for Kyoto, Lisbon, Iceland and other routes for independent travellers.</p>
-                </a>
-            </div>
-        </section>
-
-        <p class="app-coming-note">The TourAI mobile app is in its final development phase. This website already offers useful editorial content today; below you can join the waitlist to receive the launch notification.</p>
+  "page.index.content": `<p class="app-coming-note">The TourAI mobile app is in its final development phase. You can learn about the product here, join the launch waitlist and, if you already have an account, open <a href="login.html">My account</a>.</p>
 
         <section class="feature-block">
             <div class="text-content">
-                <h3>Your Private Tour Guide</h3>
-                <p>TourAI is not just an app — it is like having an <strong>exclusive local expert</strong>. Forget crowded group tours and enjoy routes 100% adapted to your pace and curiosity.</p>
+                <h3>Your private tour guide</h3>
+                <p>TourAI acts as a <strong>local expert in your pocket</strong>. Forget crowded groups and enjoy routes adapted to your pace and curiosity.</p>
                 <ul style="padding-left: 20px;">
-                    <li>Dynamic routes based on your personal interests.</li>
-                    <li>Detailed stories for every monument you visit.</li>
-                    <li>Real-time answers to historical questions.</li>
+                    <li>Dynamic routes based on your interests.</li>
+                    <li>Stories for every monument you visit.</li>
+                    <li>Historical questions answered in real time.</li>
                 </ul>
             </div>
-            <img src="https://img.freepik.com/fotos-premium/foto-de-uma-guia-turistica-compartilhando-informacoes-e-apontando-para-um-mapa_762026-84753.jpg" alt="Private guide" class="app-img" loading="lazy" width="800" height="400">
+            <img src="https://img.freepik.com/fotos-premium/foto-de-uma-guia-turistica-compartilhando-informacoes-e-apontando-para-um-mapa_762026-84753.jpg" alt="Tour guide with a map" class="app-img" loading="lazy" width="800" height="400">
         </section>
 
         <section class="feature-block reverse">
             <div class="text-content">
-                <h3>Interact with Your Surroundings</h3>
+                <h3>Interact with your surroundings</h3>
                 <p>Communication is key. With TourAI you can:</p>
                 <ul style="padding-left: 20px;">
-                    <li><strong>Smart Chat:</strong> Ask specific questions about what you see.</li>
-                    <li><strong>Voice Queries:</strong> Search for restaurants, transport or historical facts by speaking naturally with the AI.</li>
+                    <li><strong>Smart chat:</strong> ask details about what you see.</li>
+                    <li><strong>Voice queries:</strong> search restaurants, transport or historical facts without typing.</li>
                 </ul>
             </div>
-            <img src="https://img.freepik.com/premium-photo/young-female-tourist-using-smartphone-platform-applications-helping-tourism-about-travel-map-gps_35674-17150.jpg?w=2000" alt="AI chat" class="app-img" loading="lazy" width="800" height="400">
+            <img src="https://img.freepik.com/premium-photo/young-female-tourist-using-smartphone-platform-applications-helping-tourism-about-travel-map-gps_35674-17150.jpg?w=2000" alt="Traveller using a tourism app on a smartphone" class="app-img" loading="lazy" width="800" height="400">
         </section>
 
-        <h2>Planned app features</h2>
+        <p class="app-coming-note">The website is public: anyone can learn about the product. The <a href="login.html">My account</a> area requires signing in with the same app account. Later you will also be able to view your plans and purchase them from here.</p>
+
+        <h2>App features</h2>
         <div class="services-grid">
             <div class="service-card">
                 <h4>AI chat</h4>
-                <p>Ask about monuments, history or local curiosities and receive contextualised answers during your visit.</p>
+                <p>Ask about monuments, history or local curiosities and receive contextualised answers.</p>
             </div>
             <div class="service-card">
-                <h4>MAX voice assistant</h4>
-                <p>Control your walk and ask questions naturally by speaking, without stopping to type.</p>
+                <h4>Voice assistant</h4>
+                <p>Control your walk and ask questions by speaking naturally.</p>
             </div>
             <div class="service-card">
                 <h4>Map and guided route</h4>
-                <p>See nearby points of interest and walk a GPS-guided route with narration at each stop.</p>
+                <p>See nearby points and walk a GPS-guided route with narration at each stop.</p>
             </div>
             <div class="service-card">
-                <h4>Location-based audio</h4>
+                <h4>Location-based audio guides</h4>
                 <p>As you approach a point of interest, listen to narrations generated for that place.</p>
             </div>
         </div>
@@ -279,26 +352,27 @@ window.TourAiEnGBMessages = {
             <div class="service-card">
                 <span class="price-tag">Freemium</span>
                 <h4>Free access</h4>
-                <p>Use the app with a daily token allowance. Supported through responsible advertising (AdMob).</p>
+                <p>Use the app with a daily usage allowance. The free tier may include responsible advertising (AdMob).</p>
             </div>
             <div class="service-card">
                 <span class="price-tag">Premium</span>
                 <h4>Temporary plans</h4>
-                <p>Purchase 1-day, weekend or other plans for more tokens and an advert-free experience.</p>
+                <p>Purchase 1-day, weekend or other plans for more usage allowance and an advert-free experience.</p>
             </div>
             <div class="service-card">
                 <span class="price-tag">Languages</span>
                 <h4>Spanish and English</h4>
-                <p>Interface and content available in Spanish (Spain) and English (United Kingdom).</p>
+                <p>Interface and content in Spanish (Spain) and English (United Kingdom).</p>
             </div>
         </div>`,
+
 
   "page.about.header": `<h1>About TourAI</h1>
         <p>Smart, personalised and accessible tourism for every traveller.</p>`,
 
   "page.about.content": `<h2>Who are we?</h2>
         <p><strong>TourAI</strong> is an independent digital tourism project created by <strong>Jordi Perelló</strong>, a developer and travel enthusiast based in Spain. We were born from a simple idea: that anyone should be able to explore a city with the same depth they would get from a local guide, but at their own pace, in their own language and from their mobile.</p>
-        <p>This website, <strong>tourai.es</strong>, is the official portal of the project. Here we publish information about the app, travel guides, practical tips and news from the tourism sector.</p>
+        <p>This website, <strong>tourai.es</strong>, is the official portal of the project: information about the app, contact, support and access to the private account area for registered users.</p>
 
         <h2>What does TourAI do?</h2>
         <p>TourAI is a mobile application that combines <strong>artificial intelligence</strong>, <strong>geolocation</strong> and <strong>audio guides</strong> to offer a personalised travel experience:</p>
@@ -307,12 +381,12 @@ window.TourAiEnGBMessages = {
             <li><strong>Voice queries:</strong> interact with the app whilst walking, without stopping to type.</li>
             <li><strong>Interactive maps:</strong> discover nearby points of interest and start GPS-guided walks.</li>
             <li><strong>Immersive audio guides:</strong> listen to narrations triggered by your location as you approach each point.</li>
-            <li><strong>Freemium and Premium model:</strong> free access with daily tokens or paid plans without advertising.</li>
+            <li><strong>Freemium and Premium model:</strong> free access with a daily usage allowance, or paid plans without advertising.</li>
         </ul>
         <p>The application is currently in development and testing. The iOS and Android versions will be published in the official stores when they are ready.</p>
 
         <h2>Our mission</h2>
-        <p>We want to democratise access to quality cultural information. We believe that travelling should not depend on booking expensive tours or carrying outdated printed guides. TourAI offers a freemium model with optional Premium plans, supported transparently through responsible advertising.</p>
+        <p>We want to democratise access to quality cultural information. We believe that travelling should not depend on booking expensive tours or carrying outdated printed guides. TourAI offers a freemium model in the app with optional Premium plans.</p>
 
         <div class="info-box">
             <strong>Direct contact</strong><br>
@@ -497,15 +571,15 @@ window.TourAiEnGBMessages = {
   "page.faq.content": `<div class="faq-item">
             <div class="faq-question">What is TourAI?</div>
             <div class="faq-answer">
-                <p><strong>TourAI</strong> is a digital tourism project that combines a <strong>mobile app with artificial intelligence</strong> (chat, voice, maps and GPS audio guides) with this website featuring <a href="blog.html">travel articles</a>, <a href="guides.html">audio guide information</a> and <a href="targets.html">recommended destinations</a>.</p>
-                <p>Read more on <a href="about.html">About us</a> or in the article <a href="articles/what-is-tourai.html">What is TourAI?</a></p>
+                <p><strong>TourAI</strong> is a digital tourism project centred on a <strong>mobile app with artificial intelligence</strong> (chat, voice, maps and GPS audio guides). This website is the official landing page: product information, contact, support and account access.</p>
+                <p>Read more on <a href="about.html">About us</a>.</p>
             </div>
         </div>
 
         <div class="faq-item">
             <div class="faq-question">Can I use tourai.es without downloading the app?</div>
             <div class="faq-answer">
-                <p>Yes. This site offers useful editorial content even before the app is published: guides on the <a href="blog.html">blog</a>, inspiration in <a href="targets.html">Destinations 2026</a> and an explanation of <a href="guides.html">smart audio guides</a>.</p>
+                <p>Yes. The website is public: you can learn about the product, contact us or join the launch waitlist without an account. The <a href="login.html">My account</a> area requires signing in.</p>
             </div>
         </div>
 
@@ -541,7 +615,7 @@ window.TourAiEnGBMessages = {
         <div class="faq-item">
             <div class="faq-question">Does tourai.es use cookies or advertising?</div>
             <div class="faq-answer">
-                <p>Yes. We use technical cookies and, with your consent, advertising cookies managed by Google (AdSense on the web and AdMob in the app). See our <a href="cookies.html">cookie policy</a> and manage your preferences from the banner when you enter the site.</p>
+                <p>We use technical cookies needed for the site (for example language and preferences). <strong>This website does not show advertising</strong>. The free app tier may use AdMob. See our <a href="cookies.html">cookie policy</a>.</p>
             </div>
         </div>
 
@@ -562,7 +636,7 @@ window.TourAiEnGBMessages = {
         <div class="faq-item">
             <div class="faq-question">Will TourAI be free?</div>
             <div class="faq-answer">
-                <p>Yes, with a <strong>freemium</strong> model: free access with a daily token allowance, supported through responsible advertising. Temporary Premium plans will offer more tokens and an advert-free experience. More details on the <a href="index.html">home page</a> and in the <a href="terms.html">terms of use</a>.</p>
+                <p>Yes, with a <strong>freemium</strong> model in the app: free access with a daily usage allowance (may include AdMob advertising). Temporary Premium plans will offer more usage allowance and an advert-free experience. More details on the <a href="index.html">home page</a> and in the <a href="terms.html">terms of use</a>.</p>
             </div>
         </div>`,
 
@@ -576,7 +650,7 @@ window.TourAiEnGBMessages = {
 
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
-            <p><strong>Last updated:</strong> 18 July 2026.</p>
+            <p><strong>Last updated:</strong> 21 July 2026.</p>
             <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we consider our users' privacy a fundamental pillar. This policy details how we manage information to ensure that using our smart audio guides is safe and transparent.</p>
 
             <h2>2. Data Controller</h2>
@@ -616,7 +690,7 @@ window.TourAiEnGBMessages = {
             <h2>4. Responsible Advertising</h2>
             <p>TourAI may be funded through Google advertising to keep Freemium access available:</p>
             <ul>
-                <li><strong>AdSense (Web):</strong> When web advertising is enabled and you have accepted advertising cookies, cookies may be used to show adverts based on general browsing interests.</li>
+                <li><strong>Website (tourai.es):</strong> we do not use advertising on the website.</li>
                 <li><strong>AdMob (App):</strong> In the free app version we use standard industry identifiers (IDFA/AAID). Users with active Premium do not see advertising while the plan is valid.</li>
             </ul>
             <p>You can manage or disable personalisation of these adverts at any time through <a href="https://adssettings.google.com/" target="_blank">Google Ads Settings</a>.</p>
@@ -687,8 +761,8 @@ window.TourAiEnGBMessages = {
 
   "page.terms.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Acceptance of Terms</h2>
-            <p><strong>Last updated:</strong> 18 July 2026.</p>
-            <p>By accessing or using the TourAI website and mobile application, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our audio guide services or our information platform.</p>
+            <p><strong>Last updated:</strong> 21 July 2026.</p>
+            <p>By accessing or using the TourAI website and mobile application, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our services or our website.</p>
             <p>Using the mobile application also implies acceptance of the <strong>full terms embedded in the app</strong> at registration (including age eligibility, payments and permissions). If there is any difference regarding the mobile service, the app terms prevail.</p>
             
             <h2>1.1. Minimum age (app)</h2>
@@ -718,7 +792,7 @@ window.TourAiEnGBMessages = {
            <h2>5. Advertising, Premium Plans and Promotional Bonuses</h2>
             <p>To guarantee universal access to culture, TourAI offers a hybrid model in the mobile application (full contractual details are set out in the terms embedded in the app):</p>
             <ul>
-                <li><strong>Free Access (Freemium):</strong> Supported through third-party advertising (Google AdSense on the web and AdMob in the app). May include rewarded ads that temporarily extend your usage allowance.</li>
+                <li><strong>Free Access (Freemium):</strong> Supported through third-party advertising in the app (Google AdMob). The tourai.es website does not use advertising. May include rewarded ads that temporarily extend your usage allowance.</li>
                 <li><strong>Premium Plans:</strong> Temporary paid plans (for example, 1 day or weekend) with a higher service usage allowance and an advert-free experience while the plan is active.</li>
                 <li><strong>Promotional bonuses:</strong> TourAI may grant free Premium access through alphanumeric codes or QR codes distributed in campaigns (WELCOME campaign on first registration, BIRTHDATE campaign for birthdays, email pre-assigned bonuses or other campaign codes). In particular:
                     <ul>
@@ -770,8 +844,8 @@ window.TourAiEnGBMessages = {
 
   "page.cookies.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. What are Cookies?</h2>
-            <p><strong>Last updated:</strong> 18 July 2026.</p>
-            <p>Cookies are small text files that websites store in your browser to remember information about your visit. In our mobile app, we use equivalent advertising identifiers (IDFA or AAID).</p>
+            <p><strong>Last updated:</strong> 21 July 2026.</p>
+            <p>Cookies are small text files that websites store in your browser to remember information about your visit. In the mobile app, where advertising applies, we use equivalent advertising identifiers (IDFA or AAID).</p>
             
             <h2>2. Types of Cookies We Use</h2>
             <table>
@@ -781,13 +855,12 @@ window.TourAiEnGBMessages = {
                 <tbody>
                     <tr><td><strong>Technical</strong></td><td>Essential for operation: remembering cookie consent, interface language and, during the browser session, technical form states (for example, email verification on contact or account deletion).</td><td>Session / up to 1 year</td></tr>
                     <tr><td><strong>Preference</strong></td><td>Website language chosen by the user (stored locally in the browser).</td><td>Until you change it or clear site data</td></tr>
-                    <tr><td><strong>Advertising</strong></td><td>Managed by Google (AdSense) to show relevant adverts <strong>when web advertising is enabled</strong> and you have accepted advertising cookies.</td><td>Variable</td></tr>
-                </tbody>
+                                    </tbody>
             </table>
             <p>Volume settings or the last destination viewed in the <strong>app</strong> are stored on the device as local app preferences; they are <strong>not website cookies</strong>.</p>
 
-            <h2>3. Advertising and Third Parties (Google)</h2>
-            <p>On the website we may use <strong>Google AdSense</strong> when enabled; in the app we use <strong>AdMob</strong>. These platforms may use cookies or advertising identifiers to show interest-based adverts, subject to your consent where required by law. Users with an <strong>active Premium Plan</strong> will not see advertising in the app while the plan is valid.</p>
+            <h2>3. Advertising</h2>
+            <p><strong>tourai.es does not use advertising or advertising cookies on the website.</strong> In the app we use <strong>AdMob</strong> on the free tier. That platform may use advertising identifiers to show interest-based adverts, subject to your consent where required by law. Users with an <strong>active Premium Plan</strong> will not see advertising in the app while the plan is valid.</p>
 
             <h2>4. How to Manage Cookies</h2>
             <p>You can block or delete them in your browser settings (Chrome, Safari, etc.) or reset your advertising ID in your smartphone's privacy settings (iOS/Android).</p>

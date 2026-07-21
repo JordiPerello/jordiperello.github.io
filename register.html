@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Crea tu cuenta TourAI desde la web para acceder a la zona privada." data-i18n-meta="doc.meta.register">
+    <link rel="canonical" href="https://tourai.es/register.html">
+    <link rel="alternate" hreflang="es-ES" href="https://tourai.es/register.html">
+    <link rel="alternate" hreflang="en-GB" href="https://tourai.es/register.html">
+    <link rel="alternate" hreflang="x-default" href="https://tourai.es/register.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TourAI">
+    <meta property="og:title" content="Crear cuenta - TourAI">
+    <meta property="og:description" content="Regístrate en TourAI con correo y contraseña.">
+    <meta property="og:url" content="https://tourai.es/register.html">
+    <meta property="og:image" content="https://tourai.es/img/tourai_logo.png">
+    <title data-i18n-doc-title="doc.title.register">Crear cuenta - TourAI</title>
+    <link rel="icon" type="image/png" href="img/tourai_logo.png">
+    <link rel="apple-touch-icon" href="img/tourai_logo.png">
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="css/account.css">
+    <link rel="stylesheet" href="css/auth-action.css">
+    <script src="js/cookie-consent-init.js"></script>
+</head>
+<body class="account-page auth-action-page">
+    <nav>
+        <div class="nav-logo-container"><a href="index.html"><img src="img/tourai_logo_inline.png" alt="TourAI"></a></div>
+        <div class="menu-icon" onclick="document.getElementById('nav-links').classList.toggle('show')"><span></span><span></span><span></span></div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html" data-i18n="nav.app">La App</a>
+            <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+            <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+            <a class="active" href="login.html" data-i18n="nav.account">Mi cuenta</a>
+            <div class="lang-switch">
+                <button type="button" data-set-locale="es-ES">ES</button>
+                <button type="button" data-set-locale="en-GB">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="account-hero">
+        <h1 data-i18n="register.title">Crear cuenta</h1>
+        <p data-i18n="register.subtitle">Regístrate con correo y contraseña. Podrás usar la misma cuenta en la app TourAI.</p>
+    </header>
+
+    <main class="login-shell">
+        <div class="account-card">
+            <form id="registerForm" class="login-form auth-action-form" novalidate>
+                <label for="registerName" data-i18n="register.name">Nombre</label>
+                <input id="registerName" type="text" required autocomplete="name" data-i18n-placeholder="register.name.placeholder" placeholder="Tu nombre">
+
+                <label for="registerEmail" data-i18n="register.email">Correo electrónico</label>
+                <input id="registerEmail" type="email" required autocomplete="email" data-i18n-placeholder="register.email.placeholder" placeholder="tu@email.com">
+
+                <label for="registerPassword" data-i18n="register.password">Contraseña</label>
+                <input id="registerPassword" type="password" required autocomplete="new-password" minlength="8" data-i18n-placeholder="register.password.placeholder" placeholder="Nueva contraseña">
+                <div id="passwordStrength" class="auth-password-strength" hidden>
+                    <div class="auth-password-strength__bars" aria-hidden="true">
+                        <span class="auth-password-strength__bar"></span>
+                        <span class="auth-password-strength__bar"></span>
+                        <span class="auth-password-strength__bar"></span>
+                    </div>
+                    <p id="passwordStrengthLabel" class="auth-password-strength__label"></p>
+                </div>
+                <p id="passwordError" class="auth-password-field-error" hidden data-i18n="resetPassword.error.weak">La contraseña es demasiado débil. Usa al menos 8 caracteres con mayúsculas, minúsculas y números.</p>
+
+                <label for="registerConfirm" data-i18n="register.confirm">Confirmar contraseña</label>
+                <input id="registerConfirm" type="password" required autocomplete="new-password" minlength="8" data-i18n-placeholder="register.confirm.placeholder" placeholder="Repite la contraseña">
+                <p id="confirmPasswordError" class="auth-password-field-error" hidden data-i18n="resetPassword.error.mismatch">Las contraseñas no coinciden.</p>
+
+                <label class="register-terms">
+                    <input id="registerTerms" type="checkbox" required>
+                    <span data-i18n-html="register.terms">Acepto los <a href="terms.html" target="_blank" rel="noopener">términos de uso</a> y la <a href="privacy.html" target="_blank" rel="noopener">política de privacidad</a>.</span>
+                </label>
+
+                <button type="submit" id="registerSubmit" class="btn-primary" data-i18n="register.submit">Crear cuenta</button>
+                <p id="registerStatus" class="login-status" role="status" aria-live="polite"></p>
+            </form>
+            <p class="login-note" data-i18n-html="register.loginHint">
+                ¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a>. También puedes <a href="delete-account.html">eliminar una cuenta</a> existente.
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 data-i18n="footer.explore">Explora</h4>
+                <a href="index.html" data-i18n="nav.app">La App</a>
+                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+                <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+                <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.legal">Legal</h4>
+                <a href="privacy.html" data-i18n="footer.privacy">Privacidad</a>
+                <a href="terms.html" data-i18n="footer.terms">Términos</a>
+                <a href="cookies.html" data-i18n="footer.cookies">Cookies</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.help">Ayuda</h4>
+                <a href="faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a>
+                <a href="delete-account.html" data-i18n="footer.deleteAccount">Eliminar cuenta</a>
+            </div>
+        </div>
+        <div class="legal-bottom">
+            &copy; <span id="current-year"></span> <strong>TourAI App</strong> -
+            <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a> -
+            <span data-i18n="footer.rights">Todos los derechos reservados.</span>
+        </div>
+    </footer>
+
+    <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <script src="js/site-config.js"></script>
+    <script src="js/site-config.secrets.js"></script>
+    <script src="js/locales/en-GB.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/password-strength.js"></script>
+    <script src="js/firebase-auth-session.js"></script>
+    <script src="js/register.js"></script>
+    <script src="js/cookie-consent.js"></script>
+</body>
+</html>
