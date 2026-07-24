@@ -16,11 +16,15 @@
       if (!cfg?.apiKey || !cfg?.authDomain || !cfg?.projectId) {
         return null;
       }
-      return {
+      const config = {
         apiKey: cfg.apiKey,
         authDomain: cfg.authDomain,
         projectId: cfg.projectId,
       };
+      if (cfg.storageBucket) {
+        config.storageBucket = cfg.storageBucket;
+      }
+      return config;
     },
 
     ensureFirebase() {
@@ -98,8 +102,43 @@
       return user.updateProfile({ displayName: displayName || null });
     },
 
+    /**
+     * Verifies the current password against Firebase Auth, then sets a new one.
+     * Reauthentication is the Auth backend check (not a "forgot password" flow).
+     */
+    async changePassword(currentPassword, newPassword) {
+      const user = this.currentUser();
+      if (!user) {
+        throw new Error("NO_USER");
+      }
+      const email = user.email;
+      if (!email) {
+        throw new Error("NO_EMAIL");
+      }
+      const current = String(currentPassword || "");
+      const next = String(newPassword || "");
+      if (!current || !next) {
+        throw new Error("PASSWORD_REQUIRED");
+      }
+      const credential = global.firebase.auth.EmailAuthProvider.credential(email, current);
+      await user.reauthenticateWithCredential(credential);
+      await user.updatePassword(next);
+    },
+
     async signOut() {
       const auth = await this.ensureFirebase();
+      try {
+        if (typeof this.clearNavProfileCache === "function") {
+          this.clearNavProfileCache();
+        } else {
+          global.sessionStorage.removeItem("tourai-nav-profile-v1");
+          global.sessionStorage.removeItem("tourai-nav-profile-v2");
+          global.localStorage.removeItem("tourai-nav-profile-v1");
+          global.localStorage.removeItem("tourai-nav-profile-v2");
+        }
+      } catch {
+        /* ignore */
+      }
       return auth.signOut();
     },
 

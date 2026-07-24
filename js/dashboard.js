@@ -5,7 +5,10 @@
   const loadingPanel = document.getElementById("dashboardLoading");
   const logoutBtn = document.getElementById("dashboardLogout");
   const statusEl = document.getElementById("dashboardStatus");
+  const planDetailModal = document.getElementById("planDetailModal");
+  const planDetailBody = document.getElementById("planDetailBody");
   let currentUser = null;
+  let planDetailBusy = false;
 
   if (!auth || !data) {
     return;
@@ -33,6 +36,11 @@
   }
 
   function redirectToLogin() {
+    if (typeof auth.forceSignedOutNav === "function") {
+      auth.forceSignedOutNav();
+    } else if (typeof auth.clearNavProfileCache === "function") {
+      auth.clearNavProfileCache();
+    }
     const target = new URL("login.html", window.location.href);
     target.searchParams.set("next", "dashboard.html");
     window.location.replace(target.toString());
@@ -46,6 +54,64 @@
     section.dataset.loadState = state;
     if (html !== undefined) {
       body.innerHTML = html;
+    }
+  }
+
+  function closePlanDetail() {
+    if (!planDetailModal) {
+      return;
+    }
+    planDetailModal.classList.remove("is-open");
+    planDetailModal.hidden = true;
+    planDetailModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    if (planDetailBody) {
+      planDetailBody.innerHTML = "";
+    }
+  }
+
+  async function openPlanDetail(planId) {
+    if (!currentUser || !planId || planDetailBusy || !planDetailModal || !planDetailBody) {
+      return;
+    }
+
+    const plan = data.getPlanById(planId);
+    if (!plan) {
+      setStatus(t("account.plan.detail.missing", "No se encontró el plan seleccionado."), true);
+      return;
+    }
+
+    planDetailBusy = true;
+    planDetailBody.innerHTML = `<p class="account-empty">${t(
+      "dashboard.section.loading",
+      "Cargando..."
+    )}</p>`;
+    planDetailModal.hidden = false;
+    planDetailModal.classList.add("is-open");
+    planDetailModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+
+    try {
+      const usages = await data.fetchTokenUsage(currentUser, planId);
+      planDetailBody.innerHTML = data.renderPlanDetailHtml(plan, usages);
+      const title = planDetailBody.querySelector(".plan-detail__title");
+      if (title) {
+        title.id = "planDetailTitle";
+      }
+    } catch (err) {
+      console.error("[TourAI dashboard] plan detail", err);
+      planDetailBody.innerHTML = `<p class="account-empty account-empty--error">${
+        auth.mapAuthError(err) ||
+        t("account.plan.detail.error", "No se pudo cargar el detalle del plan.")
+      }</p>
+      <div class="plan-detail__actions">
+        <button type="button" class="btn-secondary" data-close-plan-detail>${t(
+          "account.plan.detail.back",
+          "Anterior"
+        )}</button>
+      </div>`;
+    } finally {
+      planDetailBusy = false;
     }
   }
 
@@ -117,6 +183,46 @@
     toggle?.addEventListener("click", function () {
       toggleSection(section);
     });
+  });
+
+  document.addEventListener("click", function (event) {
+    const closer = event.target.closest("[data-close-plan-detail]");
+    if (closer) {
+      closePlanDetail();
+      return;
+    }
+
+    if (event.target === planDetailModal) {
+      closePlanDetail();
+      return;
+    }
+
+    const card = event.target.closest(".plan-list-card--interactive[data-plan-id]");
+    if (!card) {
+      return;
+    }
+    const section = card.closest('[data-section="plans"], [data-section="activePlan"]');
+    if (!section) {
+      return;
+    }
+    openPlanDetail(card.getAttribute("data-plan-id"));
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && planDetailModal?.classList.contains("is-open")) {
+      closePlanDetail();
+      return;
+    }
+
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+    const card = event.target.closest?.(".plan-list-card--interactive[data-plan-id]");
+    if (!card || !card.closest('[data-section="plans"], [data-section="activePlan"]')) {
+      return;
+    }
+    event.preventDefault();
+    openPlanDetail(card.getAttribute("data-plan-id"));
   });
 
   auth

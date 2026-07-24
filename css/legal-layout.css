@@ -63,6 +63,11 @@ body.site-legal-page {
   text-transform: uppercase;
 }
 
+.site-legal-page nav a.nav-account--signed-in,
+.site-legal-page nav a.nav-account--signed-in .nav-account-label {
+  text-transform: none;
+}
+
 .site-legal-page nav a:hover { color: var(--accent); }
 
 .site-legal-page nav a.active {

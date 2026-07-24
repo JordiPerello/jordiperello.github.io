@@ -879,7 +879,93 @@ nav a {
   text-transform: uppercase;
 }
 
-nav a:hover { color: var(--accent); }
+/* Hide guest "Mi cuenta" while a persisted session is being restored. */
+html.tourai-auth-pending nav a[data-i18n="nav.account"],
+html.tourai-auth-pending nav a[data-auth-account]:not(.nav-account--signed-in),
+html.tourai-auth-pending .footer-col a[data-i18n="nav.account"],
+html.tourai-auth-pending .footer-col a[data-auth-account]:not(.nav-account--signed-in) {
+  visibility: hidden;
+}
+
+html.tourai-auth-pending nav a.nav-account--signed-in,
+html.tourai-auth-pending .footer-col a.nav-account--signed-in {
+  visibility: visible;
+}
+
+/* Signed-in account chip — same look on all pages (site, legal, about). */
+nav a.nav-account--signed-in,
+.site-legal-page nav a.nav-account--signed-in,
+.footer-col a.nav-account--signed-in {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary, #0A2A43);
+  text-transform: none;
+  border-bottom: none;
+  margin: 0 12px;
+  padding: 4px 2px;
+  font-weight: 700;
+  font-size: 0.95em;
+  letter-spacing: normal;
+}
+
+.footer-col a.nav-account--signed-in {
+  color: var(--accent, #4db8ff);
+  margin: 0;
+  padding: 0;
+}
+
+nav a.nav-account--signed-in:hover,
+.site-legal-page nav a.nav-account--signed-in:hover {
+  color: var(--accent, #4db8ff);
+}
+
+nav a.nav-account--signed-in .nav-account-label,
+.site-legal-page nav a.nav-account--signed-in .nav-account-label,
+.footer-col a.nav-account--signed-in .nav-account-label {
+  text-transform: none;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+nav a.nav-account--signed-in .nav-account-avatar,
+.site-legal-page nav a.nav-account--signed-in .nav-account-avatar,
+.footer-col a.nav-account--signed-in .nav-account-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #0a2a43 0%, #1a5f8a 100%);
+  color: #fff;
+  font-size: 0.72em;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border: 2px solid #4db8ff;
+  box-sizing: border-box;
+}
+
+nav a.nav-account--signed-in .nav-account-avatar img,
+.site-legal-page nav a.nav-account--signed-in .nav-account-avatar img,
+.footer-col a.nav-account--signed-in .nav-account-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.footer-col a.nav-account--signed-in .nav-account-avatar {
+  width: 28px;
+  height: 28px;
+}
 
 nav a.active {
   color: var(--accent);

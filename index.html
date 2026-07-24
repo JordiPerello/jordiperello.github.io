@@ -63,7 +63,7 @@
     </header>
 
     <main class="content-wrapper" data-i18n-html="page.index.content">
-        <p class="app-coming-note">La aplicación móvil TourAI está en fase final de desarrollo. Puedes conocer el producto aquí, apuntarte al aviso de lanzamiento y, si ya tienes cuenta, acceder a <a href="login.html">Mi cuenta</a>.</p>
+        <p class="app-coming-note">La aplicación móvil TourAI está en fase final de desarrollo. Puedes conocer el producto aquí, apuntarte al aviso de lanzamiento y, si ya tienes cuenta, acceder a <a href="login.html" data-auth-account>Mi cuenta</a>.</p>
 
         <section class="feature-block">
             <div class="text-content">
@@ -90,7 +90,7 @@
             <img src="https://img.freepik.com/premium-photo/young-female-tourist-using-smartphone-platform-applications-helping-tourism-about-travel-map-gps_35674-17150.jpg?w=2000" alt="Turista usando la app en el móvil" class="app-img" loading="lazy" width="800" height="400">
         </section>
 
-        <p class="app-coming-note">La web es pública: cualquiera puede informarse. La zona de <a href="login.html">Mi cuenta</a> requiere iniciar sesión con la misma cuenta de la app. Más adelante podrás consultar tus planes y comprarlos también desde aquí.</p>
+        <p class="app-coming-note">La web es pública: cualquiera puede informarse. La zona de <a href="login.html" data-auth-account>Mi cuenta</a> requiere iniciar sesión con la misma cuenta de la app. Más adelante podrás consultar tus planes y comprarlos también desde aquí.</p>
 
         <h2>Funcionalidades de la app</h2>
         <div class="services-grid">
@@ -232,6 +232,11 @@
         });
         TourAiStoreUnsubscribe.init();
     </script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="js/site-config.secrets.js"></script>
+<script src="js/firebase-auth-session.js"></script>
+<script src="js/nav-auth.js"></script>
 <script src="js/cookie-consent.js"></script>
 </body>
 </html>

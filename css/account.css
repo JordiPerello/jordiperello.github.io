@@ -1,3 +1,7 @@
+.account-page {
+  --site-nav-height: 70px;
+}
+
 .account-page .account-hero {
   background: var(--hero-bg);
   color: #fff;
@@ -338,6 +342,13 @@
   flex-wrap: wrap;
   gap: 10px;
   margin: 0 0 18px;
+  position: sticky;
+  top: var(--site-nav-height, 70px);
+  z-index: 900; /* below site nav (1000) */
+  background: #fff;
+  padding: 12px 0;
+  border-bottom: 1px solid #e6eef5;
+  box-shadow: 0 8px 16px rgba(10, 42, 67, 0.04);
 }
 
 .account-subnav a {
@@ -416,4 +427,796 @@
 .account-empty--error {
   color: #b42318;
   font-weight: 600;
+}
+
+/* Plan list cards — mirror app PlanListItemBorder / UserPlansHistoryView */
+.plan-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.plan-list-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.plan-list-card--interactive {
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.plan-list-card--interactive:hover,
+.plan-list-card--interactive:focus-visible {
+  background: #f5f5f5;
+  border-color: #d0d0d0;
+  outline: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.14);
+}
+
+.plan-list-card--interactive:focus-visible {
+  box-shadow: 0 0 0 3px rgba(77, 184, 255, 0.35), 0 3px 10px rgba(0, 0, 0, 0.14);
+}
+
+.plan-list-card__header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  text-align: left;
+  box-shadow: none;
+}
+
+.plan-list-card__bullet {
+  width: 12px;
+  height: 12px;
+  margin-top: 6px;
+  border-radius: 6px;
+  background: #9e9e9e;
+  flex-shrink: 0;
+}
+
+.plan-list-card[data-plan-state="freemium"] .plan-list-card__bullet {
+  background: #34c759;
+}
+
+.plan-list-card[data-plan-state="pending"] .plan-list-card__bullet {
+  background: #ff9500;
+}
+
+.plan-list-card[data-plan-state="active"] .plan-list-card__bullet {
+  background: #2f7a98;
+}
+
+.plan-list-card[data-plan-state="consumed"] .plan-list-card__bullet {
+  background: #5b7fa6;
+}
+
+.plan-list-card[data-plan-state="expired"] .plan-list-card__bullet {
+  background: #e53935;
+}
+
+.plan-list-card[data-plan-state="other"] .plan-list-card__bullet {
+  background: #9e9e9e;
+}
+
+.plan-list-card__titles {
+  min-width: 0;
+}
+
+.plan-list-card__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: #1e1e1e;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.plan-list-card__status {
+  margin: 2px 0 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.plan-list-card__description {
+  margin: 10px 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: #666;
+}
+
+.plan-list-card__divider {
+  margin: 12px 0;
+  height: 1px;
+  background: #eee;
+}
+
+.plan-list-card__metrics {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+}
+
+.plan-list-card__metrics > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+
+.plan-list-card__metrics dt {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #777;
+}
+
+.plan-list-card__metrics dd {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 800;
+}
+
+.plan-list-card__metric-accent {
+  color: #2f7a98;
+  text-transform: uppercase;
+}
+
+.plan-list-card__metric-date {
+  color: #007aff;
+}
+
+.plan-detail-modal.modal {
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow: auto;
+  z-index: 1200;
+  box-sizing: border-box;
+}
+
+.plan-detail-modal.modal.is-open {
+  display: flex !important;
+}
+
+.plan-detail-modal .modal-content,
+.plan-detail-modal .plan-detail-modal__content {
+  max-width: 720px;
+  width: 100%;
+  margin: auto;
+  text-align: left;
+  max-height: min(90vh, 900px);
+  overflow: auto;
+  padding: 28px 24px 22px;
+  position: relative;
+}
+
+.plan-detail-modal .close-modal,
+.account-edit-modal .close-modal {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  background: #fff;
+  color: #6b7280;
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.plan-detail-modal .close-modal:hover,
+.account-edit-modal .close-modal:hover {
+  background: #f5f7fa;
+  border-color: #b8c5d0;
+  color: #0a2a43;
+}
+
+.plan-detail-modal .modal-content h2,
+.plan-detail-modal .modal-content h3 {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.plan-detail__intro {
+  margin: 0 0 16px;
+  padding-right: 28px;
+}
+
+.plan-detail__title {
+  margin: 0;
+  color: #0a2a43;
+  font-size: 1.35em;
+  font-weight: 900;
+}
+
+.plan-detail__subtitle {
+  margin: 6px 0 0;
+  color: #555;
+  line-height: 1.45;
+}
+
+.plan-detail .plan-list-card {
+  margin-bottom: 16px;
+}
+
+.plan-usage-table {
+  border: 1px solid #ddd;
+  overflow: hidden;
+  background: #fff;
+}
+
+.plan-usage-table__head {
+  display: grid;
+  grid-template-columns: 1fr 152px;
+  background: #f7f7f7;
+  border-bottom: 1px solid #ddd;
+}
+
+.plan-usage-table__query,
+.plan-usage-table__date,
+.plan-usage-row__query,
+.plan-usage-row__date {
+  padding: 10px 20px;
+  font-size: 0.92em;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.plan-usage-table__query,
+.plan-usage-table__date {
+  font-weight: 800;
+  color: #444;
+}
+
+.plan-usage-table__date,
+.plan-usage-row__date {
+  text-align: center;
+  border-left: 1px solid #ddd;
+  color: #666;
+}
+
+.plan-usage-row {
+  display: grid;
+  grid-template-columns: 1fr 152px;
+  border-bottom: 1px solid #ddd;
+}
+
+.plan-usage-row:last-child {
+  border-bottom: 0;
+}
+
+.plan-usage-row__query {
+  color: #1e1e1e;
+}
+
+.plan-usage-count {
+  margin: 14px 0 0;
+  text-align: center;
+  color: #555;
+  font-size: 0.92em;
+}
+
+.plan-detail__actions {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #e6eef5;
+}
+
+.plan-detail-modal .plan-detail__actions .btn-secondary {
+  width: auto;
+  min-width: 140px;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid #0a2a43;
+  background: #fff;
+  color: #0a2a43;
+}
+
+.plan-detail-modal .plan-detail__actions .btn-secondary:hover {
+  background: #f7fbff;
+  border-color: #4db8ff;
+  color: #0a2a43;
+}
+
+@media (max-width: 640px) {
+  .plan-usage-table__head,
+  .plan-usage-row {
+    grid-template-columns: 1fr 120px;
+  }
+
+  .plan-usage-table__query,
+  .plan-usage-table__date,
+  .plan-usage-row__query,
+  .plan-usage-row__date {
+    padding: 10px 12px;
+  }
+}
+
+/* Profile card — same visual language as plan cards */
+.profile-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  margin-bottom: 20px;
+}
+
+.profile-card__identity {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.profile-card__avatar {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #0a2a43;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  border: 2px solid #4db8ff;
+  box-sizing: border-box;
+}
+
+.profile-card__avatar img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: auto;
+  height: auto;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  display: block;
+  pointer-events: none;
+}
+
+.profile-card__name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1e1e1e;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.profile-card__email {
+  margin: 4px 0 0;
+  color: #666;
+  font-size: 0.95rem;
+  word-break: break-all;
+}
+
+.profile-card__divider {
+  margin: 14px 0;
+  height: 1px;
+  background: #eee;
+}
+
+.profile-card__metrics {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.profile-card__metrics > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+
+.profile-card__metrics dt {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #777;
+}
+
+.profile-card__metrics dd {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 800;
+}
+
+.profile-card__metric-accent {
+  color: #2f7a98;
+  text-transform: uppercase;
+}
+
+.profile-card__metric-date {
+  color: #007aff;
+}
+
+.profile-card__actions {
+  margin-top: 16px;
+}
+
+.profile-card__actions .btn-primary {
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid #0a2a43;
+  background: #0a2a43;
+  color: #fff;
+}
+
+.profile-card__actions .btn-primary:hover {
+  background: #4db8ff;
+  border-color: #4db8ff;
+  color: #0a2a43;
+}
+
+.account-edit-modal.modal {
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow: auto;
+  z-index: 1200;
+  box-sizing: border-box;
+}
+
+.account-edit-modal.modal.is-open {
+  display: flex !important;
+}
+
+.account-edit-modal .modal-content,
+.account-edit-modal .account-edit-modal__content {
+  max-width: 560px;
+  width: 100%;
+  margin: auto;
+  text-align: left;
+  max-height: min(90vh, 900px);
+  overflow: auto;
+  padding: 28px 24px 22px;
+  position: relative;
+}
+
+.account-edit-modal .modal-content h2 {
+  margin: 0 28px 8px 0;
+  color: #0a2a43;
+  border-bottom: 0;
+  padding-bottom: 0;
+  font-size: 1.35em;
+  font-weight: 900;
+}
+
+.account-edit-modal__subtitle {
+  margin: 0 0 18px;
+  color: #555;
+  line-height: 1.45;
+}
+
+.account-edit-form__photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.account-edit-form__photo-preview {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #0a2a43;
+  border: 2px solid #4db8ff;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.account-edit-form__photo-preview.has-photo {
+  cursor: grab;
+}
+
+.account-edit-form__photo-preview.has-photo.is-panning {
+  cursor: grabbing;
+}
+
+.account-edit-modal .account-edit-form__photo-preview,
+.account-edit-modal .account-edit-form__photo-preview:hover {
+  width: 120px;
+  height: 120px;
+  background: #fff;
+  color: #0a2a43;
+  border: 2px solid #4db8ff;
+  border-radius: 50%;
+  padding: 0;
+}
+
+.account-edit-form__photo-preview:hover {
+  border-color: #7ccfff;
+  box-shadow: 0 0 0 3px rgba(77, 184, 255, 0.25);
+}
+
+.account-edit-form__photo-preview:focus-visible {
+  outline: 3px solid #4db8ff;
+  outline-offset: 2px;
+}
+
+.account-edit-form__photo-preview img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: auto;
+  height: auto;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  display: block;
+  pointer-events: none;
+}
+
+.account-edit-form__photo-initials {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.account-edit-form__photo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.account-edit-modal .account-edit-form__photo-actions .btn-secondary {
+  width: auto;
+  min-width: 0;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid #0a2a43;
+  background: #fff;
+  color: #0a2a43;
+}
+
+.account-edit-modal .account-edit-form__photo-actions .btn-secondary:hover {
+  background: #f7fbff;
+  border-color: #4db8ff;
+  color: #0a2a43;
+}
+
+.account-edit-form__photo .account-edit-form__hint {
+  max-width: 36em;
+}
+
+.account-edit-form label {
+  display: block;
+  margin: 12px 0 4px;
+  font-weight: 700;
+  color: #0a2a43;
+}
+
+.account-edit-form label:first-of-type {
+  margin-top: 0;
+}
+
+.account-edit-modal .account-edit-form input[type="text"],
+.account-edit-modal .account-edit-form input[type="email"],
+.account-edit-modal .account-edit-form input[type="password"],
+.account-edit-modal .account-edit-form input[type="date"] {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #c9d7e3;
+  border-radius: 10px;
+  font-size: 1em;
+}
+
+.account-edit-form input[readonly] {
+  background: #f5f8fb;
+  color: #557086;
+}
+
+.account-edit-form__hint {
+  margin: 6px 0 0;
+  color: #7a8fa3;
+  font-size: 0.88em;
+  line-height: 1.4;
+}
+
+.account-edit-form__error {
+  margin: 6px 0 0;
+  color: #b42318;
+  font-size: 0.88em;
+  font-weight: 600;
+}
+
+.account-edit-form__switch {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px;
+  margin: 14px 0 4px !important;
+  font-weight: 600 !important;
+  color: #35566f !important;
+  cursor: pointer;
+  line-height: 1.35;
+}
+
+.account-edit-form__switch input {
+  width: auto !important;
+  height: 1.1em;
+  margin: 0 !important;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.account-edit-form__switch span {
+  display: block;
+  line-height: 1.35;
+}
+
+.account-edit-form__password-entry {
+  margin: 18px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.account-edit-modal .account-edit-form__password-entry .btn-secondary {
+  width: auto;
+  min-width: 0;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid #0a2a43;
+  background: #fff;
+  color: #0a2a43;
+}
+
+.account-edit-modal .account-edit-form__password-entry .btn-secondary:hover {
+  background: #f7fbff;
+  border-color: #4db8ff;
+  color: #0a2a43;
+}
+
+.account-password-modal.modal {
+  z-index: 1300;
+}
+
+.account-edit-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.account-edit-modal .account-edit-form__actions .btn-primary,
+.account-edit-modal .account-edit-form__actions .btn-secondary {
+  width: auto;
+  min-width: 140px;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid #0a2a43;
+}
+
+.account-edit-modal .account-edit-form__actions .btn-primary {
+  background: #0a2a43;
+  color: #fff;
+}
+
+.account-edit-modal .account-edit-form__actions .btn-primary:hover {
+  background: #4db8ff;
+  border-color: #4db8ff;
+  color: #0a2a43;
+}
+
+.account-edit-modal .account-edit-form__actions .btn-secondary {
+  background: #fff;
+  color: #0a2a43;
+}
+
+.account-edit-modal .account-edit-form__actions .btn-secondary:hover {
+  background: #f7fbff;
+  border-color: #4db8ff;
+}
+
+.account-edit-modal .auth-password-strength {
+  margin-top: 8px;
+}
+
+.account-edit-modal .auth-password-strength__bars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.account-edit-modal .auth-password-strength__bar {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: #ddd;
+}
+
+.account-edit-modal .auth-password-strength__bar.is-active.is-weak {
+  background: #ff3b30;
+}
+
+.account-edit-modal .auth-password-strength__bar.is-active.is-medium {
+  background: #ff9500;
+}
+
+.account-edit-modal .auth-password-strength__bar.is-active.is-strong {
+  background: #34c759;
+}
+
+.account-edit-modal .auth-password-strength__label {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #6e6e73;
+}
+
+.account-edit-modal .auth-password-strength__label.is-weak {
+  color: #ff3b30;
+}
+
+.account-edit-modal .auth-password-strength__label.is-medium {
+  color: #ff9500;
+}
+
+.account-edit-modal .auth-password-strength__label.is-strong {
+  color: #34c759;
 }

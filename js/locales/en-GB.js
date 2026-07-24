@@ -2,6 +2,8 @@
   "nav.app": "The App",
   "nav.contact": "Contact",
   "nav.account": "My account",
+  "nav.accountSignedIn": "Hi, {name}",
+  "nav.accountSignedInGeneric": "My account",
   "doc.title.login": "Sign in - TourAI",
   "doc.meta.login": "Sign in to TourAI to access your account, plans and private web area.",
   "doc.title.account": "Profile - TourAI",
@@ -71,11 +73,49 @@
   "account.logout": "Sign out",
   "account.status.signingOut": "Signing out...",
   "account.comingSoon": "Coming soon",
+  "account.edit": "Edit account",
+  "account.edit.title": "Edit account",
+  "account.edit.subtitle": "Update your profile details. Email cannot be changed.",
+  "account.edit.photo.change": "Change photo",
+  "account.edit.photo.clear": "Clear selection",
+  "account.edit.photo.hint": "Choose an image (max. 5 MB). Drag inside the circle to centre it. It is saved with the same framing as in the app.",
+  "account.edit.photo.panHint": "Drag to centre the photo",
+  "account.edit.photo.error.tooLarge": "The image exceeds 5 MB.",
+  "account.edit.photo.error.invalid": "The selected image could not be read.",
+  "account.edit.photo.error.upload": "The profile photo could not be uploaded. Please try again.",
+  "account.edit.save": "Save changes",
+  "account.edit.cancel": "Cancel",
+  "account.edit.saving": "Saving changes...",
+  "account.edit.saved": "Changes saved.",
+  "account.edit.birthDateSwitch": "Provide my date of birth",
+  "account.edit.birthDateHint": "Optional. Used for birthday promotions (BIRTHDATE campaign); if you do not provide it, you will not receive that bonus automatically. If you are a minor under the laws applicable in your country, TourAI must be used under the supervision of a parent or legal guardian. TourAI accepts no responsibility for how a minor may use the app.",
+  "account.edit.error.displayName": "Name is required.",
+  "account.edit.error.birthDate": "Enter a valid date of birth.",
+  "account.edit.error.save": "Changes could not be saved.",
+  "account.passwordChange.open": "Change password",
+  "account.passwordChange.title": "Change password",
+  "account.passwordChange.subtitle": "Enter your current password and the new one. Changes apply only when you confirm.",
+  "account.passwordChange.hint": "If you forgot it, use “Forgot password?” on the sign-in page.",
+  "account.passwordChange.current": "Current password",
+  "account.passwordChange.new": "New password",
+  "account.passwordChange.repeat": "Repeat new password",
+  "account.passwordChange.confirm": "Confirm",
+  "account.passwordChange.exit": "Exit",
+  "account.passwordChange.saving": "Updating password...",
+  "account.passwordChange.saved": "Password updated.",
+  "account.passwordChange.error.currentRequired": "Enter your current password to verify the change.",
+  "account.passwordChange.error.currentWrong": "The current password is incorrect.",
+  "account.passwordChange.error.weak": "Password must be at least medium strength.",
+  "account.passwordChange.error.mismatch": "Passwords do not match.",
+  "account.passwordChange.error.same": "The new password must be different from the current one.",
+  "account.passwordChange.error.recentLogin": "For security, sign in again to change your password.",
+  "account.passwordChange.error.save": "The password could not be updated.",
   "account.profile.name": "Name",
   "account.profile.noName": "No name",
   "account.profile.type": "Account type",
   "account.profile.type.premium": "Premium",
   "account.profile.type.freemium": "Freemium",
+  "account.profile.birthDate": "Date of birth (optional)",
   "account.loadingData": "Loading your profile...",
   "account.error.load": "Could not load account data.",
   "account.error.permission": "You do not have permission to read this data.",
@@ -94,11 +134,27 @@
   "account.plan.status": "Status",
   "account.plan.start": "Start",
   "account.plan.end": "End",
+  "account.plan.accountType": "Account type",
+  "account.plan.acquisition": "Source",
+  "account.plan.acquisition.bonus": "Bonus",
+  "account.plan.acquisition.purchase": "Purchase",
+  "account.plan.openDetail": "View plan details",
+  "account.plan.detail.title": "Plan details",
+  "account.plan.detail.subtitle": "Plan details and recorded activity.",
+  "account.plan.detail.back": "Back",
+  "account.plan.detail.missing": "The selected plan could not be found.",
+  "account.plan.detail.error": "The plan details could not be loaded.",
+  "account.plan.usage.title": "Plan activity",
+  "account.plan.usage.query": "Query",
+  "account.plan.usage.date": "Date",
+  "account.plan.usage.empty": "There is no recorded activity for this plan yet.",
+  "account.plan.usage.loaded": "{loaded} / {total} records loaded",
   "account.plan.state.active": "In use",
-  "account.plan.state.pending": "Pending activation",
-  "account.plan.state.consumed": "Allowance used up",
+  "account.plan.state.pending": "Pending start",
+  "account.plan.state.consumed": "Consumed",
   "account.plan.state.expired": "Expired",
-  "account.plan.state.other": "Other",
+  "account.plan.state.freemium": "Free plan",
+  "account.plan.state.other": "Unclassified",
   "account.plan.freemium": "You are currently on Freemium in the app. The free daily usage allowance is managed on the device (rewarded ads) and does not appear here.",
   "account.plan.empty": "You do not have any Premium plans saved on the account yet.",
   "account.payment.listTitle": "Payment history",
@@ -314,7 +370,7 @@
   "doc.meta.mobile-travel-gps-privacy": "Guide to using your mobile when travelling: data, GPS, eSIM, battery saving and location privacy abroad.",
   "doc.meta.lisbon-algarve-spring": "Spring getaway to Lisbon and the Algarve: neighbourhoods, beaches, gastronomy and a 5-day route through Portugal.",
 
-  "page.index.content": `<p class="app-coming-note">The TourAI mobile app is in its final development phase. You can learn about the product here, join the launch waitlist and, if you already have an account, open <a href="login.html">My account</a>.</p>
+  "page.index.content": `<p class="app-coming-note">The TourAI mobile app is in its final development phase. You can learn about the product here, join the launch waitlist and, if you already have an account, open <a href="login.html" data-auth-account>My account</a>.</p>
 
         <section class="feature-block">
             <div class="text-content">
@@ -341,7 +397,7 @@
             <img src="https://img.freepik.com/premium-photo/young-female-tourist-using-smartphone-platform-applications-helping-tourism-about-travel-map-gps_35674-17150.jpg?w=2000" alt="Traveller using a tourism app on a smartphone" class="app-img" loading="lazy" width="800" height="400">
         </section>
 
-        <p class="app-coming-note">The website is public: anyone can learn about the product. The <a href="login.html">My account</a> area requires signing in with the same app account. Later you will also be able to view your plans and purchase them from here.</p>
+        <p class="app-coming-note">The website is public: anyone can learn about the product. The <a href="login.html" data-auth-account>My account</a> area requires signing in with the same app account. Later you will also be able to view your plans and purchase them from here.</p>
 
         <h2>App features</h2>
         <div class="services-grid">
@@ -595,7 +651,7 @@
         <div class="faq-item">
             <div class="faq-question">Can I use tourai.es without downloading the app?</div>
             <div class="faq-answer">
-                <p>Yes. The website is public: you can learn about the product, contact us or join the launch waitlist without an account. The <a href="login.html">My account</a> area requires signing in.</p>
+                <p>Yes. The website is public: you can learn about the product, contact us or join the launch waitlist without an account. The <a href="login.html" data-auth-account>My account</a> area requires signing in.</p>
             </div>
         </div>
 

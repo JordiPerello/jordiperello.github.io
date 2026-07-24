@@ -7,5 +7,6 @@
     apiKey: "REPLACE_WITH_FIREBASE_WEB_API_KEY",
     authDomain: "tourai-production-7dabf.firebaseapp.com",
     projectId: "tourai-production-7dabf",
+    storageBucket: "tourai-production-7dabf.firebasestorage.app",
   };
 })();

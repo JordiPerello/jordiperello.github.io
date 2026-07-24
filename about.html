@@ -35,6 +35,8 @@
         .nav-logo-container img { width: 150px; height: 50px; object-fit: contain; }
         .nav-links { display: flex; align-items: center; justify-content: center; flex-grow: 1; }
         nav a { color: var(--primary); margin: 0 20px; text-decoration: none; font-weight: 600; font-size: 0.95em; text-transform: uppercase; }
+        nav a.nav-account--signed-in,
+        nav a.nav-account--signed-in .nav-account-label { text-transform: none; }
         nav a:hover { color: var(--accent); }
         nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); pointer-events: none; }
         .menu-icon { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
@@ -132,6 +134,11 @@
     <script src="js/site-config.js"></script>
     <script src="js/locales/en-GB.js"></script>
     <script src="js/i18n.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="js/site-config.secrets.js"></script>
+<script src="js/firebase-auth-session.js"></script>
+<script src="js/nav-auth.js"></script>
 <script src="js/cookie-consent.js"></script>
 </body>
 </html>

@@ -131,11 +131,25 @@
 
     try {
       auth.setRememberPreference(remember);
-      await auth.signIn(email, password, { remember: remember });
+      const credential = await auth.signIn(email, password, { remember: remember });
       if (remember) {
         auth.setRememberedEmail(email);
       } else {
         auth.setRememberedEmail("");
+      }
+      if (credential?.user) {
+        if (auth.enrichNavProfile) {
+          try {
+            await auth.enrichNavProfile(credential.user);
+          } catch (enrichErr) {
+            console.warn("[TourAI login] profile enrich failed", enrichErr);
+            if (auth.stashNavProfile) {
+              auth.stashNavProfile(credential.user);
+            }
+          }
+        } else if (auth.stashNavProfile) {
+          auth.stashNavProfile(credential.user);
+        }
       }
       setStatus(t("login.status.redirecting", "Acceso correcto. Redirigiendo..."), false);
       window.location.replace(nextUrl());

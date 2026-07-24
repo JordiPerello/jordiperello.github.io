@@ -162,8 +162,8 @@
           DeviceId: webDeviceId(),
           SessionLastSeenAt: now,
           Preferences: "[]",
-          PhotoCropOffsetXNorm: 0.5,
-          PhotoCropOffsetYNorm: 0.5,
+          PhotoCropOffsetXNorm: 0,
+          PhotoCropOffsetYNorm: 0,
           PhotoCropUserScale: 1,
         });
 

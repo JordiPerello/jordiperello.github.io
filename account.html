@@ -45,17 +45,9 @@
                 <a href="dashboard.html" data-i18n="account.subnav.dashboard">Panel</a>
             </nav>
 
+            <div id="accountProfileMount"></div>
+
             <div class="account-card">
-                <h2 data-i18n="account.profile.title">Tu perfil</h2>
-                <p data-i18n="account.profile.intro">Has iniciado sesión con la misma cuenta que usas en la app TourAI.</p>
-                <dl class="account-meta">
-                    <dt data-i18n="account.profile.name">Nombre</dt>
-                    <dd id="accountDisplayName">—</dd>
-                    <dt data-i18n="account.profile.email">Correo</dt>
-                    <dd id="accountEmail">—</dd>
-                    <dt data-i18n="account.profile.type">Tipo de cuenta</dt>
-                    <dd id="accountType">—</dd>
-                </dl>
                 <div class="account-actions">
                     <a class="btn-primary" href="dashboard.html" data-i18n="account.subnav.dashboard">Ir al panel</a>
                     <button type="button" id="accountLogout" class="btn-secondary" data-i18n="account.logout">Cerrar sesión</button>
@@ -65,6 +57,95 @@
             </div>
         </div>
     </main>
+
+    <div id="accountEditModal" class="modal account-edit-modal" hidden aria-hidden="true">
+        <div class="modal-content account-edit-modal__content" role="dialog" aria-modal="true" aria-labelledby="accountEditTitle">
+            <button type="button" class="close-modal" data-close-account-edit aria-label="Cerrar">&times;</button>
+            <h2 id="accountEditTitle" data-i18n="account.edit.title">Editar cuenta</h2>
+            <p class="account-edit-modal__subtitle" data-i18n="account.edit.subtitle">Actualiza tus datos de perfil. El correo no se puede cambiar.</p>
+
+            <form id="accountEditForm" class="account-edit-form" novalidate>
+                <div class="account-edit-form__photo">
+                    <div class="account-edit-form__photo-preview" id="editPhotoPreview" role="img" tabindex="0" aria-label="Foto de perfil. Arrastra para centrar; pulsa para cambiar.">
+                        <span class="account-edit-form__photo-initials" id="editPhotoInitials">?</span>
+                    </div>
+                    <div class="account-edit-form__photo-actions">
+                        <button type="button" class="btn-secondary" id="editPhotoPick" data-i18n="account.edit.photo.change">Cambiar foto</button>
+                        <button type="button" class="btn-secondary" id="editPhotoClear" hidden data-i18n="account.edit.photo.clear">Quitar selección</button>
+                    </div>
+                    <input id="editPhotoFile" type="file" accept="image/*" hidden>
+                    <p class="account-edit-form__hint" data-i18n="account.edit.photo.hint">Elige una imagen (máx. 5 MB). Arrastra dentro del círculo para centrarla. Se guarda con el mismo encuadre que en la app.</p>
+                    <p id="editPhotoError" class="account-edit-form__error" hidden></p>
+                </div>
+
+                <label for="editEmail" data-i18n="account.profile.email">Correo</label>
+                <input id="editEmail" type="email" readonly autocomplete="username">
+
+                <label for="editDisplayName" data-i18n="account.profile.name">Nombre</label>
+                <input id="editDisplayName" type="text" required maxlength="80" autocomplete="name">
+                <p id="editDisplayNameError" class="account-edit-form__error" hidden></p>
+
+                <div class="account-edit-form__birth">
+                    <label class="account-edit-form__switch">
+                        <input id="editBirthDateEnabled" type="checkbox">
+                        <span data-i18n="account.edit.birthDateSwitch">Indicar mi fecha de nacimiento</span>
+                    </label>
+                    <label for="editBirthDate" data-i18n="account.profile.birthDate">Fecha de nacimiento (opcional)</label>
+                    <input id="editBirthDate" type="date" disabled>
+                    <p class="account-edit-form__hint" data-i18n="account.edit.birthDateHint">Opcional. Se usa para promociones de cumpleaños (campaña BIRTHDATE); si no la indicas, no recibirás ese bono automáticamente. Si eres menor de edad según la legislación aplicable en tu país, el uso de TourAI debe realizarse bajo la supervisión de un padre, madre o tutor legal. TourAI no se hace responsable del uso que un menor pueda dar a la aplicación.</p>
+                    <p id="editBirthDateError" class="account-edit-form__error" hidden></p>
+                </div>
+
+                <div class="account-edit-form__password-entry">
+                    <button type="button" class="btn-secondary" id="accountPasswordOpen" data-i18n="account.passwordChange.open">Cambiar contraseña</button>
+                    <p class="account-edit-form__hint" data-i18n="account.passwordChange.hint">Si la has olvidado, usa «¿Olvidaste tu contraseña?» en el inicio de sesión.</p>
+                </div>
+
+                <p id="accountEditStatus" class="account-status" role="status" aria-live="polite"></p>
+
+                <div class="account-edit-form__actions">
+                    <button type="submit" class="btn-primary" id="accountEditSave" data-i18n="account.edit.save">Guardar cambios</button>
+                    <button type="button" class="btn-secondary" data-close-account-edit data-i18n="account.edit.cancel">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="accountPasswordModal" class="modal account-edit-modal account-password-modal" hidden aria-hidden="true">
+        <div class="modal-content account-edit-modal__content" role="dialog" aria-modal="true" aria-labelledby="accountPasswordTitle">
+            <button type="button" class="close-modal" data-close-account-password aria-label="Cerrar">&times;</button>
+            <h2 id="accountPasswordTitle" data-i18n="account.passwordChange.title">Cambiar contraseña</h2>
+            <p class="account-edit-modal__subtitle" data-i18n="account.passwordChange.subtitle">Introduce tu contraseña actual y la nueva. El cambio solo se aplica al confirmar.</p>
+
+            <form id="accountPasswordForm" class="account-edit-form" novalidate>
+                <label for="pwdCurrent" data-i18n="account.passwordChange.current">Contraseña actual</label>
+                <input id="pwdCurrent" type="password" autocomplete="current-password" required>
+                <p id="pwdCurrentError" class="account-edit-form__error" hidden></p>
+
+                <label for="pwdNew" data-i18n="account.passwordChange.new">Nueva contraseña</label>
+                <input id="pwdNew" type="password" autocomplete="new-password" required>
+                <div id="pwdStrength" class="auth-password-strength" hidden>
+                    <div class="auth-password-strength__bars" aria-hidden="true">
+                        <span class="auth-password-strength__bar"></span>
+                        <span class="auth-password-strength__bar"></span>
+                        <span class="auth-password-strength__bar"></span>
+                    </div>
+                    <p id="pwdStrengthLabel" class="auth-password-strength__label"></p>
+                </div>
+
+                <label for="pwdConfirm" data-i18n="account.passwordChange.repeat">Repetir nueva contraseña</label>
+                <input id="pwdConfirm" type="password" autocomplete="new-password" required>
+                <p id="pwdNewError" class="account-edit-form__error" hidden></p>
+
+                <p id="accountPasswordStatus" class="account-status" role="status" aria-live="polite"></p>
+
+                <div class="account-edit-form__actions">
+                    <button type="submit" class="btn-primary" id="accountPasswordSave" data-i18n="account.passwordChange.confirm">Confirmar</button>
+                    <button type="button" class="btn-secondary" data-close-account-password data-i18n="account.passwordChange.exit">Salir</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-grid">
@@ -102,7 +183,9 @@
     <script src="js/site-config.secrets.js"></script>
     <script src="js/locales/en-GB.js"></script>
     <script src="js/i18n.js"></script>
+    <script src="js/password-strength.js"></script>
     <script src="js/firebase-auth-session.js"></script>
+    <script src="js/nav-auth.js"></script>
     <script src="js/account-data.js"></script>
     <script src="js/account.js"></script>
     <script src="js/cookie-consent.js"></script>
