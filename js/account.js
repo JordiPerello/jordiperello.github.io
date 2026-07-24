@@ -14,6 +14,8 @@
   const editBirthDateEnabled = document.getElementById("editBirthDateEnabled");
   const editBirthDate = document.getElementById("editBirthDate");
   const editBirthDateError = document.getElementById("editBirthDateError");
+  const editBirthDateField = document.getElementById("editBirthDateField");
+  const editBirthDateVisible = document.getElementById("editBirthDateVisible");
   const editStatusEl = document.getElementById("accountEditStatus");
   const editSaveBtn = document.getElementById("accountEditSave");
   const editPhotoPreview = document.getElementById("editPhotoPreview");
@@ -52,6 +54,42 @@
 
   function t(key, fallback) {
     return data.t(key, fallback);
+  }
+
+  let birthDatePicker = null;
+  let birthDatePickerLocale = null;
+
+  function ensureBirthDatePicker() {
+    const locale = window.TourAiI18n?.getLocale?.() || "es-ES";
+    if (birthDatePicker && birthDatePickerLocale === locale) {
+      return birthDatePicker;
+    }
+    if (birthDatePicker) {
+      try {
+        birthDatePicker.destroy?.();
+      } catch (_) {
+        /* ignore */
+      }
+      birthDatePicker = null;
+    }
+    if (!window.TourAiBirthdatePicker?.create) {
+      return null;
+    }
+    try {
+      birthDatePicker =
+        window.TourAiBirthdatePicker.create({
+          root: editBirthDateField,
+          input: editBirthDate,
+          visible: editBirthDateVisible,
+          t: t,
+        }) || null;
+      birthDatePickerLocale = birthDatePicker ? locale : null;
+    } catch (err) {
+      console.error("[TourAI] birthdate picker create failed", err);
+      birthDatePicker = null;
+      birthDatePickerLocale = null;
+    }
+    return birthDatePicker;
   }
 
   function setStatus(message, isError) {
@@ -341,8 +379,21 @@
     if (!editBirthDate || !editBirthDateEnabled) {
       return;
     }
-    editBirthDate.disabled = !editBirthDateEnabled.checked;
-    if (!editBirthDateEnabled.checked) {
+    const enabled = !!editBirthDateEnabled.checked;
+    const birthBlock = editBirthDateEnabled.closest(".account-edit-form__birth");
+    if (birthBlock) {
+      birthBlock.classList.toggle("is-disabled", !enabled);
+    }
+    const picker = ensureBirthDatePicker();
+    if (picker) {
+      picker.setEnabled(enabled);
+    } else {
+      editBirthDate.disabled = !enabled;
+      if (editBirthDateVisible) {
+        editBirthDateVisible.disabled = !enabled;
+      }
+    }
+    if (!enabled) {
       editBirthDateError.hidden = true;
     }
   }
@@ -392,15 +443,38 @@
     editBirthDateError.hidden = true;
     resetPendingPhoto();
     loadCurrentPhotoIntoEditPreview();
-    const birthValue = data.formatBirthDateInput(currentProfile.BirthDate);
-    editBirthDateEnabled.checked = !!birthValue;
-    editBirthDate.value = birthValue;
-    syncBirthDateEnabled();
-    setEditStatus("", false);
+
     editModal.hidden = false;
     editModal.classList.add("is-open");
     editModal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
+
+    const birthValue = data.formatBirthDateInput(currentProfile.BirthDate);
+    editBirthDateEnabled.checked = !!birthValue;
+    try {
+      const picker = ensureBirthDatePicker();
+      if (picker) {
+        picker.setValue(birthValue);
+      } else if (editBirthDate) {
+        editBirthDate.value = birthValue;
+        if (editBirthDateVisible) {
+          editBirthDateVisible.value = birthValue || "";
+        }
+      }
+      syncBirthDateEnabled();
+    } catch (err) {
+      console.error("[TourAI] birthdate setup failed", err);
+      if (editBirthDate) {
+        editBirthDate.value = birthValue;
+        editBirthDate.disabled = !editBirthDateEnabled.checked;
+      }
+      if (editBirthDateVisible) {
+        editBirthDateVisible.value = birthValue || "";
+        editBirthDateVisible.disabled = !editBirthDateEnabled.checked;
+      }
+    }
+
+    setEditStatus("", false);
     editDisplayName.focus();
   }
 
@@ -408,6 +482,7 @@
     if (!editModal) {
       return;
     }
+    birthDatePicker?.close?.();
     closePasswordModal();
     resetPendingPhoto();
     editModal.classList.remove("is-open");
@@ -616,6 +691,10 @@
 
   document.addEventListener("keydown", function (event) {
     if (event.key !== "Escape") {
+      return;
+    }
+    if (birthDatePicker?.isOpen?.()) {
+      birthDatePicker.close();
       return;
     }
     if (passwordModal?.classList.contains("is-open")) {

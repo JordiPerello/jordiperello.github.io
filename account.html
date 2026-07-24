@@ -11,6 +11,7 @@
     <link rel="apple-touch-icon" href="img/tourai_logo.png">
     <link rel="stylesheet" href="css/site.css">
     <link rel="stylesheet" href="css/account.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.css">
     <script src="js/cookie-consent-init.js"></script>
 </head>
 <body class="account-page">
@@ -86,12 +87,27 @@
                 <p id="editDisplayNameError" class="account-edit-form__error" hidden></p>
 
                 <div class="account-edit-form__birth">
-                    <label class="account-edit-form__switch">
-                        <input id="editBirthDateEnabled" type="checkbox">
-                        <span data-i18n="account.edit.birthDateSwitch">Indicar mi fecha de nacimiento</span>
-                    </label>
-                    <label for="editBirthDate" data-i18n="account.profile.birthDate">Fecha de nacimiento (opcional)</label>
-                    <input id="editBirthDate" type="date" disabled>
+                    <div class="account-edit-form__birth-row">
+                        <label class="account-edit-form__switch">
+                            <input id="editBirthDateEnabled" type="checkbox">
+                            <span id="editBirthDateLabel" data-i18n="account.edit.birthDateSwitch">Indicar mi fecha de nacimiento</span>
+                        </label>
+                        <div class="birthdate-field" id="editBirthDateField">
+                            <input type="hidden" id="editBirthDate" value="" disabled>
+                            <input
+                                type="text"
+                                id="editBirthDateVisible"
+                                class="birthdate-picker__input"
+                                readonly
+                                disabled
+                                autocomplete="bday"
+                                placeholder="Seleccionar fecha"
+                                aria-labelledby="editBirthDateLabel"
+                                aria-haspopup="dialog"
+                                aria-expanded="false"
+                            >
+                        </div>
+                    </div>
                     <p class="account-edit-form__hint" data-i18n="account.edit.birthDateHint">Opcional. Se usa para promociones de cumpleaños (campaña BIRTHDATE); si no la indicas, no recibirás ese bono automáticamente. Si eres menor de edad según la legislación aplicable en tu país, el uso de TourAI debe realizarse bajo la supervisión de un padre, madre o tutor legal. TourAI no se hace responsable del uso que un menor pueda dar a la aplicación.</p>
                     <p id="editBirthDateError" class="account-edit-form__error" hidden></p>
                 </div>
@@ -184,6 +200,8 @@
     <script src="js/locales/en-GB.js"></script>
     <script src="js/i18n.js"></script>
     <script src="js/password-strength.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.js"></script>
+    <script src="js/birthdate-picker.js"></script>
     <script src="js/firebase-auth-session.js"></script>
     <script src="js/nav-auth.js"></script>
     <script src="js/account-data.js"></script>
