@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+    <meta charset="UTF-8">
+    <script src="js/site-ui.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Opiniones de TourAI: valora la web y la app con estrellas y comentarios." data-i18n-meta="doc.meta.reviews">
+    <link rel="canonical" href="https://tourai.es/reviews.html">
+    <title data-i18n-doc-title="doc.title.reviews">Opiniones - TourAI</title>
+    <link rel="icon" type="image/png" href="img/tourai_logo.png">
+    <link rel="apple-touch-icon" href="img/tourai_logo.png">
+    <link rel="stylesheet" href="css/site.css">
+</head>
+<body class="reviews-page">
+    <nav>
+        <div class="nav-logo-container"><a href="index.html"><img src="img/tourai_logo_inline.png" alt="TourAI"></a></div>
+        <div class="menu-icon" onclick="document.getElementById('nav-links').classList.toggle('show')"><span></span><span></span><span></span></div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html" data-i18n="nav.app">La App</a>
+            <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+            <a href="community.html" data-i18n="nav.community">Comunidad</a>
+            <a class="active" href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
+            <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+            <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
+            <div class="lang-switch">
+                <button type="button" data-set-locale="es-ES">ES</button>
+                <button type="button" data-set-locale="en-GB">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-hero">
+        <h1 data-i18n="reviews.title">Opiniones</h1>
+        <p data-i18n="reviews.subtitle">Valora la web o la app TourAI. Las reseñas se publican tras moderación.</p>
+    </header>
+
+    <main class="reviews-shell community-shell">
+        <div id="reviewsSummary" class="reviews-summary" aria-live="polite"></div>
+        <p id="reviewsStatus" class="community-status" role="status" aria-live="polite"></p>
+
+        <p id="reviewsLoginHint" class="community-login-hint">
+            <span data-i18n="reviews.loginHint">Para valorar necesitas una cuenta.</span>
+            <a href="login.html" data-reviews-login data-i18n="reviews.loginLink">Iniciar sesión</a>
+            <span data-i18n="reviews.or">o</span>
+            <a href="register.html" data-reviews-register data-i18n="reviews.registerLink">darte de alta</a>.
+        </p>
+
+        <div id="reviewsCompose" class="community-compose" hidden>
+            <h2 data-i18n="reviews.composeTitle">Tu valoración</h2>
+            <form id="reviewsForm">
+                <label for="reviewsTarget" data-i18n="reviews.field.target">¿Qué valoras?</label>
+                <select id="reviewsTarget" required>
+                    <option value="web" data-i18n="reviews.target.web">Web</option>
+                    <option value="app" data-i18n="reviews.target.app">App</option>
+                </select>
+
+                <label data-i18n="reviews.field.stars">Estrellas</label>
+                <input type="hidden" id="reviewsStars" name="stars" value="">
+                <div id="reviewsStarsUi" class="reviews-stars-picker" role="group" aria-label="Estrellas"></div>
+
+                <label for="reviewsComment" data-i18n="reviews.field.comment">Comentario (opcional)</label>
+                <textarea id="reviewsComment" rows="4" maxlength="2000" data-i18n-placeholder="reviews.field.commentPlaceholder" placeholder="Cuéntanos qué te ha parecido..."></textarea>
+
+                <button type="submit" id="reviewsSubmit" class="btn-primary" data-i18n="reviews.submit">Enviar valoración</button>
+            </form>
+        </div>
+
+        <section id="reviewsPending" class="reviews-pending" hidden>
+            <h2 data-i18n="reviews.pending.title">Pendientes de moderación</h2>
+            <div id="reviewsPendingList"></div>
+        </section>
+
+        <div id="reviewsTabs" class="community-tabs" role="tablist" aria-label="Filtro">
+            <button type="button" class="community-tab is-active" data-target-filter="all" data-i18n="reviews.filter.all">Todas</button>
+            <button type="button" class="community-tab" data-target-filter="web" data-i18n="reviews.target.web">Web</button>
+            <button type="button" class="community-tab" data-target-filter="app" data-i18n="reviews.target.app">App</button>
+        </div>
+
+        <div id="reviewsList" class="reviews-list"></div>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 data-i18n="footer.explore">Explora</h4>
+                <a href="index.html" data-i18n="nav.app">La App</a>
+                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+                <a href="community.html" data-i18n="nav.community">Comunidad</a>
+                <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
+                <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+                <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.legal">Legal</h4>
+                <a href="privacy.html" data-i18n="footer.privacy">Privacidad</a>
+                <a href="terms.html" data-i18n="footer.terms">Términos</a>
+                <a href="cookies.html" data-i18n="footer.cookies">Cookies</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.help">Ayuda</h4>
+                <a href="faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a>
+                <a href="delete-account.html" data-i18n="footer.deleteAccount">Eliminar cuenta</a>
+            </div>
+        </div>
+        <div class="legal-bottom">
+            &copy; <span id="current-year"></span> <strong>TourAI App</strong> -
+            <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a> -
+            <span data-i18n="footer.rights">Todos los derechos reservados.</span>
+        </div>
+    </footer>
+
+    <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <script src="js/site-config.js"></script>
+    <script src="js/site-config.secrets.js"></script>
+    <script src="js/locales/en-GB.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/reviews.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+rules_version = '2';
+// Example only. Canonical rules live in:
+//   D:\Proyectos\Documents\docs-firabase\Rules\firestore.rules
+// Deploy via TourAI\firebase\scripts\deploy-functions-*.ps1
+// (or: firebase deploy --only firestore:rules after Sync-FirebaseRulesFromLocalDocs).

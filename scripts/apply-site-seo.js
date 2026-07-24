@@ -163,11 +163,11 @@ function ensureHead(content, page) {
   const prefix = assetPrefix(depthFor(page.file));
   let updated = removeInlineConsentScript(content);
 
-  if (!updated.includes("cookie-consent-init.js")) {
+  if (!updated.includes("site-ui.js")) {
     updated = updated.replace(
       /<link rel="stylesheet" href="[^"]*site\.css">\s*/i,
       (match) =>
-        `${match}    <script src="${prefix}js/cookie-consent-init.js"></script>\n`
+        `${match}    <script src="${prefix}js/site-ui.js"></script>\n`
     );
   }
 
@@ -219,7 +219,7 @@ function ensureFooterScripts(content, page) {
     );
   }
 
-  if (!updated.includes("cookie-consent-init.js") && updated.includes("<head")) {
+  if (!updated.includes("site-ui.js") && updated.includes("<head")) {
     updated = ensureHead(updated, page);
   }
 

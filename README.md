@@ -7,6 +7,8 @@ Static site for **tourai.es** (GitHub Pages): product landing, support pages, an
 - `index.html` — App landing and launch waitlist
 - `about.html`, `contact.html`, `faq.html` — Product info and support
 - `login.html` / `account.html` — Account sign-in and private zone (Firebase Auth)
+- `community.html` — Public community (topics/replies in Firestore; see `firestore.community.rules.example`)
+- `dashboard.html` — Lazy-loaded plans / payments panel
 - `privacy.html`, `terms.html`, `cookies.html` — Legal
 - `delete-account.html`, `reset-password.html` — Account self-service
 
@@ -42,7 +44,7 @@ If sign-in fails on localhost, add `localhost` / `127.0.0.1` under Firebase Auth
 
 - The website does **not** show advertising (AdMob is app-only).
 - App freemium ads use AdMob in the mobile app only.
-- Forum / community features are planned for a later phase.
+- Front-end JS is intentionally few modules: `site-ui.js`, `auth.js`, `forms.js`, `account.js`, `community.js` (+ config / i18n).
 
 ---
 © TourAI. All rights reserved.

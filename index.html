@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es-ES">
 <head>
     <meta charset="UTF-8">
+    <script src="js/site-ui.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="TourAI: guía turística con inteligencia artificial. Chat, voz, mapas y audioguías para viajar a tu ritmo con la app TourAI." data-i18n-meta="doc.meta.index">
     <link rel="canonical" href="https://tourai.es/">
@@ -28,7 +29,6 @@
     <link rel="icon" type="image/png" href="img/tourai_logo.png">
     <link rel="apple-touch-icon" href="img/tourai_logo.png">
     <link rel="stylesheet" href="css/site.css">
-    <script src="js/cookie-consent-init.js"></script>
 </head>
 <body>
 
@@ -48,6 +48,7 @@
         <div class="nav-links" id="nav-links">
             <a class="active" data-i18n="nav.app">La App</a>
             <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+            <a href="community.html" data-i18n="nav.community">Comunidad</a>
             <a href="contact.html" data-i18n="nav.contact">Contacto</a>
             <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
             <div class="lang-switch">
@@ -176,6 +177,8 @@
                 <h4 data-i18n="footer.explore">Explora</h4>
                 <a class="active" data-i18n="nav.app">La App</a>
                 <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+                <a href="community.html" data-i18n="nav.community">Comunidad</a>
+            <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
                 <a href="contact.html" data-i18n="nav.contact">Contacto</a>
                 <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
             </div>
@@ -189,6 +192,8 @@
             <div class="footer-col">
                 <h4 data-i18n="footer.help">Ayuda</h4>
                 <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+                <a href="community.html" data-i18n="nav.community">Comunidad</a>
+            <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
                 <a href="contact.html" data-i18n="nav.contact">Contacto</a>
                 <a href="faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a>
             </div>
@@ -212,11 +217,7 @@
 <script src="js/site-config.js"></script>
     <script src="js/locales/en-GB.js"></script>
     <script src="js/i18n.js"></script>
-    <script src="js/loading-overlay.js"></script>
-    <script src="js/feedback-modal.js"></script>
     <script src="js/forms.js"></script>
-    <script src="js/store-subscription.js"></script>
-    <script src="js/store-unsubscribe.js"></script>
     <script>
         TourAiStoreSubscription.init({
             modalId: 'subModal',
@@ -234,9 +235,9 @@
     </script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="js/site-config.secrets.js"></script>
-<script src="js/firebase-auth-session.js"></script>
-<script src="js/nav-auth.js"></script>
-<script src="js/cookie-consent.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/reviews.js"></script>
 </body>
 </html>

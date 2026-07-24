@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+    <meta charset="UTF-8">
+    <script src="js/site-ui.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comunidad TourAI: novedades, ayuda, ideas y viajes." data-i18n-meta="doc.meta.community">
+    <link rel="canonical" href="https://tourai.es/community.html">
+    <title data-i18n-doc-title="doc.title.community">Comunidad - TourAI</title>
+    <link rel="icon" type="image/png" href="img/tourai_logo.png">
+    <link rel="apple-touch-icon" href="img/tourai_logo.png">
+    <link rel="stylesheet" href="css/site.css">
+</head>
+<body class="community-page">
+    <nav>
+        <div class="nav-logo-container"><a href="index.html"><img src="img/tourai_logo_inline.png" alt="TourAI"></a></div>
+        <div class="menu-icon" onclick="document.getElementById('nav-links').classList.toggle('show')"><span></span><span></span><span></span></div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html" data-i18n="nav.app">La App</a>
+            <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+            <a class="active" href="community.html" data-i18n="nav.community">Comunidad</a>
+            <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+            <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
+            <div class="lang-switch">
+                <button type="button" data-set-locale="es-ES">ES</button>
+                <button type="button" data-set-locale="en-GB">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-hero">
+        <h1 data-i18n="community.title">Comunidad</h1>
+        <p data-i18n="community.subtitle">Espacio público para novedades, ayuda, ideas y viajes con TourAI.</p>
+    </header>
+
+    <main class="community-shell">
+        <div id="communityTabs" class="community-tabs" role="tablist" aria-label="Secciones">
+            <button type="button" class="community-tab" data-category="news" data-i18n="community.cat.news">Novedades</button>
+            <button type="button" class="community-tab is-active" data-category="help" data-i18n="community.cat.help">Ayuda</button>
+            <button type="button" class="community-tab" data-category="ideas" data-i18n="community.cat.ideas">Ideas</button>
+            <button type="button" class="community-tab" data-category="travel" data-i18n="community.cat.travel">Viajes</button>
+        </div>
+        <p id="communityStatus" class="community-status" role="status" aria-live="polite"></p>
+
+        <section id="communityListView">
+            <p id="communityLoginHint" class="community-login-hint">
+                <span data-i18n="community.loginHint">Para publicar necesitas iniciar sesión.</span>
+                <a href="login.html" id="communityLoginLink" data-i18n="community.loginLink">Iniciar sesión</a>
+            </p>
+
+            <div id="communityNewTopic" class="community-compose" hidden>
+                <h2 data-i18n="community.newTopic">Nuevo tema</h2>
+                <form id="communityNewTopicForm">
+                    <label for="communityTopicTitle" data-i18n="community.field.title">Título</label>
+                    <input id="communityTopicTitle" type="text" maxlength="120" required>
+                    <label for="communityTopicBody" data-i18n="community.field.body">Mensaje</label>
+                    <textarea id="communityTopicBody" rows="5" maxlength="5000" required></textarea>
+                    <button type="submit" class="btn-primary" data-i18n="community.publish">Publicar</button>
+                </form>
+            </div>
+
+            <div id="communityTopics" class="community-topics"></div>
+        </section>
+
+        <section id="communityDetailView" hidden>
+            <button type="button" class="btn-secondary community-back" id="communityBack" data-i18n="community.back">Volver al listado</button>
+            <div id="communityDetailMount"></div>
+            <div id="communityReplyBox" class="community-compose community-compose--reply" hidden>
+                <form id="communityReplyForm">
+                    <label for="communityReplyBody" class="visually-hidden" data-i18n="community.yourReply">Tu respuesta</label>
+                    <textarea id="communityReplyBody" rows="3" maxlength="4000" required data-i18n-placeholder="community.yourReply" placeholder="Escribe una respuesta..."></textarea>
+                    <button type="submit" class="btn-primary" data-i18n="community.publish">Publicar</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 data-i18n="footer.explore">Explora</h4>
+                <a href="index.html" data-i18n="nav.app">La App</a>
+                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+                <a href="community.html" data-i18n="nav.community">Comunidad</a>
+            <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
+                <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+                <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.legal">Legal</h4>
+                <a href="privacy.html" data-i18n="footer.privacy">Privacidad</a>
+                <a href="terms.html" data-i18n="footer.terms">Términos</a>
+                <a href="cookies.html" data-i18n="footer.cookies">Cookies</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.help">Ayuda</h4>
+                <a href="faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a>
+                <a href="delete-account.html" data-i18n="footer.deleteAccount">Eliminar cuenta</a>
+            </div>
+        </div>
+        <div class="legal-bottom">
+            &copy; <span id="current-year"></span> <strong>TourAI App</strong> -
+            <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a> -
+            <span data-i18n="footer.rights">Todos los derechos reservados.</span>
+        </div>
+    </footer>
+
+    <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <script src="js/site-config.js"></script>
+    <script src="js/site-config.secrets.js"></script>
+    <script src="js/locales/en-GB.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/reviews.js"></script>
+    <script src="js/community.js"></script>
+</body>
+</html>

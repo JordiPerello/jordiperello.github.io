@@ -2,6 +2,7 @@
 <html lang="es-ES">
 <head>
     <meta charset="UTF-8">
+    <script src="js/site-ui.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Crea tu cuenta TourAI desde la web para acceder a la zona privada." data-i18n-meta="doc.meta.register">
     <link rel="canonical" href="https://tourai.es/register.html">
@@ -20,7 +21,6 @@
     <link rel="stylesheet" href="css/site.css">
     <link rel="stylesheet" href="css/account.css">
     <link rel="stylesheet" href="css/auth-action.css">
-    <script src="js/cookie-consent-init.js"></script>
 </head>
 <body class="account-page auth-action-page">
     <nav>
@@ -29,6 +29,7 @@
         <div class="nav-links" id="nav-links">
             <a href="index.html" data-i18n="nav.app">La App</a>
             <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+            <a href="community.html" data-i18n="nav.community">Comunidad</a>
             <a href="contact.html" data-i18n="nav.contact">Contacto</a>
             <a class="active" href="login.html" data-i18n="nav.account">Mi cuenta</a>
             <div class="lang-switch">
@@ -38,7 +39,7 @@
         </div>
     </nav>
 
-    <header class="account-hero">
+    <header class="page-hero">
         <h1 data-i18n="register.title">Crear cuenta</h1>
         <p data-i18n="register.subtitle">Regístrate con correo y contraseña. Podrás usar la misma cuenta en la app TourAI.</p>
     </header>
@@ -88,7 +89,9 @@
                 <h4 data-i18n="footer.explore">Explora</h4>
                 <a href="index.html" data-i18n="nav.app">La App</a>
                 <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
-                <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+                <a href="community.html" data-i18n="nav.community">Comunidad</a>
+            <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
+            <a href="contact.html" data-i18n="nav.contact">Contacto</a>
                 <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
             </div>
             <div class="footer-col">
@@ -118,10 +121,7 @@
     <script src="js/site-config.secrets.js"></script>
     <script src="js/locales/en-GB.js"></script>
     <script src="js/i18n.js"></script>
-    <script src="js/password-strength.js"></script>
-    <script src="js/firebase-auth-session.js"></script>
-    <script src="js/nav-auth.js"></script>
-    <script src="js/register.js"></script>
-    <script src="js/cookie-consent.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/reviews.js"></script>
 </body>
 </html>

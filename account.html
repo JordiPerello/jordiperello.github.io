@@ -2,6 +2,7 @@
 <html lang="es-ES">
 <head>
     <meta charset="UTF-8">
+    <script src="js/site-ui.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Perfil de TourAI: consulta tu nombre, correo y tipo de cuenta." data-i18n-meta="doc.meta.account">
     <meta name="robots" content="noindex, nofollow">
@@ -11,8 +12,6 @@
     <link rel="apple-touch-icon" href="img/tourai_logo.png">
     <link rel="stylesheet" href="css/site.css">
     <link rel="stylesheet" href="css/account.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.css">
-    <script src="js/cookie-consent-init.js"></script>
 </head>
 <body class="account-page">
     <nav>
@@ -21,6 +20,7 @@
         <div class="nav-links" id="nav-links">
             <a href="index.html" data-i18n="nav.app">La App</a>
             <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+            <a href="community.html" data-i18n="nav.community">Comunidad</a>
             <a href="contact.html" data-i18n="nav.contact">Contacto</a>
             <a class="active" href="login.html" data-i18n="nav.account">Mi cuenta</a>
             <div class="lang-switch">
@@ -30,7 +30,7 @@
         </div>
     </nav>
 
-    <header class="account-hero">
+    <header class="page-hero">
         <h1 data-i18n="account.title">Perfil</h1>
         <p data-i18n="account.subtitle">Datos básicos de tu cuenta TourAI. Los planes y pagos están en el panel.</p>
     </header>
@@ -93,18 +93,13 @@
                             <span id="editBirthDateLabel" data-i18n="account.edit.birthDateSwitch">Indicar mi fecha de nacimiento</span>
                         </label>
                         <div class="birthdate-field" id="editBirthDateField">
-                            <input type="hidden" id="editBirthDate" value="" disabled>
                             <input
-                                type="text"
-                                id="editBirthDateVisible"
+                                type="date"
+                                id="editBirthDate"
                                 class="birthdate-picker__input"
-                                readonly
                                 disabled
                                 autocomplete="bday"
-                                placeholder="Seleccionar fecha"
                                 aria-labelledby="editBirthDateLabel"
-                                aria-haspopup="dialog"
-                                aria-expanded="false"
                             >
                         </div>
                     </div>
@@ -169,7 +164,9 @@
                 <h4 data-i18n="footer.explore">Explora</h4>
                 <a href="index.html" data-i18n="nav.app">La App</a>
                 <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
-                <a href="contact.html" data-i18n="nav.contact">Contacto</a>
+                <a href="community.html" data-i18n="nav.community">Comunidad</a>
+            <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
+            <a href="contact.html" data-i18n="nav.contact">Contacto</a>
                 <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
             </div>
             <div class="footer-col">
@@ -199,13 +196,8 @@
     <script src="js/site-config.secrets.js"></script>
     <script src="js/locales/en-GB.js"></script>
     <script src="js/i18n.js"></script>
-    <script src="js/password-strength.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.js"></script>
-    <script src="js/birthdate-picker.js"></script>
-    <script src="js/firebase-auth-session.js"></script>
-    <script src="js/nav-auth.js"></script>
-    <script src="js/account-data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/reviews.js"></script>
     <script src="js/account.js"></script>
-    <script src="js/cookie-consent.js"></script>
 </body>
 </html>

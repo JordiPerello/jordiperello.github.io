@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es-ES">
 <head>
     <meta charset="UTF-8">
+    <script src="js/site-ui.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta name="description" content="Contacta con el equipo de TourAI para soporte técnico, consultas comerciales o información sobre la app de turismo inteligente." data-i18n-meta="doc.meta.contact">
 <link rel="canonical" href="https://tourai.es/contact.html">
@@ -28,7 +29,6 @@
     <link rel="apple-touch-icon" href="img/tourai_logo.png">
     <link rel="stylesheet" href="css/site.css">
     <link rel="stylesheet" href="css/legal-layout.css">
-        <script src="js/cookie-consent-init.js"></script>
 </head>
 <body class="site-legal-page">
 
@@ -48,6 +48,7 @@
         <div class="nav-links" id="navLinks">
             <a href="index.html" data-i18n="nav.app">La App</a>
             <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+            <a href="community.html" data-i18n="nav.community">Comunidad</a>
             <a class="active" data-i18n="nav.contact">Contacto</a>
             <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
             <div class="lang-switch">
@@ -150,6 +151,8 @@
                 <h4 data-i18n="footer.explore">Explora</h4>
                 <a href="index.html" data-i18n="nav.app">La App</a>
                 <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+                <a href="community.html" data-i18n="nav.community">Comunidad</a>
+            <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
                 <a href="contact.html" data-i18n="nav.contact">Contacto</a>
                 <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
             </div>
@@ -163,6 +166,8 @@
             <div class="footer-col">
                 <h4 data-i18n="footer.help">Ayuda</h4>
                 <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
+                <a href="community.html" data-i18n="nav.community">Comunidad</a>
+            <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
                 <a class="active" data-i18n="nav.contact">Contacto</a>
                 <a href="faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a>
             </div>
@@ -479,14 +484,12 @@
 <script src="js/site-config.js"></script>
     <script src="js/locales/en-GB.js"></script>
     <script src="js/i18n.js"></script>
-    <script src="js/loading-overlay.js"></script>
-    <script src="js/feedback-modal.js"></script>
     <script src="js/forms.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="js/site-config.secrets.js"></script>
-<script src="js/firebase-auth-session.js"></script>
-<script src="js/nav-auth.js"></script>
-<script src="js/cookie-consent.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/reviews.js"></script>
 </body>
 </html>

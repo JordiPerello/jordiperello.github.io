@@ -119,22 +119,6 @@ body.site-legal-page {
 
 .site-legal-page .floating-logo:hover { transform: scale(1.1); }
 
-.site-legal-page header {
-  background: var(--hero-bg);
-  color: white;
-  padding: 80px 0;
-  text-align: center;
-  border-bottom: 5px solid var(--accent);
-}
-
-.site-legal-page header h1 {
-  margin: 0;
-  font-size: 3.5em;
-  letter-spacing: -2px;
-  line-height: 1.1;
-  font-weight: 900;
-}
-
 .site-legal-page .main-layout {
   max-width: 1300px;
   margin: 30px auto;
