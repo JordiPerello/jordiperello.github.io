@@ -1,0 +1,35 @@
+---
+description: Mandatory UTF-8 encoding when reading/writing site text files
+alwaysApply: true
+---
+
+# UTF-8 encoding (mandatory)
+
+**Obligatorio en cada guardado.** All text files in this site (`*.html`, `*.js`, `*.css`, `*.md`, locales, etc.) are **UTF-8 without BOM**. Never save in a way that strips or re-encodes Spanish accents (`áéíóúñü¿¡`, `Perelló`, arrows `→`, curly quotes «»).
+
+## Before saving any text file
+
+1. Confirm the file is treated as **UTF-8** (not Windows-1252 / Latin-1 / ANSI).
+2. Prefer the editor **Write / StrReplace** tools over shell redirects that re-encode.
+3. If you must use the shell on Windows:
+   - **Node:** `fs.writeFileSync(path, content, 'utf8')` (no BOM).
+   - **PowerShell:** never use `Set-Content -Encoding utf8` (adds BOM / can corrupt). Prefer:
+     `[System.IO.File]::WriteAllText($path, $content, [System.Text.UTF8Encoding]::new($false))`
+   - Do **not** round-trip file contents through default PowerShell string I/O.
+4. After any edit that touches Spanish copy (especially bulk HTML), **spot-check** accents and names like `Perelló` / `Síguenos` before finishing the task.
+
+## Mojibake symptoms (must fix immediately)
+
+Broken examples: `PolÃ­tica`, `PerellÃ³`, `mÃ³vil`, `Â¿`, `â†’`.
+
+Repair pattern (whole file only if *all* non-ASCII is mojibake):
+
+```js
+const fixed = Buffer.from(text, "latin1").toString("utf8");
+```
+
+## Do not
+
+- Re-save HTML/JS with Latin-1 or “default” console encoding.
+- Assume a file is fine because ASCII parts look correct.
+- Leave corrupted accents in the working tree.

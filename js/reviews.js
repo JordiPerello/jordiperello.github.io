@@ -1,7 +1,8 @@
 /*
  * Reviews: star ratings + optional comments (moderated).
  * - Site widget in nav (average with half-stars) → reviews.html
- * - Page: public approved list, compose when signed in, admin approve queue
+ * - Page: public approved list, compose when signed in
+ * - Admin approve/reject lives in TourAI Manager (Web Control), not on the public site
  */
 (function () {
   const auth = window.TourAiAuth;
@@ -293,13 +294,11 @@
     const starsUi = document.getElementById("reviewsStarsUi");
     const commentInput = document.getElementById("reviewsComment");
     const targetSelect = document.getElementById("reviewsTarget");
+    const targetToggle = document.getElementById("reviewsTargetToggle");
     const submitBtn = document.getElementById("reviewsSubmit");
-    const pendingBox = document.getElementById("reviewsPending");
-    const pendingList = document.getElementById("reviewsPendingList");
     const tabsEl = document.getElementById("reviewsTabs");
 
     let currentUser = null;
-    let isAdminUser = false;
     let filterTarget = "all";
     let selectedStars = 0;
     let busy = false;
@@ -344,22 +343,6 @@
       return user;
     }
 
-    async function refreshAdminFlag(user) {
-      isAdminUser = false;
-      if (!user?.uid) {
-        return;
-      }
-      try {
-        const firestore = await auth.getFirestore();
-        const doc = await firestore.collection("Users").doc(user.uid).get();
-        const data = doc.data() || {};
-        isAdminUser = data.IsAdmin === true && data.IsBlocked !== true;
-      } catch (err) {
-        console.warn("[TourAI reviews] admin check failed", err);
-        isAdminUser = false;
-      }
-    }
-
     function syncAuthUi() {
       const signedIn = !!currentUser;
       if (composeBox) {
@@ -375,9 +358,6 @@
         if (regA) {
           regA.href = registerUrl();
         }
-      }
-      if (pendingBox) {
-        pendingBox.hidden = !isAdminUser;
       }
     }
 
@@ -521,36 +501,6 @@
       });
     }
 
-    function renderPending(items) {
-      if (!pendingList || !isAdminUser) {
-        return;
-      }
-      if (!items.length) {
-        pendingList.innerHTML =
-          '<p class="community-empty">' +
-          escapeHtml(t("reviews.pending.empty", "No hay reseñas pendientes.")) +
-          "</p>";
-        return;
-      }
-      pendingList.innerHTML = items
-        .map(function (review) {
-          const actions =
-            '<div class="reviews-card__actions">' +
-            '<button type="button" class="btn-primary" data-approve="' +
-            escapeHtml(review.id) +
-            '">' +
-            escapeHtml(t("reviews.approve", "Aprobar")) +
-            "</button>" +
-            '<button type="button" class="btn-secondary" data-reject="' +
-            escapeHtml(review.id) +
-            '">' +
-            escapeHtml(t("reviews.reject", "Rechazar")) +
-            "</button></div>";
-          return reviewCardHtml(review, { actions: actions });
-        })
-        .join("");
-    }
-
     function markTabs() {
       if (!tabsEl) {
         return;
@@ -647,11 +597,37 @@
       syncComposeFromMine();
     }
 
+    function getSelectedTarget() {
+      return targetSelect?.value === "app" ? "app" : "web";
+    }
+
+    function setSelectedTarget(target) {
+      const next = target === "app" ? "app" : "web";
+      if (targetSelect) {
+        targetSelect.value = next;
+      }
+      if (targetToggle) {
+        targetToggle.querySelectorAll("[data-reviews-target]").forEach(function (btn) {
+          btn.classList.toggle(
+            "is-active",
+            btn.getAttribute("data-reviews-target") === next
+          );
+        });
+      }
+    }
+
+    function isTargetControl(el) {
+      return (
+        el === targetSelect ||
+        (el?.hasAttribute && el.hasAttribute("data-reviews-target"))
+      );
+    }
+
     function syncComposeFromMine() {
       if (!targetSelect) {
         return;
       }
-      const target = targetSelect.value === "app" ? "app" : "web";
+      const target = getSelectedTarget();
       const mine = myReviews[target];
       if (mine) {
         selectedStars = mine.stars || 0;
@@ -676,7 +652,7 @@
           );
           if (form) {
             form.querySelectorAll("input, textarea, select, button").forEach(function (el) {
-              if (el === targetSelect) {
+              if (isTargetControl(el)) {
                 return;
               }
               el.disabled = true;
@@ -698,32 +674,6 @@
         });
       }
       renderStarsPicker();
-    }
-
-    async function loadPending() {
-      if (!isAdminUser) {
-        return;
-      }
-      try {
-        const firestore = await auth.getFirestore();
-        const snap = await firestore
-          .collection("Reviews")
-          .where("hidden", "==", true)
-          .orderBy("createdAt", "desc")
-          .limit(40)
-          .get();
-        renderPending(snap.docs.map(mapReview));
-      } catch (err) {
-        console.error("[TourAI reviews] pending", err);
-        if (pendingList) {
-          pendingList.innerHTML =
-            '<p class="community-empty error">' +
-            escapeHtml(
-              t("reviews.error.load", "No se pudieron cargar las opiniones. Inténtalo más tarde.")
-            ) +
-            "</p>";
-        }
-      }
     }
 
     async function refreshStats() {
@@ -748,7 +698,7 @@
         setStatus(t("reviews.error.stars", "Elige una valoración de 1 a 5 estrellas."), true);
         return;
       }
-      const target = targetSelect?.value === "app" ? "app" : "web";
+      const target = getSelectedTarget();
       const comment = String(commentInput?.value || "").trim().slice(0, 2000);
       const existing = myReviews[target];
       if (existing && !existing.hidden) {
@@ -793,9 +743,6 @@
           false
         );
         await loadMyReviews();
-        if (isAdminUser) {
-          await loadPending();
-        }
       } catch (err) {
         console.error("[TourAI reviews] save", err);
         if (String(err?.message) === "NO_USER") {
@@ -814,107 +761,6 @@
       }
     }
 
-    async function moderateReview(id, approve) {
-      if (busy || !isAdminUser) {
-        return;
-      }
-      busy = true;
-      setStatus(
-        approve
-          ? t("reviews.approving", "Aprobando...")
-          : t("reviews.rejecting", "Rechazando..."),
-        false
-      );
-      try {
-        const firestore = await auth.getFirestore();
-        const reviewRef = firestore.collection("Reviews").doc(id);
-        const statsRef = firestore.collection("ReviewsStats").doc(STATS_DOC);
-
-        await firestore.runTransaction(async function (tx) {
-          const reviewSnap = await tx.get(reviewRef);
-          if (!reviewSnap.exists) {
-            throw new Error("MISSING");
-          }
-          const data = reviewSnap.data() || {};
-          const wasHidden = data.hidden !== false;
-          const stars = Number(data.stars) || 0;
-          const target = data.target === "app" ? "app" : "web";
-
-          if (approve) {
-            if (!wasHidden) {
-              return;
-            }
-            const statsSnap = await tx.get(statsRef);
-            const s = statsSnap.exists ? statsSnap.data() || {} : {};
-            const next = {
-              sum: (Number(s.sum) || 0) + stars,
-              count: (Number(s.count) || 0) + 1,
-              webSum: Number(s.webSum) || 0,
-              webCount: Number(s.webCount) || 0,
-              appSum: Number(s.appSum) || 0,
-              appCount: Number(s.appCount) || 0,
-              updatedAt: timestampNow(),
-            };
-            if (target === "app") {
-              next.appSum += stars;
-              next.appCount += 1;
-            } else {
-              next.webSum += stars;
-              next.webCount += 1;
-            }
-            tx.set(statsRef, next, { merge: true });
-            tx.update(reviewRef, {
-              hidden: false,
-              moderatedAt: timestampNow(),
-            });
-          } else {
-            // Reject / keep hidden. If it was already public, roll back stats.
-            if (!wasHidden) {
-              const statsSnap = await tx.get(statsRef);
-              const s = statsSnap.exists ? statsSnap.data() || {} : {};
-              const next = {
-                sum: Math.max(0, (Number(s.sum) || 0) - stars),
-                count: Math.max(0, (Number(s.count) || 0) - 1),
-                webSum: Number(s.webSum) || 0,
-                webCount: Number(s.webCount) || 0,
-                appSum: Number(s.appSum) || 0,
-                appCount: Number(s.appCount) || 0,
-                updatedAt: timestampNow(),
-              };
-              if (target === "app") {
-                next.appSum = Math.max(0, next.appSum - stars);
-                next.appCount = Math.max(0, next.appCount - 1);
-              } else {
-                next.webSum = Math.max(0, next.webSum - stars);
-                next.webCount = Math.max(0, next.webCount - 1);
-              }
-              tx.set(statsRef, next, { merge: true });
-            }
-            tx.update(reviewRef, {
-              hidden: true,
-              moderatedAt: timestampNow(),
-            });
-          }
-        });
-
-        setStatus(
-          approve
-            ? t("reviews.approved", "Reseña aprobada.")
-            : t("reviews.rejected", "Reseña rechazada."),
-          false
-        );
-        await Promise.all([refreshStats(), loadPending(), loadReviewsPage(true)]);
-      } catch (err) {
-        console.error("[TourAI reviews] moderate", err);
-        setStatus(
-          t("reviews.error.save", "No se pudo enviar la reseña. Inténtalo más tarde."),
-          true
-        );
-      } finally {
-        busy = false;
-      }
-    }
-
     starsUi?.addEventListener("click", function (event) {
       const btn = event.target.closest("[data-star]");
       if (!btn || btn.disabled) {
@@ -926,10 +772,16 @@
 
     form?.addEventListener("submit", submitReview);
 
-    targetSelect?.addEventListener("change", function () {
+    targetToggle?.addEventListener("click", function (event) {
+      const btn = event.target.closest("[data-reviews-target]");
+      if (!btn || btn.disabled) {
+        return;
+      }
+      setSelectedTarget(btn.getAttribute("data-reviews-target"));
       syncComposeFromMine();
     });
 
+    setSelectedTarget(getSelectedTarget());
     tabsEl?.addEventListener("click", function (event) {
       const btn = event.target.closest("[data-target-filter]");
       if (!btn) {
@@ -938,16 +790,6 @@
       filterTarget = btn.getAttribute("data-target-filter") || "all";
       markTabs();
       loadReviewsPage(true);
-    });
-
-    pendingList?.addEventListener("click", function (event) {
-      const approveBtn = event.target.closest("[data-approve]");
-      const rejectBtn = event.target.closest("[data-reject]");
-      if (approveBtn) {
-        moderateReview(approveBtn.getAttribute("data-approve"), true);
-      } else if (rejectBtn) {
-        moderateReview(rejectBtn.getAttribute("data-reject"), false);
-      }
     });
 
     markTabs();
@@ -960,15 +802,11 @@
       .then(function () {
         return auth.onAuthStateChanged(async function (user) {
           currentUser = user || null;
-          await refreshAdminFlag(currentUser);
           syncAuthUi();
           await refreshStats();
           await loadReviewsPage(true);
           if (currentUser) {
             await loadMyReviews();
-          }
-          if (isAdminUser) {
-            await loadPending();
           }
         });
       })

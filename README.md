@@ -1,4 +1,4 @@
-﻿# TourAI — Official website
+# TourAI — Official website
 
 Static site for **tourai.es** (GitHub Pages): product landing, support pages, and authenticated account area.
 
@@ -20,7 +20,11 @@ Live site: https://tourai.es
 
 ## Local secrets
 
-Copy `D:\Proyectos\Documents\docs-touraiweb\Secrets\site-config.secrets.js` to `js/site-config.secrets.js` (gitignored) before testing login locally.
+**Never commit secrets.** The real file lives outside this repo:
+
+`D:\Proyectos\Documents\docs-touraiweb\Secrets\site-config.secrets.js`
+
+For local login only, copy it to gitignored `js/site-config.secrets.js` so the browser can load it (agents may read the canonical path directly; do not put secrets in tracked files).
 
 ```powershell
 Copy-Item "D:\Proyectos\Documents\docs-touraiweb\Secrets\site-config.secrets.js" `

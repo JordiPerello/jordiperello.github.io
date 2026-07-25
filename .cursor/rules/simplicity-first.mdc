@@ -1,0 +1,25 @@
+---
+description: Golden rule — prefer simple solutions that fix the problem over complex ones
+alwaysApply: true
+---
+
+# Simplicity first (golden rule)
+
+**Do not overcomplicate programming.** A simple fix that solves the problem is better than a clever or layered one.
+
+## Must
+
+- Prefer the smallest change that restores correct behavior.
+- Fix the direct cause; avoid extra abstractions, counters, flags, or indirection “just in case”.
+- If two approaches work, choose the clearer and shorter one.
+- Before adding machinery (generation IDs, state machines, retries, wrappers), ask: *can a direct check or one clear branch do it?*
+
+## Avoid
+
+- Complexity that does not buy reliability or clarity
+- Premature generalization and speculative edge-case frameworks
+- Touching unrelated modules when a local fix is enough
+
+## When in doubt
+
+Ship the simple path that the owner can read in one glance. Complexity needs a concrete reason, not elegance.

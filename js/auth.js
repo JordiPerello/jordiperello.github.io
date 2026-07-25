@@ -670,6 +670,56 @@
     );
   }
 
+  function profileFromAuthUser(user, firestoreData, fallbackUrls) {
+    const data = firestoreData || {};
+    const displayName =
+      (data.DisplayName && String(data.DisplayName).trim()) ||
+      (user.displayName && String(user.displayName).trim()) ||
+      "";
+    const email = data.Email || user.email || "";
+    const photoUrls = resolvePhotoUrls(user.uid, data, user, fallbackUrls);
+    const offsetX = Number(data.PhotoCropOffsetXNorm);
+    const offsetY = Number(data.PhotoCropOffsetYNorm);
+    const scaleRaw = Number(data.PhotoCropUserScale);
+
+    return {
+      uid: user.uid,
+      displayName: displayName,
+      email: email,
+      photoUrl: photoUrls[0] || "",
+      photoUrls: photoUrls,
+      firstName: firstNameFrom(displayName, email),
+      initials: initialsFrom(displayName, email),
+      photoCropOffsetXNorm: Number.isFinite(offsetX) ? offsetX : 0,
+      photoCropOffsetYNorm: Number.isFinite(offsetY) ? offsetY : 0,
+      photoCropUserScale:
+        Number.isFinite(scaleRaw) && scaleRaw > 0 ? scaleRaw : 1,
+    };
+  }
+
+  /** Match account profile crop math (120px / radius 58), scaled to nav avatar size. */
+  function navPhotoCropStyle(profile, avatarSize) {
+    const size = Number(avatarSize) > 0 ? Number(avatarSize) : 32;
+    const sizeRatio = size / 120;
+    const radius = 58 * sizeRatio;
+    const offsetX = Number(profile?.photoCropOffsetXNorm);
+    const offsetY = Number(profile?.photoCropOffsetYNorm);
+    const scaleRaw = Number(profile?.photoCropUserScale);
+    const x = Number.isFinite(offsetX) ? offsetX : 0;
+    const y = Number.isFinite(offsetY) ? offsetY : 0;
+    const userScale = Number.isFinite(scaleRaw) && scaleRaw > 0 ? scaleRaw : 1;
+    // Scale both pan and zoom so the framing matches the 120px profile avatar.
+    return (
+      "transform: translate(calc(-50% + " +
+      x * radius +
+      "px), calc(-50% + " +
+      y * radius +
+      "px)) scale(" +
+      userScale * sizeRatio +
+      ");"
+    );
+  }
+
   function showInitials(avatarEl, initials) {
     avatarEl.textContent = initials;
     avatarEl.setAttribute("data-initials", initials);
@@ -714,6 +764,8 @@
         avatarEl.textContent = "";
         avatarEl.removeAttribute("data-initials");
         avatarEl.appendChild(img);
+        const size = avatarEl.offsetWidth || 32;
+        img.setAttribute("style", navPhotoCropStyle(profile, size));
         // Prefer the working URL for cache / next paint.
         if (profile.photoUrl !== urls[index]) {
           profile.photoUrl = urls[index];
@@ -747,7 +799,6 @@
       const avatar = document.createElement("span");
       avatar.className = "nav-account-avatar";
       avatar.setAttribute("aria-hidden", "true");
-      renderAvatar(avatar, profile);
 
       const label = document.createElement("span");
       label.className = "nav-account-label";
@@ -755,6 +806,8 @@
 
       link.appendChild(avatar);
       link.appendChild(label);
+      // After attach so offsetWidth matches nav (32) vs footer (28).
+      renderAvatar(avatar, profile);
       link.setAttribute("title", profile.displayName || profile.email || label.textContent);
       link.setAttribute("data-default-text", label.textContent);
     });
@@ -777,26 +830,6 @@
       global.TourAiI18n.applyTranslations(global.TourAiI18n.getLocale());
     }
     markAuthResolved();
-  }
-
-  function profileFromAuthUser(user, firestoreData, fallbackUrls) {
-    const data = firestoreData || {};
-    const displayName =
-      (data.DisplayName && String(data.DisplayName).trim()) ||
-      (user.displayName && String(user.displayName).trim()) ||
-      "";
-    const email = data.Email || user.email || "";
-    const photoUrls = resolvePhotoUrls(user.uid, data, user, fallbackUrls);
-
-    return {
-      uid: user.uid,
-      displayName: displayName,
-      email: email,
-      photoUrl: photoUrls[0] || "",
-      photoUrls: photoUrls,
-      firstName: firstNameFrom(displayName, email),
-      initials: initialsFrom(displayName, email),
-    };
   }
 
   function stashAuthUser(user) {

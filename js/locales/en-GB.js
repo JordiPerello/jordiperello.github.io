@@ -1,4 +1,4 @@
-﻿window.TourAiEnGBMessages = {
+window.TourAiEnGBMessages = {
   "nav.app": "The App",
   "nav.community": "Community",
   "nav.reviews": "Reviews",
@@ -15,16 +15,16 @@
   "doc.title.community": "Community - TourAI",
   "doc.meta.community": "TourAI community: news, help, ideas and travel tips.",
   "doc.title.reviews": "Reviews - TourAI",
-  "doc.meta.reviews": "TourAI reviews: rate the website and the app with stars and comments.",
+  "doc.meta.reviews": "TourAI reviews: optionally rate the website and the app with stars and an optional comment.",
   "reviews.title": "Reviews",
-  "reviews.subtitle": "Rate the TourAI website or app. Reviews are published after moderation.",
-  "reviews.loginHint": "You need an account to leave a rating.",
+  "reviews.subtitle": "You can optionally rate the TourAI website or app. If you rate, stars are required and the comment is optional. Reviews are published after moderation.",
+  "reviews.loginHint": "You need an account to leave a rating (optional).",
   "reviews.loginLink": "Sign in",
   "reviews.or": "or",
   "reviews.registerLink": "create one",
-  "reviews.composeTitle": "Your rating",
+  "reviews.composeTitle": "Your rating (optional)",
   "reviews.field.target": "What are you rating?",
-  "reviews.field.stars": "Stars",
+  "reviews.field.stars": "Stars (required to submit)",
   "reviews.field.comment": "Comment (optional)",
   "reviews.field.commentPlaceholder": "Tell us what you think...",
   "reviews.submit": "Submit rating",
@@ -78,6 +78,7 @@
   "community.error.load": "Could not load the community. Please try again later.",
   "community.error.missing": "This topic does not exist or was removed.",
   "community.error.save": "Could not publish. Please try again later.",
+  "community.error.threadLocked": "Cannot delete: there are later replies in this thread.",
   "community.error.title": "Enter a title (max. 120 characters).",
   "community.error.body": "Enter a message.",
   "login.title": "Sign in",
@@ -252,6 +253,9 @@
   "footer.about": "About us",
   "footer.faq": "FAQ",
   "footer.deleteAccount": "Delete account",
+  "footer.follow": "Follow us",
+  "footer.instagram": "Instagram",
+  "footer.facebook": "Facebook",
   "doc.title.deleteAccount": "Delete account - TourAI",
   "doc.meta.deleteAccount": "Delete your TourAI account and linked personal data with email verification.",
   "doc.title.resetPassword": "Reset password - TourAI",
@@ -284,7 +288,7 @@
   "resetPassword.status.configMissing": "Firebase configuration is not available.",
   "deleteAccount.title": "Delete TourAI account",
   "deleteAccount.subtitle": "Request permanent deletion of your account and linked personal data.",
-  "deleteAccount.warning": "This action is irreversible. Only data directly linked to your account will be deleted. Shared catalogue content (e.g. cached narrations) will not be removed.",
+  "deleteAccount.warning": "This action is irreversible. Your account data and your reviews/ratings will be deleted. The shared catalogue is not removed. Community posts are anonymised (the text may remain without your name or identifier).",
   "deleteAccount.email": "Your TourAI account email",
   "deleteAccount.email.placeholder": "you@email.com",
   "deleteAccount.email.invalid": "Enter a valid email address.",
@@ -796,8 +800,8 @@
 
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
-            <p><strong>Last updated:</strong> 21 July 2026.</p>
-            <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we consider our users' privacy a fundamental pillar. This policy details how we manage information to ensure that using our smart audio guides is safe and transparent.</p>
+            <p><strong>Last updated:</strong> 25 July 2026.</p>
+            <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we consider our users' privacy a fundamental pillar. This policy details how we manage information to ensure that using our smart audio guides and associated website services (account, community and reviews) is safe and transparent.</p>
 
             <h2>2. Data Controller</h2>
             <p>The data controller for personal data collected through <strong>tourai.es</strong> and associated TourAI project services is:</p>
@@ -813,24 +817,26 @@
             <p>We only process technical and functional information necessary to operate the service:</p>
             <ul>
                 <li><strong>Geographic location:</strong> Used with your permission to offer audio guides and contextual content for nearby points of interest. We do not store a history of your movements or a permanent route.</li>
-                <li><strong>Account and in-app plans:</strong> Registration data (email and password), optional profile photo, purchased plans, plan usage-allowance history and preferences linked to your profile. <strong>Date of birth</strong> is optional and only requested if you wish to take part in promotions such as birthday bonuses (BIRTHDATE campaign); if you do not provide it, that type of bonus will not be applied automatically.</li>
+                <li><strong>Account (app and website):</strong> Registration data (email and password), display name or alias, optional profile photo, purchased plans, plan usage-allowance history, associated payments and preferences linked to your profile. The same authentication account may be used in the mobile app and in the private area of <a href="https://tourai.es">tourai.es</a> (sign-in, dashboard and profile). <strong>Date of birth</strong> is optional and only requested if you wish to take part in promotions such as birthday bonuses (BIRTHDATE campaign); if you do not provide it, that type of bonus will not be applied automatically.</li>
                 <li><strong>Assistant messages:</strong> We temporarily keep the message history linked to your account to provide the chat service. These messages are deleted automatically after <strong>14 days</strong> and also when you delete your account.</li>
-                <li><strong>Account security and password reset:</strong> If you request “Forgot your password?” from the app, we send an email with a secure link to <a href="reset-password.html">tourai.es/reset-password.html</a> so you can set a new password. We do not send your current password by email.</li>
+                <li><strong>Account security and password reset:</strong> If you request “Forgot your password?” from the app or website, we send an email with a secure link to <a href="reset-password.html">tourai.es/reset-password.html</a> so you can set a new password. We do not send your current password by email.</li>
                 <li><strong>Registration abuse prevention:</strong> We keep a history of sign-ups and deletions linked to the same email (email lifecycle) to limit abusive re-registration (currently a maximum of <strong>3 registrations in 180 days</strong>). An administrator may unlock the email when appropriate.</li>
                 <li><strong>Bonuses and promotional codes:</strong> Record of the code redeemed, redemption date, associated plan and promotional campaign reference (for example WELCOME, BIRTHDATE), to manage free Premium access (including the automatic welcome bonus on first sign-in when applicable, email pre-assigned bonuses with priority over the WELCOME bonus), prevent duplicate use per user and prevent fraud. Bonuses must be activated within 30 days; purchased plans within 60 days from acquisition. If you redeem a bonus by scanning a QR code, the camera is used on your device to read the code; <strong>we do not store QR images or video recordings</strong>.</li>
-                <li><strong>Device identifier and session:</strong> We use a device identifier and a presence signal while you use the app to keep <strong>a single active session per account</strong> and to manage closing the previous session when you sign in from a new device. It is not used to build advertising profiles.</li>
+                <li><strong>Device identifier and session:</strong> We use a device identifier and a presence signal while you use the app to keep <strong>a single active session per account</strong> and to manage closing the previous session when you sign in from a new device. On the website the authentication session may persist in the browser. It is not used to build advertising profiles.</li>
+                <li><strong>Community (user-generated content):</strong> If you post in <a href="community.html">Community</a>, we process the topic title and body, replies, your account identifier, the display name or alias shown and the publication date. That content is <strong>public</strong> (visible without signing in). We may hide it (moderation or voluntary author removal) without immediate physical deletion, to preserve thread integrity and service security.</li>
+                <li><strong>Reviews and ratings:</strong> Leaving a rating is <strong>voluntary</strong>: you are not required to submit a review to use TourAI. If you choose to submit a rating in <a href="reviews.html">Reviews</a>, we process the stars (needed to complete the submission), the optional comment, rated target (website or app), your account identifier, display name or alias and moderation status. Reviews <strong>are not published until a moderator approves them</strong>. Once approved, they are public. We also keep aggregated statistics (sum and number of ratings) without needing to identify each author in the displayed average.</li>
                 <li><strong>Website forms:</strong> If you write via <a href="contact.html">Contact</a> or subscribe to store availability notices, we process the name (if provided), email, message or selected platform and related verification, solely to handle that request.</li>
-                <li><strong>Local device data:</strong> The phone or PC may store local preferences (language, app privacy/advertising consent), previously used emails to help you sign in and, if you enable it, biometrics to unlock an already signed-in session. Voice recognition for the assistant is preferably processed <strong>on the device</strong>.</li>
+                <li><strong>Local device data:</strong> The phone or PC may store local preferences (language, app privacy/advertising consent, website cookie consent), previously used emails to help you sign in and, if you enable it, biometrics to unlock an already signed-in session. Voice recognition for the assistant is preferably processed <strong>on the device</strong>.</li>
                 <li><strong>Technical diagnostics:</strong> If the app detects a serious error, a technical report may be sent to our team (device, OS, screen and, if signed in, identifier or email) to fix faults. It is not used for advertising.</li>
             </ul>
 
             <h2>3.1. Legal basis for processing (summary)</h2>
             <p>In general terms, we process your data on the following bases, depending on the type of information:</p>
             <ul>
-                <li><strong>Performance of contract / provision of the service:</strong> account, plans, bonus redemption, assistant messages, preferences and app features.</li>
-                <li><strong>Consent:</strong> geolocation, microphone, camera or photo gallery/library (profile photo or bonus QR scanning), contact or notice forms, personalised advertising where required by law.</li>
-                <li><strong>Legitimate interest:</strong> security, prevention of fraud in promotional codes and abusive re-registration, service stability and technical error reports.</li>
-                <li><strong>Legal obligation:</strong> retention of billing data where applicable.</li>
+                <li><strong>Performance of contract / provision of the service:</strong> account (app and website), plans, bonus redemption, assistant messages, preferences, community posting and review submission, and other requested features.</li>
+                <li><strong>Consent:</strong> geolocation, microphone, camera or photo gallery/library (profile photo or bonus QR scanning), contact or notice forms, non-essential cookies where applicable, personalised advertising where required by law.</li>
+                <li><strong>Legitimate interest:</strong> security, prevention of fraud in promotional codes and abusive re-registration, moderation of user-generated content (hiding, rejection or removal), service stability, integrity of public threads and aggregated rating averages, and technical error reports.</li>
+                <li><strong>Legal obligation:</strong> retention of billing data where applicable; responding to authorities or digital-services obligations where they apply.</li>
             </ul>
             
             <h2>4. Responsible Advertising</h2>
@@ -842,7 +848,7 @@
             <p>You can manage or disable personalisation of these adverts at any time through <a href="https://adssettings.google.com/" target="_blank">Google Ads Settings</a>.</p>
 
             <h2>4.1. Providers and transfers</h2>
-            <p>To provide the service we use common providers (cloud authentication and storage, transactional email, maps, artificial intelligence models, text-to-speech, app stores, payment gateways and advertising). Some processing may take place outside the European Economic Area. In those cases we apply the safeguards required by applicable law (for example standard contractual clauses or other appropriate measures). Categories of processors and transfers may be expanded after legal review.</p>
+            <p>To provide the service we use common providers (cloud authentication and storage — including authentication and database services —, transactional email, maps, artificial intelligence models, text-to-speech, app stores, payment gateways and advertising). Some processing may take place outside the European Economic Area. In those cases we apply the safeguards required by applicable law (for example standard contractual clauses or other appropriate measures). Categories of processors and transfers may be expanded after legal review.</p>
             
             <h2 id="delete-account">5. Your Rights (GDPR)</h2>
             <p>Under current regulations, you have full control over your information:</p>
@@ -868,10 +874,19 @@
                 <li>Authentication account and profile (email, identifier, photo, preferences).</li>
                 <li>User plans, usage history, bonus or promo redemptions and assistant messages (if they have not already expired under the automatic 14-day period).</li>
                 <li>Payment data associated with your account stored in our systems.</li>
+                <li><strong>Reviews and ratings</strong> (pending and published): they are deleted entirely and the aggregated average is updated.</li>
             </ul>
             <p>
-                <strong>We do not delete</strong> global service content without a direct link to your user, such as
-                place texts or narrations reused in the shared catalogue, points-of-interest catalogues, general commercial plans
+                <strong>Community (topics and replies):</strong>
+                the text may be kept so conversation threads are not broken, but it is <strong>anonymised</strong>:
+                the display name is replaced with a generic label (for example, “Deleted user”) and your account identifier is dissociated.
+                If you want full removal of specific content, email <a href="mailto:info@tourai.es">info@tourai.es</a> with the URL or a sufficient description;
+                we will handle the request unless a legal retention duty or overriding legitimate interest applies (for example defence against claims).
+            </p>
+            <p>
+                <strong>We do not delete</strong> global service content without a direct link to your identity, such as
+                place texts or narrations reused in the shared catalogue, points-of-interest catalogues, general commercial plans,
+                aggregated rating statistics after your contribution has been subtracted,
                 or other data shared between users.
             </p>
             <p>
@@ -907,20 +922,23 @@
 
   "page.terms.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Acceptance of Terms</h2>
-            <p><strong>Last updated:</strong> 21 July 2026.</p>
+            <p><strong>Last updated:</strong> 25 July 2026.</p>
             <p>By accessing or using the TourAI website and mobile application, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our services or our website.</p>
             <p>Using the mobile application also implies acceptance of the <strong>full terms embedded in the app</strong> at registration (including age eligibility, payments and permissions). If there is any difference regarding the mobile service, the app terms prevail.</p>
             
-            <h2>1.1. Minimum age (app)</h2>
-            <p>To create an app account you must declare that you are at least <strong>16 years old</strong>, or the minimum age required in your country with parental consent where applicable. TourAI does not technically verify age. Details and the minors notice are set out in the application terms.</p>
+            <h2>1.1. Minimum age</h2>
+            <p>To create an account on the app or website you must declare that you are at least <strong>16 years old</strong>, or the minimum age required in your country with parental consent where applicable. TourAI does not technically verify age. Details and the minors notice are set out in the application terms.</p>
 
             <h2>2. Description of the Service</h2>
-            <p>TourAI provides a tourism assistance service through immersive, geolocated audio guides. The service includes:</p>
+            <p>TourAI provides a tourism assistance service through immersive, geolocated audio guides, and an associated website portal. The service includes:</p>
             <ul>
                 <li>AI chat, voice queries and geolocated audio narrations (require an internet connection).</li>
                 <li>Geolocation for real-time point-of-interest suggestions.</li>
                 <li>Interactive map with guided walks on foot (not turn-by-turn navigation).</li>
                 <li>Redemption of bonuses or promotional codes in the mobile app (manual entry or QR scanning with the device camera on supported platforms).</li>
+                <li>Account on <a href="https://tourai.es">tourai.es</a> for access to the private area (profile and dashboard), when enabled.</li>
+                <li><a href="community.html">Community</a>: public forum of topics and replies (news, help, ideas and travel).</li>
+                <li><a href="reviews.html">Reviews</a>: voluntary ratings with stars and optional comments about the website or app, published after moderation.</li>
             </ul>
 
             <h2>3. Responsible Use and Safety</h2>
@@ -932,8 +950,17 @@
             </ul>
             <p>We strongly recommend using headphones and always keeping visual attention on the physical environment before resuming your walk.</p>
 
+            <h2>3.1. Community, reviews and user-generated content</h2>
+            <p>The <a href="community.html">Community</a> and <a href="reviews.html">Reviews</a> allow registered users to publish content. By posting, you declare that you have the right to do so and that the content does not breach the law or third-party rights.</p>
+            <p><strong>Conduct rules.</strong> Among other conduct, the following is prohibited: unlawful, defamatory or discriminatory content, or content that incites hatred or violence; spam; unauthorised advertising; third-party personal data without a lawful basis; malware or attempts to bypass security; or using community/reviews for purposes unrelated to the TourAI service.</p>
+            <p><strong>Reviews.</strong> Rating is voluntary: you are not required to submit a review to use the service. If you choose to rate, submission requires stars (1 to 5) and the comment is optional. Each account may keep at most one review per target (website or app). Reviews <strong>are not shown publicly until approved</strong> by moderation. TourAI does not guarantee publication or a specific review timeline.</p>
+            <p><strong>Moderation.</strong> TourAI may hide, reject, update moderation metadata or remove content, on its own initiative or after notice, where it considers the content breaches these terms, the law or puts users or the service at risk. Hiding may occur without immediate physical deletion (soft-hide). There is no general obligation to monitor all content in advance, without prejudice to prior moderation of reviews and action after actual knowledge.</p>
+            <p><strong>Notice of unlawful content.</strong> If you find content you consider unlawful or in breach of these terms, email <a href="mailto:info@tourai.es">info@tourai.es</a> with the URL or a sufficient description and, if possible, the reasons. We will handle good-faith notices with reasonable diligence.</p>
+            <p><strong>Licence over your content.</strong> You retain ownership of your content. By publishing it, you grant TourAI a worldwide, non-exclusive, royalty-free, transferable and sublicensable licence to host, reproduce, display, distribute and technically adapt that content (including anonymised community content after account closure, while it remains on the service) in connection with the service, moderation and legitimate promotion of TourAI. Reviews are deleted with the account. This licence ends when the content is no longer available on the service, without prejudice to backups or legal obligations.</p>
+            <p><strong>Author liability.</strong> You are solely responsible for the content you publish. User opinions do not necessarily represent TourAI’s position.</p>
+
             <h2>4. Intellectual Property</h2>
-            <p>All content on TourAI, including AI-generated guide texts, audio, logos, designs and source code, is the exclusive property of TourAI or is used under the appropriate licences. Reproduction or distribution without express authorisation is prohibited.</p>
+            <p>All TourAI-owned content — including AI-generated guide texts, audio, logos, designs, source code and the shared points-of-interest catalogue — is the exclusive property of TourAI or is used under the appropriate licences. Reproduction or distribution without express authorisation is prohibited. User-generated content is governed by section 3.1.</p>
 
            <h2>5. Advertising, Premium Plans and Promotional Bonuses</h2>
             <p>To guarantee universal access to culture, TourAI offers a hybrid model in the mobile application (full contractual details are set out in the terms embedded in the app):</p>
@@ -958,7 +985,7 @@
             <p>Fraudulent or automated code redemption, forgery of codes or QR codes, or attempts to bypass per-user or per-code limits are prohibited.</p>
 
             <h2>5.1. Account suspension</h2>
-            <p>TourAI may <strong>suspend or block</strong> accounts for fraud, abuse, breach of terms or risk to service security. If your account is blocked, you will not be able to sign in until the suspension is lifted. You may contact <a href="mailto:info@tourai.es">info@tourai.es</a> to submit a complaint.</p>
+            <p>TourAI may <strong>suspend or block</strong> accounts for fraud, abuse, breach of terms (including misuse of the community or reviews), or risk to service security. If your account is blocked, you will not be able to sign in until the suspension is lifted. We may also hide or remove your public content. You may contact <a href="mailto:info@tourai.es">info@tourai.es</a> to submit a complaint.</p>
 
             <h2>5.2. Single active session per device</h2>
             <p>Each account keeps <strong>a single active session</strong>, tied to the device you are signed in on. If you try to sign in from another device, you can choose to close the open session to continue; the previous device will be signed out as soon as it detects the change. Signing out cleanly frees the session instantly; if the app is force-closed or the device is switched off, the session is freed automatically after a short period of inactivity. Do not share your credentials: if someone else wants to use TourAI, we recommend creating a separate free Freemium account. See the full details in the mobile app terms.</p>
@@ -970,7 +997,7 @@
             <p>TourAI strives to offer accurate historical information; however, we do not guarantee that the content is free of errors or omissions. The platform is provided "as is" and its use is at the user's own risk.</p>
 
             <h2>8. Account deletion</h2>
-            <p>You may delete your account and linked personal data from the app (<strong>Edit account → Delete my account</strong>) or from the <a href="delete-account.html">Delete account</a> web page. In both cases you must verify your email with a 6-digit code. Only if you cannot access those channels may you email <a href="mailto:info@tourai.es">info@tourai.es</a>. See the <a href="privacy.html#delete-account">Privacy Policy</a> for details.</p>
+            <p>You may delete your account and linked personal data from the app (<strong>Edit account → Delete my account</strong>) or from the <a href="delete-account.html">Delete account</a> web page. In both cases you must verify your email with a 6-digit code. Only if you cannot access those channels may you email <a href="mailto:info@tourai.es">info@tourai.es</a>. On account deletion your <strong>reviews are deleted</strong> and your community posts are <strong>anonymised</strong>, as described in the <a href="privacy.html#delete-account">Privacy Policy</a>.</p>
         </main>
 
         <aside class="sidebar">
@@ -990,8 +1017,8 @@
 
   "page.cookies.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. What are Cookies?</h2>
-            <p><strong>Last updated:</strong> 21 July 2026.</p>
-            <p>Cookies are small text files that websites store in your browser to remember information about your visit. In the mobile app, where advertising applies, we use equivalent advertising identifiers (IDFA or AAID).</p>
+            <p><strong>Last updated:</strong> 25 July 2026.</p>
+            <p>Cookies are small text files that websites store in your browser to remember information about your visit. In the mobile app, where advertising applies, we use equivalent advertising identifiers (IDFA or AAID). Similar browser local storage technologies (for example <code>localStorage</code>) may also be used.</p>
             
             <h2>2. Types of Cookies We Use</h2>
             <table>
@@ -999,17 +1026,18 @@
                     <tr><th>Category</th><th>Purpose</th><th>Persistence</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Technical</strong></td><td>Essential for operation: remembering cookie consent, interface language and, during the browser session, technical form states (for example, email verification on contact or account deletion).</td><td>Session / up to 1 year</td></tr>
+                    <tr><td><strong>Technical</strong></td><td>Essential for operation: interface language, account session in the private area (authentication), technical form states (for example email verification on contact or account deletion) and recording your choice on the cookie banner (<code>cookies-aceptadas</code>).</td><td>Session / up to 1 year</td></tr>
                     <tr><td><strong>Preference</strong></td><td>Website language chosen by the user (stored locally in the browser).</td><td>Until you change it or clear site data</td></tr>
                                     </tbody>
             </table>
             <p>Volume settings or the last destination viewed in the <strong>app</strong> are stored on the device as local app preferences; they are <strong>not website cookies</strong>.</p>
+            <p>The average rating shown on the website is obtained from our servers; it does <strong>not</strong> involve third-party advertising or analytics cookies.</p>
 
             <h2>3. Advertising</h2>
             <p><strong>tourai.es does not use advertising or advertising cookies on the website.</strong> In the app we use <strong>AdMob</strong> on the free tier. That platform may use advertising identifiers to show interest-based adverts, subject to your consent where required by law. Users with an <strong>active Premium Plan</strong> will not see advertising in the app while the plan is valid.</p>
 
             <h2>4. How to Manage Cookies</h2>
-            <p>You can block or delete them in your browser settings (Chrome, Safari, etc.) or reset your advertising ID in your smartphone's privacy settings (iOS/Android).</p>
+            <p>You can block or delete them in your browser settings (Chrome, Safari, etc.) or reset your advertising ID in your smartphone's privacy settings (iOS/Android). To see the tourai.es cookie banner again, clear site data (including the <code>cookies-aceptadas</code> key) in your browser.</p>
         </main>
 
         <aside class="sidebar">

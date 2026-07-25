@@ -1,4 +1,4 @@
-﻿/* TourAI account: shared data helpers + account page + dashboard page */
+/* TourAI account: shared data helpers + account page + dashboard page */
 /*
  * Shared account/dashboard Firestore helpers (lazy section loads).
  */

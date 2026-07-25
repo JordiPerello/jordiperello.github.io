@@ -1,4 +1,5 @@
-// Copy to docs-touraiweb/Secrets/site-config.secrets.js (never commit the real file).
+// Placeholder only. Real secrets: D:\Proyectos\Documents\docs-touraiweb\Secrets\site-config.secrets.js
+// For local HTTP: copy that file to js/site-config.secrets.js (gitignored). Never commit real secrets.
 (function () {
   window.TourAiSite = window.TourAiSite || {};
   window.TourAiSite.config = window.TourAiSite.config || {};

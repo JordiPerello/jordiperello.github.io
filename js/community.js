@@ -29,7 +29,6 @@
   const backBtn = document.getElementById("communityBack");
 
   let currentUser = null;
-  let isAdminUser = false;
   let currentCategory = "help";
   let currentTopicId = null;
   let currentTopic = null;
@@ -152,6 +151,12 @@
     if (message === "TOPIC_MISSING") {
       return t("community.error.missing", "Este tema no existe o fue eliminado.");
     }
+    if (message === "THREAD_LOCKED") {
+      return t(
+        "community.error.threadLocked",
+        "No se puede eliminar: ya hay respuestas posteriores en el hilo."
+      );
+    }
     return t("community.error.save", "No se pudo publicar. Inténtalo más tarde.");
   }
 
@@ -230,26 +235,70 @@
     return (parts[0][0] + parts[1][0]).toUpperCase();
   }
 
-  function canModerate(authorUid) {
-    if (!currentUser) {
-      return false;
-    }
-    return isAdminUser || currentUser.uid === authorUid;
+  function canDeleteOwn(authorUid) {
+    return !!(currentUser && authorUid && currentUser.uid === authorUid);
   }
 
-  async function refreshAdminFlag(user) {
-    isAdminUser = false;
-    if (!user?.uid) {
-      return;
+  /** Authors may only remove leaf messages (no later replies). */
+  function canDeleteTopic() {
+    if (!currentTopic || !canDeleteOwn(currentTopic.authorUid)) {
+      return false;
     }
-    try {
-      const firestore = await auth.getFirestore();
-      const doc = await firestore.collection("Users").doc(user.uid).get();
-      const data = doc.data() || {};
-      isAdminUser = data.IsAdmin === true && data.IsBlocked !== true;
-    } catch (err) {
-      console.warn("[TourAI community] admin check failed", err);
-      isAdminUser = false;
+    return (Number(currentTopic.replyCount) || 0) === 0 && replies.length === 0;
+  }
+
+  function canDeleteReply(reply) {
+    if (!reply || !canDeleteOwn(reply.authorUid)) {
+      return false;
+    }
+    // Only the chronologically last visible reply; wait until the thread is fully loaded.
+    if (repliesHasMore || !replies.length) {
+      return false;
+    }
+    return replies[replies.length - 1].id === reply.id;
+  }
+
+  async function assertAuthorCanHideTopic(topicId, topicData) {
+    const count = Number(topicData?.replyCount) || 0;
+    if (count > 0) {
+      throw new Error("THREAD_LOCKED");
+    }
+    const firestore = await auth.getFirestore();
+    const snap = await firestore
+      .collection("CommunityTopics")
+      .doc(topicId)
+      .collection("Replies")
+      .where("hidden", "==", false)
+      .limit(1)
+      .get();
+    if (!snap.empty) {
+      throw new Error("THREAD_LOCKED");
+    }
+  }
+
+  async function assertAuthorCanHideReply(topicId, replyId) {
+    const firestore = await auth.getFirestore();
+    const replyRef = firestore
+      .collection("CommunityTopics")
+      .doc(topicId)
+      .collection("Replies")
+      .doc(replyId);
+    const replyDoc = await replyRef.get();
+    const createdAt = replyDoc.data()?.createdAt;
+    if (!createdAt) {
+      throw new Error("THREAD_LOCKED");
+    }
+    const later = await firestore
+      .collection("CommunityTopics")
+      .doc(topicId)
+      .collection("Replies")
+      .where("hidden", "==", false)
+      .where("createdAt", ">", createdAt)
+      .orderBy("createdAt", "asc")
+      .limit(1)
+      .get();
+    if (!later.empty) {
+      throw new Error("THREAD_LOCKED");
     }
   }
 
@@ -440,7 +489,7 @@
             authorName: reply.authorName,
             createdAt: reply.createdAt,
             body: reply.body,
-            canDelete: canModerate(reply.authorUid),
+            canDelete: canDeleteReply(reply),
             hideAttr: "reply",
             id: reply.id,
           });
@@ -463,7 +512,7 @@
         createdAt: currentTopic.createdAt,
         title: currentTopic.title,
         body: currentTopic.body,
-        canDelete: canModerate(currentTopic.authorUid),
+        canDelete: canDeleteTopic(),
         hideAttr: "topic",
         id: currentTopic.id,
       }) +
@@ -794,24 +843,28 @@
       if (kind === "topic") {
         const ref = firestore.collection("CommunityTopics").doc(id);
         const doc = await ref.get();
-        if (!doc.exists || (!isAdminUser && doc.data()?.authorUid !== currentUser.uid)) {
+        if (!doc.exists || doc.data()?.authorUid !== currentUser.uid) {
           throw new Error("FORBIDDEN");
         }
+        await assertAuthorCanHideTopic(id, doc.data());
         await ref.update({ hidden: true });
         showList(currentCategory);
         return;
       }
       if (kind === "reply" && currentTopicId) {
-        const ref = firestore
-          .collection("CommunityTopics")
-          .doc(currentTopicId)
-          .collection("Replies")
-          .doc(id);
+        const topicRef = firestore.collection("CommunityTopics").doc(currentTopicId);
+        const ref = topicRef.collection("Replies").doc(id);
         const doc = await ref.get();
-        if (!doc.exists || (!isAdminUser && doc.data()?.authorUid !== currentUser.uid)) {
+        if (!doc.exists || doc.data()?.authorUid !== currentUser.uid) {
           throw new Error("FORBIDDEN");
         }
-        await ref.update({ hidden: true });
+        await assertAuthorCanHideReply(currentTopicId, id);
+        const batch = firestore.batch();
+        batch.update(ref, { hidden: true });
+        batch.update(topicRef, {
+          replyCount: window.firebase.firestore.FieldValue.increment(-1),
+        });
+        await batch.commit();
         replies = replies.filter(function (reply) {
           return reply.id !== id;
         });
@@ -822,7 +875,7 @@
       }
     } catch (err) {
       console.error(err);
-      setStatus(t("community.error.save", "No se pudo publicar. Inténtalo más tarde."), true);
+      setStatus(saveErrorMessage(err), true);
     }
   });
 
@@ -841,12 +894,10 @@
   auth
     .onAuthStateChanged(function (user) {
       currentUser = user || null;
-      refreshAdminFlag(user).finally(function () {
-        syncAuthUi();
-        if (currentTopic) {
-          renderDetailThread();
-        }
-      });
+      syncAuthUi();
+      if (currentTopic) {
+        renderDetailThread();
+      }
     })
     .catch(function (err) {
       console.warn("[TourAI community] auth unavailable", err);
