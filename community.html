@@ -28,9 +28,11 @@
         </div>
     </nav>
 
-    <header class="page-hero">
+    <header class="page-hero community-hero">
+        <p class="community-hero__eyebrow" data-i18n="community.eyebrow">Habla con otros viajeros</p>
         <h1 data-i18n="community.title">Comunidad</h1>
-        <p data-i18n="community.subtitle">Espacio público para novedades, ayuda, ideas y viajes con TourAI.</p>
+        <p data-i18n="community.subtitle">Comparte novedades, pide ayuda, lanza ideas y cuenta tus viajes con TourAI.</p>
+        <p class="community-hero__cta" data-i18n="community.heroCta">Lee los hilos abiertos o publica el tuyo: tu voz suma.</p>
     </header>
 
     <main class="community-shell">
@@ -40,24 +42,22 @@
             <button type="button" class="community-tab" data-category="ideas" data-i18n="community.cat.ideas">Ideas</button>
             <button type="button" class="community-tab" data-category="travel" data-i18n="community.cat.travel">Viajes</button>
         </div>
+        <p id="communityCatBlurb" class="community-cat-blurb" data-i18n="community.blurb.help">Resuelve dudas y echa una mano a quien empieza con TourAI.</p>
         <p id="communityStatus" class="community-status" role="status" aria-live="polite"></p>
 
         <section id="communityListView">
+            <div class="community-toolbar">
+                <div class="community-search">
+                    <label class="visually-hidden" for="communitySearchInput" data-i18n="community.search.label">Buscar temas</label>
+                    <input id="communitySearchInput" type="search" maxlength="80" autocomplete="off" data-i18n-placeholder="community.search.placeholder" placeholder="Buscar por título, autor o texto...">
+                    <button type="button" id="communitySearchClear" class="community-search__clear" hidden data-i18n="community.search.clear">Limpiar</button>
+                </div>
+                <button type="button" id="communityOpenComposer" class="btn-primary community-toolbar__new" hidden data-i18n="community.newTopic">Nuevo tema</button>
+            </div>
             <p id="communityLoginHint" class="community-login-hint">
                 <span data-i18n="community.loginHint">Para publicar necesitas iniciar sesión.</span>
                 <a href="login.html" id="communityLoginLink" data-i18n="community.loginLink">Iniciar sesión</a>
             </p>
-
-            <div id="communityNewTopic" class="community-compose" hidden>
-                <h2 data-i18n="community.newTopic">Nuevo tema</h2>
-                <form id="communityNewTopicForm">
-                    <label for="communityTopicTitle" data-i18n="community.field.title">Título</label>
-                    <input id="communityTopicTitle" type="text" maxlength="120" required>
-                    <label for="communityTopicBody" data-i18n="community.field.body">Mensaje</label>
-                    <textarea id="communityTopicBody" rows="5" maxlength="5000" required></textarea>
-                    <button type="submit" class="btn-primary" data-i18n="community.publish">Publicar</button>
-                </form>
-            </div>
 
             <div id="communityTopics" class="community-topics"></div>
         </section>
@@ -66,14 +66,90 @@
             <button type="button" class="btn-secondary community-back" id="communityBack" data-i18n="community.back">Volver al listado</button>
             <div id="communityDetailMount"></div>
             <div id="communityReplyBox" class="community-compose community-compose--reply" hidden>
+                <div id="communityReplyToBanner" class="community-reply-to" hidden>
+                    <div class="community-reply-to__text">
+                        <strong id="communityReplyToLabel"></strong>
+                        <span id="communityReplyToSnippet"></span>
+                    </div>
+                    <button type="button" id="communityReplyToClear" class="community-reply-to__clear" data-i18n="community.replyTo.clear">Cancelar</button>
+                </div>
                 <form id="communityReplyForm">
-                    <label for="communityReplyBody" class="visually-hidden" data-i18n="community.yourReply">Tu respuesta</label>
-                    <textarea id="communityReplyBody" rows="3" maxlength="4000" required data-i18n-placeholder="community.yourReply" placeholder="Escribe una respuesta..."></textarea>
+                    <label id="communityReplyBodyLabel" class="visually-hidden" data-i18n="community.yourReply">Tu respuesta</label>
+                    <div class="community-rte" data-rte="reply">
+                        <div class="community-rte__toolbar" role="toolbar" aria-label="Formato">
+                            <button type="button" class="community-rte__btn" data-cmd="bold" title="Negrita" aria-label="Negrita"><strong>B</strong></button>
+                            <button type="button" class="community-rte__btn" data-cmd="italic" title="Cursiva" aria-label="Cursiva"><em>I</em></button>
+                            <button type="button" class="community-rte__btn" data-cmd="underline" title="Subrayado" aria-label="Subrayado"><span class="community-rte__u">U</span></button>
+                            <label class="community-rte__color" title="Color de texto">
+                                <span class="visually-hidden" data-i18n="community.rte.color">Color</span>
+                                <input type="color" data-fore-color value="#0a2a43">
+                            </label>
+                            <select class="community-rte__size" data-font-size title="Tamaño" aria-label="Tamaño de letra">
+                                <option value="2" data-i18n="community.rte.size.small">Pequeño</option>
+                                <option value="3" selected data-i18n="community.rte.size.normal">Normal</option>
+                                <option value="4" data-i18n="community.rte.size.large">Grande</option>
+                                <option value="5" data-i18n="community.rte.size.xlarge">Muy grande</option>
+                            </select>
+                            <button type="button" class="community-rte__btn community-rte__emoji-toggle" data-emoji-toggle title="Emoticonos" aria-label="Emoticonos" aria-expanded="false">☺</button>
+                        </div>
+                        <div class="community-rte__emoji" data-emoji-panel hidden></div>
+                        <div id="communityReplyBody" class="community-rte__editor" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="communityReplyBodyLabel" data-placeholder="Escribe una respuesta..." data-i18n-placeholder="community.yourReply"></div>
+                    </div>
                     <button type="submit" class="btn-primary" data-i18n="community.publish">Publicar</button>
                 </form>
             </div>
         </section>
     </main>
+
+    <div id="communityComposerModal" class="community-composer-modal" hidden>
+        <div class="community-composer-modal__backdrop" data-close-composer tabindex="-1"></div>
+        <div class="community-composer-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="communityComposerTitle">
+            <button type="button" class="community-composer-modal__close" data-close-composer aria-label="Cerrar">×</button>
+            <div id="communityNewTopic" class="community-compose community-compose--modal">
+                <h2 id="communityComposerTitle" data-i18n="community.newTopic">Nuevo tema</h2>
+                <p class="community-compose__hint" data-i18n="community.composeHint">Un buen título y un mensaje claro invitan a más respuestas.</p>
+                <p id="communityComposerStatus" class="community-status" role="status" aria-live="polite"></p>
+                <form id="communityNewTopicForm">
+                    <label for="communityTopicTitle" data-i18n="community.field.title">Título</label>
+                    <input id="communityTopicTitle" type="text" maxlength="120" required autocomplete="off">
+                    <label id="communityTopicBodyLabel" data-i18n="community.field.body">Mensaje</label>
+                    <div class="community-rte" data-rte="topic">
+                        <div class="community-rte__toolbar" role="toolbar" aria-label="Formato">
+                            <button type="button" class="community-rte__btn" data-cmd="bold" title="Negrita" aria-label="Negrita"><strong>B</strong></button>
+                            <button type="button" class="community-rte__btn" data-cmd="italic" title="Cursiva" aria-label="Cursiva"><em>I</em></button>
+                            <button type="button" class="community-rte__btn" data-cmd="underline" title="Subrayado" aria-label="Subrayado"><span class="community-rte__u">U</span></button>
+                            <label class="community-rte__color" title="Color de texto">
+                                <span class="visually-hidden" data-i18n="community.rte.color">Color</span>
+                                <input type="color" data-fore-color value="#0a2a43">
+                            </label>
+                            <select class="community-rte__size" data-font-size title="Tamaño" aria-label="Tamaño de letra">
+                                <option value="2" data-i18n="community.rte.size.small">Pequeño</option>
+                                <option value="3" selected data-i18n="community.rte.size.normal">Normal</option>
+                                <option value="4" data-i18n="community.rte.size.large">Grande</option>
+                                <option value="5" data-i18n="community.rte.size.xlarge">Muy grande</option>
+                            </select>
+                            <button type="button" class="community-rte__btn community-rte__emoji-toggle" data-emoji-toggle title="Emoticonos" aria-label="Emoticonos" aria-expanded="false">☺</button>
+                        </div>
+                        <div class="community-rte__emoji" data-emoji-panel hidden></div>
+                        <div id="communityTopicBody" class="community-rte__editor" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="communityTopicBodyLabel" data-placeholder="Escribe tu mensaje..." data-i18n-placeholder="community.placeholder.topic"></div>
+                    </div>
+                    <div class="community-composer-modal__actions">
+                        <button type="button" class="btn-secondary" data-close-composer data-i18n="community.composer.cancel">Cancelar</button>
+                        <button type="submit" class="btn-primary" data-i18n="community.publish">Publicar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="communityUserCard" class="community-user-card" hidden role="dialog" aria-modal="false" aria-labelledby="communityUserCardName">
+        <button type="button" class="community-user-card__close" id="communityUserCardClose" aria-label="Cerrar">×</button>
+        <div class="community-user-card__avatar" id="communityUserCardAvatar" aria-hidden="true"></div>
+        <div class="community-user-card__body">
+            <p class="community-user-card__name" id="communityUserCardName"></p>
+            <p class="community-user-card__meta" id="communityUserCardMeta"></p>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-grid">
