@@ -114,8 +114,10 @@
                 <p class="community-compose__hint" data-i18n="community.composeHint">Un buen título y un mensaje claro invitan a más respuestas.</p>
                 <p id="communityComposerStatus" class="community-status" role="status" aria-live="polite"></p>
                 <form id="communityNewTopicForm">
-                    <label for="communityTopicTitle" data-i18n="community.field.title">Título</label>
-                    <input id="communityTopicTitle" type="text" maxlength="120" required autocomplete="off">
+                    <div id="communityComposerTitleField">
+                        <label for="communityTopicTitle" data-i18n="community.field.title">Título</label>
+                        <input id="communityTopicTitle" type="text" maxlength="120" required autocomplete="off">
+                    </div>
                     <label id="communityTopicBodyLabel" data-i18n="community.field.body">Mensaje</label>
                     <div class="community-rte" data-rte="topic">
                         <div class="community-rte__toolbar" role="toolbar" aria-label="Formato">

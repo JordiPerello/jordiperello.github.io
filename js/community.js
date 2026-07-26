@@ -45,6 +45,8 @@
 
   let replyToTarget = null;
   let confirmResolver = null;
+  /** @type {null | { kind: 'topic'|'reply', id: string, parentReplyId?: string }} */
+  let editingTarget = null;
 
   let currentUser = null;
   let currentCategory = "help";
@@ -1449,7 +1451,11 @@
     composerModal.hidden = false;
     document.body.classList.add("community-composer-open");
     window.setTimeout(function () {
-      topicTitleInput?.focus();
+      if (editingTarget && editingTarget.kind === "reply") {
+        focusEditorEnd(topicBodyInput);
+      } else {
+        topicTitleInput?.focus();
+      }
     }, 30);
   }
 
@@ -1459,6 +1465,100 @@
     }
     composerModal.hidden = true;
     document.body.classList.remove("community-composer-open");
+    if (editingTarget) {
+      resetComposerForNewTopic();
+    }
+  }
+
+  function setComposerTitleFieldVisible(visible) {
+    const titleInput = topicTitleInput;
+    const titleLabel = titleInput
+      ? document.querySelector('label[for="communityTopicTitle"]')
+      : null;
+    const titleWrap = document.getElementById("communityComposerTitleField");
+    if (titleWrap) {
+      titleWrap.hidden = !visible;
+    }
+    if (titleLabel) {
+      titleLabel.hidden = !visible;
+    }
+    if (titleInput) {
+      titleInput.hidden = !visible;
+      if (visible) {
+        titleInput.setAttribute("required", "");
+      } else {
+        titleInput.removeAttribute("required");
+      }
+    }
+  }
+
+  function resetComposerForNewTopic() {
+    editingTarget = null;
+    if (topicTitleInput) {
+      topicTitleInput.value = "";
+    }
+    clearEditor(topicBodyInput);
+    setComposerTitleFieldVisible(true);
+    const titleEl = document.getElementById("communityComposerTitle");
+    if (titleEl) {
+      titleEl.textContent = t("community.newTopic", "Nuevo tema");
+    }
+  }
+
+  function findReplyById(id) {
+    if (!id) {
+      return null;
+    }
+    const top = replies.find(function (item) {
+      return item.id === id;
+    });
+    if (top) {
+      return top;
+    }
+    const parentIds = Object.keys(replicasByParent);
+    for (let i = 0; i < parentIds.length; i++) {
+      const items = replicasByParent[parentIds[i]]?.items || [];
+      const found = items.find(function (item) {
+        return item.id === id;
+      });
+      if (found) {
+        return found;
+      }
+    }
+    return null;
+  }
+
+  function openComposerModalForEdit(target) {
+    if (!composerModal || !currentUser || !target) {
+      return;
+    }
+    editingTarget = target;
+    const titleEl = document.getElementById("communityComposerTitle");
+    if (target.kind === "topic") {
+      setComposerTitleFieldVisible(true);
+      if (titleEl) {
+        titleEl.textContent = t("community.editTopic", "Editar tema");
+      }
+      if (topicTitleInput) {
+        topicTitleInput.value = currentTopic?.title || "";
+      }
+      if (topicBodyInput) {
+        topicBodyInput.innerHTML = currentTopic?.body || "";
+      }
+    } else {
+      setComposerTitleFieldVisible(false);
+      if (titleEl) {
+        titleEl.textContent = t("community.editReply", "Editar mensaje");
+      }
+      const reply = findReplyById(target.id);
+      if (topicTitleInput) {
+        topicTitleInput.value = "";
+      }
+      if (topicBodyInput) {
+        topicBodyInput.innerHTML = reply?.body || "";
+      }
+    }
+    openComposerModal();
   }
 
   function markActiveTab() {
@@ -1487,6 +1587,10 @@
 
   function canDeleteOwn(authorUid) {
     return !!(currentUser && authorUid && currentUser.uid === authorUid);
+  }
+
+  function canEditOwn(authorUid) {
+    return canDeleteOwn(authorUid);
   }
 
   /** Authors may only remove top-level replies with no replicas. */
@@ -1569,6 +1673,17 @@
           "</button>"
       );
     }
+    if (opts.canEdit) {
+      bits.push(
+        '<button type="button" class="community-msg__edit" data-edit="' +
+          escapeHtml(opts.hideAttr) +
+          '" data-id="' +
+          escapeHtml(opts.id) +
+          '">' +
+          escapeHtml(t("community.edit", "Editar")) +
+          "</button>"
+      );
+    }
     if (opts.canDelete) {
       bits.push(
         '<button type="button" class="community-msg__delete" data-hide="' +
@@ -1633,6 +1748,7 @@
       "</div>" +
       actionButtons({
         canReply: opts.canReply,
+        canEdit: opts.canEdit,
         canDelete: opts.canDelete,
         hideAttr: opts.hideAttr,
         id: opts.id,
@@ -1697,6 +1813,7 @@
             createdAt: replica.createdAt,
             body: replica.body,
             canReply: false,
+            canEdit: canEditOwn(replica.authorUid),
             canDelete: canDeleteReply(replica),
             hideAttr: "reply",
             id: replica.id,
@@ -1723,6 +1840,7 @@
         createdAt: reply.createdAt,
         body: reply.body,
         canReply: !!currentUser,
+        canEdit: canEditOwn(reply.authorUid),
         canDelete: canDeleteReply(reply),
         hideAttr: "reply",
         id: reply.id,
@@ -1907,6 +2025,7 @@
         title: currentTopic.title,
         body: currentTopic.body,
         canReply: false,
+        canEdit: canEditOwn(currentTopic.authorUid),
         canDelete: canDeleteTopic(),
         hideAttr: "topic",
         id: currentTopic.id,
@@ -2389,13 +2508,8 @@
     if (busy) {
       return;
     }
-    const title = String(topicTitleInput?.value || "").trim();
     const bodyHtml = getEditorHtml(topicBodyInput);
     const bodyText = plainTextFromHtml(bodyHtml);
-    if (!title || title.length > 120) {
-      setStatus(t("community.error.title", "Escribe un título (máx. 120 caracteres)."), true);
-      return;
-    }
     if (!bodyText) {
       setStatus(t("community.error.body", "Escribe un mensaje."), true);
       return;
@@ -2405,6 +2519,91 @@
         t("community.error.bodyLong", "El mensaje es demasiado largo. Acórtalo un poco."),
         true
       );
+      return;
+    }
+
+    if (editingTarget) {
+      const isTopicEdit = editingTarget.kind === "topic";
+      let title = "";
+      if (isTopicEdit) {
+        title = String(topicTitleInput?.value || "").trim();
+        if (!title || title.length > 120) {
+          setStatus(t("community.error.title", "Escribe un título (máx. 120 caracteres)."), true);
+          return;
+        }
+      }
+      const ok = await confirmAction({
+        title: t("community.confirm.saveEdit.title", "¿Guardar cambios?"),
+        message: t(
+          "community.confirm.saveEdit.body",
+          "Se actualizará el contenido publicado."
+        ),
+        confirmLabel: t("community.confirm.ok", "Confirmar"),
+      });
+      if (!ok) {
+        return;
+      }
+      busy = true;
+      setStatus(t("community.savingEdit", "Guardando..."), false);
+      try {
+        const user = await requireUser();
+        const firestore = await auth.getFirestore();
+        if (isTopicEdit) {
+          const ref = firestore.collection("CommunityTopics").doc(editingTarget.id);
+          const doc = await ref.get();
+          if (!doc.exists || doc.data()?.authorUid !== user.uid) {
+            throw new Error("FORBIDDEN");
+          }
+          await ref.update({
+            title: title,
+            body: bodyHtml,
+            bodyFormat: "html",
+            updatedAt: timestampNow(),
+          });
+          if (currentTopic && currentTopic.id === editingTarget.id) {
+            currentTopic.title = title;
+            currentTopic.body = bodyHtml;
+          }
+        } else {
+          if (!currentTopicId) {
+            throw new Error("TOPIC_MISSING");
+          }
+          const ref = firestore
+            .collection("CommunityTopics")
+            .doc(currentTopicId)
+            .collection("Replies")
+            .doc(editingTarget.id);
+          const doc = await ref.get();
+          if (!doc.exists || doc.data()?.authorUid !== user.uid) {
+            throw new Error("FORBIDDEN");
+          }
+          await ref.update({
+            body: bodyHtml,
+            bodyFormat: "html",
+            updatedAt: timestampNow(),
+          });
+          const local = findReplyById(editingTarget.id);
+          if (local) {
+            local.body = bodyHtml;
+          }
+        }
+        editingTarget = null;
+        resetComposerForNewTopic();
+        closeComposerModal();
+        setStatus("", false);
+        renderDetailThread();
+      } catch (err) {
+        console.error("[TourAI community] edit", err);
+        setStatus(saveErrorMessage(err), true);
+      } finally {
+        busy = false;
+      }
+      return;
+    }
+
+    const title = String(topicTitleInput?.value || "").trim();
+    if (!title || title.length > 120) {
+      setStatus(t("community.error.title", "Escribe un título (máx. 120 caracteres)."), true);
       return;
     }
     if (CATEGORIES.indexOf(currentCategory) < 0) {
@@ -2437,10 +2636,7 @@
         hidden: false,
         replyCount: 0,
       });
-      if (topicTitleInput) {
-        topicTitleInput.value = "";
-      }
-      clearEditor(topicBodyInput);
+      resetComposerForNewTopic();
       closeComposerModal();
       setStatus("", false);
       showDetail(ref.id);
@@ -2609,6 +2805,38 @@
       });
       if (reply && isTopLevelReply(reply)) {
         setReplyToTarget(reply);
+      }
+      return;
+    }
+    // Edit before delete handlers (avatar/name sit nearby).
+    const editBtn = event.target.closest("[data-edit]");
+    if (editBtn && detailMount.contains(editBtn)) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!currentUser) {
+        window.location.href = loginUrl();
+        return;
+      }
+      const kind = editBtn.getAttribute("data-edit");
+      const id = editBtn.getAttribute("data-id");
+      if (kind === "topic") {
+        if (!currentTopic || currentTopic.id !== id || !canEditOwn(currentTopic.authorUid)) {
+          return;
+        }
+        openComposerModalForEdit({ kind: "topic", id: id });
+        return;
+      }
+      if (kind === "reply") {
+        const reply = findReplyById(id);
+        if (!reply || !canEditOwn(reply.authorUid)) {
+          return;
+        }
+        const parentReplyId = resolveParentId(reply);
+        openComposerModalForEdit({
+          kind: "reply",
+          id: id,
+          parentReplyId: parentReplyId !== PARENT_ROOT ? parentReplyId : undefined,
+        });
       }
       return;
     }
@@ -2865,6 +3093,7 @@
   });
 
   openComposerBtn?.addEventListener("click", function () {
+    resetComposerForNewTopic();
     openComposerModal();
   });
   composerModal?.querySelectorAll("[data-close-composer]").forEach(function (el) {
@@ -2909,6 +3138,13 @@
   document.addEventListener("tourai:locale-changed", function () {
     syncEditorPlaceholders();
     updateCategoryBlurb();
+    syncAuthUi();
+    markActiveTab();
+    if (currentTopic) {
+      renderDetailThread();
+    } else {
+      renderTopicsList();
+    }
   });
 
   auth

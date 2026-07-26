@@ -51,7 +51,8 @@
   function t(key, locale, vars) {
     syncEnglishMessages();
     const normalized = normalizeLocale(locale);
-    if (isSpanishLocale(normalized)) {
+    // Only en-GB uses the English table; anything else falls back to Spanish source copy.
+    if (!normalized || normalized !== ENGLISH_LOCALE) {
       return null;
     }
     const table = messages[ENGLISH_LOCALE] ?? {};

@@ -22,14 +22,13 @@
   }
   window.gtag = window.gtag || gtag;
 
-  var consentState = localStorage.getItem("cookies-aceptadas");
-  var granted = consentState === "true";
-
   gtag("consent", "default", {
-    ad_storage: granted ? "granted" : "denied",
-    analytics_storage: granted ? "granted" : "denied",
-    ad_user_data: granted ? "granted" : "denied",
-    ad_personalization: granted ? "granted" : "denied",
+    // Web has no advertising or third-party analytics today; keep these denied
+    // even if the user acknowledges the technical-cookie notice.
+    ad_storage: "denied",
+    analytics_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
     wait_for_update: 500,
   });
 })();
@@ -42,10 +41,10 @@
 
     if (window.gtag) {
       window.gtag("consent", "update", {
-        ad_storage: granted ? "granted" : "denied",
-        analytics_storage: granted ? "granted" : "denied",
-        ad_user_data: granted ? "granted" : "denied",
-        ad_personalization: granted ? "granted" : "denied",
+        ad_storage: "denied",
+        analytics_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
       });
     }
 

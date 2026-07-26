@@ -1821,6 +1821,11 @@
       }
     }
   });
+
+  document.addEventListener("tourai:locale-changed", function () {
+    renderProfile();
+    updatePasswordStrengthUi();
+  });
 })();
 
 
@@ -2285,5 +2290,16 @@
     } catch (err) {
       setStatus(auth.mapAuthError(err), true);
     }
+  });
+
+  document.addEventListener("tourai:locale-changed", function () {
+    document.querySelectorAll("[data-section].is-open").forEach(function (section) {
+      const key = section.getAttribute("data-section");
+      if (key === "plans" && pagers.plans.items.length) {
+        paintPlansSection(section);
+      } else if (key === "payments" && pagers.payments.items.length) {
+        paintPaymentsSection(section);
+      }
+    });
   });
 })();
