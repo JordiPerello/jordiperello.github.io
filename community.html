@@ -142,6 +142,18 @@
         </div>
     </div>
 
+    <div id="communityConfirmModal" class="community-confirm-modal" hidden>
+        <div class="community-confirm-modal__backdrop" data-confirm-cancel tabindex="-1"></div>
+        <div class="community-confirm-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="communityConfirmTitle" aria-describedby="communityConfirmMessage">
+            <h2 id="communityConfirmTitle" class="community-confirm-modal__title"></h2>
+            <p id="communityConfirmMessage" class="community-confirm-modal__message"></p>
+            <div class="community-confirm-modal__actions">
+                <button type="button" class="btn-secondary" id="communityConfirmCancel" data-i18n="community.confirm.cancel">Cancelar</button>
+                <button type="button" class="btn-primary" id="communityConfirmOk" data-i18n="community.confirm.ok">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
     <div id="communityUserCard" class="community-user-card" hidden role="dialog" aria-modal="false" aria-labelledby="communityUserCardName">
         <button type="button" class="community-user-card__close" id="communityUserCardClose" aria-label="Cerrar">×</button>
         <div class="community-user-card__avatar" id="communityUserCardAvatar" aria-hidden="true"></div>

@@ -941,6 +941,9 @@
   auth.enrichNavProfile = enrichNavProfile;
   auth.clearNavProfileCache = clearCache;
   auth.forceSignedOutNav = forceSignedOutNav;
+  auth.getNavProfile = function () {
+    return currentProfile;
+  };
 
   auth.onAuthStateChanged(sync).catch(function (err) {
     // Auth could not be restored — do not keep a cached "signed in" avatar.

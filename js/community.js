@@ -1,6 +1,6 @@
 /*
  * Community page: topics + replies in Firestore.
- * Paged reads only (scroll to load more). Soft-hide for author/admin.
+ * Paged reads only (scroll to load more). Author delete is physical (doc.delete).
  */
 (function () {
   const auth = window.TourAiAuth;
@@ -33,12 +33,18 @@
   const backBtn = document.getElementById("communityBack");
   const openComposerBtn = document.getElementById("communityOpenComposer");
   const composerModal = document.getElementById("communityComposerModal");
+  const confirmModal = document.getElementById("communityConfirmModal");
+  const confirmTitleEl = document.getElementById("communityConfirmTitle");
+  const confirmMessageEl = document.getElementById("communityConfirmMessage");
+  const confirmOkBtn = document.getElementById("communityConfirmOk");
+  const confirmCancelBtn = document.getElementById("communityConfirmCancel");
   const replyToBanner = document.getElementById("communityReplyToBanner");
   const replyToLabelEl = document.getElementById("communityReplyToLabel");
   const replyToSnippetEl = document.getElementById("communityReplyToSnippet");
   const replyToClearBtn = document.getElementById("communityReplyToClear");
 
   let replyToTarget = null;
+  let confirmResolver = null;
 
   let currentUser = null;
   let currentCategory = "help";
@@ -94,6 +100,56 @@
       .replace(/"/g, "&quot;");
   }
 
+  function closeConfirmModal(result) {
+    if (confirmModal) {
+      confirmModal.hidden = true;
+    }
+    document.body.classList.remove("community-confirm-open");
+    if (confirmOkBtn) {
+      confirmOkBtn.classList.remove("btn-primary--danger");
+    }
+    confirmModal?.querySelector(".community-confirm-modal__dialog")?.classList.remove(
+      "community-confirm-modal__dialog--danger"
+    );
+    const resolve = confirmResolver;
+    confirmResolver = null;
+    if (resolve) {
+      resolve(!!result);
+    }
+  }
+
+  function confirmAction(options) {
+    const opts = options || {};
+    if (!confirmModal || !confirmTitleEl || !confirmMessageEl || !confirmOkBtn) {
+      return Promise.resolve(window.confirm(opts.message || opts.title || ""));
+    }
+    if (confirmResolver) {
+      closeConfirmModal(false);
+    }
+    confirmTitleEl.textContent = opts.title || "";
+    confirmMessageEl.textContent = opts.message || "";
+    confirmOkBtn.textContent =
+      opts.confirmLabel || t("community.confirm.ok", "Confirmar");
+    if (confirmCancelBtn) {
+      confirmCancelBtn.textContent =
+        opts.cancelLabel || t("community.confirm.cancel", "Cancelar");
+    }
+    const dialog = confirmModal.querySelector(".community-confirm-modal__dialog");
+    if (opts.danger) {
+      confirmOkBtn.classList.add("btn-primary--danger");
+      dialog?.classList.add("community-confirm-modal__dialog--danger");
+    } else {
+      confirmOkBtn.classList.remove("btn-primary--danger");
+      dialog?.classList.remove("community-confirm-modal__dialog--danger");
+    }
+    confirmModal.hidden = false;
+    document.body.classList.add("community-confirm-open");
+    confirmOkBtn.focus();
+    return new Promise(function (resolve) {
+      confirmResolver = resolve;
+    });
+  }
+
   const BODY_MAX_CHARS = 5000;
   const BODY_MAX_HTML = 16000;
   const EMOJI_SET =
@@ -116,16 +172,32 @@
           return;
         }
         const prop = bits[0].trim().toLowerCase();
-        const raw = bits.slice(1).join(":").trim();
+        let raw = bits.slice(1).join(":").trim().replace(/\s*!important$/i, "").trim();
         if (!raw || /expression|url\s*\(|javascript:|@import/i.test(raw)) {
           return;
         }
         if (prop === "color" || prop === "background-color") {
-          if (/^(#[0-9a-f]{3,8}|rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)|[a-z]+)$/i.test(raw)) {
+          if (
+            /^(#[0-9a-f]{3,8}|rgba?\(\s*[\d.]+\s*[,/\s]+[\d.]+\s*[,/\s]+[\d.]+(?:\s*[,/]\s*[\d.]+)?\s*\)|hsla?\(\s*[\d.]+\s*[,/\s]+[\d.%]+\s*[,/\s]+[\d.%]+(?:\s*[,/]\s*[\d.]+)?\s*\)|[a-z]+)$/i.test(
+              raw
+            )
+          ) {
             allowed.push(prop + ": " + raw);
           }
         } else if (prop === "font-size") {
-          if (/^\d+(\.\d+)?(px|em|rem|%)$/i.test(raw)) {
+          if (/^\d+(\.\d+)?(px|em|rem|%|pt)$/i.test(raw)) {
+            allowed.push(prop + ": " + raw);
+          }
+        } else if (prop === "font-weight") {
+          if (/^(normal|bold|bolder|lighter|[1-9]00)$/i.test(raw)) {
+            allowed.push(prop + ": " + raw);
+          }
+        } else if (prop === "font-style") {
+          if (/^(normal|italic|oblique)$/i.test(raw)) {
+            allowed.push(prop + ": " + raw);
+          }
+        } else if (prop === "text-decoration" || prop === "text-decoration-line") {
+          if (/^(none|underline|line-through)(\s+(none|underline|line-through))*$/i.test(raw)) {
             allowed.push(prop + ": " + raw);
           }
         }
@@ -133,19 +205,95 @@
     return allowed.join("; ");
   }
 
-  function sanitizeCommunityHtml(raw) {
+  function extractClipboardHtml(raw) {
+    let html = String(raw || "");
+    if (!html) {
+      return "";
+    }
+    const startMark = "<!--StartFragment-->";
+    const endMark = "<!--EndFragment-->";
+    const start = html.indexOf(startMark);
+    const end = html.indexOf(endMark);
+    let fragment = "";
+    if (start !== -1 && end > start) {
+      fragment = html.slice(start + startMark.length, end).trim();
+    }
+    let body = "";
+    const bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+    if (bodyMatch) {
+      body = bodyMatch[1]
+        .replace(/<!--StartFragment-->/gi, "")
+        .replace(/<!--EndFragment-->/gi, "")
+        .trim();
+    }
+    // Some apps put a poor/empty fragment; prefer the richer of fragment vs body vs raw.
+    return pickRicherHtml(fragment, pickRicherHtml(body, html.trim()));
+  }
+
+  function formattingScore(html) {
+    const s = String(html || "");
+    if (!s) {
+      return 0;
+    }
+    let score = Math.min(s.length, 200);
+    if (/style\s*=/i.test(s)) {
+      score += 120;
+    }
+    if (/\bcolor\s*:/i.test(s) || /\bcolor\s*=/i.test(s)) {
+      score += 80;
+    }
+    if (/font-weight\s*:\s*(bold|[5-9]00)/i.test(s) || /<(b|strong)\b/i.test(s)) {
+      score += 40;
+    }
+    if (/font-style\s*:\s*italic/i.test(s) || /<(i|em)\b/i.test(s)) {
+      score += 30;
+    }
+    if (/text-decoration[^;]*underline/i.test(s) || /<u\b/i.test(s)) {
+      score += 30;
+    }
+    if (/<font\b/i.test(s)) {
+      score += 50;
+    }
+    if (/font-size\s*:/i.test(s) || /\bsize\s*=\s*["']?[1-7]/i.test(s)) {
+      score += 25;
+    }
+    return score;
+  }
+
+  function pickRicherHtml(a, b) {
+    return formattingScore(a) >= formattingScore(b) ? a : b;
+  }
+
+  function sanitizeCommunityHtml(raw, options) {
+    const skipExtract = !!(options && options.skipExtract);
+    const source = skipExtract ? String(raw || "") : extractClipboardHtml(raw) || String(raw || "");
     const template = document.createElement("template");
-    template.innerHTML = String(raw || "");
+    template.innerHTML = source;
     const allowed = {
       B: true,
       STRONG: true,
       I: true,
       EM: true,
       U: true,
+      S: true,
+      STRIKE: true,
       BR: true,
       P: true,
       DIV: true,
       SPAN: true,
+      FONT: true,
+    };
+    const styleTags = {
+      B: true,
+      STRONG: true,
+      I: true,
+      EM: true,
+      U: true,
+      S: true,
+      STRIKE: true,
+      SPAN: true,
+      P: true,
+      DIV: true,
       FONT: true,
     };
 
@@ -158,6 +306,8 @@
           child.remove();
           return;
         }
+        // Clean descendants first so unwrap keeps already-sanitized children.
+        clean(child);
         const tag = child.tagName;
         if (!allowed[tag]) {
           while (child.firstChild) {
@@ -168,7 +318,7 @@
         }
         Array.from(child.attributes).forEach(function (attr) {
           const name = attr.name.toLowerCase();
-          if ((tag === "SPAN" || tag === "P" || tag === "DIV" || tag === "FONT") && name === "style") {
+          if (styleTags[tag] && name === "style") {
             const style = sanitizeStyle(attr.value);
             if (style) {
               child.setAttribute("style", style);
@@ -185,12 +335,134 @@
           }
           child.removeAttribute(attr.name);
         });
-        clean(child);
       });
     }
 
     clean(template.content);
+    // Contenteditable unwraps the first pasted block (p/div) and drops its attributes.
+    // Move block styles onto an inner span so the first paragraph keeps color/weight/etc.
+    moveBlockStylesInside(template.content);
     return template.innerHTML.trim();
+  }
+
+  function moveBlockStylesInside(root) {
+    if (!root || !root.querySelectorAll) {
+      return;
+    }
+    Array.from(root.querySelectorAll("p, div")).forEach(function (el) {
+      const style = String(el.getAttribute("style") || "").trim();
+      if (!style) {
+        return;
+      }
+      // Already a single styled span wrapping everything — merge styles upward protection.
+      if (
+        el.childNodes.length === 1 &&
+        el.firstChild.nodeType === Node.ELEMENT_NODE &&
+        el.firstChild.tagName === "SPAN"
+      ) {
+        const inner = el.firstChild;
+        const merged = sanitizeStyle(
+          [inner.getAttribute("style") || "", style].filter(Boolean).join(";")
+        );
+        if (merged) {
+          inner.setAttribute("style", merged);
+        }
+        el.removeAttribute("style");
+        return;
+      }
+      const span = document.createElement("span");
+      span.setAttribute("style", style);
+      while (el.firstChild) {
+        span.appendChild(el.firstChild);
+      }
+      el.appendChild(span);
+      el.removeAttribute("style");
+    });
+  }
+
+  function sanitizePasteHtml(raw) {
+    const direct = sanitizeCommunityHtml(raw);
+    // If extraction path lost formatting that the raw clipboard still had, retry without extract.
+    if (formattingScore(raw) > formattingScore(direct) + 40) {
+      const alt = sanitizeCommunityHtml(raw, { skipExtract: true });
+      return pickRicherHtml(direct, alt);
+    }
+    return direct;
+  }
+
+  /** Range-only insert — execCommand('insertHTML') strips styles inconsistently in Chromium. */
+  function insertHtmlAtSelection(editor, html) {
+    if (!editor || !html) {
+      return false;
+    }
+    editor.focus();
+    const selection = window.getSelection();
+    if (!selection) {
+      return false;
+    }
+    let range = null;
+    if (selection.rangeCount) {
+      range = selection.getRangeAt(0);
+      if (!editor.contains(range.commonAncestorContainer)) {
+        range = null;
+      }
+    }
+    if (!range) {
+      range = document.createRange();
+      range.selectNodeContents(editor);
+      range.collapse(false);
+    }
+    range.deleteContents();
+    const holder = document.createElement("div");
+    // Wrapper so the browser's "merge first block" does not target a styled <p> directly.
+    holder.innerHTML = '<div data-tourai-paste="1">' + html + "</div>";
+    moveBlockStylesInside(holder);
+    const frag = document.createDocumentFragment();
+    let node;
+    let last = null;
+    while ((node = holder.firstChild)) {
+      last = frag.appendChild(node);
+    }
+    range.insertNode(frag);
+    // Unwrap paste carrier if it survived insertion.
+    const wrap =
+      (last && last.nodeType === Node.ELEMENT_NODE && last.getAttribute?.("data-tourai-paste") === "1"
+        ? last
+        : null) ||
+      editor.querySelector("[data-tourai-paste='1']");
+    if (wrap && wrap.parentNode) {
+      const parent = wrap.parentNode;
+      let child;
+      while ((child = wrap.firstChild)) {
+        last = parent.insertBefore(child, wrap);
+      }
+      parent.removeChild(wrap);
+    }
+    if (last) {
+      range = document.createRange();
+      range.setStartAfter(last);
+      range.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    return true;
+  }
+
+  function selectionHtmlInEditor(editor) {
+    const selection = window.getSelection();
+    if (!editor || !selection || selection.isCollapsed || !selection.rangeCount) {
+      return null;
+    }
+    const range = selection.getRangeAt(0);
+    if (!editor.contains(range.commonAncestorContainer)) {
+      return null;
+    }
+    const holder = document.createElement("div");
+    holder.appendChild(range.cloneContents());
+    return {
+      html: sanitizeCommunityHtml(holder.innerHTML, { skipExtract: true }),
+      text: String(holder.textContent || ""),
+    };
   }
 
   function looksLikeHtml(value) {
@@ -236,6 +508,39 @@
       return;
     }
     editor.innerHTML = "";
+    const root = editor.closest(".community-rte");
+    if (root) {
+      const colorInput = root.querySelector("[data-fore-color]");
+      if (colorInput) {
+        colorInput.value = "#0a2a43";
+      }
+      const sizeSelect = root.querySelector("[data-font-size]");
+      if (sizeSelect) {
+        sizeSelect.value = "3";
+      }
+      const emojiPanel = root.querySelector("[data-emoji-panel]");
+      const emojiToggle = root.querySelector("[data-emoji-toggle]");
+      if (emojiPanel) {
+        emojiPanel.setAttribute("hidden", "");
+      }
+      if (emojiToggle) {
+        emojiToggle.setAttribute("aria-expanded", "false");
+      }
+    }
+    // Drop lingering bold/italic/color/size so the next keystrokes are plain.
+    try {
+      editor.focus();
+      ["bold", "italic", "underline"].forEach(function (cmd) {
+        if (document.queryCommandState?.(cmd)) {
+          document.execCommand(cmd, false, null);
+        }
+      });
+      document.execCommand("removeFormat", false, null);
+      document.execCommand("foreColor", false, "#0a2a43");
+      document.execCommand("fontSize", false, "3");
+    } catch (_) {
+      // Formatting commands are best-effort across browsers.
+    }
   }
 
   function syncEditorPlaceholders() {
@@ -262,16 +567,64 @@
     selection.addRange(range);
   }
 
-  function insertEmoji(editor, emoji) {
+  function selectionRangeInEditor(editor) {
+    const selection = window.getSelection();
+    if (!editor || !selection || !selection.rangeCount) {
+      return null;
+    }
+    const range = selection.getRangeAt(0);
+    if (!editor.contains(range.commonAncestorContainer)) {
+      return null;
+    }
+    return range.cloneRange();
+  }
+
+  function restoreEditorRange(editor, range) {
     if (!editor) {
       return;
     }
-    focusEditorEnd(editor);
-    try {
-      document.execCommand("insertText", false, emoji);
-    } catch (_) {
-      editor.appendChild(document.createTextNode(emoji));
+    editor.focus();
+    const selection = window.getSelection();
+    if (!selection) {
+      return;
     }
+    if (range) {
+      try {
+        selection.removeAllRanges();
+        selection.addRange(range);
+        return;
+      } catch (_) {
+        // Fall through to end if the saved range is stale.
+      }
+    }
+    focusEditorEnd(editor);
+  }
+
+  function insertEmoji(editor, emoji, savedRange) {
+    if (!editor || !emoji) {
+      return;
+    }
+    restoreEditorRange(editor, savedRange || selectionRangeInEditor(editor));
+    try {
+      if (document.execCommand("insertText", false, emoji)) {
+        return;
+      }
+    } catch (_) {
+      // Use Range API below.
+    }
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount) {
+      const range = selection.getRangeAt(0);
+      range.deleteContents();
+      const node = document.createTextNode(emoji);
+      range.insertNode(node);
+      range.setStartAfter(node);
+      range.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      return;
+    }
+    editor.appendChild(document.createTextNode(emoji));
   }
 
   function bindRichEditor(root) {
@@ -282,6 +635,18 @@
     const editor = root.querySelector(".community-rte__editor");
     const emojiPanel = root.querySelector("[data-emoji-panel]");
     const emojiToggle = root.querySelector("[data-emoji-toggle]");
+    let savedEditorRange = null;
+
+    function rememberEditorSelection() {
+      const range = selectionRangeInEditor(editor);
+      if (range) {
+        savedEditorRange = range;
+      }
+    }
+
+    editor?.addEventListener("keyup", rememberEditorSelection);
+    editor?.addEventListener("mouseup", rememberEditorSelection);
+    editor?.addEventListener("blur", rememberEditorSelection);
 
     if (emojiPanel && !emojiPanel.childElementCount) {
       EMOJI_SET.split(/\s+/).forEach(function (emoji) {
@@ -293,8 +658,13 @@
         btn.className = "community-rte__emoji-btn";
         btn.textContent = emoji;
         btn.setAttribute("aria-label", emoji);
+        btn.addEventListener("mousedown", function (event) {
+          event.preventDefault();
+          rememberEditorSelection();
+        });
         btn.addEventListener("click", function () {
-          insertEmoji(editor, emoji);
+          insertEmoji(editor, emoji, savedEditorRange);
+          savedEditorRange = selectionRangeInEditor(editor);
         });
         emojiPanel.appendChild(btn);
       });
@@ -303,35 +673,49 @@
     root.querySelectorAll("[data-cmd]").forEach(function (btn) {
       btn.addEventListener("mousedown", function (event) {
         event.preventDefault();
+        rememberEditorSelection();
       });
       btn.addEventListener("click", function () {
         const cmd = btn.getAttribute("data-cmd");
         if (!editor || !cmd) {
           return;
         }
-        editor.focus();
+        restoreEditorRange(editor, savedEditorRange);
         document.execCommand(cmd, false, null);
+        savedEditorRange = selectionRangeInEditor(editor);
       });
     });
 
     const colorInput = root.querySelector("[data-fore-color]");
+    colorInput?.addEventListener("mousedown", function () {
+      rememberEditorSelection();
+    });
     colorInput?.addEventListener("input", function () {
       if (!editor) {
         return;
       }
-      editor.focus();
+      restoreEditorRange(editor, savedEditorRange);
       document.execCommand("foreColor", false, colorInput.value);
+      savedEditorRange = selectionRangeInEditor(editor);
     });
 
     const sizeSelect = root.querySelector("[data-font-size]");
+    sizeSelect?.addEventListener("mousedown", function () {
+      rememberEditorSelection();
+    });
     sizeSelect?.addEventListener("change", function () {
       if (!editor) {
         return;
       }
-      editor.focus();
+      restoreEditorRange(editor, savedEditorRange);
       document.execCommand("fontSize", false, sizeSelect.value);
+      savedEditorRange = selectionRangeInEditor(editor);
     });
 
+    emojiToggle?.addEventListener("mousedown", function (event) {
+      event.preventDefault();
+      rememberEditorSelection();
+    });
     emojiToggle?.addEventListener("click", function () {
       if (!emojiPanel) {
         return;
@@ -343,12 +727,48 @@
         emojiPanel.setAttribute("hidden", "");
       }
       emojiToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      restoreEditorRange(editor, savedEditorRange);
+    });
+
+    function writeSelectionToClipboard(event) {
+      const packed = selectionHtmlInEditor(editor);
+      if (!packed || (!packed.html && !packed.text)) {
+        return;
+      }
+      event.clipboardData.setData("text/plain", packed.text);
+      if (packed.html) {
+        event.clipboardData.setData("text/html", packed.html);
+      }
+      event.preventDefault();
+    }
+
+    editor?.addEventListener("copy", writeSelectionToClipboard);
+    editor?.addEventListener("cut", function (event) {
+      writeSelectionToClipboard(event);
+      if (event.defaultPrevented) {
+        const selection = window.getSelection();
+        if (selection && selection.rangeCount) {
+          selection.getRangeAt(0).deleteContents();
+          savedEditorRange = selectionRangeInEditor(editor);
+        }
+      }
     });
 
     editor?.addEventListener("paste", function (event) {
       event.preventDefault();
-      const text = event.clipboardData?.getData("text/plain") || "";
-      document.execCommand("insertText", false, text);
+      const clip = event.clipboardData;
+      const htmlRaw = clip?.getData("text/html") || "";
+      const plain = clip?.getData("text/plain") || "";
+      let insertHtml = htmlRaw ? sanitizePasteHtml(htmlRaw) : "";
+      if (!insertHtml && plain) {
+        insertHtml = escapeHtml(plain).replace(/\r\n|\r|\n/g, "<br>");
+      }
+      if (!insertHtml) {
+        return;
+      }
+      if (insertHtmlAtSelection(editor, insertHtml)) {
+        savedEditorRange = selectionRangeInEditor(editor);
+      }
     });
   }
 
@@ -413,6 +833,52 @@
     );
   }
 
+  function authorPreviewFromNav(nav, fallbackName) {
+    if (!nav || !nav.uid) {
+      return null;
+    }
+    const urls = Array.isArray(nav.photoUrls)
+      ? nav.photoUrls.filter(Boolean).slice()
+      : [];
+    if (!urls.length && nav.photoUrl) {
+      urls.push(nav.photoUrl);
+    }
+    return {
+      uid: nav.uid,
+      displayName:
+        nav.displayName ||
+        fallbackName ||
+        t("community.anonymous", "Usuario"),
+      photoUrls: urls,
+      photoCropOffsetXNorm: Number.isFinite(Number(nav.photoCropOffsetXNorm))
+        ? Number(nav.photoCropOffsetXNorm)
+        : 0,
+      photoCropOffsetYNorm: Number.isFinite(Number(nav.photoCropOffsetYNorm))
+        ? Number(nav.photoCropOffsetYNorm)
+        : 0,
+      photoCropUserScale:
+        Number.isFinite(Number(nav.photoCropUserScale)) &&
+        Number(nav.photoCropUserScale) > 0
+          ? Number(nav.photoCropUserScale)
+          : 1,
+      createdAt: nav.createdAt || null,
+    };
+  }
+
+  function selfAuthorPreview(uid, fallbackName) {
+    const key = String(uid || "");
+    const me = currentUser || auth.currentUser?.() || null;
+    if (!key || !me || me.uid !== key) {
+      return null;
+    }
+    const nav =
+      typeof auth.getNavProfile === "function" ? auth.getNavProfile() : null;
+    if (nav && nav.uid === key) {
+      return authorPreviewFromNav(nav, fallbackName);
+    }
+    return null;
+  }
+
   async function loadAuthorPreview(uid, fallbackName) {
     const key = String(uid || "");
     if (!key) {
@@ -428,6 +894,12 @@
     }
     if (authorCache[key]) {
       return authorCache[key];
+    }
+    // Own profile: reuse nav cache (already loaded for the avatar) — no Users read.
+    const selfProfile = selfAuthorPreview(key, fallbackName);
+    if (selfProfile) {
+      authorCache[key] = selfProfile;
+      return selfProfile;
     }
     const profile = {
       uid: key,
@@ -476,12 +948,10 @@
     return profile;
   }
 
-  function paintUserCardAvatar(profile) {
-    if (!userCardAvatar) {
+  function paintAvatarElement(avatarEl, profile) {
+    if (!avatarEl || !profile) {
       return;
     }
-    userCardAvatar.textContent = "";
-    userCardAvatar.textContent = initialsFrom(profile.displayName);
     const urls = (profile.photoUrls || []).filter(Boolean);
     if (!urls.length) {
       return;
@@ -496,9 +966,9 @@
       img.decoding = "async";
       img.referrerPolicy = "no-referrer";
       img.onload = function () {
-        userCardAvatar.textContent = "";
-        userCardAvatar.appendChild(img);
-        const size = userCardAvatar.offsetWidth || 64;
+        avatarEl.textContent = "";
+        avatarEl.appendChild(img);
+        const size = avatarEl.offsetWidth || 40;
         img.setAttribute("style", authorCropStyle(profile, size));
       };
       img.onerror = function () {
@@ -508,6 +978,44 @@
       img.src = urls[index];
     };
     tryNext();
+  }
+
+  function paintUserCardAvatar(profile) {
+    if (!userCardAvatar) {
+      return;
+    }
+    userCardAvatar.textContent = "";
+    userCardAvatar.textContent = initialsFrom(profile.displayName);
+    paintAvatarElement(userCardAvatar, profile);
+  }
+
+  function hydrateSelfAuthorAvatars(root) {
+    const me = currentUser || auth.currentUser?.() || null;
+    if (!root || !me) {
+      return;
+    }
+    const profile =
+      authorCache[me.uid] ||
+      selfAuthorPreview(me.uid, me.displayName || "");
+    if (!profile) {
+      return;
+    }
+    authorCache[me.uid] = profile;
+    root.querySelectorAll("[data-author-uid]").forEach(function (el) {
+      if (el.getAttribute("data-author-uid") !== me.uid) {
+        return;
+      }
+      if (
+        !el.classList.contains("community-msg__avatar") &&
+        !el.classList.contains("community-topic__avatar")
+      ) {
+        return;
+      }
+      if (el.querySelector("img")) {
+        return;
+      }
+      paintAvatarElement(el, profile);
+    });
   }
 
   function positionUserCard(anchor) {
@@ -673,7 +1181,15 @@
   function mapReply(doc) {
     const data = doc.data() || {};
     const legacyReplyTo = String(data.replyToId || "").trim();
-    const parentReplyId = String(data.parentReplyId || legacyReplyTo || PARENT_ROOT).trim() || PARENT_ROOT;
+    let parentReplyId = String(data.parentReplyId || "").trim();
+    // "root" (or empty) must fall through to replyToId — otherwise replicas
+    // with a bad parentReplyId never resolve to their real parent.
+    if (!parentReplyId || parentReplyId === PARENT_ROOT) {
+      parentReplyId = legacyReplyTo || PARENT_ROOT;
+    }
+    if (!parentReplyId) {
+      parentReplyId = PARENT_ROOT;
+    }
     return {
       id: doc.id,
       _doc: doc,
@@ -687,6 +1203,47 @@
       replyToAuthorName: data.replyToAuthorName || "",
       replyToSnippet: data.replyToSnippet || "",
     };
+  }
+
+  function resolveParentId(data) {
+    const parent = String(data?.parentReplyId || "").trim();
+    const replyTo = String(data?.replyToId || "").trim();
+    if (parent && parent !== PARENT_ROOT) {
+      return parent;
+    }
+    if (replyTo && replyTo !== PARENT_ROOT) {
+      return replyTo;
+    }
+    return PARENT_ROOT;
+  }
+
+  function removeReplyFromLocalState(replyId) {
+    const id = String(replyId || "");
+    if (!id) {
+      return;
+    }
+    replies = replies.filter(function (reply) {
+      return reply.id !== id;
+    });
+    Object.keys(replicasByParent).forEach(function (parentId) {
+      const state = replicasByParent[parentId];
+      if (!state || !Array.isArray(state.items)) {
+        return;
+      }
+      const before = state.items.length;
+      state.items = state.items.filter(function (item) {
+        return item.id !== id;
+      });
+      if (state.items.length < before) {
+        const parent = replies.find(function (item) {
+          return item.id === parentId;
+        });
+        if (parent && parent.replicaCount > 0) {
+          parent.replicaCount -= 1;
+        }
+      }
+    });
+    delete replicasByParent[id];
   }
 
   function isTopLevelReply(reply) {
@@ -807,6 +1364,7 @@
 
   function saveErrorMessage(err) {
     const message = String(err?.message || "");
+    const code = String(err?.code || "");
     if (message === "NO_USER") {
       return t("community.error.auth", "Tu sesión ha caducado. Vuelve a iniciar sesión.");
     }
@@ -817,6 +1375,12 @@
       return t(
         "community.error.threadLocked",
         "No se puede eliminar: esta respuesta tiene réplicas."
+      );
+    }
+    if (message === "FORBIDDEN" || code === "permission-denied") {
+      return t(
+        "community.error.forbidden",
+        "No tienes permiso para esta acción. Si acabas de cambiar las reglas, espera un minuto e inténtalo de nuevo."
       );
     }
     return t("community.error.save", "No se pudo publicar. Inténtalo más tarde.");
@@ -951,8 +1515,8 @@
   }
 
   async function assertAuthorCanHideReply(_topicId, _replyId, replyData) {
-    const parentId = String(replyData?.parentReplyId || replyData?.replyToId || PARENT_ROOT);
-    if (parentId === PARENT_ROOT || !parentId) {
+    const parentId = resolveParentId(replyData);
+    if (parentId === PARENT_ROOT) {
       if ((Number(replyData?.replicaCount) || 0) > 0) {
         throw new Error("THREAD_LOCKED");
       }
@@ -1292,6 +1856,7 @@
     }
 
     topicsEl.innerHTML = html;
+    hydrateSelfAuthorAvatars(topicsEl);
     const sentinel = topicsEl.querySelector("[data-topics-sentinel]");
     topicsObserver = observeSentinel(sentinel, function () {
       loadTopicsPage(false);
@@ -1356,6 +1921,7 @@
     repliesObserver = observeSentinel(sentinel, function () {
       loadRepliesPage(false);
     });
+    hydrateSelfAuthorAvatars(detailMount);
   }
 
   function createdAtMillis(value) {
@@ -1844,6 +2410,17 @@
     if (CATEGORIES.indexOf(currentCategory) < 0) {
       currentCategory = "help";
     }
+    const ok = await confirmAction({
+      title: t("community.confirm.publishTopic.title", "¿Publicar este tema?"),
+      message: t(
+        "community.confirm.publishTopic.body",
+        "Tu tema será visible en esta sección de la comunidad."
+      ),
+      confirmLabel: t("community.publish", "Publicar"),
+    });
+    if (!ok) {
+      return;
+    }
     busy = true;
     setStatus(t("community.saving", "Publicando..."), false);
     try {
@@ -1891,6 +2468,25 @@
         t("community.error.bodyLong", "El mensaje es demasiado largo. Acórtalo un poco."),
         true
       );
+      return;
+    }
+    const isReplica = !!(replyToTarget && replyToTarget.id);
+    const ok = await confirmAction({
+      title: isReplica
+        ? t("community.confirm.publishReplica.title", "¿Publicar esta réplica?")
+        : t("community.confirm.publishReply.title", "¿Publicar esta respuesta?"),
+      message: isReplica
+        ? t(
+            "community.confirm.publishReplica.body",
+            "Tu réplica aparecerá bajo la respuesta seleccionada."
+          )
+        : t(
+            "community.confirm.publishReply.body",
+            "Tu respuesta se añadirá a este hilo."
+          ),
+      confirmLabel: t("community.publish", "Publicar"),
+    });
+    if (!ok) {
       return;
     }
     busy = true;
@@ -2016,6 +2612,141 @@
       }
       return;
     }
+    // Delete must win over author-card handlers (avatar/name sit nearby).
+    const hideBtn = event.target.closest("[data-hide]");
+    if (hideBtn && detailMount.contains(hideBtn)) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!currentUser) {
+        window.location.href = loginUrl();
+        return;
+      }
+      const kind = hideBtn.getAttribute("data-hide");
+      const id = hideBtn.getAttribute("data-id");
+      let confirmOpts;
+      if (kind === "topic") {
+        confirmOpts = {
+          title: t("community.confirm.deleteTopic.title", "¿Eliminar este tema?"),
+          message: t(
+            "community.confirm.deleteTopic.body",
+            "Se eliminará de forma permanente. Esta acción no se puede deshacer."
+          ),
+          confirmLabel: t("community.delete", "Eliminar"),
+          danger: true,
+        };
+      } else {
+        let isReplica = false;
+        Object.keys(replicasByParent).some(function (parentId) {
+          const items = replicasByParent[parentId]?.items || [];
+          return items.some(function (item) {
+            if (item.id === id) {
+              isReplica = true;
+              return true;
+            }
+            return false;
+          });
+        });
+        if (!isReplica) {
+          const top = replies.find(function (item) {
+            return item.id === id;
+          });
+          if (top && !isTopLevelReply(top)) {
+            isReplica = true;
+          }
+        }
+        confirmOpts = isReplica
+          ? {
+              title: t(
+                "community.confirm.deleteReplica.title",
+                "¿Eliminar esta réplica?"
+              ),
+              message: t(
+                "community.confirm.deleteReplica.body",
+                "Se eliminará de forma permanente. Esta acción no se puede deshacer."
+              ),
+              confirmLabel: t("community.delete", "Eliminar"),
+              danger: true,
+            }
+          : {
+              title: t(
+                "community.confirm.deleteReply.title",
+                "¿Eliminar esta respuesta?"
+              ),
+              message: t(
+                "community.confirm.deleteReply.body",
+                "Se eliminará de forma permanente. Esta acción no se puede deshacer."
+              ),
+              confirmLabel: t("community.delete", "Eliminar"),
+              danger: true,
+            };
+      }
+      const ok = await confirmAction(confirmOpts);
+      if (!ok) {
+        return;
+      }
+      try {
+        const firestore = await auth.getFirestore();
+        if (kind === "topic") {
+          const ref = firestore.collection("CommunityTopics").doc(id);
+          const doc = await ref.get();
+          if (!doc.exists || doc.data()?.authorUid !== currentUser.uid) {
+            throw new Error("FORBIDDEN");
+          }
+          await assertAuthorCanHideTopic(id, doc.data());
+          await ref.delete();
+          showList(currentCategory);
+          return;
+        }
+        if (kind === "reply" && currentTopicId) {
+          const topicRef = firestore.collection("CommunityTopics").doc(currentTopicId);
+          const ref = topicRef.collection("Replies").doc(id);
+          const doc = await ref.get();
+          if (!doc.exists || doc.data()?.authorUid !== currentUser.uid) {
+            throw new Error("FORBIDDEN");
+          }
+          const data = doc.data() || {};
+          await assertAuthorCanHideReply(currentTopicId, id, data);
+          const parentId = resolveParentId(data);
+          // Delete the reply first; then adjust counters (best-effort).
+          await ref.delete();
+          try {
+            await topicRef.update({
+              replyCount: window.firebase.firestore.FieldValue.increment(-1),
+            });
+          } catch (countErr) {
+            console.warn("[TourAI community] replyCount update after delete", countErr);
+          }
+          if (parentId && parentId !== PARENT_ROOT) {
+            try {
+              await topicRef.collection("Replies").doc(parentId).update({
+                replicaCount: window.firebase.firestore.FieldValue.increment(-1),
+              });
+            } catch (countErr) {
+              console.warn("[TourAI community] replicaCount update after delete", countErr);
+            }
+          }
+
+          removeReplyFromLocalState(id);
+          if (currentTopic && currentTopic.replyCount > 0) {
+            currentTopic.replyCount -= 1;
+          }
+          setStatus("", false);
+          renderDetailThread();
+        }
+      } catch (err) {
+        console.error("[TourAI community] delete", err);
+        const msg = saveErrorMessage(err);
+        setStatus(msg, true);
+        if (window.TourAiFeedback?.show) {
+          window.TourAiFeedback.show({
+            type: "error",
+            title: t("community.confirm.deleteFailed.title", "No se pudo eliminar"),
+            message: msg,
+          });
+        }
+      }
+      return;
+    }
     const authorEl = event.target.closest("[data-author-uid]");
     if (authorEl && detailMount.contains(authorEl)) {
       event.preventDefault();
@@ -2024,78 +2755,6 @@
         authorEl.getAttribute("data-author-uid"),
         authorEl.getAttribute("data-author-name")
       );
-      return;
-    }
-    const hideBtn = event.target.closest("[data-hide]");
-    if (!hideBtn) {
-      return;
-    }
-    if (!currentUser) {
-      window.location.href = loginUrl();
-      return;
-    }
-    const kind = hideBtn.getAttribute("data-hide");
-    const id = hideBtn.getAttribute("data-id");
-    try {
-      const firestore = await auth.getFirestore();
-      if (kind === "topic") {
-        const ref = firestore.collection("CommunityTopics").doc(id);
-        const doc = await ref.get();
-        if (!doc.exists || doc.data()?.authorUid !== currentUser.uid) {
-          throw new Error("FORBIDDEN");
-        }
-        await assertAuthorCanHideTopic(id, doc.data());
-        await ref.update({ hidden: true });
-        showList(currentCategory);
-        return;
-      }
-      if (kind === "reply" && currentTopicId) {
-        const topicRef = firestore.collection("CommunityTopics").doc(currentTopicId);
-        const ref = topicRef.collection("Replies").doc(id);
-        const doc = await ref.get();
-        if (!doc.exists || doc.data()?.authorUid !== currentUser.uid) {
-          throw new Error("FORBIDDEN");
-        }
-        const data = doc.data() || {};
-        await assertAuthorCanHideReply(currentTopicId, id, data);
-        const parentId = String(data.parentReplyId || data.replyToId || PARENT_ROOT);
-        const batch = firestore.batch();
-        batch.update(ref, { hidden: true });
-        batch.update(topicRef, {
-          replyCount: window.firebase.firestore.FieldValue.increment(-1),
-        });
-        if (parentId && parentId !== PARENT_ROOT) {
-          batch.update(topicRef.collection("Replies").doc(parentId), {
-            replicaCount: window.firebase.firestore.FieldValue.increment(-1),
-          });
-        }
-        await batch.commit();
-
-        if (parentId && parentId !== PARENT_ROOT) {
-          const state = replicasState(parentId);
-          state.items = state.items.filter(function (item) {
-            return item.id !== id;
-          });
-          const parent = replies.find(function (item) {
-            return item.id === parentId;
-          });
-          if (parent && parent.replicaCount > 0) {
-            parent.replicaCount -= 1;
-          }
-        } else {
-          replies = replies.filter(function (reply) {
-            return reply.id !== id;
-          });
-          delete replicasByParent[id];
-        }
-        if (currentTopic && currentTopic.replyCount > 0) {
-          currentTopic.replyCount -= 1;
-        }
-        renderDetailThread();
-      }
-    } catch (err) {
-      console.error(err);
-      setStatus(saveErrorMessage(err), true);
     }
   });
 
@@ -2181,12 +2840,28 @@
   });
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
+      if (confirmModal && !confirmModal.hidden) {
+        closeConfirmModal(false);
+        return;
+      }
       if (composerModal && !composerModal.hidden) {
         closeComposerModal();
         return;
       }
       closeUserCard();
     }
+  });
+
+  confirmOkBtn?.addEventListener("click", function () {
+    closeConfirmModal(true);
+  });
+  confirmCancelBtn?.addEventListener("click", function () {
+    closeConfirmModal(false);
+  });
+  confirmModal?.querySelectorAll("[data-confirm-cancel]").forEach(function (el) {
+    el.addEventListener("click", function () {
+      closeConfirmModal(false);
+    });
   });
 
   openComposerBtn?.addEventListener("click", function () {
@@ -2242,6 +2917,8 @@
       syncAuthUi();
       if (currentTopic) {
         renderDetailThread();
+      } else if (topicsEl && topics.length) {
+        hydrateSelfAuthorAvatars(topicsEl);
       }
     })
     .catch(function (err) {
