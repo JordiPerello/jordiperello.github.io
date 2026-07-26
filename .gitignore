@@ -2,6 +2,9 @@
 js/site-config.secrets.js
 js/site-config.secrets.local.js
 
+# IDE
+.vs/
+
 # Environment / credentials (defense in depth)
 .env
 .env.*
