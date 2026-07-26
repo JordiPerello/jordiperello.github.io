@@ -34,45 +34,45 @@
 })();
 
 (function () {
+  // Dismiss flag for the technical-storage notice (not a marketing consent).
   var STORAGE_KEY = "cookies-aceptadas";
 
   function cookieBannerHtml() {
     return (
       '<div class="site-cookie-banner__inner">' +
       '<p class="site-cookie-banner__text">' +
-      '<span data-i18n="cookie.text">Utilizamos cookies técnicas necesarias para el sitio (idioma y preferencias). Esta web no muestra publicidad.</span> ' +
+      '<span data-i18n="cookie.text">Usamos almacenamiento local técnico necesario (idioma, sesión y preferencias). Esta web no usa publicidad ni analítica de terceros.</span> ' +
       '<a href="cookies.html" data-i18n="cookie.more">Más info</a>.' +
       "</p>" +
       '<div class="site-cookie-banner__actions">' +
-      '<button type="button" class="site-cookie-banner__reject" data-cookie-reject data-i18n="cookie.reject">Rechazar</button>' +
-      '<button type="button" class="site-cookie-banner__accept" data-cookie-accept data-i18n="cookie.accept">Aceptar</button>' +
+      '<button type="button" class="site-cookie-banner__accept" data-cookie-dismiss data-i18n="cookie.dismiss">Entendido</button>' +
       "</div></div>"
     );
   }
 
   function ensureCookieBanner() {
     var banner = document.getElementById("cookie-banner");
-    if (banner) {
-      return banner;
+    if (!banner) {
+      if (!document.body) {
+        return null;
+      }
+      banner = document.createElement("div");
+      banner.id = "cookie-banner";
+      banner.className = "site-cookie-banner";
+      banner.hidden = true;
+      banner.setAttribute("aria-live", "polite");
+      document.body.appendChild(banner);
     }
-    if (!document.body) {
-      return null;
-    }
-    banner = document.createElement("div");
-    banner.id = "cookie-banner";
-    banner.className = "site-cookie-banner";
-    banner.hidden = true;
-    banner.setAttribute("aria-live", "polite");
+
     banner.innerHTML = cookieBannerHtml();
-    document.body.appendChild(banner);
     if (window.TourAiI18n?.applyTranslations && window.TourAiI18n?.getLocale) {
       window.TourAiI18n.applyTranslations(window.TourAiI18n.getLocale());
     }
     return banner;
   }
 
-  function updateConsent(granted) {
-    localStorage.setItem(STORAGE_KEY, granted ? "true" : "false");
+  function dismissNotice() {
+    localStorage.setItem(STORAGE_KEY, "true");
 
     if (window.gtag) {
       window.gtag("consent", "update", {
@@ -99,12 +99,8 @@
       banner.hidden = false;
     }
 
-    banner.querySelector("[data-cookie-accept]")?.addEventListener("click", function () {
-      updateConsent(true);
-    });
-
-    banner.querySelector("[data-cookie-reject]")?.addEventListener("click", function () {
-      updateConsent(false);
+    banner.querySelector("[data-cookie-dismiss]")?.addEventListener("click", function () {
+      dismissNotice();
     });
   }
 
