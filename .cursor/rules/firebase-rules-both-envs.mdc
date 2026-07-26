@@ -1,0 +1,49 @@
+---
+description: Always deploy Firebase Firestore/Storage rules to both DES and PROD
+alwaysApply: true
+---
+
+# Firebase rules: deploy DES and PROD together
+
+Whenever Firestore or Storage security rules are changed or synced, **deploy them to both Firebase environments in the same session**. Never leave only one environment updated.
+
+## Projects
+
+| Alias | Project ID | Environment |
+|-------|------------|-------------|
+| `tourai-dev` | `tourai-1f3d9` | DES (development) |
+| `tourai-pro` | `tourai-production-7dabf` | PROD (production) |
+
+Working directory for deploys: `D:\Proyectos\TourAI\firebase`
+
+## Source of truth
+
+Canonical rules live in:
+
+- `D:\Proyectos\Documents\docs-firabase\Rules\firestore.rules`
+- `D:\Proyectos\Documents\docs-firabase\Rules\storage.rules`
+
+Before deploy, sync into `TourAI\firebase\` (copy from that docs folder, or use `Sync-FirebaseRulesFromLocalDocs` from `firebase/scripts/_common.ps1`).
+
+## Required deploy sequence
+
+```powershell
+cd D:\Proyectos\TourAI\firebase
+# sync rules from docs-firabase first
+firebase use tourai-dev
+firebase deploy --only firestore:rules --non-interactive
+firebase use tourai-pro
+firebase deploy --only firestore:rules --non-interactive
+```
+
+If Storage rules also changed, include `storage` (or deploy `firestore:rules,storage` on both aliases).
+
+## Do not
+
+- Deploy rules only to DES or only to PROD
+- Edit `TourAI\firebase\firestore.rules` without updating the canonical file in `docs-firabase\Rules`
+- Assume a previous deploy covered both environments — verify both in the same turn
+
+## After deploy
+
+Tell the owner that rules were released on **DES** and **PROD** (include project ids).

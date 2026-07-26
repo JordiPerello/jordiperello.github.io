@@ -1,11 +1,12 @@
 rules_version = '2';
 // Example only. Canonical rules live in:
 //   D:\Proyectos\Documents\docs-firabase\Rules\firestore.rules
-// Deploy via TourAI\firebase\scripts\deploy-functions-*.ps1
-// (or: firebase deploy --only firestore:rules after Sync-FirebaseRulesFromLocalDocs).
+// Sync + deploy from TourAI\firebase (Copy from docs, then:
+//   firebase deploy --only firestore:rules)
 //
 // CommunityTopics / Replies (summary):
-// - Create with status Pending (hidden=true) or Approved (hidden=false).
+// - Create with status Pending (hidden=true) or Approved (hidden=false)
+//   via communityStatusCreateOk().
 // - Authors cannot change status/hidden (Manager/admin only).
 // - Author/admin may physically delete a topic when replyCount == 0.
 // - Author/admin may physically delete a reply when replicaCount == 0.
