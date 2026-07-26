@@ -1364,6 +1364,23 @@ nav a.active {
   font-weight: 600;
 }
 
+.community-blocked-banner {
+  display: none;
+  margin: 0 0 14px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #c62828;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  box-shadow: 0 2px 8px rgba(198, 40, 40, 0.25);
+}
+
+.community-blocked-banner:not([hidden]) {
+  display: block;
+}
+
 .community-login-hint {
   margin: 0 0 16px;
   padding: 12px 14px;
@@ -1545,6 +1562,256 @@ body.community-composer-open {
 
 body.community-confirm-open {
   overflow: hidden;
+}
+
+/* Legal re-acceptance (blocking) — aligned with community confirm / composer modals */
+.tourai-legal-reaccept {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.tourai-legal-reaccept__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 42, 67, 0.55);
+  border: 0;
+  padding: 0;
+  cursor: default;
+}
+
+.tourai-legal-reaccept__dialog {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: min(720px, 100%);
+  max-height: min(88vh, 820px);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(10, 42, 67, 0.28);
+  border-top: 4px solid #4db8ff;
+  animation: community-compose-in 0.28s ease both;
+  overflow: hidden;
+}
+
+.tourai-legal-reaccept__header {
+  padding: 22px 22px 0;
+  flex-shrink: 0;
+}
+
+.tourai-legal-reaccept__title {
+  margin: 0 0 8px;
+  color: #0a2a43;
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.tourai-legal-reaccept__intro {
+  margin: 0 0 14px;
+  color: #3d5366;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.tourai-legal-reaccept__tabs {
+  display: flex;
+  gap: 8px;
+  padding: 0 22px;
+  flex-shrink: 0;
+  border-bottom: 1px solid #e2e8ee;
+}
+
+.tourai-legal-reaccept__tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #5a7288;
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tourai-legal-reaccept__tab:hover {
+  color: #0a2a43;
+}
+
+.tourai-legal-reaccept__tab.is-active {
+  color: #0a2a43;
+  border-bottom-color: #4db8ff;
+}
+
+.tourai-legal-reaccept__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 16px 22px;
+  -webkit-overflow-scrolling: touch;
+  background: #f7fafc;
+}
+
+.tourai-legal-reaccept__panel {
+  background: #fff;
+  border: 1px solid #e2e8ee;
+  border-radius: 12px;
+  padding: 18px 16px;
+  color: #333;
+  line-height: 1.65;
+  font-size: 0.92rem;
+}
+
+.tourai-legal-reaccept__panel h2 {
+  margin: 1.1em 0 0.45em;
+  color: #0a2a43;
+  font-size: 1.05rem;
+}
+
+.tourai-legal-reaccept__panel h2:first-child {
+  margin-top: 0;
+}
+
+.tourai-legal-reaccept__panel h3 {
+  margin: 1em 0 0.4em;
+  color: #0d3b5e;
+  font-size: 0.98rem;
+}
+
+.tourai-legal-reaccept__panel p {
+  margin: 0 0 0.75em;
+  text-align: justify;
+}
+
+.tourai-legal-reaccept__panel ul {
+  margin: 0 0 0.85em;
+  padding-left: 1.25em;
+}
+
+.tourai-legal-reaccept__panel li {
+  margin-bottom: 0.35em;
+}
+
+.tourai-legal-reaccept__panel a {
+  color: #0a7cff;
+  font-weight: 600;
+}
+
+.tourai-legal-reaccept__panel table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 0.85em;
+  font-size: 0.88rem;
+}
+
+.tourai-legal-reaccept__panel th,
+.tourai-legal-reaccept__panel td {
+  border: 1px solid #d7e2ec;
+  padding: 6px 8px;
+  text-align: left;
+}
+
+.tourai-legal-reaccept__status {
+  margin: 0;
+  color: #5a7288;
+  font-size: 0.92rem;
+  text-align: center;
+  padding: 28px 12px;
+}
+
+.tourai-legal-reaccept__status--error {
+  color: #a93226;
+}
+
+.tourai-legal-reaccept__footer {
+  flex-shrink: 0;
+  padding: 14px 22px 18px;
+  border-top: 1px solid #e2e8ee;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tourai-legal-reaccept__hint {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #5a7288;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.tourai-legal-reaccept__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.tourai-legal-reaccept__actions .btn-primary,
+.tourai-legal-reaccept__actions .btn-secondary {
+  display: inline-block;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  min-width: 140px;
+  padding: 10px 16px;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.tourai-legal-reaccept__actions .btn-primary {
+  border: 0;
+  background: #0a2a43;
+  color: #fff;
+}
+
+.tourai-legal-reaccept__actions .btn-primary:hover:not(:disabled) {
+  background: #134866;
+  transform: translateY(-1px);
+}
+
+.tourai-legal-reaccept__actions .btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.tourai-legal-reaccept__actions .btn-secondary {
+  border: 1px solid #c9d7e3;
+  background: #fff;
+  color: #0a2a43;
+}
+
+.tourai-legal-reaccept__actions .btn-secondary:hover:not(:disabled) {
+  background: #f4f7f9;
+}
+
+body.tourai-legal-reaccept-open {
+  overflow: hidden;
+}
+
+@media (max-width: 560px) {
+  .tourai-legal-reaccept {
+    padding: 8px;
+    align-items: stretch;
+  }
+
+  .tourai-legal-reaccept__dialog {
+    max-height: 96vh;
+    border-radius: 12px;
+  }
+
+  .tourai-legal-reaccept__actions .btn-primary,
+  .tourai-legal-reaccept__actions .btn-secondary {
+    flex: 1 1 100%;
+  }
 }
 
 @keyframes community-compose-in {

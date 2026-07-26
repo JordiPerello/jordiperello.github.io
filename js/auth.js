@@ -7,6 +7,9 @@
   const TourAiAuth = {
     _ready: null,
 
+    /** Fallback if PublicConfig/Legal cannot be read. Live value lives in Firestore. */
+    LegalDocumentsVersion: "2026-07-26",
+
     t(key, fallback) {
       const locale = global.TourAiI18n?.getLocale?.();
       return global.TourAiI18n?.tOr?.(key, locale, null, fallback) ?? fallback;
@@ -694,7 +697,314 @@
       photoCropOffsetYNorm: Number.isFinite(offsetY) ? offsetY : 0,
       photoCropUserScale:
         Number.isFinite(scaleRaw) && scaleRaw > 0 ? scaleRaw : 1,
+      termsAccepted: data.TermsAccepted === true,
+      legalAcceptedVersion: String(data.LegalAcceptedVersion || "").trim(),
     };
+  }
+
+  /** Fallback only — live value is PublicConfig/Legal.CurrentVersion in Firestore. */
+  const LEGAL_DOCUMENTS_VERSION = auth.LegalDocumentsVersion || "2026-07-26";
+  let legalModalBusy = false;
+  let cachedLegalVersion = null;
+
+  async function fetchLegalDocumentsVersion() {
+    if (cachedLegalVersion) {
+      return cachedLegalVersion;
+    }
+    try {
+      const db = await auth.getFirestore();
+      const snap = await db.collection("PublicConfig").doc("Legal").get();
+      if (snap.exists) {
+        const version = String(snap.data()?.CurrentVersion || "").trim();
+        if (version) {
+          cachedLegalVersion = version;
+          return cachedLegalVersion;
+        }
+      }
+    } catch (_) {
+      // Offline / missing doc → fallback embedded version.
+    }
+    cachedLegalVersion = LEGAL_DOCUMENTS_VERSION;
+    return cachedLegalVersion;
+  }
+
+  function needsLegalReacceptance(profileOrData, currentVersion) {
+    if (!profileOrData) {
+      return true;
+    }
+    const termsOk =
+      profileOrData.termsAccepted === true ||
+      profileOrData.TermsAccepted === true;
+    if (!termsOk) {
+      return true;
+    }
+    const version = String(
+      profileOrData.legalAcceptedVersion ||
+        profileOrData.LegalAcceptedVersion ||
+        ""
+    ).trim();
+    const required = String(currentVersion || LEGAL_DOCUMENTS_VERSION).trim();
+    return version !== required;
+  }
+
+  const legalDocHtmlCache = { terms: null, privacy: null };
+
+  function extractLegalMainHtml(html) {
+    const doc = new DOMParser().parseFromString(String(html || ""), "text/html");
+    const main =
+      doc.querySelector("main.legal-content") ||
+      doc.querySelector("main.container.legal-content") ||
+      doc.querySelector("[data-i18n-html] main") ||
+      doc.querySelector("main");
+    if (!main) {
+      return "";
+    }
+    return main.innerHTML;
+  }
+
+  async function loadLegalDocumentHtml(kind) {
+    if (legalDocHtmlCache[kind]) {
+      return legalDocHtmlCache[kind];
+    }
+
+    const locale = global.TourAiI18n?.getLocale?.() || "es-ES";
+    const i18nKey = kind === "privacy" ? "page.privacy.content" : "page.terms.content";
+    if (locale === "en-GB" && typeof global.TourAiI18n?.t === "function") {
+      const translated = global.TourAiI18n.t(i18nKey, locale);
+      if (translated) {
+        legalDocHtmlCache[kind] = extractLegalMainHtml(translated) || translated;
+        return legalDocHtmlCache[kind];
+      }
+    }
+
+    const url = kind === "privacy" ? "privacy.html" : "terms.html";
+    const response = await fetch(url, { credentials: "same-origin", cache: "no-cache" });
+    if (!response.ok) {
+      throw new Error("LEGAL_FETCH_FAILED");
+    }
+    legalDocHtmlCache[kind] = extractLegalMainHtml(await response.text());
+    if (!legalDocHtmlCache[kind]) {
+      throw new Error("LEGAL_PARSE_FAILED");
+    }
+    return legalDocHtmlCache[kind];
+  }
+
+  function shouldLeavePrivateAreaAfterLegalDecline() {
+    const path = String(global.location.pathname || "").toLowerCase();
+    return /(^|\/)(account|dashboard)\.html$/i.test(path);
+  }
+
+  async function acceptCurrentLegalDocuments(uid, version) {
+    const db = await auth.getFirestore();
+    const now = firebase.firestore.Timestamp.now();
+    const legalVersion = String(version || LEGAL_DOCUMENTS_VERSION).trim();
+    await db.collection("Users").doc(uid).update({
+      TermsAccepted: true,
+      TermsAcceptedAt: now,
+      LegalAcceptedVersion: legalVersion,
+    });
+    return legalVersion;
+  }
+
+  async function promptLegalReacceptanceIfNeeded(profile) {
+    const currentVersion = await fetchLegalDocumentsVersion();
+    if (!currentUser || !profile || !needsLegalReacceptance(profile, currentVersion) || legalModalBusy) {
+      return true;
+    }
+    legalModalBusy = true;
+
+    return new Promise(function (resolve) {
+      let activeTab = "terms";
+      const overlay = document.createElement("div");
+      overlay.className = "tourai-legal-reaccept";
+      overlay.setAttribute("role", "dialog");
+      overlay.setAttribute("aria-modal", "true");
+      overlay.setAttribute(
+        "aria-label",
+        t("legal.reaccept.title", "Documentos legales actualizados")
+      );
+      overlay.innerHTML =
+        '<div class="tourai-legal-reaccept__backdrop" aria-hidden="true"></div>' +
+        '<div class="tourai-legal-reaccept__dialog">' +
+        '<div class="tourai-legal-reaccept__header">' +
+        '<h2 class="tourai-legal-reaccept__title">' +
+        escapeHtml(t("legal.reaccept.title", "Documentos legales actualizados")) +
+        "</h2>" +
+        '<p class="tourai-legal-reaccept__intro">' +
+        escapeHtml(
+          t(
+            "legal.reaccept.body",
+            "Hemos actualizado los Términos y Condiciones y/o la Política de Privacidad. Léelos aquí y acéptalos para continuar (una aceptación vale para la app y la web con la misma cuenta)."
+          )
+        ) +
+        "</p></div>" +
+        '<div class="tourai-legal-reaccept__tabs" role="tablist">' +
+        '<button type="button" class="tourai-legal-reaccept__tab is-active" role="tab" aria-selected="true" data-legal-tab="terms">' +
+        escapeHtml(t("legal.reaccept.tab.terms", "Términos")) +
+        "</button>" +
+        '<button type="button" class="tourai-legal-reaccept__tab" role="tab" aria-selected="false" data-legal-tab="privacy">' +
+        escapeHtml(t("legal.reaccept.tab.privacy", "Privacidad")) +
+        "</button></div>" +
+        '<div class="tourai-legal-reaccept__body">' +
+        '<p class="tourai-legal-reaccept__status" data-legal-status>' +
+        escapeHtml(t("legal.reaccept.loading", "Cargando documentos…")) +
+        "</p>" +
+        '<div class="tourai-legal-reaccept__panel" data-legal-panel hidden></div></div>' +
+        '<div class="tourai-legal-reaccept__footer">' +
+        '<p class="tourai-legal-reaccept__hint">' +
+        escapeHtml(
+          t(
+            "legal.reaccept.hint",
+            "Si no aceptas, se cerrará tu sesión. Podrás seguir viendo el contenido público de la web, pero no la zona de cuenta hasta que aceptes."
+          )
+        ) +
+        "</p>" +
+        '<div class="tourai-legal-reaccept__actions">' +
+        '<button type="button" class="btn-secondary" data-legal-decline>' +
+        escapeHtml(t("legal.reaccept.decline", "No acepto · Cerrar sesión")) +
+        "</button>" +
+        '<button type="button" class="btn-primary" data-legal-accept disabled>' +
+        escapeHtml(t("legal.reaccept.accept", "He leído y acepto")) +
+        "</button></div></div></div>";
+
+      document.body.appendChild(overlay);
+      document.body.classList.add("tourai-legal-reaccept-open");
+
+      const statusEl = overlay.querySelector("[data-legal-status]");
+      const panelEl = overlay.querySelector("[data-legal-panel]");
+      const acceptBtn = overlay.querySelector("[data-legal-accept]");
+      const declineBtn = overlay.querySelector("[data-legal-decline]");
+
+      async function finish(ok) {
+        overlay.remove();
+        document.body.classList.remove("tourai-legal-reaccept-open");
+        legalModalBusy = false;
+        resolve(ok);
+      }
+
+      async function showTab(kind) {
+        activeTab = kind;
+        overlay.querySelectorAll("[data-legal-tab]").forEach(function (tab) {
+          const selected = tab.getAttribute("data-legal-tab") === kind;
+          tab.classList.toggle("is-active", selected);
+          tab.setAttribute("aria-selected", selected ? "true" : "false");
+        });
+        if (statusEl) {
+          statusEl.hidden = false;
+          statusEl.classList.remove("tourai-legal-reaccept__status--error");
+          statusEl.textContent = t("legal.reaccept.loading", "Cargando documentos…");
+        }
+        if (panelEl) {
+          panelEl.hidden = true;
+          panelEl.innerHTML = "";
+        }
+        if (acceptBtn) {
+          acceptBtn.disabled = true;
+        }
+        try {
+          const html = await loadLegalDocumentHtml(kind);
+          if (panelEl) {
+            panelEl.innerHTML = html;
+            panelEl.hidden = false;
+          }
+          if (statusEl) {
+            statusEl.hidden = true;
+          }
+          if (acceptBtn) {
+            acceptBtn.disabled = false;
+          }
+          const body = overlay.querySelector(".tourai-legal-reaccept__body");
+          if (body) {
+            body.scrollTop = 0;
+          }
+        } catch (_) {
+          if (statusEl) {
+            statusEl.hidden = false;
+            statusEl.classList.add("tourai-legal-reaccept__status--error");
+            statusEl.textContent = t(
+              "legal.reaccept.error",
+              "No se pudieron cargar los documentos. Revisa tu conexión e inténtalo de nuevo."
+            );
+          }
+        }
+      }
+
+      overlay.querySelectorAll("[data-legal-tab]").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          const kind = tab.getAttribute("data-legal-tab");
+          if (kind && kind !== activeTab) {
+            showTab(kind);
+          }
+        });
+      });
+
+      panelEl?.addEventListener("click", function (event) {
+        const link = event.target?.closest?.("a");
+        if (!link) {
+          return;
+        }
+        const href = String(link.getAttribute("href") || "");
+        if (/privacy\.html/i.test(href)) {
+          event.preventDefault();
+          showTab("privacy");
+        } else if (/terms\.html/i.test(href)) {
+          event.preventDefault();
+          showTab("terms");
+        }
+      });
+
+      declineBtn?.addEventListener("click", async function () {
+        if (declineBtn) {
+          declineBtn.disabled = true;
+        }
+        if (acceptBtn) {
+          acceptBtn.disabled = true;
+        }
+        try {
+          await auth.signOut();
+        } catch (_) {
+          /* ignore */
+        }
+        await finish(false);
+        if (shouldLeavePrivateAreaAfterLegalDecline()) {
+          global.location.href = "index.html";
+        }
+      });
+
+      acceptBtn?.addEventListener("click", async function () {
+        if (acceptBtn) {
+          acceptBtn.disabled = true;
+        }
+        if (declineBtn) {
+          declineBtn.disabled = true;
+        }
+        try {
+          const saved = await acceptCurrentLegalDocuments(currentUser.uid, currentVersion);
+          profile.termsAccepted = true;
+          profile.legalAcceptedVersion = saved;
+          writeCache(profile);
+          await finish(true);
+        } catch (err) {
+          console.error("[TourAI legal] accept failed", err);
+          if (acceptBtn) {
+            acceptBtn.disabled = false;
+          }
+          if (declineBtn) {
+            declineBtn.disabled = false;
+          }
+        }
+      });
+
+      showTab("terms");
+    });
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
   }
 
   /** Match account profile crop math (120px / radius 58), scaled to nav avatar size. */
@@ -904,6 +1214,7 @@
       const enriched = await loadProfile(currentUser);
       currentProfile = enriched;
       applySignedIn(enriched);
+      await promptLegalReacceptanceIfNeeded(enriched);
     } catch (err) {
       console.warn("[TourAI nav-auth]", err);
       markAuthResolved();
@@ -1373,6 +1684,16 @@
 
       const db = await auth.getFirestore();
       const now = firebase.firestore.Timestamp.now();
+      let legalVersion = auth.LegalDocumentsVersion || "2026-07-26";
+      try {
+        const legalSnap = await db.collection("PublicConfig").doc("Legal").get();
+        const fromConfig = String(legalSnap.data()?.CurrentVersion || "").trim();
+        if (fromConfig) {
+          legalVersion = fromConfig;
+        }
+      } catch (_) {
+        // Keep fallback.
+      }
       await db
         .collection("Users")
         .doc(user.uid)
@@ -1385,6 +1706,7 @@
           CreatedAt: now,
           TermsAccepted: true,
           TermsAcceptedAt: now,
+          LegalAcceptedVersion: legalVersion,
           DeviceId: webDeviceId(),
           SessionLastSeenAt: now,
           Preferences: "[]",

@@ -36,6 +36,41 @@
 (function () {
   var STORAGE_KEY = "cookies-aceptadas";
 
+  function cookieBannerHtml() {
+    return (
+      '<div class="site-cookie-banner__inner">' +
+      '<p class="site-cookie-banner__text">' +
+      '<span data-i18n="cookie.text">Utilizamos cookies técnicas necesarias para el sitio (idioma y preferencias). Esta web no muestra publicidad.</span> ' +
+      '<a href="cookies.html" data-i18n="cookie.more">Más info</a>.' +
+      "</p>" +
+      '<div class="site-cookie-banner__actions">' +
+      '<button type="button" class="site-cookie-banner__reject" data-cookie-reject data-i18n="cookie.reject">Rechazar</button>' +
+      '<button type="button" class="site-cookie-banner__accept" data-cookie-accept data-i18n="cookie.accept">Aceptar</button>' +
+      "</div></div>"
+    );
+  }
+
+  function ensureCookieBanner() {
+    var banner = document.getElementById("cookie-banner");
+    if (banner) {
+      return banner;
+    }
+    if (!document.body) {
+      return null;
+    }
+    banner = document.createElement("div");
+    banner.id = "cookie-banner";
+    banner.className = "site-cookie-banner";
+    banner.hidden = true;
+    banner.setAttribute("aria-live", "polite");
+    banner.innerHTML = cookieBannerHtml();
+    document.body.appendChild(banner);
+    if (window.TourAiI18n?.applyTranslations && window.TourAiI18n?.getLocale) {
+      window.TourAiI18n.applyTranslations(window.TourAiI18n.getLocale());
+    }
+    return banner;
+  }
+
   function updateConsent(granted) {
     localStorage.setItem(STORAGE_KEY, granted ? "true" : "false");
 
@@ -55,7 +90,7 @@
   }
 
   function initCookieBanner() {
-    var banner = document.getElementById("cookie-banner");
+    var banner = ensureCookieBanner();
     if (!banner) {
       return;
     }

@@ -15,6 +15,12 @@
   const SEARCH_SCAN_LIMIT = 40;
   /** Max replicas loaded per parent when expanded (on demand only). */
   const REPLICAS_LIMIT = 40;
+  const STATUS_PENDING = "Pending";
+  const STATUS_APPROVED = "Approved";
+  /** Auto-publish when the author has this many approved posts and zero rejections. */
+  const AUTO_APPROVE_MIN = 5;
+  /** Same threshold as Manager CommunityTopicsRepository.RejectBlockThreshold. */
+  const REJECT_BLOCK_THRESHOLD = 3;
 
   const statusEl = document.getElementById("communityStatus");
   const tabsEl = document.getElementById("communityTabs");
@@ -81,6 +87,9 @@
   let openAuthorUid = null;
   let hoverOpenTimer = null;
   let hoverCloseTimer = null;
+  /** @type {string[]|null} */
+  let forbiddenWordsCache = null;
+  let forbiddenWordsLoading = null;
 
   const searchInput = document.getElementById("communitySearchInput");
   const searchClearBtn = document.getElementById("communitySearchClear");
@@ -89,6 +98,10 @@
   const userCardName = document.getElementById("communityUserCardName");
   const userCardMeta = document.getElementById("communityUserCardMeta");
   const userCardClose = document.getElementById("communityUserCardClose");
+  const blockedBanner = document.getElementById("communityBlockedBanner");
+
+  /** True when the signed-in user cannot create community posts. */
+  let postingBlocked = false;
 
   function t(key, fallback) {
     return auth.t?.(key, fallback) ?? fallback;
@@ -488,6 +501,149 @@
     return String(box.textContent || "")
       .replace(/\u00a0/g, " ")
       .trim();
+  }
+
+  function normalizeForForbidden(text) {
+    return String(text || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9 ]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function containsWholeWord(haystack, needle) {
+    if (!haystack || !needle) {
+      return false;
+    }
+    const escaped = needle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return new RegExp("\\b" + escaped + "\\b", "i").test(haystack);
+  }
+
+  function flattenForbiddenItems(items) {
+    const terms = [];
+    if (!items || typeof items !== "object") {
+      return terms;
+    }
+    Object.keys(items).forEach(function (key) {
+      const list = items[key];
+      if (!Array.isArray(list)) {
+        return;
+      }
+      list.forEach(function (word) {
+        const normalized = normalizeForForbidden(word);
+        if (normalized) {
+          terms.push(normalized);
+        }
+      });
+    });
+    return terms;
+  }
+
+  async function loadForbiddenWords() {
+    if (forbiddenWordsCache) {
+      return forbiddenWordsCache;
+    }
+    if (forbiddenWordsLoading) {
+      return forbiddenWordsLoading;
+    }
+    forbiddenWordsLoading = (async function () {
+      const terms = [];
+      try {
+        const firestore = await auth.getFirestore();
+        const locale = window.TourAiI18n?.getLocale?.() || "es-ES";
+        const locales = [locale, "es-ES", "en-GB"].filter(function (value, index, arr) {
+          return arr.indexOf(value) === index;
+        });
+        for (let i = 0; i < locales.length; i++) {
+          try {
+            const snap = await firestore
+              .collection("ConversationalRules")
+              .doc("ForbiddenWords_" + locales[i])
+              .get();
+            if (snap.exists) {
+              const data = snap.data() || {};
+              terms.push.apply(terms, flattenForbiddenItems(data.Items || data.items));
+            }
+          } catch (_) {
+            // Best-effort; posting still works without the list.
+          }
+        }
+      } catch (_) {
+        // Ignore.
+      }
+      forbiddenWordsCache = Array.from(new Set(terms)).sort(function (a, b) {
+        return b.length - a.length;
+      });
+      return forbiddenWordsCache;
+    })();
+    try {
+      return await forbiddenWordsLoading;
+    } finally {
+      forbiddenWordsLoading = null;
+    }
+  }
+
+  async function textHasForbiddenWords(text) {
+    const normalized = normalizeForForbidden(text);
+    if (!normalized) {
+      return false;
+    }
+    const terms = await loadForbiddenWords();
+    for (let i = 0; i < terms.length; i++) {
+      if (containsWholeWord(normalized, terms[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  async function authorTrustSnapshot(uid) {
+    const result = { approved: 0, rejected: 0, postingBlocked: false };
+    if (!uid) {
+      return result;
+    }
+    try {
+      const firestore = await auth.getFirestore();
+      const snap = await firestore.collection("Users").doc(uid).get();
+      if (snap.exists) {
+        const data = snap.data() || {};
+        result.approved = Number(data.CommunityApprovedCount) || 0;
+        result.rejected = Number(data.CommunityRejectedCount) || 0;
+        result.postingBlocked =
+          data.CommunityPostingBlocked === true ||
+          result.rejected >= REJECT_BLOCK_THRESHOLD;
+      }
+    } catch (_) {
+      // Owner-only Users read may fail for others; for self it should work.
+    }
+    return result;
+  }
+
+  async function refreshPostingBlockState(uid) {
+    if (!uid) {
+      postingBlocked = false;
+      syncAuthUi();
+      return;
+    }
+    const trust = await authorTrustSnapshot(uid);
+    postingBlocked = !!trust.postingBlocked;
+    syncAuthUi();
+  }
+
+  async function resolveModerationState(user, plainText) {
+    const hasForbidden = await textHasForbiddenWords(plainText);
+    let autoApprove = false;
+    if (!hasForbidden && user?.uid) {
+      const trust = await authorTrustSnapshot(user.uid);
+      autoApprove = trust.approved >= AUTO_APPROVE_MIN && trust.rejected === 0;
+    }
+    return {
+      hasForbiddenWords: hasForbidden,
+      status: autoApprove ? STATUS_APPROVED : STATUS_PENDING,
+      hidden: !autoApprove,
+    };
   }
 
   function previewFromBody(body, maxLen) {
@@ -1176,6 +1332,8 @@
       authorName: data.authorName || "",
       createdAt: data.createdAt || null,
       hidden: !!data.hidden,
+      status: data.status || (data.hidden ? STATUS_PENDING : STATUS_APPROVED),
+      hasForbiddenWords: !!data.hasForbiddenWords,
       replyCount: Number(data.replyCount) || 0,
     };
   }
@@ -1200,6 +1358,8 @@
       authorName: data.authorName || "",
       createdAt: data.createdAt || null,
       hidden: !!data.hidden,
+      status: data.status || (data.hidden ? STATUS_PENDING : STATUS_APPROVED),
+      hasForbiddenWords: !!data.hasForbiddenWords,
       parentReplyId: parentReplyId,
       replicaCount: Number(data.replicaCount) || 0,
       replyToAuthorName: data.replyToAuthorName || "",
@@ -1429,22 +1589,32 @@
 
   function syncAuthUi() {
     const signedIn = !!currentUser;
+    const canPost = signedIn && !postingBlocked;
+    if (blockedBanner) {
+      blockedBanner.hidden = !signedIn || !postingBlocked;
+      if (!blockedBanner.hidden) {
+        blockedBanner.textContent = t(
+          "community.blocked.banner",
+          "Usuario bloqueado: puedes leer la comunidad, pero no publicar mensajes."
+        );
+      }
+    }
     if (openComposerBtn) {
-      openComposerBtn.hidden = !signedIn || !listView || listView.hidden;
+      openComposerBtn.hidden = !canPost || !listView || listView.hidden;
     }
     if (loginHint) {
       loginHint.hidden = signedIn || !listView || listView.hidden;
     }
     if (replyBox) {
-      replyBox.hidden = !signedIn || !currentTopicId;
+      replyBox.hidden = !canPost || !currentTopicId;
     }
-    if (!signedIn) {
+    if (!signedIn || postingBlocked) {
       closeComposerModal();
     }
   }
 
   function openComposerModal() {
-    if (!composerModal || !currentUser) {
+    if (!composerModal || !currentUser || postingBlocked) {
       return;
     }
     closeUserCard();
@@ -2606,15 +2776,50 @@
       setStatus(t("community.error.title", "Escribe un título (máx. 120 caracteres)."), true);
       return;
     }
+    if (postingBlocked) {
+      setStatus(
+        t(
+          "community.blocked.banner",
+          "Usuario bloqueado: puedes leer la comunidad, pero no publicar mensajes."
+        ),
+        true
+      );
+      return;
+    }
     if (CATEGORIES.indexOf(currentCategory) < 0) {
       currentCategory = "help";
     }
+    const plainForModeration = (title + " " + bodyText).trim();
+    const user = await requireUser();
+    const moderation = await resolveModerationState(user, plainForModeration);
+    if (moderation.hasForbiddenWords) {
+      const continueAnyway = await confirmAction({
+        title: t(
+          "community.confirm.forbidden.title",
+          "Palabras no permitidas"
+        ),
+        message: t(
+          "community.confirm.forbidden.body",
+          "Tu mensaje contiene palabras que pueden no admitirse. Si continúas, quedará pendiente de revisión y puede ser rechazado."
+        ),
+        confirmLabel: t("community.confirm.forbidden.continue", "Continuar igualmente"),
+        danger: true,
+      });
+      if (!continueAnyway) {
+        return;
+      }
+    }
     const ok = await confirmAction({
       title: t("community.confirm.publishTopic.title", "¿Publicar este tema?"),
-      message: t(
-        "community.confirm.publishTopic.body",
-        "Tu tema será visible en esta sección de la comunidad."
-      ),
+      message: moderation.hidden
+        ? t(
+            "community.confirm.publishTopic.pending",
+            "Tu tema quedará pendiente de revisión antes de mostrarse en la comunidad."
+          )
+        : t(
+            "community.confirm.publishTopic.body",
+            "Tu tema será visible en esta sección de la comunidad."
+          ),
       confirmLabel: t("community.publish", "Publicar"),
     });
     if (!ok) {
@@ -2623,7 +2828,6 @@
     busy = true;
     setStatus(t("community.saving", "Publicando..."), false);
     try {
-      const user = await requireUser();
       const firestore = await auth.getFirestore();
       const ref = await firestore.collection("CommunityTopics").add({
         category: currentCategory,
@@ -2633,13 +2837,25 @@
         authorUid: user.uid,
         authorName: authorLabel(user),
         createdAt: timestampNow(),
-        hidden: false,
+        status: moderation.status,
+        hidden: moderation.hidden,
+        hasForbiddenWords: moderation.hasForbiddenWords,
         replyCount: 0,
       });
       resetComposerForNewTopic();
       closeComposerModal();
-      setStatus("", false);
-      showDetail(ref.id);
+      if (moderation.hidden) {
+        setStatus(
+          t(
+            "community.pending.review",
+            "Mensaje pendiente de revisión. Se publicará cuando un moderador lo apruebe."
+          ),
+          false
+        );
+      } else {
+        setStatus("", false);
+        showDetail(ref.id);
+      }
     } catch (err) {
       console.error("[TourAI community] createTopic", err);
       setStatus(saveErrorMessage(err), true);
@@ -2666,20 +2882,54 @@
       );
       return;
     }
+    if (postingBlocked) {
+      setStatus(
+        t(
+          "community.blocked.banner",
+          "Usuario bloqueado: puedes leer la comunidad, pero no publicar mensajes."
+        ),
+        true
+      );
+      return;
+    }
     const isReplica = !!(replyToTarget && replyToTarget.id);
+    const user = await requireUser();
+    const moderation = await resolveModerationState(user, bodyText);
+    if (moderation.hasForbiddenWords) {
+      const continueAnyway = await confirmAction({
+        title: t(
+          "community.confirm.forbidden.title",
+          "Palabras no permitidas"
+        ),
+        message: t(
+          "community.confirm.forbidden.body",
+          "Tu mensaje contiene palabras que pueden no admitirse. Si continúas, quedará pendiente de revisión y puede ser rechazado."
+        ),
+        confirmLabel: t("community.confirm.forbidden.continue", "Continuar igualmente"),
+        danger: true,
+      });
+      if (!continueAnyway) {
+        return;
+      }
+    }
     const ok = await confirmAction({
       title: isReplica
         ? t("community.confirm.publishReplica.title", "¿Publicar esta réplica?")
         : t("community.confirm.publishReply.title", "¿Publicar esta respuesta?"),
-      message: isReplica
+      message: moderation.hidden
         ? t(
-            "community.confirm.publishReplica.body",
-            "Tu réplica aparecerá bajo la respuesta seleccionada."
+            "community.confirm.publishReply.pending",
+            "Tu respuesta quedará pendiente de revisión antes de mostrarse en el hilo."
           )
-        : t(
-            "community.confirm.publishReply.body",
-            "Tu respuesta se añadirá a este hilo."
-          ),
+        : isReplica
+          ? t(
+              "community.confirm.publishReplica.body",
+              "Tu réplica aparecerá bajo la respuesta seleccionada."
+            )
+          : t(
+              "community.confirm.publishReply.body",
+              "Tu respuesta se añadirá a este hilo."
+            ),
       confirmLabel: t("community.publish", "Publicar"),
     });
     if (!ok) {
@@ -2688,7 +2938,6 @@
     busy = true;
     setStatus(t("community.saving", "Publicando..."), false);
     try {
-      const user = await requireUser();
       const firestore = await auth.getFirestore();
       const topicRef = firestore.collection("CommunityTopics").doc(currentTopicId);
       // Avoid an extra topic read when we already have it in memory.
@@ -2714,7 +2963,9 @@
         authorUid: user.uid,
         authorName: authorLabel(user),
         createdAt: timestampNow(),
-        hidden: false,
+        status: moderation.status,
+        hidden: moderation.hidden,
+        hasForbiddenWords: moderation.hasForbiddenWords,
         parentReplyId: parentId,
         replicaCount: 0,
       };
@@ -2729,13 +2980,16 @@
       const batch = firestore.batch();
       const replyRef = topicRef.collection("Replies").doc();
       batch.set(replyRef, replyPayload);
-      batch.update(topicRef, {
-        replyCount: window.firebase.firestore.FieldValue.increment(1),
-      });
-      if (parentId !== PARENT_ROOT) {
-        batch.update(topicRef.collection("Replies").doc(parentId), {
-          replicaCount: window.firebase.firestore.FieldValue.increment(1),
+      // Only public (Approved) replies affect visible counters.
+      if (!moderation.hidden) {
+        batch.update(topicRef, {
+          replyCount: window.firebase.firestore.FieldValue.increment(1),
         });
+        if (parentId !== PARENT_ROOT) {
+          batch.update(topicRef.collection("Replies").doc(parentId), {
+            replicaCount: window.firebase.firestore.FieldValue.increment(1),
+          });
+        }
       }
       await batch.commit();
 
@@ -2747,6 +3001,17 @@
       };
       clearReplyToTarget();
 
+      if (moderation.hidden) {
+        setStatus(
+          t(
+            "community.pending.review",
+            "Mensaje pendiente de revisión. Se publicará cuando un moderador lo apruebe."
+          ),
+          false
+        );
+        return;
+      }
+
       const localReply = {
         id: replyRef.id,
         body: bodyHtml,
@@ -2754,6 +3019,8 @@
         authorName: authorLabel(user),
         createdAt: new Date(),
         hidden: false,
+        status: STATUS_APPROVED,
+        hasForbiddenWords: false,
         parentReplyId: savedParentId,
         replicaCount: 0,
         replyToAuthorName: savedMeta.replyToAuthorName,
@@ -2935,28 +3202,34 @@
           const data = doc.data() || {};
           await assertAuthorCanHideReply(currentTopicId, id, data);
           const parentId = resolveParentId(data);
+          const wasPublic =
+            data.hidden !== true &&
+            String(data.status || STATUS_APPROVED) === STATUS_APPROVED;
           // Delete the reply first; then adjust counters (best-effort).
           await ref.delete();
-          try {
-            await topicRef.update({
-              replyCount: window.firebase.firestore.FieldValue.increment(-1),
-            });
-          } catch (countErr) {
-            console.warn("[TourAI community] replyCount update after delete", countErr);
-          }
-          if (parentId && parentId !== PARENT_ROOT) {
+          if (wasPublic) {
             try {
-              await topicRef.collection("Replies").doc(parentId).update({
-                replicaCount: window.firebase.firestore.FieldValue.increment(-1),
+              await topicRef.update({
+                replyCount: window.firebase.firestore.FieldValue.increment(-1),
               });
             } catch (countErr) {
-              console.warn("[TourAI community] replicaCount update after delete", countErr);
+              console.warn("[TourAI community] replyCount update after delete", countErr);
             }
-          }
-
-          removeReplyFromLocalState(id);
-          if (currentTopic && currentTopic.replyCount > 0) {
-            currentTopic.replyCount -= 1;
+            if (parentId && parentId !== PARENT_ROOT) {
+              try {
+                await topicRef.collection("Replies").doc(parentId).update({
+                  replicaCount: window.firebase.firestore.FieldValue.increment(-1),
+                });
+              } catch (countErr) {
+                console.warn("[TourAI community] replicaCount update after delete", countErr);
+              }
+            }
+            removeReplyFromLocalState(id);
+            if (currentTopic && currentTopic.replyCount > 0) {
+              currentTopic.replyCount -= 1;
+            }
+          } else {
+            removeReplyFromLocalState(id);
           }
           setStatus("", false);
           renderDetailThread();
@@ -3150,7 +3423,12 @@
   auth
     .onAuthStateChanged(function (user) {
       currentUser = user || null;
-      syncAuthUi();
+      if (!currentUser) {
+        postingBlocked = false;
+        syncAuthUi();
+      } else {
+        refreshPostingBlockState(currentUser.uid);
+      }
       if (currentTopic) {
         renderDetailThread();
       } else if (topicsEl && topics.length) {

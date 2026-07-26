@@ -5,6 +5,8 @@ rules_version = '2';
 // (or: firebase deploy --only firestore:rules after Sync-FirebaseRulesFromLocalDocs).
 //
 // CommunityTopics / Replies (summary):
+// - Create with status Pending (hidden=true) or Approved (hidden=false).
+// - Authors cannot change status/hidden (Manager/admin only).
 // - Author/admin may physically delete a topic when replyCount == 0.
 // - Author/admin may physically delete a reply when replicaCount == 0.
 // - Signed-in clients may onlyChanged(['replyCount']) on topics and

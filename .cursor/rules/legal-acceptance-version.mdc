@@ -1,0 +1,39 @@
+---
+description: When Terms or Privacy change, bump legal acceptance version (PublicConfig + fallbacks)
+alwaysApply: true
+---
+
+# Legal acceptance version (must bump)
+
+TourAI forces users to re-accept Terms/Privacy when the legal version changes. **Do not ship legal text edits without bumping the version.**
+
+## Source of truth
+
+Firestore document **`PublicConfig/Legal`**, field **`CurrentVersion`** (ISO date string, e.g. `2026-07-26`).
+
+App and Web read this at runtime. An Android store release is **not** required only to bump this field.
+
+## When this applies
+
+Any edit to published legal content on this site, including:
+
+- `terms.html`, `privacy.html`, `cookies.html`
+- `js/locales/**` keys that embed legal page HTML (`page.terms.*`, `page.privacy.*`, …)
+- `js/auth.js` legal re-acceptance / `LegalDocumentsVersion`
+
+## Mandatory checklist (same calendar day as the legal change)
+
+1. Set version strings to **today’s date** (`YYYY-MM-DD` from the session “Today’s date”).
+2. Update **“Última actualización” / “Last updated”** in the edited legal HTML (es defaults + `en-GB.js`).
+3. Align all of these to the **same** date string:
+   - Firestore `PublicConfig/Legal.CurrentVersion` (tell the owner if you cannot write Firestore)
+   - `js/auth.js` → `TourAiAuth.LegalDocumentsVersion` (and any local fallback)
+   - App fallback `TourAI.Models/Policies/LegalAcceptancePolicy.FallbackVersion` when that repo is in scope
+   - `TourAI/src/scripts/dataSeeds/PublicConfig_Legal.json` when in scope
+4. In the reply to the owner, state clearly: **version bumped to `YYYY-MM-DD`** and whether Firestore still needs a manual update.
+
+## Do not
+
+- Change Terms/Privacy body and leave `CurrentVersion` unchanged
+- Bump only Web and forget App fallback / Firestore
+- Assume “continued use = acceptance” — re-acceptance is enforced in code
