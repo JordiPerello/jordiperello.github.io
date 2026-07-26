@@ -81,8 +81,7 @@ function cookieBannerMarkup(depth) {
                 <button type="button" class="site-cookie-banner__accept" data-cookie-accept data-i18n="cookie.accept">Aceptar</button>
             </div>
         </div>
-    </div>
-    <script src="${prefix}js/cookie-consent.js"></script>`;
+    </div>`;
 }
 
 function removeInlineConsentScript(content) {
@@ -103,6 +102,10 @@ function removeLegacyCookieBanner(content) {
   );
   updated = updated.replace(
     /\s*<script>\s*const banner = document\.getElementById\("cookie-banner"\);[\s\S]*?<\/script>\s*/gi,
+    "\n"
+  );
+  updated = updated.replace(
+    /\s*<script src="[^"]*js\/cookie-consent\.js"><\/script>\s*/gi,
     "\n"
   );
   return updated;
@@ -212,7 +215,7 @@ function ensureFooterScripts(content, page) {
   let updated = removeLegacyCookieBanner(content);
   const prefix = assetPrefix(depthFor(page.file));
 
-  if (!updated.includes("js/cookie-consent.js")) {
+  if (!updated.includes('id="cookie-banner"')) {
     updated = updated.replace(
       /<\/body>/i,
       `${cookieBannerMarkup(depthFor(page.file))}\n</body>`

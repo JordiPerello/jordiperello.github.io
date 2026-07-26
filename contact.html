@@ -195,13 +195,7 @@
 
     <script>
         // Lógica del menú hamburguesa
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-        function openModal() { document.getElementById('privacyModal').style.display = 'flex'; }
+function openModal() { document.getElementById('privacyModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('privacyModal').style.display = 'none'; }
 
         function tContact(key, fallback) {

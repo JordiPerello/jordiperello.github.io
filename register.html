@@ -25,7 +25,7 @@
 <body class="account-page auth-action-page">
     <nav>
         <div class="nav-logo-container"><a href="index.html"><img src="img/tourai_logo_inline.png" alt="TourAI"></a></div>
-        <div class="menu-icon" onclick="document.getElementById('nav-links').classList.toggle('show')"><span></span><span></span><span></span></div>
+        <div class="menu-icon" onclick="toggleMenu()"><span></span><span></span><span></span></div>
         <div class="nav-links" id="nav-links">
             <a href="index.html" data-i18n="nav.app">La App</a>
             <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
@@ -126,7 +126,6 @@
         </div>
     </footer>
 
-    <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>

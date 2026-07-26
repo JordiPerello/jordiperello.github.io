@@ -259,3 +259,31 @@
   };
 })();
 
+/* Shared chrome: mobile nav + footer year (replaces duplicated inline page scripts). */
+(function () {
+  function fillCurrentYear() {
+    var el = document.getElementById("current-year");
+    if (el) {
+      el.textContent = String(new Date().getFullYear());
+    }
+  }
+
+  window.toggleMenu = function toggleMenu() {
+    var links =
+      document.getElementById("navLinks") || document.getElementById("nav-links");
+    if (!links) {
+      return;
+    }
+    var open = links.classList.contains("active") || links.classList.contains("show");
+    // site.css treats .active and .show the same; keep both in sync across pages.
+    links.classList.toggle("active", !open);
+    links.classList.toggle("show", !open);
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", fillCurrentYear);
+  } else {
+    fillCurrentYear();
+  }
+})();
+

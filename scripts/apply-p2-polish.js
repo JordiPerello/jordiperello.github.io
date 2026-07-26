@@ -157,23 +157,3 @@ for (const filePath of walkHtml(root)) {
     console.log("Updated", path.relative(root, filePath));
   }
 }
-
-// Update article footer template script
-const wirePath = path.join(root, "scripts", "wire-articles-i18n.js");
-let wire = fs.readFileSync(wirePath, "utf8");
-const newFooter = `const footer = \`    <footer>
-        <div class="footer-grid">
-            <div class="footer-col"><h4 data-i18n="footer.explore">Explora</h4><a href="../index.html" data-i18n="nav.app">La App</a><a href="../blog.html" data-i18n="nav.blog">Blog</a><a href="../about.html" data-i18n="footer.about">Sobre nosotros</a></div>
-            <div class="footer-col"><h4 data-i18n="footer.legal">Legal</h4><a href="../privacy.html" data-i18n="footer.privacy">Privacidad</a><a href="../terms.html" data-i18n="footer.terms">Términos</a><a href="../cookies.html" data-i18n="footer.cookies">Cookies</a></div>
-            <div class="footer-col"><h4 data-i18n="footer.help">Ayuda</h4><a href="../contact.html" data-i18n="nav.contact">Contacto</a><a href="../faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a><a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a></div>
-        </div>
-        <div class="legal-bottom">&copy; <span id="y"></span> TourAI App - <span data-i18n="footer.rights">Todos los derechos reservados.</span></div>
-    </footer>
-    <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
-    <script src="../js/site-config.js"></script>
-    <script src="../js/locales/en-GB.js"></script>
-    <script src="../js/i18n.js"></script>\`;`;
-
-wire = wire.replace(/const footer = `[\s\S]*?`\;/, newFooter);
-fs.writeFileSync(wirePath, wire, "utf8");
-console.log("Updated scripts/wire-articles-i18n.js");

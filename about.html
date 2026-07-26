@@ -63,7 +63,7 @@
 <body>
     <nav>
         <div class="nav-logo-container"><a href="index.html"><img src="img/tourai_logo_inline.png" alt="TourAI Logo"></a></div>
-        <div class="menu-icon" onclick="document.getElementById('nav-links').classList.toggle('show')"><span></span><span></span><span></span></div>
+        <div class="menu-icon" onclick="toggleMenu()"><span></span><span></span><span></span></div>
         <div class="nav-links" id="nav-links">
             <a href="index.html" data-i18n="nav.app">La App</a>
             <a class="active" data-i18n="footer.about">Sobre nosotros</a>
@@ -155,7 +155,7 @@
             <span data-i18n="footer.rights">Todos los derechos reservados.</span>
         </div>
     </footer>
-    <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+
     <script src="js/site-config.js"></script>
     <script src="js/locales/en-GB.js"></script>
     <script src="js/i18n.js"></script>

@@ -159,13 +159,7 @@
     <script src="js/i18n.js"></script>
     <script src="js/forms.js"></script>
     <script>
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('active');
-        }
-
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        function tDelete(key, fallback) {
+function tDelete(key, fallback) {
             return window.TourAiDeleteAccount?.tOr(key, fallback) ?? fallback;
         }
 
