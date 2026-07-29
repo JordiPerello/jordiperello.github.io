@@ -1,0 +1,57 @@
+---
+description: Keep PublicConfig_WhatsNew.json NextRelease updated on every meaningful product change
+alwaysApply: true
+---
+
+# What's New / Novedades (must keep current)
+
+TourAI shows release notes from Firestore **`PublicConfig/WhatsNew`**. The **web** page is the only UI; the **app** opens that URL.
+
+## Working file (TourAI app repo)
+
+`D:\Proyectos\TourAI\src\scripts\dataSeeds\PublicConfig_WhatsNew.json`
+
+(Web only consumes Firestore; do not duplicate the catalog in the web repo.)
+
+| Field | Role |
+|-------|------|
+| `NextRelease.Highlights` | Draft bullets for the **next** published notes (`es-ES` + `en-GB`) |
+| `Entries` | Published history, **newest first** |
+
+## Version format (two levels only)
+
+`Version` in What's New = **`major.minor`** only — same as `ApplicationDisplayVersion` (e.g. `1.0`, `1.1`).
+
+Full app versioning policy (major / minor / build): see **`app-versioning.mdc`**.
+
+- Do **not** use `major.minor.patch` or the store build (`ApplicationVersion` / `1.0.136`) in What's New `Version`.
+- Store scripts may still label packages `1.0.{build}`; What's New stays on the marketing **two-level** version.
+
+## When to update (every chat / every task)
+
+If the change is **user-visible** (feature, UX fix, store-facing behavior, important bugfix):
+
+1. Append a short bullet to **both** `NextRelease.Highlights.es-ES` and `.en-GB`.
+2. Write for end users (no internal file names, no “refactored X”).
+3. Follow **`user-facing-copy.mdc`** (Spanish orthography on `es-ES` bullets; App menu labels stay in `.resx`).
+4. Do **not** invent a version number until publish day.
+
+**Not resx:** release-note bullets live in this JSON → Firestore (so Web can update without an app store release). App **chrome** (menu button label, etc.) stays in `.resx` / web i18n.
+
+Skip only pure-internal edits (StyleCop, dead code, secrets paths, agent rules with no user impact).
+
+## On store publish
+
+1. Read current `ApplicationDisplayVersion` (e.g. `1.0`).
+2. If `Entries[0].Version` already equals that value → merge `NextRelease` highlights into that entry and refresh `ReleasedAt`.
+3. Else → insert new `Entries[0]` with that `Version` + `ReleasedAt` (today) + highlights.
+4. Clear `NextRelease.Highlights` to empty arrays.
+5. Upload via Manager **System → dataSeeds → WhatsNew** (or `.\scripts\Import-WhatsNewToFirestore.ps1 -Environment Development -Force`; then Production when ready). Alias: `Publish-WhatsNewToFirestore.ps1`.
+6. Tell the owner if Firestore still needs a manual Console update.
+
+## UI entry points
+
+- Web: `whats-new.html` (footer Help) — sole published UI; reads Firestore.
+- App: menu **Novedades** / **What's New** opens `WebSite:WhatsNewUrl` (same pattern as FAQ/Contact).
+
+Do not add an in-app What's New screen, Model, or Repository for this catalog.

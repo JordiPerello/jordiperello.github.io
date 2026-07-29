@@ -1,0 +1,53 @@
+---
+description: When legal texts change — sync App/Web, bump acceptance version, version lawyer review packages by date
+alwaysApply: true
+---
+
+# Legal documents — sync, acceptance bump, lawyer review versions
+
+## 1. Sync App ↔ Web (same change)
+
+When editing published legal content, review **all** related surfaces in the same task:
+
+| Document | Canonical / locations |
+|----------|------------------------|
+| Privacy | Web `privacy.html` + EN in `js/locales/en-GB.js` (app links to web) |
+| Terms (web) | `terms.html` + EN i18n |
+| Cookies | `cookies.html` + EN i18n |
+| Terms (app) | `TourAI.App/Resources/Terms/Terms.es-ES.html` + `Terms.en-GB.html` |
+| Flows | `delete-account.html`, `reset-password.html` if wording changes |
+
+Do not leave App Terms and Web Privacy/Terms out of sync for the same policy change.
+
+## 2. Acceptance version (mandatory)
+
+Follow **`legal-acceptance-version.mdc`**: bump `PublicConfig/Legal.CurrentVersion` and all fallbacks to **today’s** `YYYY-MM-DD`.
+
+## 3. Lawyer review packages (delta-only folders)
+
+Lawyer tooling lives **outside Git**:
+
+`D:\Proyectos\Documents\legal-export`
+
+**Never rewrite** a folder the lawyer already reviewed. For each new legal change set, create:
+
+```
+legal-export/reviews/yyyyMMdd - ShortTitle/
+  SCOPE.md              # what changed vs last reviewed package (bullet list)
+  DIFF-NOTES.md         # lawyer-facing delta only (new/changed clauses)
+  outgoing/             # PDFs/ZIP of changed docs (or full package + SCOPE)
+  lawyer-response/      # inbound answers/PDFs from the lawyer
+```
+
+Rules:
+
+- Folder name starts with **`yyyyMMdd`** (session date) + short English or Spanish title.
+- Put **only what is new or modified** in `DIFF-NOTES.md` / `outgoing/` so the lawyer does not re-read the whole corpus.
+- Keep prior `reviews/*` folders immutable (archive, do not merge into them).
+- Legacy flat files under `Revisiones hechas por Abogados\` stay as historical archive; **new** cycles use `reviews/`.
+
+After content edits: regenerate PDFs with `legal-export/scripts/build-lawyer-package.js`, then copy the relevant outputs into that day’s `outgoing/`.
+
+## 4. Reply to the owner
+
+State: acceptance version bumped (or not), App/Web sync done, and the new `reviews/yyyyMMdd - …` folder path (or that lawyer package still needs generating).

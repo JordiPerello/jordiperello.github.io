@@ -4,26 +4,25 @@
     <meta charset="UTF-8">
     <script src="js/site-ui.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="canonical" href="https://tourai.es/about.html">
+        <link rel="canonical" href="https://tourai.es/whats-new.html">
 
-    <link rel="alternate" hreflang="es-ES" href="https://tourai.es/about.html">
-    <link rel="alternate" hreflang="en-GB" href="https://tourai.es/about.html">
-    <link rel="alternate" hreflang="x-default" href="https://tourai.es/about.html">
+    <link rel="alternate" hreflang="es-ES" href="https://tourai.es/whats-new.html">
+    <link rel="alternate" hreflang="en-GB" href="https://tourai.es/whats-new.html">
+    <link rel="alternate" hreflang="x-default" href="https://tourai.es/whats-new.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="TourAI">
-    <meta property="og:title" content="TourAI">
-    <meta property="og:description" content="Conoce quién está detrás de TourAI, la aplicación de turismo inteligente con guías personalizadas e inteligencia artificial.">
-    <meta property="og:url" content="https://tourai.es/about.html">
+    <meta property="og:title" content="Novedades - TourAI">
+    <meta property="og:description" content="Historial de versiones y novedades de la app TourAI.">
+    <meta property="og:url" content="https://tourai.es/whats-new.html">
     <meta property="og:image" content="https://tourai.es/img/tourai_logo.png">
     <meta property="og:locale" content="es_ES">
     <meta property="og:locale:alternate" content="en_GB">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="TourAI">
-    <meta name="twitter:description" content="Conoce quién está detrás de TourAI, la aplicación de turismo inteligente con guías personalizadas e inteligencia artificial.">
+    <meta name="twitter:title" content="Novedades - TourAI">
+    <meta name="twitter:description" content="Historial de versiones y novedades de la app TourAI.">
     <meta name="twitter:image" content="https://tourai.es/img/tourai_logo.png">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"TourAI","url":"https://tourai.es","logo":"https://tourai.es/img/tourai_logo.png","email":"info@tourai.es","founder":{"@type":"Person","name":"Jordi Perelló"},"address":{"@type":"PostalAddress","addressCountry":"ES"}}</script>
-    <meta name="description" content="Conoce quién está detrás de TourAI, la aplicación de turismo inteligente con guías personalizadas e inteligencia artificial." data-i18n-meta="doc.meta.about">
-    <title data-i18n-doc-title="doc.title.about">Sobre nosotros - TourAI</title>
+    <meta name="description" content="Historial de versiones y novedades de la app TourAI." data-i18n-meta="doc.meta.whatsNew">
+    <title data-i18n-doc-title="doc.title.whatsNew">Novedades - TourAI</title>
     <link rel="icon" type="image/png" href="img/tourai_logo.png">
     <link rel="apple-touch-icon" href="img/tourai_logo.png">
     <link rel="stylesheet" href="css/site.css">
@@ -43,7 +42,19 @@
         .menu-icon span { width: 30px; height: 3px; background: var(--primary); border-radius: 3px; }
         header { background: var(--hero-bg); color: white; padding: 80px 20px; text-align: center; border-bottom: 5px solid var(--accent); }
         h1 { margin: 0; font-size: 3em; font-weight: 900; }
-        .container { max-width: 900px; margin: 40px auto 80px; padding: 50px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        header p { margin: 12px auto 0; max-width: 640px; opacity: 0.92; font-size: 1.1em; }
+        .container { max-width: 820px; margin: 40px auto 80px; padding: 40px 44px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .whats-new-status { text-align: center; color: #5a6b7a; margin: 24px 0; }
+        .whats-new-timeline { list-style: none; margin: 0; padding: 0 0 0 8px; border-left: 2px solid #d5dee6; }
+        .whats-new-entry { position: relative; margin: 0 0 28px 22px; padding: 18px 20px; border: 1px solid #d5dee6; border-radius: 14px; background: #fff; }
+        .whats-new-entry::before { content: ""; position: absolute; left: -32px; top: 26px; width: 12px; height: 12px; border-radius: 50%; background: #4db8ff; box-shadow: 0 0 0 4px rgba(77,184,255,0.2); }
+        .whats-new-entry--latest { border-color: #4db8ff; background: #f3faff; }
+        .whats-new-entry__header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; margin-bottom: 12px; }
+        .whats-new-entry__version { font-weight: 800; color: var(--primary); font-size: 1.15em; letter-spacing: 0.01em; }
+        .whats-new-entry__date { color: #5a6b7a; font-size: 0.92em; }
+        .whats-new-entry__items { margin: 0; padding-left: 1.1em; }
+        .whats-new-entry__items li { margin: 0 0 8px; }
+        .whats-new-entry__items li:last-child { margin-bottom: 0; }
         footer { background-color: #051622; color: #fff; padding: 60px 20px 40px; margin-top: 60px; border-top: 4px solid var(--accent); text-align: center; }
         .footer-grid { max-width: 1200px; margin: 0 auto 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; }
         .footer-col h4 { color: var(--accent); text-transform: uppercase; margin-bottom: 20px; }
@@ -57,8 +68,8 @@
         .footer-social__icon { width: 18px; height: 18px; flex-shrink: 0; display: block; }
         .legal-bottom { font-size: 0.9em; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
         .footer-email { color: var(--accent); text-decoration: none; font-weight: bold; }
-        @media (max-width: 768px) { .menu-icon { display: flex; } .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background: #fff; padding: 20px 0; } .nav-links.show { display: flex; } h1 { font-size: 2.2em; } .container { margin: 20px; padding: 30px 20px; } .footer-grid { grid-template-columns: 1fr; gap: 28px; text-align: center; justify-items: center; } .footer-col { width: 100%; max-width: 320px; } .footer-social__links { margin: 0 auto; max-width: 220px; } }
-    </style>
+        @media (max-width: 768px) { .menu-icon { display: flex; } .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background: #fff; padding: 20px 0; } .nav-links.show { display: flex; } h1 { font-size: 2.2em; } .container { margin: 20px; padding: 28px 18px; } .footer-grid { grid-template-columns: 1fr; gap: 28px; text-align: center; justify-items: center; } .footer-col { width: 100%; max-width: 320px; } .footer-social__links { margin: 0 auto; max-width: 220px; } .whats-new-timeline { padding-left: 4px; } .whats-new-entry { margin-left: 18px; } .whats-new-entry::before { left: -28px; } }
+</style>
 </head>
 <body>
     <nav>
@@ -66,7 +77,7 @@
         <div class="menu-icon" onclick="toggleMenu()"><span></span><span></span><span></span></div>
         <div class="nav-links" id="nav-links">
             <a href="index.html" data-i18n="nav.app">La App</a>
-            <a class="active" data-i18n="footer.about">Sobre nosotros</a>
+            <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
             <a href="community.html" data-i18n="nav.community">Comunidad</a>
             <a href="contact.html" data-i18n="nav.contact">Contacto</a>
             <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
@@ -82,36 +93,12 @@
     </nav>
 
     <header>
-        <div data-i18n-html="page.about.header">
-            <h1>Sobre TourAI</h1>
-            <p>Turismo inteligente, personalizado y accesible para todos los viajeros.</p>
-        </div>
+        <h1 data-i18n="whatsNew.title">Novedades</h1>
+        <p data-i18n="whatsNew.subtitle">Cambios y mejoras de cada versión de TourAI.</p>
     </header>
 
-    <main class="container" data-i18n-html="page.about.content">
-        <h2>¿Quiénes somos?</h2>
-        <p><strong>TourAI</strong> es un proyecto independiente de turismo digital creado por <strong>Jordi Perelló</strong>, desarrollador y apasionado de los viajes con sede en España. Nacimos con una idea sencilla: que cualquier persona pueda explorar una ciudad con la misma profundidad que tendría con un guía local, pero a su ritmo, en su idioma y desde el móvil.</p>
-        <p>Este sitio web, <strong>tourai.es</strong>, es el portal oficial del proyecto: información sobre la app, contacto, soporte y acceso a la zona privada de cuenta para usuarios registrados.</p>
-        <h2>¿Qué hace TourAI?</h2>
-        <p>TourAI es una aplicación móvil que combina <strong>inteligencia artificial</strong>, <strong>geolocalización</strong> y <strong>audioguías</strong> para ofrecer una experiencia de viaje personalizada:</p>
-        <ul>
-            <li><strong>Chat con IA:</strong> pregunta sobre monumentos, historia, restaurantes o transporte y recibe respuestas contextualizadas.</li>
-            <li><strong>Consultas por voz:</strong> interactúa con la app mientras caminas, sin detenerte a escribir.</li>
-            <li><strong>Mapas interactivos:</strong> descubre puntos de interés cercanos e inicia recorridos guiados a pie por GPS.</li>
-            <li><strong>Audioguías inmersivas:</strong> escucha narraciones activadas por tu ubicación al acercarte a cada punto.</li>
-            <li><strong>Modelo Freemium y Premium:</strong> acceso gratuito con cupo diario de uso, o planes de pago sin publicidad.</li>
-        </ul>
-        <p>La aplicación se encuentra actualmente en fase de desarrollo y pruebas. Las versiones para iOS y Android se publicarán en las tiendas oficiales cuando estén listas.</p>
-        <h2>Nuestra misión</h2>
-        <p>Queremos democratizar el acceso a información cultural de calidad. Creemos que viajar no debería depender de contratar tours caros ni de llevar guías impresas obsoletas. TourAI ofrece un modelo freemium en la app con planes Premium opcionales.</p>
-        <div class="info-box">
-            <strong>Contacto directo</strong><br>
-            Correo electrónico: <a href="mailto:info@tourai.es">info@tourai.es</a><br>
-            Web: <a href="https://tourai.es">https://tourai.es</a><br>
-            Responsable del proyecto: Jordi Perelló
-        </div>
-        <h2>Transparencia y legalidad</h2>
-        <p>Respetamos la normativa europea de protección de datos (RGPD). Puedes consultar nuestra <a href="privacy.html">política de privacidad</a>, los <a href="terms.html">términos de uso</a> y la información sobre <a href="cookies.html">cookies</a>. Si tienes dudas, escríbenos desde la página de <a href="contact.html">contacto</a> o revisa las <a href="faq.html">preguntas frecuentes</a>.</p>
+    <main class="container">
+        <div id="whats-new-root" aria-live="polite"></div>
     </main>
 
     <footer>
@@ -119,7 +106,7 @@
             <div class="footer-col">
                 <h4 data-i18n="footer.explore">Explora</h4>
                 <a href="index.html" data-i18n="nav.app">La App</a>
-                <a class="active" data-i18n="footer.about">Sobre nosotros</a>
+                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
                 <a href="community.html" data-i18n="nav.community">Comunidad</a>
                 <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
                 <a href="contact.html" data-i18n="nav.contact">Contacto</a>
@@ -134,12 +121,12 @@
             </div>
             <div class="footer-col">
                 <h4 data-i18n="footer.help">Ayuda</h4>
-                <a class="active" data-i18n="footer.about">Sobre nosotros</a>
+                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
                 <a href="community.html" data-i18n="nav.community">Comunidad</a>
                 <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
                 <a href="contact.html" data-i18n="nav.contact">Contacto</a>
                 <a href="faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a>
-                <a href="whats-new.html" data-i18n="footer.whatsNew">Novedades</a>
+                <a class="active" href="whats-new.html" data-i18n="footer.whatsNew">Novedades</a>
             </div>
             <div class="footer-col footer-social">
                 <h4 data-i18n="footer.follow">Síguenos</h4>
@@ -171,14 +158,13 @@
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="js/site-config.secrets.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/reviews.js"></script>
+    <script src="js/whats-new.js"></script>
 
     <div id="cookie-banner" class="site-cookie-banner" hidden aria-live="polite">
         <div class="site-cookie-banner__inner">
-            <p class="site-cookie-banner__text"><span data-i18n="cookie.text">Utilizamos cookies técnicas necesarias para el sitio (idioma y preferencias). Esta web no muestra publicidad.</span> <a href="cookies.html" data-i18n="cookie.more">Más info</a>.</p>
+            <p class="site-cookie-banner__text"><span data-i18n="cookie.text">Usamos almacenamiento local técnico necesario (idioma, sesión y preferencias).</span> <a href="cookies.html" data-i18n="cookie.more">Más info</a>.</p>
             <div class="site-cookie-banner__actions">
-                <button type="button" class="site-cookie-banner__reject" data-cookie-reject data-i18n="cookie.reject">Rechazar</button>
-                <button type="button" class="site-cookie-banner__accept" data-cookie-accept data-i18n="cookie.accept">Aceptar</button>
+                <button type="button" class="site-cookie-banner__accept" data-cookie-dismiss data-i18n="cookie.dismiss">Entendido</button>
             </div>
         </div>
     </div>

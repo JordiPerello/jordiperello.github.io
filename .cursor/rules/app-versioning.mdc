@@ -1,0 +1,12 @@
+---
+description: App versioning pointer — major/minor marketing, build as store third digit
+alwaysApply: true
+---
+
+# App versioning (pointer)
+
+TourAI mobile/desktop versioning lives in the app repo. Canonical rule:
+
+`D:\Proyectos\TourAI\.cursor\rules\app-versioning.mdc`
+
+Summary: **major** = big milestones; **minor** = features + bugs; **build** (`ApplicationVersion`) = each store upload. What's New uses **major.minor** only.

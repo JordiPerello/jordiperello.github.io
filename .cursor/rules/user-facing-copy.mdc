@@ -1,0 +1,24 @@
+---
+description: User-facing copy — no hardcoded UI strings; Spanish orthography on all pages/i18n
+alwaysApply: true
+---
+
+# User-facing copy (i18n / orthography)
+
+Applies to **every** user-visible string on tourai.es — not only What's New.
+
+## No hardcoded UI text in logic
+
+- Visible copy → HTML defaults + `js/locales/*.js` (`data-i18n` / `tOr`).
+- Do not bury new Spanish/English UI sentences only inside JS control flow when a locale key should exist.
+- App chrome for the same feature lives in TourAI `.resx` (see TourAI `user-facing-copy.mdc`).
+
+## Spanish orthography (mandatory)
+
+All Spanish copy (HTML, locales, legal bodies): correct accents and ñ (`menú`, `versión`, `información`, `Síguenos`, `Perelló`, …). Spot-check after edits; fix mojibake immediately. UTF-8 without BOM — see `utf8-file-encoding.mdc`.
+
+## Checklist
+
+- [ ] New/changed user strings use i18n/HTML (or TourAI resx for the app), not hard-coded in logic-only code
+- [ ] Spanish accents correct
+- [ ] `en-GB.js` updated when meaning changed
