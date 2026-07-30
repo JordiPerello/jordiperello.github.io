@@ -21,6 +21,11 @@
     timeout: null,
   };
 
+  const autoVerificationGate = {
+    lastStartedEmail: null,
+    inFlight: false,
+  };
+
   function resetEmailRegistrationCheck() {
     emailRegistrationCheck.email = null;
     emailRegistrationCheck.status = null;
@@ -28,6 +33,38 @@
       clearTimeout(emailRegistrationCheck.timeout);
       emailRegistrationCheck.timeout = null;
     }
+  }
+
+  function resetAutoVerificationGate() {
+    autoVerificationGate.lastStartedEmail = null;
+    autoVerificationGate.inFlight = false;
+  }
+
+  function maybeStartAutoVerification(email, handler) {
+    const normalized = (email ?? "").trim().toLowerCase();
+    if (!normalized || typeof handler !== "function") {
+      return;
+    }
+    if (autoVerificationGate.inFlight) {
+      return;
+    }
+    if (autoVerificationGate.lastStartedEmail === normalized) {
+      return;
+    }
+    if (window.TourAiForms.isWebEmailVerified(normalized)) {
+      return;
+    }
+
+    autoVerificationGate.lastStartedEmail = normalized;
+    autoVerificationGate.inFlight = true;
+    Promise.resolve()
+      .then(() => handler(normalized))
+      .catch(() => {
+        autoVerificationGate.lastStartedEmail = null;
+      })
+      .finally(() => {
+        autoVerificationGate.inFlight = false;
+      });
   }
 
   function resolveEmailVerificationUi(email, options) {
@@ -43,20 +80,12 @@
         verified: true,
         showVerifyButton: false,
         messageKey: "contact.verify.success",
-        messageFallback: "Correo verificado correctamente.",
+        messageFallback: "Email validado correctamente.",
       };
     }
 
-    const check = emailRegistrationCheck;
-    if (check.email !== normalized || !check.status || check.status === "checking") {
-      return { visible: false, verified: false, showVerifyButton: false };
-    }
-
-    return {
-      visible: true,
-      verified: false,
-      showVerifyButton: true,
-    };
+    // No manual "verify email" CTA: unknown emails open the OTP modal automatically on blur.
+    return { visible: false, verified: false, showVerifyButton: false };
   }
 
   function tOrVerification(key, fallback) {
@@ -87,25 +116,35 @@
 
     if (!ui.visible) {
       box.classList.remove("visible", "verified", "button-only");
+      if (actions) {
+        actions.style.display = "none";
+      }
+      if (sendBtn) {
+        sendBtn.style.display = "none";
+      }
       return;
     }
 
     box.classList.add("visible");
     box.classList.toggle("verified", !!ui.verified);
-    box.classList.toggle("button-only", !!ui.showVerifyButton && !ui.verified);
+    box.classList.remove("button-only");
 
     if (message) {
-      message.hidden = !ui.verified;
-      if (ui.verified && ui.messageKey) {
-        message.textContent = tOrVerification(ui.messageKey, ui.messageFallback);
+      if (ui.verified) {
+        message.hidden = false;
+        if (ui.messageKey) {
+          message.textContent = tOrVerification(ui.messageKey, ui.messageFallback);
+        }
+      } else {
+        message.hidden = true;
       }
     }
 
     if (actions) {
-      actions.style.display = ui.showVerifyButton ? "flex" : "none";
+      actions.style.display = "none";
     }
     if (sendBtn) {
-      sendBtn.style.display = ui.showVerifyButton ? "inline-block" : "none";
+      sendBtn.style.display = "none";
     }
   }
 
@@ -146,16 +185,22 @@
       return;
     }
 
+    emailRegistrationCheck.email = normalized;
+    emailRegistrationCheck.status = "pending";
+    settings.onStateChange?.();
+
     emailRegistrationCheck.timeout = setTimeout(async () => {
       emailRegistrationCheck.timeout = null;
       const requestId = ++emailRegistrationCheck.requestId;
       let loadingShown = false;
+      let shouldAutoVerify = false;
 
       emailRegistrationCheck.email = normalized;
       emailRegistrationCheck.status = "checking";
       settings.onStateChange?.();
 
-      if (window.TourAiLoading) {
+      // Spinner only when leaving the field (blur) — avoid flashing while typing.
+      if (window.TourAiLoading && settings.autoOpenVerification === true) {
         window.TourAiLoading.show(getEmailCheckLoadingMessage(settings.context));
         loadingShown = true;
       }
@@ -177,8 +222,10 @@
 
         emailRegistrationCheck.status = "checked";
 
-        if (result.ok && result.body?.knownSubscriber) {
+        const isKnown = result.ok && result.body?.knownSubscriber === true;
+        if (isKnown) {
           window.TourAiForms.markTrustedSubscriberVerification(normalized);
+          autoVerificationGate.lastStartedEmail = null;
         }
 
         if (settings.platform && result.ok && result.body?.subscribed) {
@@ -187,9 +234,45 @@
 
         settings.onStateChange?.();
         settings.onCheckComplete?.(result);
+
+        shouldAutoVerify =
+          settings.autoOpenVerification === true &&
+          !isKnown &&
+          !window.TourAiForms.isWebEmailVerified(normalized);
+      } catch {
+        if (requestId !== emailRegistrationCheck.requestId) {
+          return;
+        }
+        if (emailRegistrationCheck.email === normalized) {
+          emailRegistrationCheck.status = "checked";
+          settings.onStateChange?.();
+          shouldAutoVerify = settings.autoOpenVerification === true;
+        }
       } finally {
         if (loadingShown) {
           window.TourAiLoading.hide();
+        }
+        // Safety net: never leave this request stuck in "checking" after the spinner closes.
+        if (
+          requestId === emailRegistrationCheck.requestId &&
+          emailRegistrationCheck.email === normalized &&
+          emailRegistrationCheck.status === "checking"
+        ) {
+          emailRegistrationCheck.status = "checked";
+          settings.onStateChange?.();
+          if (settings.autoOpenVerification === true) {
+            shouldAutoVerify = true;
+          }
+        }
+
+        // Start OTP only after the check spinner is gone (handlers bail while loading is visible).
+        if (
+          shouldAutoVerify &&
+          requestId === emailRegistrationCheck.requestId &&
+          emailRegistrationCheck.email === normalized &&
+          !window.TourAiForms.isWebEmailVerified(normalized)
+        ) {
+          maybeStartAutoVerification(normalized, settings.onNeedsVerification);
         }
       }
     }, settings.debounceMs ?? 400);
@@ -261,40 +344,124 @@
     );
   }
 
+  function genericActionErrorMessage() {
+    return tOrVerification(
+      "forms.error.generic",
+      "No se pudo completar la acción."
+    );
+  }
+
+  function isTechnicalErrorMessage(message) {
+    return /failed to fetch|networkerror|load failed|network request failed|internal_error|network_error|request_failed|abort(ed)?|cors/i.test(
+      String(message || "")
+    );
+  }
+
+  /** Never surface browser/network internals (e.g. "Failed to fetch") to users. */
+  function toUserFacingErrorMessage(error, fallbackMessage) {
+    const fallback = fallbackMessage || genericActionErrorMessage();
+    const message =
+      typeof error === "string"
+        ? error.trim()
+        : typeof error?.message === "string"
+          ? error.message.trim()
+          : "";
+
+    if (!message || isTechnicalErrorMessage(message)) {
+      return fallback;
+    }
+
+    if (error && (error.name === "TypeError" || error.name === "NetworkError")) {
+      return fallback;
+    }
+
+    return message;
+  }
+
+  /** Remaining wait as m:ss / mm:ss (matches app rate-limit UX). */
+  function formatRetryAfterClock(retryAfterMs, retryAfterMinutes) {
+    let ms = typeof retryAfterMs === "number" && Number.isFinite(retryAfterMs)
+      ? retryAfterMs
+      : null;
+    if (
+      ms == null &&
+      typeof retryAfterMinutes === "number" &&
+      Number.isFinite(retryAfterMinutes)
+    ) {
+      ms = Math.max(1, retryAfterMinutes) * 60 * 1000;
+    }
+    if (ms == null || !Number.isFinite(ms)) {
+      ms = 60 * 60 * 1000;
+    }
+
+    const totalSeconds = Math.max(1, Math.ceil(ms / 1000));
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${String(seconds).padStart(2, "0")}`;
+  }
+
+  function rateLimitedMessage(result, key, fallback) {
+    const hasRetryHint =
+      (typeof result?.body?.retryAfterMs === "number" &&
+        Number.isFinite(result.body.retryAfterMs)) ||
+      (typeof result?.body?.retryAfterMinutes === "number" &&
+        Number.isFinite(result.body.retryAfterMinutes));
+
+    if (!hasRetryHint) {
+      return tOrVerification(
+        "contact.verify.rateLimitedGeneric",
+        "Has solicitado demasiados códigos. Espera unos minutos antes de solicitar otro."
+      );
+    }
+
+    const time = formatRetryAfterClock(
+      result.body.retryAfterMs,
+      result.body.retryAfterMinutes
+    );
+    const locale = window.TourAiI18n?.getLocale?.() ?? "es-ES";
+    const template =
+      window.TourAiI18n?.tOr?.(key, locale, { time }, fallback) ?? fallback;
+    return String(template).split("{time}").join(time);
+  }
+
   async function postJson(url, payload, options) {
     const execute = async () => {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      let body = null;
       try {
-        body = await response.json();
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        let body = null;
+        try {
+          body = await response.json();
+        } catch {
+          body = null;
+        }
+
+        if (!response.ok) {
+          return {
+            ok: false,
+            error: body?.error ?? "request_failed",
+            status: response.status,
+            body,
+          };
+        }
+
+        if (body && body.success === false) {
+          return {
+            ok: false,
+            error: body.error ?? "unknown_error",
+            status: response.status,
+            body,
+          };
+        }
+
+        return { ok: true, body };
       } catch {
-        body = null;
+        return { ok: false, error: "network_error", status: 0, body: null };
       }
-
-      if (!response.ok) {
-        return {
-          ok: false,
-          error: body?.error ?? "request_failed",
-          status: response.status,
-          body,
-        };
-      }
-
-      if (body && body.success === false) {
-        return {
-          ok: false,
-          error: body.error ?? "unknown_error",
-          status: response.status,
-          body,
-        };
-      }
-
-      return { ok: true, body };
     };
 
     if (window.TourAiLoading && options?.loading !== false) {
@@ -390,6 +557,12 @@
       ) {
         window.TourAiForms.clearWebEmailVerification();
         resetEmailRegistrationCheck();
+        resetAutoVerificationGate();
+      } else if (
+        autoVerificationGate.lastStartedEmail &&
+        autoVerificationGate.lastStartedEmail !== normalized
+      ) {
+        resetAutoVerificationGate();
       }
     },
 
@@ -403,12 +576,30 @@
         return { ok: false, error: "invalid_email" };
       }
 
-      const payload = { email: normalized };
-      if (platform) {
-        payload.platform = platform;
+      const result = await postJson(config.checkStoreSubscriptionUrl, { email: normalized }, { loading: false });
+      if (!result.ok) {
+        return result;
       }
 
-      return postJson(config.checkStoreSubscriptionUrl, payload, { loading: false });
+      const ios = result.body?.ios === true;
+      const android = result.body?.android === true;
+      const normalizedPlatform = (platform ?? "").trim().toLowerCase();
+      let subscribed = ios || android;
+      if (normalizedPlatform === "ios") {
+        subscribed = ios;
+      } else if (normalizedPlatform === "android") {
+        subscribed = android;
+      }
+
+      return {
+        ok: true,
+        body: {
+          ...result.body,
+          subscribed,
+          platform: platform || undefined,
+          subscriptions: { iOS: ios, Android: android },
+        },
+      };
     },
 
     resolveEmailVerificationUi(email, options) {
@@ -423,8 +614,32 @@
       applyEmailVerificationBox(email, config, context);
     },
 
+    toUserFacingErrorMessage(error, fallbackMessage) {
+      return toUserFacingErrorMessage(error, fallbackMessage);
+    },
+
+    rateLimitedMessage(result, key, fallback) {
+      return rateLimitedMessage(result, key, fallback);
+    },
+
+    genericActionErrorMessage() {
+      return genericActionErrorMessage();
+    },
+
     resetEmailRegistrationCheck() {
       resetEmailRegistrationCheck();
+      resetAutoVerificationGate();
+    },
+
+    resetAutoVerificationGate() {
+      resetAutoVerificationGate();
+    },
+
+    allowAutoVerificationRetry(email) {
+      const normalized = (email ?? "").trim().toLowerCase();
+      if (!normalized || autoVerificationGate.lastStartedEmail === normalized) {
+        autoVerificationGate.lastStartedEmail = null;
+      }
     },
 
     scheduleEmailRegistrationCheck(email, options) {
@@ -528,13 +743,21 @@
         return { ok: false, error: "email_not_verified" };
       }
 
+      const platform = (payload.platform ?? "").trim().toLowerCase();
+      const ios = payload.ios === true || platform === "ios";
+      const android = payload.android === true || platform === "android";
+      if (!ios && !android) {
+        return { ok: false, error: "invalid_payload" };
+      }
+
       const requestPayload = {
         name: payload.name ?? "TourAI subscription",
         email,
         subject: payload.subject ?? "TourAI launch alert",
-        platform: payload.platform ?? "Web",
         message: payload.message ?? "",
         privacy: true,
+        ios,
+        android,
       };
 
       const verificationToken = window.TourAiForms.getWebEmailVerificationToken(email);
@@ -557,30 +780,69 @@
         payload.verificationToken = verificationToken;
       }
 
-      if (platform) {
-        payload.platform = platform;
+      const result = await postJson(config.checkStoreSubscriptionUrl, payload, options);
+      if (!result.ok) {
+        return result;
       }
 
-      return postJson(config.checkStoreSubscriptionUrl, payload, options);
+      const ios = result.body?.ios === true;
+      const android = result.body?.android === true;
+      const normalizedPlatform = (platform ?? "").trim().toLowerCase();
+      let subscribed = ios || android;
+      if (normalizedPlatform === "ios") {
+        subscribed = ios;
+      } else if (normalizedPlatform === "android") {
+        subscribed = android;
+      }
+
+      return {
+        ok: true,
+        body: {
+          ...result.body,
+          ios,
+          android,
+          subscribed,
+          platform: platform || undefined,
+          subscriptions: { iOS: ios, Android: android },
+        },
+      };
     },
 
-    async unsubscribeStoreNotifications(email, platforms) {
+    async unsubscribeStoreNotifications(email, platformsOrFlags) {
       const normalized = (email ?? "").trim().toLowerCase();
       if (!window.TourAiForms.isValidEmail(normalized)) {
         return { ok: false, error: "invalid_email" };
-      }
-
-      if (!Array.isArray(platforms) || platforms.length === 0) {
-        return { ok: false, error: "invalid_payload" };
       }
 
       if (!window.TourAiForms.isWebEmailVerified(normalized)) {
         return { ok: false, error: "email_not_verified" };
       }
 
+      let ios = false;
+      let android = false;
+      if (Array.isArray(platformsOrFlags)) {
+        platformsOrFlags.forEach((entry) => {
+          const value = String(entry ?? "").trim().toLowerCase();
+          if (value === "ios") {
+            ios = true;
+          }
+          if (value === "android") {
+            android = true;
+          }
+        });
+      } else if (platformsOrFlags && typeof platformsOrFlags === "object") {
+        ios = platformsOrFlags.ios === true;
+        android = platformsOrFlags.android === true;
+      }
+
+      if (!ios && !android) {
+        return { ok: false, error: "invalid_payload" };
+      }
+
       const payload = {
         email: normalized,
-        platforms,
+        ios,
+        android,
       };
 
       const verificationToken = window.TourAiForms.getWebEmailVerificationToken(normalized);
@@ -599,8 +861,13 @@
     return;
   }
 
+  /* Account deletion must never reuse a prior OTP session across page loads. */
   const VERIFIED_STORAGE_KEY = "tourai-account-deletion-verified";
-  const VERIFICATION_STORAGE_TTL_MS = 30 * 60 * 1000;
+  try {
+    sessionStorage.removeItem(VERIFIED_STORAGE_KEY);
+  } catch {
+    /* ignore */
+  }
 
   const verificationState = {
     token: null,
@@ -616,61 +883,14 @@
     return window.TourAiForms?.isValidEmail(email) ?? false;
   }
 
-  function loadVerifiedFromStorage() {
-    try {
-      const raw = sessionStorage.getItem(VERIFIED_STORAGE_KEY);
-      return raw ? JSON.parse(raw) : {};
-    } catch {
-      return {};
-    }
-  }
-
-  function saveVerifiedToStorage(email, token, expiresAt) {
-    const entries = loadVerifiedFromStorage();
-    entries[email] = { token, expiresAt };
-    sessionStorage.setItem(VERIFIED_STORAGE_KEY, JSON.stringify(entries));
-  }
-
-  function removeVerifiedFromStorage(email) {
-    const entries = loadVerifiedFromStorage();
-    delete entries[email];
-    sessionStorage.setItem(VERIFIED_STORAGE_KEY, JSON.stringify(entries));
-  }
-
-  function restoreVerifiedFromStorage(email) {
-    const normalized = (email ?? "").trim().toLowerCase();
-    const entry = loadVerifiedFromStorage()[normalized];
-    if (!entry?.token || !entry.expiresAt || entry.expiresAt <= Date.now()) {
-      if (entry) {
-        removeVerifiedFromStorage(normalized);
-      }
-      return false;
-    }
-
-    verificationState.token = entry.token;
-    verificationState.verifiedEmail = normalized;
-    return true;
-  }
-
   function clearVerification() {
-    const previousEmail = verificationState.verifiedEmail;
     verificationState.token = null;
     verificationState.verifiedEmail = null;
-    if (previousEmail) {
-      removeVerifiedFromStorage(previousEmail);
-    }
   }
 
   function isEmailVerified(email) {
     const normalized = (email ?? "").trim().toLowerCase();
     if (!normalized) {
-      return false;
-    }
-
-    if (
-      verificationState.verifiedEmail !== normalized &&
-      !restoreVerifiedFromStorage(normalized)
-    ) {
       return false;
     }
 
@@ -739,6 +959,11 @@
       }
     },
 
+    /** Drop any in-memory OTP proof (call on page entry). */
+    resetVerification() {
+      clearVerification();
+    },
+
     isEmailVerified(email) {
       return isEmailVerified(email);
     },
@@ -748,6 +973,9 @@
       if (!isValidEmail(normalized)) {
         return { ok: false, error: "invalid_email" };
       }
+
+      /* A new code invalidates any previous proof on this page. */
+      clearVerification();
 
       return postJson(config.accountDeletionSendVerificationUrl, {
         email: normalized,
@@ -771,11 +999,14 @@
       if (result.ok && result.body?.verificationToken) {
         verificationState.token = result.body.verificationToken;
         verificationState.verifiedEmail = normalized;
-        saveVerifiedToStorage(
-          normalized,
-          result.body.verificationToken,
-          Date.now() + VERIFICATION_STORAGE_TTL_MS
-        );
+      } else if (result.ok) {
+        clearVerification();
+        return {
+          ok: false,
+          error: "invalid_payload",
+          status: result.status,
+          body: result.body,
+        };
       }
 
       return result;
@@ -809,7 +1040,6 @@
 })();
 
 (function () {
-  const CODE_MODAL_ID = "webEmailCodeModal";
   let activeConfig = null;
   let alreadySubscribedNoticeKey = null;
   let alreadySubscribedToPlatform = false;
@@ -870,68 +1100,21 @@
     return document.getElementById(activeConfig.submitBtnId);
   }
 
-  function ensureCodeModal() {
-    if (document.getElementById(CODE_MODAL_ID)) {
-      return;
-    }
-
-    const modal = document.createElement("div");
-    modal.id = CODE_MODAL_ID;
-    modal.className = "web-email-code-modal";
-    modal.innerHTML = `
-      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="webEmailCodeTitle">
-        <span class="close-modal" data-close-code-modal role="button" aria-label="Cerrar">&times;</span>
-        <h3 id="webEmailCodeTitle" data-i18n="contact.verify.title">Verifica tu correo</h3>
-        <p data-i18n="contact.verify.intro">Te hemos enviado un código de 6 dígitos. Introdúcelo para confirmar tu dirección.</p>
-        <label for="webEmailCodeInput" data-i18n="contact.verify.code">Código de verificación</label>
-        <input type="text" id="webEmailCodeInput" class="verification-code-input" inputmode="numeric" maxlength="6" autocomplete="one-time-code" data-i18n-placeholder="contact.verify.code.placeholder" placeholder="000000">
-        <p id="webEmailCodeStatus" class="verification-status" hidden></p>
-        <button type="button" id="webEmailCodeSubmitBtn" data-i18n="contact.verify.submit">Confirmar código</button>
-        <p class="verification-hint">
-          <button type="button" id="webEmailCodeResendBtn" style="background:transparent;color:#4db8ff;padding:0;width:auto;font-size:0.9em;border:none;cursor:pointer;" data-i18n="contact.verify.resend">Reenviar código</button>
-        </p>
-      </div>
-    `;
-    document.body.appendChild(modal);
-
-    modal.querySelector("[data-close-code-modal]")?.addEventListener("click", (event) => {
-      event.preventDefault();
-      closeCodeModal();
+  function openSubscribeVerifyModal() {
+    window.TourAiEmailVerifyModal.open({
+      onConfirm: confirmCode,
+      onResend: resendCode,
     });
-
-    modal.addEventListener("click", (event) => {
-      if (event.target === modal) {
-        closeCodeModal();
-      }
-    });
-
-    modal.querySelector(".modal-content").addEventListener("click", (event) => {
-      event.stopPropagation();
-    });
-
-    const codeInput = document.getElementById("webEmailCodeInput");
-    codeInput.addEventListener("input", function () {
-      this.value = this.value.replace(/\D/g, "").slice(0, 6);
-    });
-    codeInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        confirmCode();
-      }
-    });
-
-    document.getElementById("webEmailCodeSubmitBtn").addEventListener("click", confirmCode);
-    document.getElementById("webEmailCodeResendBtn").addEventListener("click", resendCode);
   }
 
-  function setVerificationBoxState({ visible, verified, showVerifyButton }) {
+  function setVerificationBoxState({ visible, verified }) {
     window.TourAiForms?.renderEmailVerificationBox(
       {
         boxId: activeConfig.verificationBoxId,
         messageId: activeConfig.verificationMessageId,
         sendButtonId: activeConfig.sendVerificationBtnId,
       },
-      { visible, verified, showVerifyButton }
+      { visible, verified, showVerifyButton: false }
     );
   }
 
@@ -948,80 +1131,48 @@
   }
 
   function showCodeModalStatus(message, type) {
-    const status = document.getElementById("webEmailCodeStatus");
-    status.textContent = message;
-    status.className = "verification-status " + (type ?? "");
-    status.hidden = false;
-  }
-
-  function openCodeModal() {
-    ensureCodeModal();
-    const modal = document.getElementById(CODE_MODAL_ID);
-    modal.style.display = "flex";
-    const status = document.getElementById("webEmailCodeStatus");
-    status.hidden = true;
-    status.className = "verification-status";
-    const codeInput = document.getElementById("webEmailCodeInput");
-    codeInput.value = "";
-    codeInput.focus();
-    if (window.TourAiI18n?.applyTranslations) {
-      window.TourAiI18n.applyTranslations(window.TourAiI18n.getLocale());
-    }
-  }
-
-  function closeCodeModal() {
-    const modal = document.getElementById(CODE_MODAL_ID);
-    if (modal) {
-      modal.style.display = "none";
-    }
+    window.TourAiEmailVerifyModal?.setStatus(message, type);
   }
 
   async function startVerification() {
     if (isBusy()) {
+      window.TourAiForms?.allowAutoVerificationRetry?.(getEmailInput()?.value);
       return;
     }
 
     const email = getEmailInput()?.value?.trim() ?? "";
-    const button = document.getElementById(activeConfig.sendVerificationBtnId);
-    const originalText = tOr("contact.verify.button", button?.textContent ?? "VERIFICAR CORREO");
-
     if (!window.TourAiForms?.isValidEmail(email)) {
       window.TourAiFeedback?.show({
         type: "info",
         message: tOr("contact.email.invalid", "Introduce una dirección de correo válida."),
       });
+      window.TourAiForms?.allowAutoVerificationRetry?.(email);
       return;
     }
 
     try {
-      if (button) {
-        button.disabled = true;
-        button.textContent = tOr("contact.verify.sending", "Enviando código...");
-      }
-
       const result = await window.TourAiForms.sendWebEmailVerificationCode(email);
       if (!result.ok) {
         if (result.error === "rate_limited") {
-          throw new Error(tOr("contact.verify.rateLimited", "Demasiados intentos. Espera unos minutos."));
+          throw new Error(
+            window.TourAiForms.rateLimitedMessage(
+              result,
+              "contact.verify.rateLimited",
+              "Has solicitado demasiados códigos. No podrás solicitar otro hasta dentro de {time}."
+            )
+          );
         }
-        throw new Error(tOr("contact.verify.sendError", "No se pudo enviar el código."));
+        throw new Error(window.TourAiForms.genericActionErrorMessage());
       }
 
-      openCodeModal();
-      showCodeModalStatus(
-        tOr("contact.verify.sent", "Código enviado. Revisa tu bandeja de entrada y spam."),
-        "success"
-      );
+      openSubscribeVerifyModal();
     } catch (error) {
+      window.TourAiForms?.allowAutoVerificationRetry?.(email);
       window.TourAiFeedback?.show({
         type: "error",
-        message: error.message || tOr("contact.verify.sendError", "No se pudo enviar el código."),
+        message: window.TourAiForms.toUserFacingErrorMessage(error),
       });
     } finally {
-      if (button) {
-        button.textContent = originalText;
-        button.disabled = false;
-      }
       validateSubscriptionForm();
     }
   }
@@ -1031,58 +1182,59 @@
       return;
     }
 
-    const button = document.getElementById("webEmailCodeResendBtn");
-    const originalText = tOr("contact.verify.resend", button?.textContent ?? "Reenviar código");
     try {
-      button.disabled = true;
       const result = await window.TourAiForms.sendWebEmailVerificationCode(
         getEmailInput()?.value?.trim() ?? ""
       );
       if (!result.ok) {
         if (result.error === "rate_limited") {
-          throw new Error(tOr("contact.verify.rateLimited", "Demasiados intentos. Espera unos minutos."));
+          throw new Error(
+            window.TourAiForms.rateLimitedMessage(
+              result,
+              "contact.verify.rateLimited",
+              "Has solicitado demasiados códigos. No podrás solicitar otro hasta dentro de {time}."
+            )
+          );
         }
-        throw new Error(tOr("contact.verify.sendError", "No se pudo enviar el código."));
+        throw new Error(window.TourAiForms.genericActionErrorMessage());
       }
-      showCodeModalStatus(
-        tOr("contact.verify.resent", "Se ha enviado un nuevo código."),
+      window.TourAiEmailVerifyModal.setStatus(
+        tOr("contact.verify.resent", "Hemos enviado un nuevo código a tu correo."),
         "success"
       );
+      window.TourAiEmailVerifyModal.clearAndFocus();
     } catch (error) {
-      showCodeModalStatus(error.message, "error");
-    } finally {
-      button.disabled = false;
-      button.textContent = originalText;
+      window.TourAiEmailVerifyModal.setStatus(
+        window.TourAiForms.toUserFacingErrorMessage(error),
+        "error"
+      );
     }
   }
 
-  async function confirmCode() {
+  async function confirmCode(codeFromModal) {
     if (isBusy()) {
       return;
     }
 
     const email = getEmailInput()?.value?.trim() ?? "";
-    const code = document.getElementById("webEmailCodeInput")?.value?.trim() ?? "";
-    const button = document.getElementById("webEmailCodeSubmitBtn");
-    const originalText = tOr("contact.verify.submit", button?.textContent ?? "Confirmar código");
+    const code = codeFromModal || window.TourAiEmailVerifyModal.getCode();
 
     try {
-      button.disabled = true;
-      button.textContent = tOr("contact.verify.verifying", "VERIFICANDO...");
       const result = await window.TourAiForms.verifyWebEmailCode(email, code);
       if (!result.ok) {
         const errorMap = {
-          invalid_code: ["contact.verify.invalidCode", "El código no es correcto. Inténtalo de nuevo."],
+          invalid_code: ["contact.verify.invalidCode", "El código no coincide."],
           expired: ["contact.verify.expired", "El código ha caducado. Solicita uno nuevo."],
           too_many_attempts: ["contact.verify.rateLimited", "Demasiados intentos. Espera unos minutos."],
-          not_found: ["contact.verify.invalidCode", "El código no es correcto. Inténtalo de nuevo."],
+          not_found: ["contact.verify.invalidCode", "El código no coincide."],
         };
         const entry = errorMap[result.error] ?? errorMap.invalid_code;
-        showCodeModalStatus(tOr(entry[0], entry[1]), "error");
+        window.TourAiEmailVerifyModal.setStatus(tOr(entry[0], entry[1]), "error");
+        window.TourAiEmailVerifyModal.clearAndFocus();
         return;
       }
 
-      closeCodeModal();
+      window.TourAiEmailVerifyModal.close();
       applySubscriptionVerificationBox(email);
 
       const platform = getCurrentPlatform();
@@ -1098,13 +1250,11 @@
 
       validateSubscriptionForm();
     } catch (error) {
-      showCodeModalStatus(
-        tOr("contact.verify.invalidCode", "El código no es correcto. Inténtalo de nuevo."),
+      window.TourAiEmailVerifyModal.setStatus(
+        tOr("contact.verify.invalidCode", "El código no coincide."),
         "error"
       );
-    } finally {
-      button.textContent = originalText;
-      button.disabled = false;
+      window.TourAiEmailVerifyModal.clearAndFocus();
     }
   }
 
@@ -1131,9 +1281,10 @@
     validateSubscriptionForm();
   }
 
-  function syncSubscriptionEmailState() {
+  function syncSubscriptionEmailState(options) {
     const email = getEmailInput()?.value?.trim() ?? "";
     const platform = getCurrentPlatform();
+    const settings = options ?? {};
 
     window.TourAiForms?.scheduleEmailRegistrationCheck(email, {
       context: "subscribe",
@@ -1141,6 +1292,8 @@
       getEmail: () => getEmailInput()?.value ?? "",
       onAlreadySubscribed: handleAlreadySubscribedNotice,
       onStateChange: validateSubscriptionForm,
+      autoOpenVerification: settings.autoOpenVerification === true,
+      onNeedsVerification: () => startVerification(),
     });
   }
 
@@ -1235,11 +1388,7 @@
     }
 
     if (!window.TourAiForms.isWebEmailVerified(email)) {
-      window.TourAiFeedback?.show({
-        type: "info",
-        message: tOr("contact.error.notVerified", "Debes verificar tu correo antes de continuar."),
-        onClose: () => startVerification(),
-      });
+      startVerification();
       return;
     }
 
@@ -1289,13 +1438,14 @@
           email_not_verified: tOr("contact.error.notVerified", "Debes verificar tu correo antes de continuar."),
           smtp_not_configured: tOr("contact.error.smtp", "El servicio no está disponible temporalmente."),
         };
-        throw new Error(errorMessages[result.error] ?? tOr("index.modal.error", "Hubo un error al procesar tu suscripción."));
+        throw new Error(errorMessages[result.error] ?? window.TourAiForms.genericActionErrorMessage());
       }
     } catch (error) {
-      const shouldVerify = (error.message || "").toLowerCase().includes("verificar");
+      const rawMessage = typeof error?.message === "string" ? error.message : "";
+      const shouldVerify = rawMessage.toLowerCase().includes("verificar");
       window.TourAiFeedback?.show({
         type: "error",
-        message: error.message || tOr("index.modal.error", "Hubo un error al procesar tu suscripción."),
+        message: window.TourAiForms.toUserFacingErrorMessage(error, window.TourAiForms.genericActionErrorMessage()),
         onClose: shouldVerify ? () => startVerification() : undefined,
       });
     } finally {
@@ -1307,7 +1457,6 @@
   window.TourAiStoreSubscription = {
     init(config) {
       activeConfig = config;
-      ensureCodeModal();
 
       window.openModal = openPlatformModal;
       window.closeModal = closePlatformModal;
@@ -1321,15 +1470,15 @@
         alreadySubscribedNoticeKey = null;
         alreadySubscribedToPlatform = false;
         validateSubscriptionForm();
-        syncSubscriptionEmailState();
       });
-      emailInput?.addEventListener("change", syncSubscriptionEmailState);
-      emailInput?.addEventListener("blur", syncSubscriptionEmailState);
+      emailInput?.addEventListener("change", function () {
+        syncSubscriptionEmailState({ autoOpenVerification: true });
+      });
+      emailInput?.addEventListener("blur", function () {
+        syncSubscriptionEmailState({ autoOpenVerification: true });
+      });
       getPrivacyInput()?.addEventListener("change", validateSubscriptionForm);
       getPrivacyInput()?.addEventListener("click", validateSubscriptionForm);
-      document
-        .getElementById(activeConfig.sendVerificationBtnId)
-        ?.addEventListener("click", startVerification);
 
       document
         .getElementById(activeConfig.modalId)
@@ -1420,19 +1569,7 @@
         <form id="unsubForm" onsubmit="return false;" novalidate>
           <input type="email" id="unsubEmail" name="email" autocomplete="email" data-i18n-placeholder="index.modal.email" placeholder="Tu correo electrónico">
           <div id="unsubVerificationBox" class="verification-box">
-            <p id="unsubVerificationMessage" data-i18n="contact.verify.prompt">Verifica tu correo para continuar.</p>
-            <div class="verification-actions">
-              <button type="button" id="unsubSendVerificationBtn" data-i18n="contact.verify.button">VERIFICAR CORREO</button>
-            </div>
-          </div>
-          <div id="unsubCodeSection" class="unsub-code-section" hidden>
-            <label for="unsubCodeInput" data-i18n="contact.verify.code">Código de verificación</label>
-            <input type="text" id="unsubCodeInput" class="verification-code-input" inputmode="numeric" maxlength="6" autocomplete="one-time-code" data-i18n-placeholder="contact.verify.code.placeholder" placeholder="000000">
-            <p id="unsubCodeStatus" class="verification-status" hidden></p>
-            <div class="verification-actions">
-              <button type="button" id="unsubConfirmCodeBtn" data-i18n="contact.verify.submit">Confirmar código</button>
-              <button type="button" id="unsubResendCodeBtn" class="link-button" data-i18n="contact.verify.resend">Reenviar código</button>
-            </div>
+            <p id="unsubVerificationMessage" data-i18n="contact.verify.success">Email validado correctamente.</p>
           </div>
           <div id="unsubManageSection" class="unsub-manage-section" hidden>
             <p data-i18n="unsubscribe.selectStores">Selecciona las tiendas de las que quieres darte de baja:</p>
@@ -1467,65 +1604,56 @@
       event.stopPropagation();
     });
 
-    const codeInput = document.getElementById("unsubCodeInput");
-    codeInput.addEventListener("input", function () {
-      this.value = this.value.replace(/\D/g, "").slice(0, 6);
-    });
-    codeInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        confirmCode();
-      }
-    });
-
-    document.getElementById("unsubSendVerificationBtn").addEventListener("click", startVerification);
-    document.getElementById("unsubConfirmCodeBtn").addEventListener("click", confirmCode);
-    document.getElementById("unsubResendCodeBtn").addEventListener("click", resendCode);
     document.getElementById("unsubSubmitBtn").addEventListener("click", submitUnsubscribe);
     getEmailInput()?.addEventListener("input", function () {
       window.TourAiForms?.onWebEmailInput(this.value);
       resetManageSection();
       updateVerificationBox();
-      scheduleUnsubscribeEmailCheck();
     });
-    getEmailInput()?.addEventListener("blur", scheduleUnsubscribeEmailCheck);
+    getEmailInput()?.addEventListener("blur", function () {
+      scheduleUnsubscribeEmailCheck({ autoOpenVerification: true });
+    });
 
     ["unsubIos", "unsubAndroid"].forEach((id) => {
       document.getElementById(id)?.addEventListener("change", updateUnsubscribeButton);
     });
   }
 
-  function setVerificationBoxState({ visible, verified, showVerifyButton }) {
+  function setVerificationBoxState({ visible, verified }) {
     window.TourAiForms?.renderEmailVerificationBox(
       {
         boxId: "unsubVerificationBox",
         messageId: "unsubVerificationMessage",
         sendButtonId: "unsubSendVerificationBtn",
       },
-      { visible, verified, showVerifyButton }
+      { visible, verified, showVerifyButton: false }
     );
   }
 
   function showCodeStatus(message, type) {
-    const status = document.getElementById("unsubCodeStatus");
-    status.textContent = message;
-    status.className = "verification-status " + (type ?? "");
-    status.hidden = false;
+    window.TourAiEmailVerifyModal?.setStatus(message, type);
   }
 
   function resetManageSection() {
     resetLoadedStatus();
     const manageSection = document.getElementById("unsubManageSection");
-    const codeSection = document.getElementById("unsubCodeSection");
-    manageSection.hidden = true;
-    codeSection.hidden = true;
-    document.getElementById("unsubCodeInput").value = "";
-    document.getElementById("unsubCodeStatus").hidden = true;
-    document.getElementById("unsubNoSubscriptions").hidden = true;
-    document.getElementById("unsubIos").checked = false;
-    document.getElementById("unsubAndroid").checked = false;
-    document.getElementById("unsubIos").disabled = true;
-    document.getElementById("unsubAndroid").disabled = true;
+    if (manageSection) {
+      manageSection.hidden = true;
+    }
+    const noSubscriptions = document.getElementById("unsubNoSubscriptions");
+    if (noSubscriptions) {
+      noSubscriptions.hidden = true;
+    }
+    const ios = document.getElementById("unsubIos");
+    const android = document.getElementById("unsubAndroid");
+    if (ios) {
+      ios.checked = false;
+      ios.disabled = true;
+    }
+    if (android) {
+      android.checked = false;
+      android.disabled = true;
+    }
     updateUnsubscribeButton();
   }
 
@@ -1550,12 +1678,15 @@
     }
   }
 
-  function scheduleUnsubscribeEmailCheck() {
+  function scheduleUnsubscribeEmailCheck(options) {
     const email = getEmailInput()?.value?.trim() ?? "";
+    const settings = options ?? {};
     window.TourAiForms?.scheduleEmailRegistrationCheck(email, {
       context: "unsubscribe",
       getEmail: () => getEmailInput()?.value ?? "",
       onStateChange: updateVerificationBox,
+      autoOpenVerification: settings.autoOpenVerification === true,
+      onNeedsVerification: () => startVerification(),
       onCheckComplete: async () => {
         const normalized = getEmailInput()?.value?.trim().toLowerCase() ?? "";
         if (window.TourAiForms?.isWebEmailVerified(normalized)) {
@@ -1591,8 +1722,8 @@
     }
 
     const subscriptions = result.body?.subscriptions ?? {};
-    const iosActive = subscriptions.iOS === true;
-    const androidActive = subscriptions.Android === true;
+    const iosActive = result.body?.ios === true || subscriptions.iOS === true;
+    const androidActive = result.body?.android === true || subscriptions.Android === true;
     const manageSection = document.getElementById("unsubManageSection");
     const noSubscriptions = document.getElementById("unsubNoSubscriptions");
     const iosInput = document.getElementById("unsubIos");
@@ -1619,51 +1750,46 @@
 
   async function startVerification() {
     if (isBusy()) {
+      window.TourAiForms?.allowAutoVerificationRetry?.(getEmailInput()?.value);
       return;
     }
 
     const email = getEmailInput()?.value?.trim() ?? "";
-    const button = document.getElementById("unsubSendVerificationBtn");
-    const originalText = tOr("contact.verify.button", button?.textContent ?? "VERIFICAR CORREO");
-
     if (!window.TourAiForms?.isValidEmail(email)) {
       window.TourAiFeedback?.show({
         type: "info",
         message: tOr("contact.email.invalid", "Introduce una dirección de correo válida."),
       });
+      window.TourAiForms?.allowAutoVerificationRetry?.(email);
       return;
     }
 
     try {
-      if (button) {
-        button.disabled = true;
-        button.textContent = tOr("contact.verify.sending", "Enviando código...");
-      }
-
       const result = await window.TourAiForms.sendWebEmailVerificationCode(email);
       if (!result.ok) {
         if (result.error === "rate_limited") {
-          throw new Error(tOr("contact.verify.rateLimited", "Demasiados intentos. Espera unos minutos."));
+          throw new Error(
+            window.TourAiForms.rateLimitedMessage(
+              result,
+              "contact.verify.rateLimited",
+              "Has solicitado demasiados códigos. No podrás solicitar otro hasta dentro de {time}."
+            )
+          );
         }
-        throw new Error(tOr("contact.verify.sendError", "No se pudo enviar el código."));
+        throw new Error(window.TourAiForms.genericActionErrorMessage());
       }
 
-      document.getElementById("unsubCodeSection").hidden = false;
-      showCodeStatus(
-        tOr("contact.verify.sent", "Código enviado. Revisa tu bandeja de entrada y spam."),
-        "success"
-      );
-      document.getElementById("unsubCodeInput").focus();
+      window.TourAiEmailVerifyModal.open({
+        onConfirm: confirmCode,
+        onResend: resendCode,
+      });
     } catch (error) {
+      window.TourAiForms?.allowAutoVerificationRetry?.(email);
       window.TourAiFeedback?.show({
         type: "error",
-        message: error.message || tOr("contact.verify.sendError", "No se pudo enviar el código."),
+        message: window.TourAiForms.toUserFacingErrorMessage(error),
       });
     } finally {
-      if (button) {
-        button.textContent = originalText;
-        button.disabled = false;
-      }
       updateVerificationBox();
     }
   }
@@ -1673,68 +1799,67 @@
       return;
     }
 
-    const button = document.getElementById("unsubResendCodeBtn");
-    const originalText = tOr("contact.verify.resend", button?.textContent ?? "Reenviar código");
     try {
-      button.disabled = true;
       const result = await window.TourAiForms.sendWebEmailVerificationCode(
         getEmailInput()?.value?.trim() ?? ""
       );
       if (!result.ok) {
         if (result.error === "rate_limited") {
-          throw new Error(tOr("contact.verify.rateLimited", "Demasiados intentos. Espera unos minutos."));
+          throw new Error(
+            window.TourAiForms.rateLimitedMessage(
+              result,
+              "contact.verify.rateLimited",
+              "Has solicitado demasiados códigos. No podrás solicitar otro hasta dentro de {time}."
+            )
+          );
         }
-        throw new Error(tOr("contact.verify.sendError", "No se pudo enviar el código."));
+        throw new Error(window.TourAiForms.genericActionErrorMessage());
       }
-      showCodeStatus(
-        tOr("contact.verify.resent", "Se ha enviado un nuevo código."),
+      window.TourAiEmailVerifyModal.setStatus(
+        tOr("contact.verify.resent", "Hemos enviado un nuevo código a tu correo."),
         "success"
       );
+      window.TourAiEmailVerifyModal.clearAndFocus();
     } catch (error) {
-      showCodeStatus(error.message, "error");
-    } finally {
-      button.disabled = false;
-      button.textContent = originalText;
+      window.TourAiEmailVerifyModal.setStatus(
+        window.TourAiForms.toUserFacingErrorMessage(error),
+        "error"
+      );
     }
   }
 
-  async function confirmCode() {
+  async function confirmCode(codeFromModal) {
     if (isBusy()) {
       return;
     }
 
     const email = getEmailInput()?.value?.trim() ?? "";
-    const code = document.getElementById("unsubCodeInput")?.value?.trim() ?? "";
-    const button = document.getElementById("unsubConfirmCodeBtn");
-    const originalText = tOr("contact.verify.submit", button?.textContent ?? "Confirmar código");
+    const code = codeFromModal || window.TourAiEmailVerifyModal.getCode();
 
     try {
-      button.disabled = true;
-      button.textContent = tOr("contact.verify.verifying", "VERIFICANDO...");
       const result = await window.TourAiForms.verifyWebEmailCode(email, code);
       if (!result.ok) {
         const errorMap = {
-          invalid_code: ["contact.verify.invalidCode", "El código no es correcto. Inténtalo de nuevo."],
+          invalid_code: ["contact.verify.invalidCode", "El código no coincide."],
           expired: ["contact.verify.expired", "El código ha caducado. Solicita uno nuevo."],
           too_many_attempts: ["contact.verify.rateLimited", "Demasiados intentos. Espera unos minutos."],
-          not_found: ["contact.verify.invalidCode", "El código no es correcto. Inténtalo de nuevo."],
+          not_found: ["contact.verify.invalidCode", "El código no coincide."],
         };
         const entry = errorMap[result.error] ?? errorMap.invalid_code;
-        showCodeStatus(tOr(entry[0], entry[1]), "error");
+        window.TourAiEmailVerifyModal.setStatus(tOr(entry[0], entry[1]), "error");
+        window.TourAiEmailVerifyModal.clearAndFocus();
         return;
       }
 
-      document.getElementById("unsubCodeSection").hidden = true;
+      window.TourAiEmailVerifyModal.close();
       updateVerificationBox();
       await loadSubscriptionStatus();
     } catch (error) {
-      showCodeStatus(
-        tOr("contact.verify.invalidCode", "El código no es correcto. Inténtalo de nuevo."),
+      window.TourAiEmailVerifyModal.setStatus(
+        tOr("contact.verify.invalidCode", "El código no coincide."),
         "error"
       );
-    } finally {
-      button.textContent = originalText;
-      button.disabled = false;
+      window.TourAiEmailVerifyModal.clearAndFocus();
     }
   }
 
@@ -1801,19 +1926,15 @@
       }
 
       if (result.error === "email_not_verified") {
-        window.TourAiFeedback?.show({
-          type: "info",
-          message: tOr("contact.error.notVerified", "Debes verificar tu correo antes de continuar."),
-          onClose: () => startVerification(),
-        });
+        startVerification();
         return;
       }
 
-      throw new Error(tOr("unsubscribe.error", "No se pudo completar la baja. Inténtalo de nuevo."));
+      throw new Error(window.TourAiForms.genericActionErrorMessage());
     } catch (error) {
       window.TourAiFeedback?.show({
         type: "error",
-        message: error.message || tOr("unsubscribe.error", "No se pudo completar la baja. Inténtalo de nuevo."),
+        message: window.TourAiForms.toUserFacingErrorMessage(error),
       });
     } finally {
       button.textContent = originalText;

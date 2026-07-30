@@ -81,7 +81,6 @@
 
   let searchQuery = "";
   let searchBusy = false;
-  let searchTimer = null;
   let searchGen = 0;
   const authorCache = Object.create(null);
   let openAuthorUid = null;
@@ -92,6 +91,7 @@
   let forbiddenWordsLoading = null;
 
   const searchInput = document.getElementById("communitySearchInput");
+  const searchSubmitBtn = document.getElementById("communitySearchSubmit");
   const searchClearBtn = document.getElementById("communitySearchClear");
   const userCardEl = document.getElementById("communityUserCard");
   const userCardAvatar = document.getElementById("communityUserCardAvatar");
@@ -518,16 +518,50 @@
       return false;
     }
     const escaped = needle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    return new RegExp("\\b" + escaped + "\\b", "i").test(haystack);
+    return new RegExp("(?:^|\\s)" + escaped + "(?:\\s|$)", "i").test(
+      " " + haystack + " "
+    );
+  }
+
+  /**
+   * Firestore stores ConversationalRules Items as a JSON string (stringValue),
+   * matching the app importer — not as a native map.
+   */
+  function coerceForbiddenItemsMap(raw) {
+    if (!raw) {
+      return null;
+    }
+    if (typeof raw === "string") {
+      try {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+          return parsed;
+        }
+        if (Array.isArray(parsed)) {
+          return { ALL: parsed };
+        }
+      } catch (err) {
+        console.warn("[TourAI community] ForbiddenWords Items JSON parse failed", err);
+      }
+      return null;
+    }
+    if (Array.isArray(raw)) {
+      return { ALL: raw };
+    }
+    if (typeof raw === "object") {
+      return raw;
+    }
+    return null;
   }
 
   function flattenForbiddenItems(items) {
     const terms = [];
-    if (!items || typeof items !== "object") {
+    const map = coerceForbiddenItemsMap(items);
+    if (!map) {
       return terms;
     }
-    Object.keys(items).forEach(function (key) {
-      const list = items[key];
+    Object.keys(map).forEach(function (key) {
+      const list = map[key];
       if (!Array.isArray(list)) {
         return;
       }
@@ -542,7 +576,7 @@
   }
 
   async function loadForbiddenWords() {
-    if (forbiddenWordsCache) {
+    if (forbiddenWordsCache !== null) {
       return forbiddenWordsCache;
     }
     if (forbiddenWordsLoading) {
@@ -550,6 +584,7 @@
     }
     forbiddenWordsLoading = (async function () {
       const terms = [];
+      let loadOk = false;
       try {
         const firestore = await auth.getFirestore();
         const locale = window.TourAiI18n?.getLocale?.() || "es-ES";
@@ -562,21 +597,31 @@
               .collection("ConversationalRules")
               .doc("ForbiddenWords_" + locales[i])
               .get();
+            loadOk = true;
             if (snap.exists) {
               const data = snap.data() || {};
-              terms.push.apply(terms, flattenForbiddenItems(data.Items || data.items));
+              terms.push.apply(
+                terms,
+                flattenForbiddenItems(data.Items || data.items)
+              );
             }
-          } catch (_) {
-            // Best-effort; posting still works without the list.
+          } catch (err) {
+            console.warn(
+              "[TourAI community] ForbiddenWords_" + locales[i] + " read failed",
+              err
+            );
           }
         }
-      } catch (_) {
-        // Ignore.
+      } catch (err) {
+        console.error("[TourAI community] loadForbiddenWords", err);
       }
-      forbiddenWordsCache = Array.from(new Set(terms)).sort(function (a, b) {
+      const unique = Array.from(new Set(terms)).sort(function (a, b) {
         return b.length - a.length;
       });
-      return forbiddenWordsCache;
+      if (loadOk) {
+        forbiddenWordsCache = unique;
+      }
+      return unique;
     })();
     try {
       return await forbiddenWordsLoading;
@@ -597,6 +642,29 @@
       }
     }
     return false;
+  }
+
+  async function showCommunityPolicyBlocked() {
+    const title = t("community.error.policy.title", "No se puede publicar");
+    const message = t(
+      "community.error.policy",
+      "No se puede publicar: el contenido incumple la política de uso de la Comunidad. Revisa el texto e inténtalo de nuevo."
+    );
+    setStatus(message, true);
+    if (window.TourAiFeedback?.show) {
+      window.TourAiFeedback.show({
+        type: "error",
+        title: title,
+        message: message,
+      });
+      return;
+    }
+    await confirmAction({
+      title: title,
+      message: message,
+      confirmLabel: t("community.error.policy.ok", "Entendido"),
+      danger: true,
+    });
   }
 
   async function authorTrustSnapshot(uid) {
@@ -2456,19 +2524,35 @@
 
   function syncSearchClear() {
     if (searchClearBtn) {
-      searchClearBtn.hidden = !String(searchQuery || "").trim();
+      const hasText = !!(
+        String(searchInput?.value || "").trim() || String(searchQuery || "").trim()
+      );
+      searchClearBtn.hidden = !hasText;
     }
   }
 
-  function scheduleSearch(raw) {
-    searchQuery = String(raw || "").trim();
+  function commitSearch() {
+    searchQuery = String(searchInput?.value || "").trim();
     syncSearchClear();
-    if (searchTimer) {
-      clearTimeout(searchTimer);
+    runTopicSearch();
+  }
+
+  function clearSearch() {
+    if (searchInput) {
+      searchInput.value = "";
     }
-    searchTimer = setTimeout(function () {
-      runTopicSearch();
-    }, 280);
+    searchQuery = "";
+    syncSearchClear();
+    runTopicSearch();
+  }
+
+  function syncSearchSubmitLabel() {
+    if (!searchSubmitBtn) {
+      return;
+    }
+    const label = t("community.search.submit", "Buscar");
+    searchSubmitBtn.setAttribute("aria-label", label);
+    searchSubmitBtn.setAttribute("title", label);
   }
 
   async function getTopic(topicId) {
@@ -2793,21 +2877,8 @@
     const user = await requireUser();
     const moderation = await resolveModerationState(user, plainForModeration);
     if (moderation.hasForbiddenWords) {
-      const continueAnyway = await confirmAction({
-        title: t(
-          "community.confirm.forbidden.title",
-          "Palabras no permitidas"
-        ),
-        message: t(
-          "community.confirm.forbidden.body",
-          "Tu mensaje contiene palabras que pueden no admitirse. Si continúas, quedará pendiente de revisión y puede ser rechazado."
-        ),
-        confirmLabel: t("community.confirm.forbidden.continue", "Continuar igualmente"),
-        danger: true,
-      });
-      if (!continueAnyway) {
-        return;
-      }
+      await showCommunityPolicyBlocked();
+      return;
     }
     const ok = await confirmAction({
       title: t("community.confirm.publishTopic.title", "¿Publicar este tema?"),
@@ -2896,21 +2967,8 @@
     const user = await requireUser();
     const moderation = await resolveModerationState(user, bodyText);
     if (moderation.hasForbiddenWords) {
-      const continueAnyway = await confirmAction({
-        title: t(
-          "community.confirm.forbidden.title",
-          "Palabras no permitidas"
-        ),
-        message: t(
-          "community.confirm.forbidden.body",
-          "Tu mensaje contiene palabras que pueden no admitirse. Si continúas, quedará pendiente de revisión y puede ser rechazado."
-        ),
-        confirmLabel: t("community.confirm.forbidden.continue", "Continuar igualmente"),
-        danger: true,
-      });
-      if (!continueAnyway) {
-        return;
-      }
+      await showCommunityPolicyBlocked();
+      return;
     }
     const ok = await confirmAction({
       title: isReplica
@@ -3389,13 +3447,19 @@
   });
 
   searchInput?.addEventListener("input", function () {
-    scheduleSearch(searchInput.value);
+    syncSearchClear();
+  });
+  searchInput?.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      commitSearch();
+    }
+  });
+  searchSubmitBtn?.addEventListener("click", function () {
+    commitSearch();
   });
   searchClearBtn?.addEventListener("click", function () {
-    if (searchInput) {
-      searchInput.value = "";
-    }
-    scheduleSearch("");
+    clearSearch();
   });
   replyToClearBtn?.addEventListener("click", function () {
     clearReplyToTarget();
@@ -3413,12 +3477,15 @@
     updateCategoryBlurb();
     syncAuthUi();
     markActiveTab();
+    syncSearchSubmitLabel();
     if (currentTopic) {
       renderDetailThread();
     } else {
       renderTopicsList();
     }
   });
+
+  syncSearchSubmitLabel();
 
   auth
     .onAuthStateChanged(function (user) {

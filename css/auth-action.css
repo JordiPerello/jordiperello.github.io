@@ -213,14 +213,6 @@
 .auth-action-page .auth-action-submit {
   width: 100%;
   margin-top: 8px;
-  padding: 14px 18px;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: 700;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  box-sizing: border-box;
 }
 
 .auth-action-page .auth-action-status {

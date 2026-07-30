@@ -81,10 +81,7 @@
                 <p id="emailError" class="field-error" data-i18n="contact.email.invalid" hidden>Introduce una dirección de correo válida (ejemplo: nombre@dominio.com).</p>
 
                 <div id="emailVerificationBox" class="verification-box">
-                    <p id="emailVerificationMessage" data-i18n="contact.verify.prompt">Verifica tu correo para poder enviar la consulta.</p>
-                    <div class="verification-actions">
-                        <button type="button" id="sendVerificationBtn" onclick="startEmailVerification()" data-i18n="contact.verify.button">VERIFICAR CORREO</button>
-                    </div>
+                    <p id="emailVerificationMessage" data-i18n="contact.verify.success">Email validado correctamente.</p>
                 </div>
 
                 <label data-i18n="contact.subject">Asunto de la consulta</label>
@@ -115,21 +112,6 @@
                 </p>
             </div>
         </main>
-    </div>
-
-    <div id="emailVerificationModal" class="modal-overlay" onclick="closeEmailVerificationModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-modal" role="button" aria-label="Cerrar">&times;</span>
-            <h3 data-i18n="contact.verify.title">Verifica tu correo</h3>
-            <p data-i18n="contact.verify.intro">Te hemos enviado un código de 6 dígitos. Introdúcelo para confirmar tu dirección antes de enviar la consulta.</p>
-            <label for="verificationCode" data-i18n="contact.verify.code">Código de verificación</label>
-            <input type="text" id="verificationCode" class="verification-code-input" inputmode="numeric" pattern="[0-9]*" maxlength="6" data-i18n-placeholder="contact.verify.code.placeholder" placeholder="000000" autocomplete="one-time-code">
-            <p id="verificationModalStatus" class="verification-status" hidden></p>
-            <button type="button" id="verifyCodeBtn" onclick="confirmVerificationCode()" data-i18n="contact.verify.submit">Confirmar código</button>
-            <p class="verification-hint">
-                <button type="button" id="resendVerificationBtn" onclick="resendVerificationCode()" style="background: transparent; color: var(--accent); padding: 0; width: auto; font-size: 0.9em;" data-i18n="contact.verify.resend">Reenviar código</button>
-            </p>
-        </div>
     </div>
 
     <div id="privacyModal" class="modal-overlay" onclick="closeModal()">
@@ -208,14 +190,14 @@ function openModal() { document.getElementById('privacyModal').style.display = '
             return window.TourAiI18n?.tOr(key, locale, null, fallback) ?? fallback;
         }
 
-        function setVerificationBoxState({ visible, verified, showVerifyButton }) {
+        function setVerificationBoxState({ visible, verified }) {
             window.TourAiForms?.renderEmailVerificationBox(
                 {
                     boxId: 'emailVerificationBox',
                     messageId: 'emailVerificationMessage',
                     sendButtonId: 'sendVerificationBtn',
                 },
-                { visible, verified, showVerifyButton }
+                { visible, verified, showVerifyButton: false }
             );
         }
 
@@ -231,57 +213,45 @@ function openModal() { document.getElementById('privacyModal').style.display = '
             );
         }
 
-        function openEmailVerificationModal() {
-            document.getElementById('emailVerificationModal').style.display = 'flex';
-            const status = document.getElementById('verificationModalStatus');
-            status.hidden = true;
-            status.className = 'verification-status';
-            document.getElementById('verificationCode').value = '';
-            document.getElementById('verificationCode').focus();
-        }
-
-        function closeEmailVerificationModal() {
-            document.getElementById('emailVerificationModal').style.display = 'none';
-        }
-
-        function showVerificationModalStatus(message, type) {
-            const status = document.getElementById('verificationModalStatus');
-            status.textContent = message;
-            status.className = 'verification-status ' + (type ?? '');
-            status.hidden = false;
+        function openContactVerifyModal() {
+            window.TourAiEmailVerifyModal.open({
+                onConfirm: confirmVerificationCode,
+                onResend: resendVerificationCode,
+            });
         }
 
         async function startEmailVerification() {
             if (window.TourAiLoading?.isVisible()) {
+                window.TourAiForms?.allowAutoVerificationRetry?.(
+                    document.getElementById('email').value
+                );
                 return;
             }
 
             const email = document.getElementById('email').value.trim();
-            const button = document.getElementById('sendVerificationBtn');
-            const originalText = tContact('contact.verify.button', button.textContent);
             try {
-                button.disabled = true;
-                button.textContent = tContact('contact.verify.sending', 'Enviando código...');
                 const result = await window.TourAiForms.sendContactVerificationCode(email);
                 if (!result.ok) {
                     if (result.error === 'rate_limited') {
-                        throw new Error(tContact('contact.verify.rateLimited', 'Demasiados intentos. Espera unos minutos.'));
+                        throw new Error(
+                            window.TourAiForms.rateLimitedMessage(
+                                result,
+                                'contact.verify.rateLimited',
+                                'Has solicitado demasiados códigos. No podrás solicitar otro hasta dentro de {time}.'
+                            )
+                        );
                     }
-                    throw new Error(tContact('contact.verify.sendError', 'No se pudo enviar el código.'));
+                    throw new Error(tContact('forms.error.generic', 'No se pudo completar la acción.'));
                 }
-                openEmailVerificationModal();
-                showVerificationModalStatus(
-                    tContact('contact.verify.sent', 'Código enviado. Revisa tu bandeja de entrada y spam.'),
-                    'success'
-                );
+                openContactVerifyModal();
             } catch (error) {
+                window.TourAiForms?.allowAutoVerificationRetry?.(email);
                 window.TourAiFeedback?.show({
                     type: 'error',
-                    message: error.message || tContact('contact.verify.sendError', 'No se pudo enviar el código.'),
+                    message: window.TourAiForms?.toUserFacingErrorMessage?.(error)
+                        ?? tContact('forms.error.generic', 'No se pudo completar la acción.'),
                 });
             } finally {
-                button.textContent = originalText;
-                button.disabled = false;
                 validarForm();
             }
         }
@@ -291,65 +261,65 @@ function openModal() { document.getElementById('privacyModal').style.display = '
                 return;
             }
 
-            const button = document.getElementById('resendVerificationBtn');
-            const originalText = tContact('contact.verify.resend', button.textContent);
             try {
-                button.disabled = true;
                 const result = await window.TourAiForms.sendContactVerificationCode(
                     document.getElementById('email').value.trim()
                 );
                 if (!result.ok) {
                     if (result.error === 'rate_limited') {
-                        throw new Error(tContact('contact.verify.rateLimited', 'Demasiados intentos. Espera unos minutos.'));
+                        throw new Error(
+                            window.TourAiForms.rateLimitedMessage(
+                                result,
+                                'contact.verify.rateLimited',
+                                'Has solicitado demasiados códigos. No podrás solicitar otro hasta dentro de {time}.'
+                            )
+                        );
                     }
-                    throw new Error(tContact('contact.verify.sendError', 'No se pudo enviar el código.'));
+                    throw new Error(tContact('forms.error.generic', 'No se pudo completar la acción.'));
                 }
-                showVerificationModalStatus(
-                    tContact('contact.verify.resent', 'Se ha enviado un nuevo código.'),
+                window.TourAiEmailVerifyModal.setStatus(
+                    tContact('contact.verify.resent', 'Hemos enviado un nuevo código a tu correo.'),
                     'success'
                 );
+                window.TourAiEmailVerifyModal.clearAndFocus();
             } catch (error) {
-                showVerificationModalStatus(error.message, 'error');
-            } finally {
-                button.disabled = false;
-                button.textContent = originalText;
+                window.TourAiEmailVerifyModal.setStatus(
+                    window.TourAiForms?.toUserFacingErrorMessage?.(error)
+                        ?? tContact('forms.error.generic', 'No se pudo completar la acción.'),
+                    'error'
+                );
             }
         }
 
-        async function confirmVerificationCode() {
+        async function confirmVerificationCode(codeFromModal) {
             if (window.TourAiLoading?.isVisible()) {
                 return;
             }
 
             const email = document.getElementById('email').value.trim();
-            const code = document.getElementById('verificationCode').value.trim();
-            const button = document.getElementById('verifyCodeBtn');
-            const originalText = tContact('contact.verify.submit', button.textContent);
+            const code = codeFromModal || window.TourAiEmailVerifyModal.getCode();
             try {
-                button.disabled = true;
-                button.textContent = tContact('contact.verify.verifying', 'VERIFICANDO...');
                 const result = await window.TourAiForms.verifyContactCode(email, code);
                 if (!result.ok) {
                     const errorKey = {
-                        invalid_code: ['contact.verify.invalidCode', 'El código no es correcto. Inténtalo de nuevo.'],
+                        invalid_code: ['contact.verify.invalidCode', 'El código no coincide.'],
                         expired: ['contact.verify.expired', 'El código ha caducado. Solicita uno nuevo.'],
                         too_many_attempts: ['contact.verify.rateLimited', 'Demasiados intentos. Espera unos minutos.'],
-                        not_found: ['contact.verify.invalidCode', 'El código no es correcto. Inténtalo de nuevo.'],
-                    }[result.error] ?? ['contact.verify.invalidCode', 'El código no es correcto. Inténtalo de nuevo.'];
-                    showVerificationModalStatus(tContact(errorKey[0], errorKey[1]), 'error');
+                        not_found: ['contact.verify.invalidCode', 'El código no coincide.'],
+                    }[result.error] ?? ['contact.verify.invalidCode', 'El código no coincide.'];
+                    window.TourAiEmailVerifyModal.setStatus(tContact(errorKey[0], errorKey[1]), 'error');
+                    window.TourAiEmailVerifyModal.clearAndFocus();
                     return;
                 }
-                closeEmailVerificationModal();
+                window.TourAiEmailVerifyModal.close();
                 applyContactVerificationBox(email);
                 validarForm();
             } catch (error) {
-                showVerificationModalStatus(
-                    tContact('contact.verify.invalidCode', 'El código no es correcto. Inténtalo de nuevo.'),
+                window.TourAiEmailVerifyModal.setStatus(
+                    tContact('contact.verify.invalidCode', 'El código no coincide.'),
                     'error'
                 );
-            } finally {
-                button.textContent = originalText;
-                button.disabled = false;
+                window.TourAiEmailVerifyModal.clearAndFocus();
             }
         }
 
@@ -384,7 +354,7 @@ function openModal() { document.getElementById('privacyModal').style.display = '
             if (!isEmailValid) {
                 window.TourAiForms?.clearContactEmailVerification();
                 window.TourAiForms?.resetEmailRegistrationCheck();
-                setVerificationBoxState({ visible: false, verified: false, showVerifyButton: false });
+                setVerificationBoxState({ visible: false, verified: false });
             } else {
                 applyContactVerificationBox(e);
             }
@@ -392,13 +362,16 @@ function openModal() { document.getElementById('privacyModal').style.display = '
             b.disabled = !(n.length > 0 && isEmailValid && isEmailVerified && m.length > 0 && p);
         }
 
-        function scheduleContactEmailCheck() {
+        function scheduleContactEmailCheck(options) {
+            const settings = options ?? {};
             window.TourAiForms?.scheduleEmailRegistrationCheck(
                 document.getElementById('email').value,
                 {
                     context: 'contact',
                     getEmail: () => document.getElementById('email').value,
                     onStateChange: validarForm,
+                    autoOpenVerification: settings.autoOpenVerification === true,
+                    onNeedsVerification: () => startEmailVerification(),
                 }
             );
         }
@@ -406,18 +379,10 @@ function openModal() { document.getElementById('privacyModal').style.display = '
         document.getElementById('email').addEventListener('input', function () {
             window.TourAiForms?.onContactEmailInput(this.value);
             validarForm();
-            scheduleContactEmailCheck();
         });
         document.getElementById('name').addEventListener('input', validarForm);
-        document.getElementById('email').addEventListener('blur', scheduleContactEmailCheck);
-        document.getElementById('verificationCode').addEventListener('input', function () {
-            this.value = this.value.replace(/\D/g, '').slice(0, 6);
-        });
-        document.getElementById('verificationCode').addEventListener('keydown', function (event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                confirmVerificationCode();
-            }
+        document.getElementById('email').addEventListener('blur', function () {
+            scheduleContactEmailCheck({ autoOpenVerification: true });
         });
         document.getElementById('message').addEventListener('input', validarForm);
         document.getElementById('privacy').addEventListener('change', validarForm);
@@ -436,7 +401,6 @@ function openModal() { document.getElementById('privacyModal').style.display = '
         }
 
         bindOverlayClose('privacyModal', closeModal);
-        bindOverlayClose('emailVerificationModal', closeEmailVerificationModal);
     </script>
 
     <script>
@@ -452,11 +416,7 @@ function openModal() { document.getElementById('privacyModal').style.display = '
             const originalText = window.TourAiI18n?.t('contact.submit', locale) ?? button.textContent;
 
             if (!window.TourAiForms.isContactEmailVerified(email)) {
-                window.TourAiFeedback?.show({
-                    type: 'info',
-                    message: tContact('contact.error.notVerified', 'Debes verificar tu correo antes de enviar la consulta.'),
-                    onClose: () => startEmailVerification(),
-                });
+                startEmailVerification();
                 return;
             }
 
@@ -481,10 +441,12 @@ function openModal() { document.getElementById('privacyModal').style.display = '
                     throw new Error(errorMessages[result.error] ?? tContact('contact.error', 'No se pudo enviar. Inténtalo de nuevo.'));
                 }
             } catch (e) {
-                const shouldVerify = (e.message || '').toLowerCase().includes('verificar');
+                const rawMessage = typeof e?.message === 'string' ? e.message : '';
+                const shouldVerify = rawMessage.toLowerCase().includes('verificar');
                 window.TourAiFeedback?.show({
                     type: 'error',
-                    message: e.message || tContact('contact.error', 'No se pudo enviar. Inténtalo de nuevo.'),
+                    message: window.TourAiForms?.toUserFacingErrorMessage?.(e)
+                        ?? tContact('forms.error.generic', 'No se pudo completar la acción.'),
                     onClose: shouldVerify ? () => startEmailVerification() : undefined,
                 });
             } finally {

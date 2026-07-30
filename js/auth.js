@@ -146,6 +146,54 @@
       return auth.signOut();
     },
 
+    /**
+     * Wipe browser auth leftovers after account deletion.
+     * Password is never stored; this clears remembered email, prefs, nav cache,
+     * web OTP tokens, and the Firebase Auth session/token.
+     */
+    async purgeAfterAccountDeletion() {
+      try {
+        this.setRememberedEmail("");
+      } catch {
+        /* ignore */
+      }
+      try {
+        global.localStorage.removeItem("tourai-login-email");
+        global.localStorage.removeItem("tourai-login-remember");
+      } catch {
+        /* ignore */
+      }
+      try {
+        if (typeof this.clearNavProfileCache === "function") {
+          this.clearNavProfileCache();
+        } else {
+          global.sessionStorage.removeItem("tourai-nav-profile-v1");
+          global.sessionStorage.removeItem("tourai-nav-profile-v2");
+          global.localStorage.removeItem("tourai-nav-profile-v1");
+          global.localStorage.removeItem("tourai-nav-profile-v2");
+        }
+      } catch {
+        /* ignore */
+      }
+      try {
+        global.sessionStorage.removeItem("tourai-web-verified-emails");
+        global.sessionStorage.removeItem("tourai-account-deletion-verified");
+      } catch {
+        /* ignore */
+      }
+      try {
+        global.document?.documentElement?.classList?.remove("tourai-auth-pending");
+      } catch {
+        /* ignore */
+      }
+
+      try {
+        await this.signOut();
+      } catch {
+        /* Account may already be gone on Auth; local wipe above still applies. */
+      }
+    },
+
     async sendPasswordReset(email) {
       const auth = await this.ensureFirebase();
       const continueUrl = `${global.location.origin}/reset-password.html`;

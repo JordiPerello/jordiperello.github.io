@@ -158,10 +158,7 @@
             <form id="subscriptionForm" onsubmit="handleSubscription(event)" novalidate>
                 <input type="email" id="userEmail" name="email" data-i18n-placeholder="index.modal.email" placeholder="Tu correo electrónico" required autocomplete="email">
                 <div id="subEmailVerificationBox" class="verification-box">
-                    <p id="subEmailVerificationMessage" data-i18n="contact.verify.prompt">Verifica tu correo para continuar.</p>
-                    <div class="verification-actions">
-                        <button type="button" id="subSendVerificationBtn" data-i18n="contact.verify.button">VERIFICAR CORREO</button>
-                    </div>
+                    <p id="subEmailVerificationMessage" data-i18n="contact.verify.success">Email validado correctamente.</p>
                 </div>
                 <label style="display:flex;gap:10px;align-items:flex-start;font-size:0.9em;margin:10px 0 15px;text-align:left;">
                     <input type="checkbox" id="subPrivacy" name="privacy" required onchange="validateSubscriptionForm()" style="width:auto;margin-top:3px;">

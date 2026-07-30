@@ -993,6 +993,7 @@
   const loadingPanel = document.getElementById("accountLoading");
   const profileMount = document.getElementById("accountProfileMount");
   const logoutBtn = document.getElementById("accountLogout");
+  const deleteAccountBtn = document.getElementById("accountDeleteAccount");
   const editModal = document.getElementById("accountEditModal");
   const editForm = document.getElementById("accountEditForm");
   const editEmail = document.getElementById("editEmail");
@@ -1030,6 +1031,8 @@
   let editPhotoCrop = { offsetXNorm: 0, offsetYNorm: 0, userScale: 1 };
   let editPhotoCropDirty = false;
   let editPhotoNatural = { width: 0, height: 0 };
+  /** Baseline of the edit modal when opened (fields + photo crop). */
+  let editBaseline = null;
   let photoPan = null;
   const PHOTO_PAN_SLOP_PX = 8;
 
@@ -1374,6 +1377,40 @@
     }
   }
 
+  function getEditFormState() {
+    return {
+      displayName: (editDisplayName?.value || "").trim(),
+      birthEnabled: !!editBirthDateEnabled?.checked,
+      birthDate: editBirthDateEnabled?.checked
+        ? String(editBirthDate?.value || "")
+        : "",
+    };
+  }
+
+  function captureEditBaseline() {
+    editBaseline = {
+      form: getEditFormState(),
+    };
+  }
+
+  function hasEditChanges() {
+    if (!editBaseline) {
+      return false;
+    }
+    if (pendingPhotoBlob) {
+      return true;
+    }
+    if (editPhotoCropDirty) {
+      return true;
+    }
+    const form = getEditFormState();
+    return (
+      form.displayName !== editBaseline.form.displayName ||
+      form.birthEnabled !== editBaseline.form.birthEnabled ||
+      form.birthDate !== editBaseline.form.birthDate
+    );
+  }
+
   function openEditModal() {
     if (!editModal || !currentProfile || !currentUser) {
       return;
@@ -1396,6 +1433,7 @@
       editBirthDate.value = birthValue;
     }
     syncBirthDateEnabled();
+    captureEditBaseline();
 
     setEditStatus("", false);
     editDisplayName.focus();
@@ -1407,12 +1445,46 @@
     }
     closePasswordModal();
     resetPendingPhoto();
+    editBaseline = null;
     editModal.classList.remove("is-open");
     editModal.hidden = true;
     editModal.setAttribute("aria-hidden", "true");
     if (!passwordModal?.classList.contains("is-open")) {
       document.body.style.overflow = "";
     }
+  }
+
+  async function requestCloseEditModal() {
+    if (!editModal?.classList.contains("is-open")) {
+      return;
+    }
+    if (hasEditChanges()) {
+      const ok = await (window.TourAiConfirm?.show
+        ? window.TourAiConfirm.show({
+            title: t("account.confirm.discardEdit.title", "¿Descartar cambios?"),
+            message: t(
+              "account.confirm.discardEdit.body",
+              "Si continúas, perderás los cambios hechos."
+            ),
+            confirmLabel: t("account.confirm.discardEdit.confirm", "Descartar"),
+            cancelLabel: t("account.confirm.cancel", "Cancelar"),
+            danger: true,
+          })
+        : Promise.resolve(
+            window.confirm(
+              t("account.confirm.discardEdit.title", "¿Descartar cambios?") +
+                "\n\n" +
+                t(
+                  "account.confirm.discardEdit.body",
+                  "Si continúas, perderás los cambios hechos."
+                )
+            )
+          ));
+      if (!ok) {
+        return;
+      }
+    }
+    closeEditModal();
   }
 
   function resetPasswordForm() {
@@ -1583,6 +1655,29 @@
     });
 
   logoutBtn?.addEventListener("click", async function () {
+    const ok = await (window.TourAiConfirm?.show
+      ? window.TourAiConfirm.show({
+          title: t("account.confirm.logout.title", "¿Cerrar sesión?"),
+          message: t(
+            "account.confirm.logout.body",
+            "Vas a salir de tu cuenta en este dispositivo. Podrás volver a iniciar sesión cuando quieras."
+          ),
+          confirmLabel: t("account.confirm.logout.confirm", "Cerrar sesión"),
+          cancelLabel: t("account.confirm.cancel", "Cancelar"),
+        })
+      : Promise.resolve(
+          window.confirm(
+            t("account.confirm.logout.title", "¿Cerrar sesión?") +
+              "\n\n" +
+              t(
+                "account.confirm.logout.body",
+                "Vas a salir de tu cuenta en este dispositivo. Podrás volver a iniciar sesión cuando quieras."
+              )
+          )
+        ));
+    if (!ok) {
+      return;
+    }
     setStatus(t("account.status.signingOut", "Cerrando sesión..."), false);
     try {
       data.clearCache();
@@ -1591,6 +1686,36 @@
     } catch (err) {
       setStatus(auth.mapAuthError(err), true);
     }
+  });
+
+  deleteAccountBtn?.addEventListener("click", async function (event) {
+    event.preventDefault();
+    const href = deleteAccountBtn.getAttribute("href") || "delete-account.html";
+    const ok = await (window.TourAiConfirm?.show
+      ? window.TourAiConfirm.show({
+          title: t("account.confirm.delete.title", "¿Eliminar tu cuenta?"),
+          message: t(
+            "account.confirm.delete.body",
+            "Vas a iniciar el proceso de eliminación permanente. Deberás verificar tu correo con un código. Una vez completada, esta acción no se puede deshacer."
+          ),
+          confirmLabel: t("account.confirm.delete.confirm", "Continuar"),
+          cancelLabel: t("account.confirm.cancel", "Cancelar"),
+          danger: true,
+        })
+      : Promise.resolve(
+          window.confirm(
+            t("account.confirm.delete.title", "¿Eliminar tu cuenta?") +
+              "\n\n" +
+              t(
+                "account.confirm.delete.body",
+                "Vas a iniciar el proceso de eliminación permanente. Deberás verificar tu correo con un código. Una vez completada, esta acción no se puede deshacer."
+              )
+          )
+        ));
+    if (!ok) {
+      return;
+    }
+    window.location.href = href;
   });
 
   document.addEventListener("click", function (event) {
@@ -1607,7 +1732,7 @@
       return;
     }
     if (event.target.closest("[data-close-account-edit]") || event.target === editModal) {
-      closeEditModal();
+      requestCloseEditModal();
     }
   });
 
@@ -1620,7 +1745,7 @@
       return;
     }
     if (editModal?.classList.contains("is-open")) {
-      closeEditModal();
+      requestCloseEditModal();
     }
   });
 
@@ -1840,6 +1965,7 @@
   const signedInPanel = document.getElementById("dashboardSignedIn");
   const loadingPanel = document.getElementById("dashboardLoading");
   const logoutBtn = document.getElementById("dashboardLogout");
+  const deleteAccountBtn = document.getElementById("dashboardDeleteAccount");
   const statusEl = document.getElementById("dashboardStatus");
   const planDetailModal = document.getElementById("planDetailModal");
   const planDetailBody = document.getElementById("planDetailBody");
@@ -2282,6 +2408,29 @@
     });
 
   logoutBtn?.addEventListener("click", async function () {
+    const ok = await (window.TourAiConfirm?.show
+      ? window.TourAiConfirm.show({
+          title: t("account.confirm.logout.title", "¿Cerrar sesión?"),
+          message: t(
+            "account.confirm.logout.body",
+            "Vas a salir de tu cuenta en este dispositivo. Podrás volver a iniciar sesión cuando quieras."
+          ),
+          confirmLabel: t("account.confirm.logout.confirm", "Cerrar sesión"),
+          cancelLabel: t("account.confirm.cancel", "Cancelar"),
+        })
+      : Promise.resolve(
+          window.confirm(
+            t("account.confirm.logout.title", "¿Cerrar sesión?") +
+              "\n\n" +
+              t(
+                "account.confirm.logout.body",
+                "Vas a salir de tu cuenta en este dispositivo. Podrás volver a iniciar sesión cuando quieras."
+              )
+          )
+        ));
+    if (!ok) {
+      return;
+    }
     setStatus(t("account.status.signingOut", "Cerrando sesión..."), false);
     try {
       data.clearCache();
@@ -2290,6 +2439,36 @@
     } catch (err) {
       setStatus(auth.mapAuthError(err), true);
     }
+  });
+
+  deleteAccountBtn?.addEventListener("click", async function (event) {
+    event.preventDefault();
+    const href = deleteAccountBtn.getAttribute("href") || "delete-account.html";
+    const ok = await (window.TourAiConfirm?.show
+      ? window.TourAiConfirm.show({
+          title: t("account.confirm.delete.title", "¿Eliminar tu cuenta?"),
+          message: t(
+            "account.confirm.delete.body",
+            "Vas a iniciar el proceso de eliminación permanente. Deberás verificar tu correo con un código. Una vez completada, esta acción no se puede deshacer."
+          ),
+          confirmLabel: t("account.confirm.delete.confirm", "Continuar"),
+          cancelLabel: t("account.confirm.cancel", "Cancelar"),
+          danger: true,
+        })
+      : Promise.resolve(
+          window.confirm(
+            t("account.confirm.delete.title", "¿Eliminar tu cuenta?") +
+              "\n\n" +
+              t(
+                "account.confirm.delete.body",
+                "Vas a iniciar el proceso de eliminación permanente. Deberás verificar tu correo con un código. Una vez completada, esta acción no se puede deshacer."
+              )
+          )
+        ));
+    if (!ok) {
+      return;
+    }
+    window.location.href = href;
   });
 
   document.addEventListener("tourai:locale-changed", function () {

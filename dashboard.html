@@ -45,51 +45,54 @@
         </div>
 
         <div id="dashboardSignedIn" hidden>
-            <nav class="account-subnav" aria-label="Cuenta">
-                <a href="account.html" data-i18n="account.subnav.profile">Perfil</a>
-                <a class="active" href="dashboard.html" data-i18n="account.subnav.dashboard">Panel</a>
-            </nav>
+            <div class="account-tabs">
+                <nav class="account-subnav" role="tablist" aria-label="Cuenta">
+                    <a href="account.html" role="tab" aria-selected="false" data-i18n="account.subnav.profile">Perfil</a>
+                    <a class="active" href="dashboard.html" role="tab" aria-selected="true" data-i18n="account.subnav.dashboard">Panel</a>
+                </nav>
+                <div class="account-panel" role="tabpanel">
+                    <section class="account-card account-accordion" data-section="activePlan" data-load-state="idle">
+                        <button type="button" class="account-accordion__toggle" aria-expanded="false">
+                            <span data-i18n="account.plan.activeTitle">Plan en uso</span>
+                            <span class="account-accordion__chevron" aria-hidden="true"></span>
+                        </button>
+                        <div class="account-accordion__panel" hidden>
+                            <div class="account-accordion__body" data-section-body>
+                                <p class="account-empty" data-i18n="dashboard.section.collapsed">Expande para cargar esta información.</p>
+                            </div>
+                        </div>
+                    </section>
 
-            <section class="account-card account-accordion" data-section="activePlan" data-load-state="idle">
-                <button type="button" class="account-accordion__toggle" aria-expanded="false">
-                    <span data-i18n="account.plan.activeTitle">Plan en uso</span>
-                    <span class="account-accordion__chevron" aria-hidden="true"></span>
-                </button>
-                <div class="account-accordion__panel" hidden>
-                    <div class="account-accordion__body" data-section-body>
-                        <p class="account-empty" data-i18n="dashboard.section.collapsed">Expande para cargar esta información.</p>
-                    </div>
+                    <section class="account-card account-accordion" data-section="plans" data-load-state="idle">
+                        <button type="button" class="account-accordion__toggle" aria-expanded="false">
+                            <span data-i18n="account.plan.listTitle">Tus planes</span>
+                            <span class="account-accordion__chevron" aria-hidden="true"></span>
+                        </button>
+                        <div class="account-accordion__panel" hidden>
+                            <div class="account-accordion__body" data-section-body>
+                                <p class="account-empty" data-i18n="dashboard.section.collapsed">Expande para cargar esta información.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="account-card account-accordion" data-section="payments" data-load-state="idle">
+                        <button type="button" class="account-accordion__toggle" aria-expanded="false">
+                            <span data-i18n="account.payment.listTitle">Historial de pagos</span>
+                            <span class="account-accordion__chevron" aria-hidden="true"></span>
+                        </button>
+                        <div class="account-accordion__panel" hidden>
+                            <div class="account-accordion__body" data-section-body>
+                                <p class="account-empty" data-i18n="dashboard.section.collapsed">Expande para cargar esta información.</p>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-            </section>
+            </div>
 
-            <section class="account-card account-accordion" data-section="plans" data-load-state="idle">
-                <button type="button" class="account-accordion__toggle" aria-expanded="false">
-                    <span data-i18n="account.plan.listTitle">Tus planes</span>
-                    <span class="account-accordion__chevron" aria-hidden="true"></span>
-                </button>
-                <div class="account-accordion__panel" hidden>
-                    <div class="account-accordion__body" data-section-body>
-                        <p class="account-empty" data-i18n="dashboard.section.collapsed">Expande para cargar esta información.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="account-card account-accordion" data-section="payments" data-load-state="idle">
-                <button type="button" class="account-accordion__toggle" aria-expanded="false">
-                    <span data-i18n="account.payment.listTitle">Historial de pagos</span>
-                    <span class="account-accordion__chevron" aria-hidden="true"></span>
-                </button>
-                <div class="account-accordion__panel" hidden>
-                    <div class="account-accordion__body" data-section-body>
-                        <p class="account-empty" data-i18n="dashboard.section.collapsed">Expande para cargar esta información.</p>
-                    </div>
-                </div>
-            </section>
-
-            <div class="account-card">
+            <div class="account-actions-bar">
                 <div class="account-actions">
-                    <button type="button" id="dashboardLogout" class="btn-secondary" data-i18n="account.logout">Cerrar sesión</button>
-                    <a class="btn-secondary" href="account.html" data-i18n="account.subnav.profile">Perfil</a>
+                    <button type="button" id="dashboardLogout" class="site-btn site-btn--secondary" data-i18n="account.logout">Cerrar sesión</button>
+                    <a id="dashboardDeleteAccount" class="site-btn site-btn--danger" href="delete-account.html" data-i18n="footer.deleteAccount">Eliminar cuenta</a>
                 </div>
                 <p id="dashboardStatus" class="account-status" role="status" aria-live="polite"></p>
             </div>

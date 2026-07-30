@@ -255,13 +255,31 @@
 
       const defaultTitles = {
         success: tOr("feedback.success.title", "¡Listo!"),
-        error: tOr("feedback.error.title", "No se pudo completar"),
+        error: tOr(
+          "forms.error.generic",
+          "No se pudo completar la acción."
+        ),
         info: tOr("feedback.info.title", "Acción necesaria"),
       };
 
+      const customTitle =
+        typeof options?.title === "string" ? options.title.trim() : "";
+      const message =
+        typeof options?.message === "string" ? options.message.trim() : "";
+
       icon.className = `tourai-feedback-icon tourai-feedback-icon--${type}`;
-      titleEl.textContent = options?.title ?? defaultTitles[type] ?? defaultTitles.info;
-      messageEl.textContent = options?.message ?? "";
+
+      // Errors: single title-styled line (avoid title + nearly identical body).
+      if (type === "error" && !customTitle) {
+        titleEl.textContent = message || defaultTitles.error;
+        messageEl.textContent = "";
+        messageEl.hidden = true;
+      } else {
+        titleEl.textContent = customTitle || defaultTitles[type] || defaultTitles.info;
+        messageEl.textContent = message;
+        messageEl.hidden = !message;
+      }
+
       button.textContent = options?.buttonText ?? tOr("feedback.close", "Entendido");
 
       onCloseCallback = options?.onClose ?? null;
@@ -315,5 +333,528 @@
   } else {
     fillCurrentYear();
   }
+})();
+
+/* Six-digit OTP inputs (same interaction pattern as TourAI app VerificationCodeInputView). */
+(function () {
+  function digitInputs(root) {
+    return Array.prototype.slice.call(
+      root.querySelectorAll('input[data-otp-digit]')
+    );
+  }
+
+  function syncHidden(root) {
+    var hiddenId = root.getAttribute("data-otp-hidden");
+    if (!hiddenId) {
+      return;
+    }
+    var hidden = document.getElementById(hiddenId);
+    if (hidden) {
+      hidden.value = window.TourAiOtpDigits.getCode(root);
+    }
+  }
+
+  function fillFromString(root, value) {
+    var digits = String(value || "").replace(/\D/g, "").slice(0, 6).split("");
+    digitInputs(root).forEach(function (input, index) {
+      input.value = digits[index] || "";
+    });
+    syncHidden(root);
+  }
+
+  function focusIndex(root, index) {
+    var inputs = digitInputs(root);
+    var target = inputs[Math.max(0, Math.min(index, inputs.length - 1))];
+    if (target) {
+      target.focus();
+      target.select();
+    }
+  }
+
+  function mount(root, options) {
+    if (!root || root.getAttribute("data-otp-ready") === "1") {
+      return root;
+    }
+    var opts = options || {};
+    var length = Math.max(4, Math.min(8, Number(opts.length) || 6));
+    var hiddenId = opts.hiddenInputId || root.getAttribute("data-otp-hidden") || "";
+    var ariaLabel =
+      opts.ariaLabel ||
+      root.getAttribute("aria-label") ||
+      "Código de verificación";
+
+    root.classList.add("otp-digits");
+    root.setAttribute("role", "group");
+    root.setAttribute("aria-label", ariaLabel);
+    if (hiddenId) {
+      root.setAttribute("data-otp-hidden", hiddenId);
+    }
+    root.innerHTML = "";
+
+    for (var i = 0; i < length; i++) {
+      var input = document.createElement("input");
+      input.type = "text";
+      input.inputMode = "numeric";
+      input.autocomplete = i === 0 ? "one-time-code" : "off";
+      input.maxLength = 1;
+      input.pattern = "[0-9]*";
+      input.className = "otp-digits__cell";
+      input.setAttribute("data-otp-digit", String(i));
+      input.setAttribute("aria-label", "Dígito " + (i + 1));
+      root.appendChild(input);
+    }
+
+    root.addEventListener("input", function (event) {
+      var target = event.target;
+      if (!(target instanceof HTMLInputElement) || !target.hasAttribute("data-otp-digit")) {
+        return;
+      }
+      var cleaned = target.value.replace(/\D/g, "");
+      if (cleaned.length > 1) {
+        fillFromString(root, cleaned);
+        var filled = window.TourAiOtpDigits.getCode(root);
+        focusIndex(root, Math.min(filled.length, length - 1));
+        if (filled.length >= length && typeof opts.onComplete === "function") {
+          opts.onComplete(filled);
+        }
+        return;
+      }
+      target.value = cleaned.slice(0, 1);
+      syncHidden(root);
+      if (target.value) {
+        var idx = Number(target.getAttribute("data-otp-digit") || "0");
+        focusIndex(root, idx + 1);
+      }
+      var code = window.TourAiOtpDigits.getCode(root);
+      if (code.length >= length && typeof opts.onComplete === "function") {
+        opts.onComplete(code);
+      }
+    });
+
+    root.addEventListener("keydown", function (event) {
+      var target = event.target;
+      if (!(target instanceof HTMLInputElement) || !target.hasAttribute("data-otp-digit")) {
+        return;
+      }
+      var idx = Number(target.getAttribute("data-otp-digit") || "0");
+      if (event.key === "Backspace" && !target.value && idx > 0) {
+        focusIndex(root, idx - 1);
+        return;
+      }
+      if (event.key === "ArrowLeft" && idx > 0) {
+        event.preventDefault();
+        focusIndex(root, idx - 1);
+        return;
+      }
+      if (event.key === "ArrowRight" && idx < length - 1) {
+        event.preventDefault();
+        focusIndex(root, idx + 1);
+        return;
+      }
+      if (event.key === "Enter" && typeof opts.onEnter === "function") {
+        event.preventDefault();
+        opts.onEnter(window.TourAiOtpDigits.getCode(root));
+      }
+    });
+
+    root.addEventListener("paste", function (event) {
+      var text = (event.clipboardData || window.clipboardData)?.getData("text") || "";
+      if (!/\d/.test(text)) {
+        return;
+      }
+      event.preventDefault();
+      fillFromString(root, text);
+      var code = window.TourAiOtpDigits.getCode(root);
+      focusIndex(root, Math.min(code.length, length - 1));
+      if (code.length >= length && typeof opts.onComplete === "function") {
+        opts.onComplete(code);
+      }
+    });
+
+    root.setAttribute("data-otp-ready", "1");
+    return root;
+  }
+
+  window.TourAiOtpDigits = {
+    mount: mount,
+    getCode: function (root) {
+      if (!root) {
+        return "";
+      }
+      return digitInputs(root)
+        .map(function (input) {
+          return input.value || "";
+        })
+        .join("");
+    },
+    clear: function (root) {
+      if (!root) {
+        return;
+      }
+      digitInputs(root).forEach(function (input) {
+        input.value = "";
+      });
+      syncHidden(root);
+    },
+    focusFirst: function (root) {
+      focusIndex(root, 0);
+    },
+  };
+})();
+
+/* Shared “Verifica tu correo” OTP modal for contact, subscribe, unsubscribe, delete-account. */
+(function () {
+  var MODAL_ID = "tourai-email-verify-modal";
+  var session = {
+    onConfirm: null,
+    onResend: null,
+    confirming: false,
+    resending: false,
+  };
+
+  function tOr(key, fallback) {
+    var locale = window.TourAiI18n?.getLocale?.() ?? "es-ES";
+    return window.TourAiI18n?.tOr?.(key, locale, null, fallback) ?? fallback;
+  }
+
+  function otpRoot() {
+    return document.getElementById("touraiEmailVerifyOtp");
+  }
+
+  function statusEl() {
+    return document.getElementById("touraiEmailVerifyStatus");
+  }
+
+  function setText(id, text) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.textContent = text;
+    }
+  }
+
+  function runConfirm() {
+    if (session.confirming || typeof session.onConfirm !== "function") {
+      return;
+    }
+    var code = window.TourAiEmailVerifyModal.getCode();
+    if (!/^\d{6}$/.test(code)) {
+      return;
+    }
+    session.confirming = true;
+    Promise.resolve(session.onConfirm(code))
+      .catch(function () {
+        /* Caller shows status */
+      })
+      .finally(function () {
+        session.confirming = false;
+      });
+  }
+
+  function runResend() {
+    if (session.resending || typeof session.onResend !== "function") {
+      return;
+    }
+    session.resending = true;
+    Promise.resolve(session.onResend())
+      .catch(function () {
+        /* Caller shows status */
+      })
+      .finally(function () {
+        session.resending = false;
+      });
+  }
+
+  function ensure() {
+    if (document.getElementById(MODAL_ID)) {
+      return;
+    }
+
+    var modal = document.createElement("div");
+    modal.id = MODAL_ID;
+    modal.className = "modal-overlay tourai-email-verify-modal";
+    modal.setAttribute("aria-hidden", "true");
+    modal.innerHTML =
+      '<div class="modal-content tourai-email-verify-modal__card" role="dialog" aria-modal="true" aria-labelledby="touraiEmailVerifyTitle">' +
+      '<h3 id="touraiEmailVerifyTitle" class="tourai-email-verify-modal__title">Introduce el código de verificación</h3>' +
+      '<p id="touraiEmailVerifyIntro" class="tourai-email-verify-modal__intro" hidden></p>' +
+      '<div class="tourai-email-verify-modal__divider" aria-hidden="true"></div>' +
+      '<div id="touraiEmailVerifyOtp" class="otp-digits" data-otp-hidden="touraiEmailVerifyCode" aria-label="Código recibido por email"></div>' +
+      '<input type="hidden" id="touraiEmailVerifyCode" value="" autocomplete="one-time-code">' +
+      '<p id="touraiEmailVerifyStatus" class="verification-status tourai-email-verify-modal__status" hidden></p>' +
+      '<p id="touraiEmailVerifySpamHint" class="tourai-email-verify-modal__hint"></p>' +
+      '<button type="button" id="touraiEmailVerifyResend" class="tourai-email-verify-modal__link">Reenviar código</button>' +
+      '<button type="button" id="touraiEmailVerifySubmit" class="tourai-email-verify-modal__primary">Validar código</button>' +
+      '<div class="tourai-email-verify-modal__divider" aria-hidden="true"></div>' +
+      '<button type="button" id="touraiEmailVerifyClose" class="tourai-email-verify-modal__exit">Cerrar</button>' +
+      "</div>";
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", function (event) {
+      if (event.target === modal) {
+        window.TourAiEmailVerifyModal.close();
+      }
+    });
+    modal.querySelector(".modal-content")?.addEventListener("click", function (event) {
+      event.stopPropagation();
+    });
+
+    var root = otpRoot();
+    if (root && window.TourAiOtpDigits) {
+      window.TourAiOtpDigits.mount(root, {
+        length: 6,
+        hiddenInputId: "touraiEmailVerifyCode",
+        onEnter: runConfirm,
+        onComplete: runConfirm,
+      });
+    }
+
+    document.getElementById("touraiEmailVerifySubmit")?.addEventListener("click", runConfirm);
+    document.getElementById("touraiEmailVerifyResend")?.addEventListener("click", runResend);
+    document.getElementById("touraiEmailVerifyClose")?.addEventListener("click", function () {
+      window.TourAiEmailVerifyModal.close();
+    });
+  }
+
+  window.TourAiEmailVerifyModal = {
+    open: function (options) {
+      ensure();
+      var opts = options || {};
+      session.onConfirm = opts.onConfirm || null;
+      session.onResend = opts.onResend || null;
+      session.confirming = false;
+      session.resending = false;
+
+      setText(
+        "touraiEmailVerifyTitle",
+        opts.title ||
+          tOr("contact.verify.title", "Introduce el código de verificación")
+      );
+
+      var introEl = document.getElementById("touraiEmailVerifyIntro");
+      if (introEl) {
+        var introText =
+          typeof opts.intro === "string" ? opts.intro.trim() : "";
+        introEl.textContent = introText;
+        introEl.hidden = !introText;
+      }
+
+      setText(
+        "touraiEmailVerifySpamHint",
+        opts.spamHint ||
+          tOr(
+            "contact.verify.spamHint",
+            "Si no recibes el correo en unos minutos, revisa la carpeta de spam o correo no deseado."
+          )
+      );
+      setText(
+        "touraiEmailVerifySubmit",
+        opts.submitLabel || tOr("contact.verify.submit", "Validar código")
+      );
+      setText(
+        "touraiEmailVerifyResend",
+        opts.resendLabel || tOr("contact.verify.resend", "Reenviar código")
+      );
+      setText(
+        "touraiEmailVerifyClose",
+        opts.closeLabel || tOr("contact.verify.close", "Cerrar")
+      );
+
+      var status = statusEl();
+      if (status) {
+        if (opts.statusMessage) {
+          status.textContent = opts.statusMessage;
+          status.className =
+            "verification-status tourai-email-verify-modal__status " +
+            (opts.statusType || "success");
+          status.hidden = false;
+        } else {
+          status.hidden = true;
+          status.textContent = "";
+          status.className =
+            "verification-status tourai-email-verify-modal__status";
+        }
+      }
+
+      var modal = document.getElementById(MODAL_ID);
+      modal.style.display = "flex";
+      modal.setAttribute("aria-hidden", "false");
+
+      /* Focus after the modal is visible (and after any loading overlay hides). */
+      window.TourAiEmailVerifyModal.clearAndFocus();
+      window.requestAnimationFrame(function () {
+        window.TourAiEmailVerifyModal.focusFirstDigit();
+        window.setTimeout(function () {
+          window.TourAiEmailVerifyModal.focusFirstDigit();
+        }, 50);
+      });
+    },
+
+    close: function () {
+      var modal = document.getElementById(MODAL_ID);
+      if (modal) {
+        modal.style.display = "none";
+        modal.setAttribute("aria-hidden", "true");
+      }
+      session.onConfirm = null;
+      session.onResend = null;
+      session.confirming = false;
+      session.resending = false;
+    },
+
+    setStatus: function (message, type) {
+      var status = statusEl();
+      if (!status) {
+        return;
+      }
+      status.textContent = message || "";
+      status.className =
+        "verification-status tourai-email-verify-modal__status " + (type || "");
+      status.hidden = !message;
+    },
+
+    getCode: function () {
+      var root = otpRoot();
+      if (root && window.TourAiOtpDigits) {
+        return window.TourAiOtpDigits.getCode(root);
+      }
+      return document.getElementById("touraiEmailVerifyCode")?.value?.trim() || "";
+    },
+
+    clearAndFocus: function () {
+      var root = otpRoot();
+      if (root && window.TourAiOtpDigits) {
+        window.TourAiOtpDigits.clear(root);
+        window.TourAiOtpDigits.focusFirst(root);
+      }
+    },
+
+    focusFirstDigit: function () {
+      var root = otpRoot();
+      var modal = document.getElementById(MODAL_ID);
+      if (!root || !window.TourAiOtpDigits || !modal || modal.style.display !== "flex") {
+        return;
+      }
+      window.TourAiOtpDigits.focusFirst(root);
+    },
+
+    isOpen: function () {
+      var modal = document.getElementById(MODAL_ID);
+      return !!(modal && modal.style.display === "flex");
+    },
+  };
+})();
+
+/* Shared confirm dialog (logout, delete account, etc.) */
+(function () {
+  var MODAL_ID = "touraiConfirmModal";
+  var resolver = null;
+
+  function tOr(key, fallback) {
+    var locale = window.TourAiI18n?.getLocale?.() ?? "es-ES";
+    return window.TourAiI18n?.tOr(key, locale, null, fallback) ?? fallback;
+  }
+
+  function closeConfirm(result) {
+    var modal = document.getElementById(MODAL_ID);
+    if (modal) {
+      modal.hidden = true;
+    }
+    document.body.classList.remove("community-confirm-open");
+    var resolve = resolver;
+    resolver = null;
+    if (resolve) {
+      resolve(!!result);
+    }
+  }
+
+  function ensureConfirmModal() {
+    if (document.getElementById(MODAL_ID)) {
+      return;
+    }
+
+    var modal = document.createElement("div");
+    modal.id = MODAL_ID;
+    modal.className = "community-confirm-modal";
+    modal.hidden = true;
+    modal.innerHTML =
+      '<div class="community-confirm-modal__backdrop" data-confirm-cancel tabindex="-1"></div>' +
+      '<div class="community-confirm-modal__dialog" role="dialog" aria-modal="true" ' +
+      'aria-labelledby="touraiConfirmTitle" aria-describedby="touraiConfirmMessage">' +
+      '<h2 id="touraiConfirmTitle" class="community-confirm-modal__title"></h2>' +
+      '<p id="touraiConfirmMessage" class="community-confirm-modal__message"></p>' +
+      '<div class="community-confirm-modal__actions">' +
+      '<button type="button" class="btn-secondary" id="touraiConfirmCancel"></button>' +
+      '<button type="button" class="btn-primary" id="touraiConfirmOk"></button>' +
+      "</div></div>";
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", function (event) {
+      if (event.target === modal || event.target.closest("[data-confirm-cancel]")) {
+        closeConfirm(false);
+      }
+    });
+
+    document.getElementById("touraiConfirmCancel").addEventListener("click", function () {
+      closeConfirm(false);
+    });
+    document.getElementById("touraiConfirmOk").addEventListener("click", function () {
+      closeConfirm(true);
+    });
+
+    document.addEventListener("keydown", function (event) {
+      var open = document.getElementById(MODAL_ID);
+      if (!open || open.hidden) {
+        return;
+      }
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeConfirm(false);
+      }
+    });
+  }
+
+  window.TourAiConfirm = {
+    /**
+     * @param {{ title?: string, message?: string, confirmLabel?: string, cancelLabel?: string, danger?: boolean }} options
+     * @returns {Promise<boolean>}
+     */
+    show: function (options) {
+      ensureConfirmModal();
+      var opts = options || {};
+      var modal = document.getElementById(MODAL_ID);
+      var titleEl = document.getElementById("touraiConfirmTitle");
+      var messageEl = document.getElementById("touraiConfirmMessage");
+      var okBtn = document.getElementById("touraiConfirmOk");
+      var cancelBtn = document.getElementById("touraiConfirmCancel");
+      var dialog = modal.querySelector(".community-confirm-modal__dialog");
+
+      if (resolver) {
+        closeConfirm(false);
+      }
+
+      titleEl.textContent = opts.title || "";
+      messageEl.textContent = opts.message || "";
+      okBtn.textContent =
+        opts.confirmLabel || tOr("account.confirm.ok", "Confirmar");
+      cancelBtn.textContent =
+        opts.cancelLabel || tOr("account.confirm.cancel", "Cancelar");
+
+      if (opts.danger) {
+        okBtn.classList.add("btn-primary--danger");
+        dialog?.classList.add("community-confirm-modal__dialog--danger");
+      } else {
+        okBtn.classList.remove("btn-primary--danger");
+        dialog?.classList.remove("community-confirm-modal__dialog--danger");
+      }
+
+      modal.hidden = false;
+      document.body.classList.add("community-confirm-open");
+      okBtn.focus();
+
+      return new Promise(function (resolve) {
+        resolver = resolve;
+      });
+    },
+  };
 })();
 

@@ -54,8 +54,15 @@
             <div class="community-toolbar">
                 <div class="community-search">
                     <label class="visually-hidden" for="communitySearchInput" data-i18n="community.search.label">Buscar temas</label>
-                    <input id="communitySearchInput" type="search" maxlength="80" autocomplete="off" data-i18n-placeholder="community.search.placeholder" placeholder="Buscar por título, autor o texto...">
-                    <button type="button" id="communitySearchClear" class="community-search__clear" hidden data-i18n="community.search.clear">Limpiar</button>
+                    <div class="community-search__field">
+                        <input id="communitySearchInput" type="search" maxlength="80" autocomplete="off" data-i18n-placeholder="community.search.placeholder" placeholder="Buscar por título, autor o texto...">
+                        <button type="button" id="communitySearchSubmit" class="community-search__submit" title="Buscar" data-i18n-title="community.search.submit" aria-label="Buscar">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <button type="button" id="communitySearchClear" class="btn-secondary community-search__clear" hidden data-i18n="community.search.clear">Limpiar</button>
                 </div>
                 <button type="button" id="communityOpenComposer" class="btn-primary community-toolbar__new" hidden data-i18n="community.newTopic">Nuevo tema</button>
             </div>

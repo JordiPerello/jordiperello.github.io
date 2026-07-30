@@ -91,36 +91,6 @@
   margin-top: 18px;
 }
 
-.account-actions .btn-primary,
-.account-actions .btn-secondary,
-.login-form .btn-primary {
-  border-radius: 10px;
-  padding: 12px 18px;
-  font-weight: 700;
-  cursor: pointer;
-  border: 2px solid #0a2a43;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.account-actions .btn-primary,
-.login-form .btn-primary {
-  background: #0a2a43;
-  color: #fff;
-}
-
-.account-actions .btn-secondary {
-  background: #fff;
-  color: #0a2a43;
-}
-
-.account-actions .btn-primary:hover,
-.login-form .btn-primary:hover {
-  background: #4db8ff;
-  border-color: #4db8ff;
-  color: #0a2a43;
-}
-
 .account-status,
 .login-status {
   margin-top: 14px;
@@ -154,6 +124,8 @@
 
 .login-form .btn-primary {
   position: relative;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .login-form .btn-primary.is-loading {
@@ -203,11 +175,6 @@
   border: 1px solid #c9d7e3;
   border-radius: 10px;
   font-size: 1em;
-}
-
-.login-form .btn-primary {
-  width: 100%;
-  margin-top: 20px;
 }
 
 .login-form .link-button {
@@ -316,42 +283,121 @@
   margin: 3px 0 0 !important;
 }
 
+.account-tabs {
+  margin-bottom: 20px;
+}
+
 .account-subnav {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin: 0 0 18px;
-  position: sticky;
-  top: var(--site-nav-height, 70px);
-  z-index: 900; /* below site nav (1000) */
-  background: #fff;
-  padding: 12px 0;
-  border-bottom: 1px solid #e6eef5;
-  box-shadow: 0 8px 16px rgba(10, 42, 67, 0.04);
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 2px solid #d9e4ee;
+  background: transparent;
+  position: static;
+  top: auto;
+  z-index: auto;
+  box-shadow: none;
 }
 
 .account-subnav a {
-  display: inline-block;
-  padding: 8px 14px;
-  border-radius: 999px;
-  border: 1px solid #c9d7e3;
-  color: #0a2a43;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 12px 22px;
+  margin: 0 0 -2px;
+  border-radius: 10px 10px 0 0;
+  border: 2px solid transparent;
+  border-bottom: none;
+  color: #5a7388;
   text-decoration: none;
   font-weight: 700;
-  font-size: 0.92em;
-  background: #fff;
+  font-size: 0.95em;
+  text-transform: none;
+  background: transparent;
 }
 
 .account-subnav a:hover {
-  border-color: #4db8ff;
   color: #0a2a43;
 }
 
 .account-subnav a.active {
-  background: #0a2a43;
-  border-color: #0a2a43;
-  color: #fff;
+  background: #f0f4f8;
+  border-color: #d9e4ee;
+  border-bottom-color: #f0f4f8;
+  color: #0a2a43;
   pointer-events: none;
+}
+
+.account-panel {
+  background: #f0f4f8;
+  border: 2px solid #d9e4ee;
+  border-top: none;
+  border-radius: 0 12px 12px 12px;
+  padding: 24px;
+}
+
+.account-tabs:has(.account-subnav a:not(:first-child).active) .account-panel {
+  border-radius: 12px;
+}
+
+.account-panel > .account-card,
+.account-panel > .account-accordion {
+  margin-bottom: 16px;
+}
+
+.account-panel > .account-card:last-child,
+.account-panel > .account-accordion:last-child {
+  margin-bottom: 0;
+}
+
+.account-panel #accountProfileMount > :last-child {
+  margin-bottom: 0;
+}
+
+.account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 0;
+}
+
+.account-actions-bar {
+  background: #fff;
+  border: 1px solid #e6eef5;
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: 0 8px 24px rgba(10, 42, 67, 0.06);
+}
+
+.account-actions-bar .account-status {
+  margin-top: 12px;
+}
+
+@media (max-width: 560px) {
+  .account-subnav a {
+    padding: 12px 14px;
+    margin: 0 0 -2px;
+    font-size: 0.9em;
+  }
+
+  .account-panel {
+    padding: 16px;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .account-actions {
+    flex-direction: column;
+  }
+
+  .account-actions .site-btn {
+    width: 100%;
+  }
 }
 
 .account-accordion {
@@ -709,13 +755,6 @@
 .plan-detail-modal .plan-detail__actions .btn-secondary {
   width: auto;
   min-width: 140px;
-  border-radius: 10px;
-  padding: 12px 18px;
-  font-weight: 700;
-  cursor: pointer;
-  border: 2px solid #0a2a43;
-  background: #fff;
-  color: #0a2a43;
 }
 
 .plan-detail-modal .plan-detail__actions .btn-secondary:hover {
@@ -846,22 +885,6 @@
 
 .profile-card__actions {
   margin-top: 16px;
-}
-
-.profile-card__actions .btn-primary {
-  border-radius: 10px;
-  padding: 12px 18px;
-  font-weight: 700;
-  cursor: pointer;
-  border: 2px solid #0a2a43;
-  background: #0a2a43;
-  color: #fff;
-}
-
-.profile-card__actions .btn-primary:hover {
-  background: #4db8ff;
-  border-color: #4db8ff;
-  color: #0a2a43;
 }
 
 .account-edit-modal.modal {
@@ -996,19 +1019,6 @@
 .account-edit-modal .account-edit-form__photo-actions .btn-secondary {
   width: auto;
   min-width: 0;
-  border-radius: 10px;
-  padding: 8px 14px;
-  font-weight: 700;
-  cursor: pointer;
-  border: 2px solid #0a2a43;
-  background: #fff;
-  color: #0a2a43;
-}
-
-.account-edit-modal .account-edit-form__photo-actions .btn-secondary:hover {
-  background: #f7fbff;
-  border-color: #4db8ff;
-  color: #0a2a43;
 }
 
 .account-edit-form__photo .account-edit-form__hint {
@@ -1174,19 +1184,6 @@
 .account-edit-modal .account-edit-form__password-entry .btn-secondary {
   width: auto;
   min-width: 0;
-  border-radius: 10px;
-  padding: 10px 16px;
-  font-weight: 700;
-  cursor: pointer;
-  border: 2px solid #0a2a43;
-  background: #fff;
-  color: #0a2a43;
-}
-
-.account-edit-modal .account-edit-form__password-entry .btn-secondary:hover {
-  background: #f7fbff;
-  border-color: #4db8ff;
-  color: #0a2a43;
 }
 
 .account-password-modal.modal {
@@ -1204,32 +1201,6 @@
 .account-edit-modal .account-edit-form__actions .btn-secondary {
   width: auto;
   min-width: 140px;
-  border-radius: 10px;
-  padding: 12px 18px;
-  font-weight: 700;
-  cursor: pointer;
-  border: 2px solid #0a2a43;
-}
-
-.account-edit-modal .account-edit-form__actions .btn-primary {
-  background: #0a2a43;
-  color: #fff;
-}
-
-.account-edit-modal .account-edit-form__actions .btn-primary:hover {
-  background: #4db8ff;
-  border-color: #4db8ff;
-  color: #0a2a43;
-}
-
-.account-edit-modal .account-edit-form__actions .btn-secondary {
-  background: #fff;
-  color: #0a2a43;
-}
-
-.account-edit-modal .account-edit-form__actions .btn-secondary:hover {
-  background: #f7fbff;
-  border-color: #4db8ff;
 }
 
 .account-edit-modal .auth-password-strength {

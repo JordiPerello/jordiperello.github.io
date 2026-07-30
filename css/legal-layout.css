@@ -418,6 +418,12 @@ body.site-legal-page {
   background: #fff8f8;
 }
 
+.site-legal-page input[readonly] {
+  background: #eef3f7;
+  color: #0a2a43;
+  cursor: default;
+}
+
 .site-legal-page .field-error {
   color: #c0392b;
   font-size: 0.85em;

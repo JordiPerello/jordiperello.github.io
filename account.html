@@ -45,18 +45,20 @@
         </div>
 
         <div id="accountSignedIn" hidden>
-            <nav class="account-subnav" aria-label="Cuenta">
-                <a class="active" href="account.html" data-i18n="account.subnav.profile">Perfil</a>
-                <a href="dashboard.html" data-i18n="account.subnav.dashboard">Panel</a>
-            </nav>
+            <div class="account-tabs">
+                <nav class="account-subnav" role="tablist" aria-label="Cuenta">
+                    <a class="active" href="account.html" role="tab" aria-selected="true" data-i18n="account.subnav.profile">Perfil</a>
+                    <a href="dashboard.html" role="tab" aria-selected="false" data-i18n="account.subnav.dashboard">Panel</a>
+                </nav>
+                <div class="account-panel" role="tabpanel">
+                    <div id="accountProfileMount"></div>
+                </div>
+            </div>
 
-            <div id="accountProfileMount"></div>
-
-            <div class="account-card">
+            <div class="account-actions-bar">
                 <div class="account-actions">
-                    <a class="btn-primary" href="dashboard.html" data-i18n="account.subnav.dashboard">Ir al panel</a>
-                    <button type="button" id="accountLogout" class="btn-secondary" data-i18n="account.logout">Cerrar sesión</button>
-                    <a class="btn-secondary" href="delete-account.html" data-i18n="footer.deleteAccount">Eliminar cuenta</a>
+                    <button type="button" id="accountLogout" class="site-btn site-btn--secondary" data-i18n="account.logout">Cerrar sesión</button>
+                    <a id="accountDeleteAccount" class="site-btn site-btn--danger" href="delete-account.html" data-i18n="footer.deleteAccount">Eliminar cuenta</a>
                 </div>
                 <p id="accountStatus" class="account-status" role="status" aria-live="polite"></p>
             </div>
