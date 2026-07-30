@@ -463,6 +463,7 @@ window.TourAiEnGBMessages = {
   "index.download.unsubscribe": "Manage or cancel launch alerts",
   "unsubscribe.title": "Manage launch alerts",
   "unsubscribe.intro": "Enter your email to verify your identity and cancel App Store or Google Play alerts.",
+  "unsubscribe.viewSubscriptions": "View subscriptions",
   "unsubscribe.selectStores": "Select the stores you want to unsubscribe from:",
   "unsubscribe.store.ios": "App Store (iOS)",
   "unsubscribe.store.android": "Google Play (Android)",

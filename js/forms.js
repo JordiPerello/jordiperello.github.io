@@ -848,6 +848,16 @@
       const verificationToken = window.TourAiForms.getWebEmailVerificationToken(normalized);
       if (verificationToken) {
         payload.verificationToken = verificationToken;
+      } else if (window.TourAiForms.isTrustedStoreSubscriber(normalized)) {
+        // Signed-in owner path: prove session ownership to the Cloud Function.
+        const user = window.TourAiAuth?.currentUser?.();
+        if (user?.email && String(user.email).trim().toLowerCase() === normalized) {
+          try {
+            payload.idToken = await user.getIdToken();
+          } catch (err) {
+            console.warn("[TourAI forms] getIdToken for unsubscribe failed", err);
+          }
+        }
       }
 
       return postJson(config.unsubscribeStoreNotificationsUrl, payload);
@@ -1568,6 +1578,7 @@
         <p data-i18n="unsubscribe.intro">Introduce tu correo para verificar tu identidad y cancelar las alertas de App Store o Google Play.</p>
         <form id="unsubForm" onsubmit="return false;" novalidate>
           <input type="email" id="unsubEmail" name="email" autocomplete="email" data-i18n-placeholder="index.modal.email" placeholder="Tu correo electrónico">
+          <button type="button" id="unsubViewSubscriptionsBtn" class="btn-primary" data-i18n="unsubscribe.viewSubscriptions">Ver suscripciones</button>
           <div id="unsubVerificationBox" class="verification-box">
             <p id="unsubVerificationMessage" data-i18n="contact.verify.success">Email validado correctamente.</p>
           </div>
@@ -1582,7 +1593,7 @@
               <span data-i18n="unsubscribe.store.android">Google Play (Android)</span>
             </label>
             <p id="unsubNoSubscriptions" class="unsub-empty-message" hidden data-i18n="unsubscribe.none">No tienes alertas activas con este correo.</p>
-            <button type="button" id="unsubSubmitBtn" disabled data-i18n="unsubscribe.submit">Darme de baja</button>
+            <button type="button" id="unsubSubmitBtn" class="btn-primary" disabled data-i18n="unsubscribe.submit">Darme de baja</button>
           </div>
         </form>
       </div>
@@ -1605,18 +1616,44 @@
     });
 
     document.getElementById("unsubSubmitBtn").addEventListener("click", submitUnsubscribe);
+    document
+      .getElementById("unsubViewSubscriptionsBtn")
+      ?.addEventListener("click", viewSubscriptions);
     getEmailInput()?.addEventListener("input", function () {
       window.TourAiForms?.onWebEmailInput(this.value);
       resetManageSection();
+      syncSignedInOwnerVerification();
       updateVerificationBox();
     });
-    getEmailInput()?.addEventListener("blur", function () {
-      scheduleUnsubscribeEmailCheck({ autoOpenVerification: true });
+    getEmailInput()?.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        viewSubscriptions();
+      }
     });
 
     ["unsubIos", "unsubAndroid"].forEach((id) => {
       document.getElementById(id)?.addEventListener("change", updateUnsubscribeButton);
     });
+  }
+
+  function getSignedInEmail() {
+    const email = window.TourAiAuth?.currentUser?.()?.email;
+    return email ? String(email).trim().toLowerCase() : "";
+  }
+
+  /** Session owner: Firebase login already proves ownership of this email. */
+  function syncSignedInOwnerVerification() {
+    const email = getEmailInput()?.value?.trim().toLowerCase() ?? "";
+    if (!window.TourAiForms?.isValidEmail(email)) {
+      return false;
+    }
+    const signedIn = getSignedInEmail();
+    if (signedIn && signedIn === email) {
+      window.TourAiForms.markTrustedSubscriberVerification(email);
+      return true;
+    }
+    return false;
   }
 
   function setVerificationBoxState({ visible, verified }) {
@@ -1664,36 +1701,77 @@
     if (!isEmailValid) {
       window.TourAiForms?.clearWebEmailVerification();
       window.TourAiForms?.resetEmailRegistrationCheck();
-      setVerificationBoxState({ visible: false, verified: false, showVerifyButton: false });
+      setVerificationBoxState({ visible: false, verified: false });
       resetManageSection();
       return;
     }
 
     applyUnsubscribeVerificationBox(email);
-
-    if (window.TourAiForms?.isWebEmailVerified(email)) {
-      loadSubscriptionStatus().catch(() => undefined);
-    } else {
-      resetManageSection();
-    }
   }
 
-  function scheduleUnsubscribeEmailCheck(options) {
+  async function viewSubscriptions() {
+    if (isBusy()) {
+      window.TourAiFeedback?.show({
+        type: "info",
+        message: tOr("loading.processing", "Procesando..."),
+      });
+      return;
+    }
+
     const email = getEmailInput()?.value?.trim() ?? "";
-    const settings = options ?? {};
-    window.TourAiForms?.scheduleEmailRegistrationCheck(email, {
-      context: "unsubscribe",
-      getEmail: () => getEmailInput()?.value ?? "",
-      onStateChange: updateVerificationBox,
-      autoOpenVerification: settings.autoOpenVerification === true,
-      onNeedsVerification: () => startVerification(),
-      onCheckComplete: async () => {
-        const normalized = getEmailInput()?.value?.trim().toLowerCase() ?? "";
-        if (window.TourAiForms?.isWebEmailVerified(normalized)) {
-          await loadSubscriptionStatus();
-        }
-      },
-    });
+    if (!window.TourAiForms?.isValidEmail(email)) {
+      window.TourAiFeedback?.show({
+        type: "info",
+        message: tOr("contact.email.invalid", "Introduce una dirección de correo válida."),
+      });
+      return;
+    }
+
+    const viewBtn = document.getElementById("unsubViewSubscriptionsBtn");
+    const originalLabel = tOr(
+      "unsubscribe.viewSubscriptions",
+      viewBtn?.textContent ?? "Ver suscripciones"
+    );
+
+    try {
+      if (viewBtn) {
+        viewBtn.disabled = true;
+        viewBtn.textContent = tOr(
+          "unsubscribe.checkingEmail",
+          "Comprobando si tienes alertas activas..."
+        );
+      }
+
+      // Same email as the signed-in account → trust session, no OTP.
+      if (syncSignedInOwnerVerification()) {
+        updateVerificationBox();
+        await loadSubscriptionStatus({ force: true });
+        return;
+      }
+
+      // Already verified via OTP in this session.
+      if (window.TourAiForms?.isWebEmailVerified(email)) {
+        updateVerificationBox();
+        await loadSubscriptionStatus({ force: true });
+        return;
+      }
+
+      // Ownership must be proven with a code before listing/removing alerts.
+      await startVerification();
+    } catch (error) {
+      window.TourAiFeedback?.show({
+        type: "error",
+        message: window.TourAiForms.toUserFacingErrorMessage(
+          error,
+          tOr("unsubscribe.statusError", "No se pudo comprobar tus alertas. Inténtalo de nuevo.")
+        ),
+      });
+    } finally {
+      if (viewBtn) {
+        viewBtn.disabled = false;
+        viewBtn.textContent = originalLabel;
+      }
+    }
   }
 
   function updateUnsubscribeButton() {
@@ -1704,13 +1782,14 @@
     }
   }
 
-  async function loadSubscriptionStatus() {
+  async function loadSubscriptionStatus(options) {
+    const force = options?.force === true;
     const email = getEmailInput()?.value?.trim().toLowerCase() ?? "";
     if (!window.TourAiForms?.isWebEmailVerified(email)) {
       return;
     }
 
-    if (loadedStatusEmail === email) {
+    if (!force && loadedStatusEmail === email) {
       return;
     }
 
@@ -1718,7 +1797,9 @@
       loading: false,
     });
     if (!result.ok) {
-      throw new Error(tOr("unsubscribe.statusError", "No se pudo comprobar tus alertas. Inténtalo de nuevo."));
+      throw new Error(
+        tOr("unsubscribe.statusError", "No se pudo comprobar tus alertas. Inténtalo de nuevo.")
+      );
     }
 
     const subscriptions = result.body?.subscriptions ?? {};
@@ -1853,7 +1934,7 @@
 
       window.TourAiEmailVerifyModal.close();
       updateVerificationBox();
-      await loadSubscriptionStatus();
+      await loadSubscriptionStatus({ force: true });
     } catch (error) {
       window.TourAiEmailVerifyModal.setStatus(
         tOr("contact.verify.invalidCode", "El código no coincide."),
@@ -1921,7 +2002,7 @@
           type: "info",
           message: tOr("unsubscribe.none", "No tienes alertas activas con este correo."),
         });
-        await loadSubscriptionStatus();
+        await loadSubscriptionStatus({ force: true });
         return;
       }
 
@@ -1952,6 +2033,16 @@
     window.TourAiForms?.resetEmailRegistrationCheck();
     document.getElementById("unsubForm")?.reset();
     resetManageSection();
+
+    const signedInEmail = getSignedInEmail();
+    if (signedInEmail) {
+      const emailInput = getEmailInput();
+      if (emailInput) {
+        emailInput.value = signedInEmail;
+      }
+      window.TourAiForms?.markTrustedSubscriberVerification(signedInEmail);
+    }
+
     updateVerificationBox();
 
     const modal = document.getElementById(MODAL_ID);
@@ -1960,6 +2051,8 @@
     if (window.TourAiI18n?.applyTranslations) {
       window.TourAiI18n.applyTranslations(window.TourAiI18n.getLocale());
     }
+
+    getEmailInput()?.focus();
   }
 
   function closeModal() {
