@@ -854,6 +854,242 @@ body.tourai-feedback-open {
   }
 }
 
+/* First-party site promo: guests (install app) + freemium (Premium). Not third-party ads. */
+.site-promo__banner {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 9400;
+}
+
+body:has(.site-cookie-banner:not([hidden])) .site-promo__banner {
+  bottom: 120px;
+}
+
+.site-promo__banner-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid #9fd6ef;
+  background: linear-gradient(120deg, #0a2a43 0%, #123f5c 55%, #0d3b5e 100%);
+  color: #fff;
+  box-shadow: 0 14px 32px rgba(10, 42, 67, 0.28);
+}
+
+.site-promo__banner-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.site-promo__banner-title {
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.site-promo__banner-body {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #d7eef8;
+}
+
+.site-promo__banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.site-promo__banner-actions .btn-secondary {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.site-promo__banner-actions .btn-secondary:hover {
+  background: #fff;
+  color: #0a2a43;
+  border-color: #fff;
+}
+
+.site-promo__rail {
+  position: fixed;
+  top: 50%;
+  right: 12px;
+  z-index: 9300;
+  width: 168px;
+  transform: translateY(-50%);
+  padding: 16px 14px;
+  border-radius: 14px;
+  border: 1px solid #c9e6f5;
+  background: linear-gradient(165deg, #f4fafc 0%, #e8f4ff 100%);
+  box-shadow: 0 10px 28px rgba(10, 42, 67, 0.16);
+  display: none;
+}
+
+.site-promo__rail-eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #2f7a98;
+}
+
+.site-promo__rail-title {
+  margin: 0 0 8px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #0a2a43;
+}
+
+.site-promo__rail-body {
+  margin: 0 0 12px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #555;
+}
+
+.site-promo__rail-cta {
+  width: 100%;
+  min-height: 40px;
+  height: auto;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.site-promo__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.site-promo__modal[hidden] {
+  display: none !important;
+}
+
+.site-promo__modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 42, 67, 0.55);
+}
+
+.site-promo__modal-card {
+  position: relative;
+  width: min(440px, 100%);
+  padding: 24px 22px 20px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.28);
+  text-align: center;
+}
+
+.site-promo__spot {
+  position: relative;
+  margin: 0 auto 16px;
+  width: 100%;
+  max-width: 280px;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(77, 184, 255, 0.35), transparent 55%),
+    linear-gradient(145deg, #0a2a43, #123f5c 55%, #2f7a98);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-promo__spot-brand {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.site-promo__spot-pulse {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid rgba(201, 238, 239, 0.55);
+  animation: site-promo-spot-pulse 2.4s ease-out infinite;
+}
+
+@keyframes site-promo-spot-pulse {
+  0% {
+    transform: scale(0.55);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+.site-promo__modal-title {
+  margin: 0 0 10px;
+  font-size: 1.25rem;
+  color: #0a2a43;
+}
+
+.site-promo__modal-lead,
+.site-promo__modal-body {
+  margin: 0 0 10px;
+  color: #555;
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+.site-promo__modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+@media (min-width: 1100px) {
+  .site-promo__rail:not([hidden]) {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-promo__banner-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .site-promo__banner-actions {
+    width: 100%;
+  }
+
+  .site-promo__banner-actions .btn-primary,
+  .site-promo__banner-actions .btn-secondary {
+    flex: 1;
+  }
+
+  body:has(.site-cookie-banner:not([hidden])) .site-promo__banner {
+    bottom: 160px;
+  }
+}
+
 /* Shared navigation, footer and home visuals */
 html { scroll-behavior: smooth; }
 

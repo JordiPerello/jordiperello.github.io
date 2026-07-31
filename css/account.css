@@ -454,6 +454,52 @@
   font-weight: 600;
 }
 
+/* Freemium-only upgrade promo (dashboard active plan empty state). */
+.plan-freemium-promo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #d7e6f2;
+  background: linear-gradient(160deg, #f4fafc 0%, #e8f4ff 55%, #f7fbfc 100%);
+}
+
+.plan-freemium-promo__eyebrow {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #2f7a98;
+}
+
+.plan-freemium-promo__title {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  color: #0a2a43;
+}
+
+.plan-freemium-promo__body {
+  margin: 0;
+  color: #555;
+  line-height: 1.6;
+}
+
+.plan-freemium-promo__actions {
+  margin: 4px 0 0;
+}
+
+.plan-freemium-promo__actions .btn-primary {
+  width: 100%;
+  max-width: 360px;
+}
+
+.plan-freemium-promo .account-note {
+  margin-top: 0;
+}
+
 /* Plan list cards — mirror app PlanListItemBorder / UserPlansHistoryView */
 .plan-list {
   display: flex;

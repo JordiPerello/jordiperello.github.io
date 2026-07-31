@@ -311,13 +311,49 @@
       ? plansOrActive.find((p) => planState(p) === "active")
       : plansOrActive;
     if (!active) {
-      return `<p class="account-empty">${t(
-        "account.plan.freemium",
-        "Ahora mismo usas Freemium en la app. El cupo diario de uso gratuito se gestiona en el dispositivo (anuncios recompensados) y no aparece aquí."
-      )}</p>`;
+      return renderFreemiumPromoHtml();
     }
 
     return `<div class="plan-list">${renderPlanCardHtml(active, { interactive: true })}</div>`;
+  }
+
+  function renderFreemiumPromoHtml() {
+    const title = escapeHtml(
+      t(
+        "account.plan.freemium.promoTitle",
+        "¿Quieres TourAI sin anuncios?"
+      )
+    );
+    const body = escapeHtml(
+      t(
+        "account.plan.freemium.promoBody",
+        "Ahora usas Freemium: el cupo diario en la app se recarga con anuncios. Hazte con un plan Premium y disfruta de tus vacaciones sin interrupciones."
+      )
+    );
+    const cta = escapeHtml(
+      t(
+        "account.plan.freemium.promoCta",
+        "Abrir TourAI / aviso de lanzamiento"
+      )
+    );
+    const note = escapeHtml(
+      t(
+        "account.plan.freemium.promoNote",
+        "La compra de planes desde la web llegará en la siguiente fase. Mientras tanto, gestiona tu plan desde la app TourAI."
+      )
+    );
+
+    return `<aside class="plan-freemium-promo" role="note">
+  <p class="plan-freemium-promo__eyebrow">${escapeHtml(
+    t("account.plan.state.freemium", "Plan gratuito")
+  )}</p>
+  <h3 class="plan-freemium-promo__title">${title}</h3>
+  <p class="plan-freemium-promo__body">${body}</p>
+  <p class="plan-freemium-promo__actions">
+    <a class="btn-primary" href="index.html#waitlist">${cta}</a>
+  </p>
+  <p class="account-note">${note}</p>
+</aside>`;
   }
 
   function planSortKey(plan, state) {
