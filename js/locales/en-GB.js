@@ -423,7 +423,7 @@ window.TourAiEnGBMessages = {
   "resetPassword.status.configMissing": "Firebase configuration is not available.",
   "deleteAccount.title": "Delete TourAI account",
   "deleteAccount.subtitle": "Request permanent deletion of your account and linked personal data.",
-  "deleteAccount.warning": "This action is irreversible. Your account and usage trail are deleted, including your reviews. The shared catalogue is not removed. Community posts are anonymised as \"Anonymous\" (the thread text may remain without your name, email or identifier).",
+  "deleteAccount.warning": "This action is irreversible. Your account and usage trail are deleted, including your reviews and the record of places presented by the guide. The shared catalogue is not removed. Community posts are anonymised as \"Anonymous\" (the thread text may remain without your name, email or identifier).",
   "deleteAccount.email": "Your TourAI account email",
   "deleteAccount.email.placeholder": "you@email.com",
   "deleteAccount.email.invalid": "Enter a valid email address.",
@@ -736,7 +736,7 @@ window.TourAiEnGBMessages = {
 
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
-            <p><strong>Last updated:</strong> 30 July 2026.</p>
+            <p><strong>Last updated:</strong> 1 August 2026.</p>
             <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we regard our users' privacy as a fundamental pillar. This policy explains how we manage information to ensure that the use of our intelligent audio guides and associated website services (account, community and reviews) is safe and transparent.</p>
 
             <h2>2. Data controller</h2>
@@ -757,6 +757,7 @@ window.TourAiEnGBMessages = {
             <p>In addition, to provide specific service features (not as additional profile data), the following technical or operational data may be processed:</p>
             <ul>
                 <li><strong>Geographic location:</strong> Used with your permission to offer audio guides and contextual content for nearby points of interest. We do not store a history of your movements or a permanent route.</li>
+                <li><strong>Places presented by the tourist guide:</strong> To avoid repeating the same point of interest on later routes, we associate with your account a record of places the guide has started to present to you (place identifier, name, category and technical registration and silence dates). This record <strong>is not a route or movement history</strong>: it does not store your GPS trail. It may be stored in the cloud linked to your account and, while you use the app, also in device memory. The record may be created when presentation of the place begins, even if you do not finish listening to the narration or move on to the next place. It is kept while it remains useful to avoid repeating that place (a silence period by category) and is deleted if you clear the list in the app (<strong>Edit account → Visited and saved places</strong>, with periods such as last hour, 24 hours, week or all), when the silence no longer applies for the service, or when the account is deleted.</li>
                 <li><strong>Messages to the assistant:</strong> We temporarily retain the message history associated with your account to provide the chat service. These messages are deleted automatically after <strong>14 days</strong> and also when the account is deleted.</li>
                 <li><strong>Account security and password reset:</strong> If you request "Forgot your password?" from the app or the website, we send an email with a secure link to <a href="reset-password.html">tourai.es/reset-password.html</a> so you can set a new password. We do not send your current password by email.</li>
                 <li><strong>Registration abuse prevention:</strong> We retain a history of registrations and deletions associated with the same email address (email lifecycle) to limit abusive re-registrations (currently a maximum of <strong>3 registrations in 180 days</strong>). An administrator may unlock the email when appropriate.</li>
@@ -774,7 +775,7 @@ window.TourAiEnGBMessages = {
             <h2>3.1. Legal basis for processing (summary)</h2>
             <p>In general terms, we process your data on the following bases, depending on the type of information:</p>
             <ul>
-                <li><strong>Performance of the contract / provision of the service:</strong> account (app and web), plans, bonus redemption, messages to the assistant, preferences, community posting and submission of reviews, and other requested features.</li>
+                <li><strong>Performance of the contract / provision of the service:</strong> account (app and web), plans, bonus redemption, messages to the assistant, record of places presented by the guide, preferences, community posting and submission of reviews, and other requested features.</li>
                 <li><strong>Consent:</strong> geolocation, microphone, camera or gallery/photo library (profile photo or bonus QR scanning), contact or notice forms, non-essential cookies where applicable, personalised advertising when the law so requires.</li>
                 <li><strong>Legitimate interest:</strong> security, fraud prevention for promotional codes and abusive re-registrations, moderation of user-generated content (hiding, rejection, removal and, where applicable, restriction of the ability to post), service stability, integrity of public threads and aggregated rating averages, evidencing the accepted version of legal texts, and technical error reports.</li>
                 <li><strong>Legal obligation:</strong> retention of billing data where applicable; responding to authority requests or obligations arising from digital services rules when they apply.</li>
@@ -795,6 +796,7 @@ window.TourAiEnGBMessages = {
             <p>In accordance with applicable law, you may exercise the rights of <strong>access</strong>, <strong>rectification</strong>, <strong>erasure</strong>, <strong>restriction of processing</strong>, <strong>portability</strong> and <strong>objection</strong>, as well as withdraw consent where processing is based on it, by writing to <a href="mailto:info@tourai.es">info@tourai.es</a>. You may also lodge a complaint with the <strong>Spanish Data Protection Agency</strong> (<a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">www.aepd.es</a>).</p>
             <ul>
                 <li><strong>Account deletion</strong> and linked data are preferably managed automatically through the app or the <a href="delete-account.html">Delete account</a> page, in accordance with section 5.1.</li>
+                <li>You may clear the list of places already presented by the guide from the app (<strong>Edit account → Visited and saved places</strong>), choosing a period or all, without deleting the account.</li>
                 <li>You may withdraw <strong>geolocation</strong> consent at any time from your device settings.</li>
             </ul>
             
@@ -812,9 +814,10 @@ window.TourAiEnGBMessages = {
             <p>
                 After verification, we delete the trail of your account and of your usage history: authentication and profile
                 (email, display name or alias, date of birth if you provided it, photo if any, identifier),
-                plans, usage history, bonus redemptions, assistant messages, associated payment data stored in
-                our systems, linked preferences and <strong>reviews or ratings</strong> (pending and published;
-                the aggregated average is updated). No reference to your account or to the usage history generated by you remains.
+                plans, usage history, the record of places presented by the guide, bonus redemptions, assistant messages,
+                associated payment data stored in our systems, linked preferences and <strong>reviews or ratings</strong>
+                (pending and published; the aggregated average is updated). No reference to your account or to the usage
+                history generated by you remains.
             </p>
             <p>
                 <strong>Community (topics and replies):</strong>
@@ -868,7 +871,7 @@ window.TourAiEnGBMessages = {
 
   "page.terms.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Acceptance of the Terms</h2>
-            <p><strong>Last updated:</strong> 30 July 2026.</p>
+            <p><strong>Last updated:</strong> 1 August 2026.</p>
             <p>By accessing or using the <strong>TourAI</strong> website and mobile application, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our services or our website.</p>
             <p>Use of the mobile application also implies acceptance of the <strong>full terms embedded in the app</strong> at the time of registration (including age eligibility, payments and permissions). In the event of any difference regarding the mobile service, the app terms prevail.</p>
             
@@ -881,6 +884,7 @@ window.TourAiEnGBMessages = {
                 <li>AI chat, voice queries and geolocated audio narrations (require an internet connection).</li>
                 <li>Geolocation for real-time points-of-interest suggestions.</li>
                 <li>Interactive map with guided walking routes (not turn-by-turn navigation).</li>
+                <li>A record of places already presented by the tourist guide so they are not repeated, which you can clear from the app (see the <a href="privacy.html">Privacy Policy</a> for detail).</li>
                 <li>Redemption of <strong>bonuses or promotional codes</strong> (manual entry or QR scanning with the device camera in the mobile app) to obtain free Premium access in enabled campaigns.</li>
                 <li>Account on <a href="https://tourai.es">tourai.es</a> for access to the private area (profile and dashboard), when enabled.</li>
                 <li><a href="community.html">Community</a>: public forum of topics and replies (news, help, ideas and travel).</li>
@@ -945,7 +949,7 @@ window.TourAiEnGBMessages = {
             <p>TourAI strives to offer accurate historical information; however, we do not guarantee that the content is free from errors or omissions. The platform is provided "as is" and its use is at the user's own risk.</p>
 
             <h2>8. Account deletion</h2>
-            <p>If you do not want TourAI to use your email or other account data, you must delete the account. You may do so from the app (<strong>Edit account → Delete my account</strong>) or from <a href="delete-account.html">Delete account</a> on the website. In both cases you must verify your email with a 6-digit code. Only if you cannot access those channels may you write to <a href="mailto:info@tourai.es">info@tourai.es</a>. On deleting the account the trail of your profile and usage history is erased (including your <strong>reviews</strong>). <strong>Community</strong> posts are not removed from the thread, but they are <strong>anonymised</strong> (label "Anonymous", with no name or email), in accordance with the <a href="privacy.html#delete-account">Privacy Policy</a>.</p>
+            <p>If you do not want TourAI to use your email or other account data, you must delete the account. You may do so from the app (<strong>Edit account → Delete my account</strong>) or from <a href="delete-account.html">Delete account</a> on the website. In both cases you must verify your email with a 6-digit code. Only if you cannot access those channels may you write to <a href="mailto:info@tourai.es">info@tourai.es</a>. On deleting the account the trail of your profile and usage history is erased (including your <strong>reviews</strong> and the record of places presented by the guide). <strong>Community</strong> posts are not removed from the thread, but they are <strong>anonymised</strong> (label "Anonymous", with no name or email), in accordance with the <a href="privacy.html#delete-account">Privacy Policy</a>.</p>
 
             <h2>9. Applicable law, jurisdiction and languages</h2>
             <p>These terms are governed by <strong>Spanish law</strong>. Unless a mandatory consumer-protection rule confers another forum, the parties submit to the courts of the consumer's domicile where the user is a consumer and, otherwise, to those of Barcelona (Spain), without prejudice to the provisions of the mobile application terms.</p>

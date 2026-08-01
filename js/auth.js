@@ -8,7 +8,7 @@
     _ready: null,
 
     /** Fallback if PublicConfig/Legal cannot be read. Live value lives in Firestore. */
-    LegalDocumentsVersion: "2026-07-30",
+    LegalDocumentsVersion: "2026-08-01",
 
     t(key, fallback) {
       const locale = global.TourAiI18n?.getLocale?.();
@@ -751,7 +751,7 @@
   }
 
   /** Fallback only — live value is PublicConfig/Legal.CurrentVersion in Firestore. */
-  const LEGAL_DOCUMENTS_VERSION = auth.LegalDocumentsVersion || "2026-07-30";
+  const LEGAL_DOCUMENTS_VERSION = auth.LegalDocumentsVersion || "2026-08-01";
   let legalModalBusy = false;
   let cachedLegalVersion = null;
 
@@ -1732,7 +1732,7 @@
 
       const db = await auth.getFirestore();
       const now = firebase.firestore.Timestamp.now();
-      let legalVersion = auth.LegalDocumentsVersion || "2026-07-30";
+      let legalVersion = auth.LegalDocumentsVersion || "2026-08-01";
       try {
         const legalSnap = await db.collection("PublicConfig").doc("Legal").get();
         const fromConfig = String(legalSnap.data()?.CurrentVersion || "").trim();
