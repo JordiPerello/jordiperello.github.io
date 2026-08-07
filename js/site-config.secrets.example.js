@@ -17,4 +17,8 @@
   // Register the web app in Firebase Console → App Check → reCAPTCHA v3.
   window.TourAiSite.config.appCheckRecaptchaSiteKey =
     "REPLACE_WITH_RECAPTCHA_V3_SITE_KEY";
+
+  // Localhost only — one shared UUID registered in Firebase Console → App Check → Manage debug tokens.
+  // Production (tourai.es) ignores this; real users use reCAPTCHA v3 above.
+  // window.TourAiSite.config.appCheckDebugToken = "00000000-0000-0000-0000-000000000000";
 })();

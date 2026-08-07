@@ -2123,6 +2123,77 @@ body.community-composer-open {
   line-height: 1.45;
 }
 
+.community-confirm-modal__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.community-confirm-modal__dialog:not(.community-confirm-modal__dialog--app) {
+  text-align: center;
+}
+
+.community-confirm-modal__dialog:not(.community-confirm-modal__dialog--app) .community-confirm-modal__header {
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.community-confirm-modal__dialog:not(.community-confirm-modal__dialog--app) .community-confirm-modal__title {
+  margin: 0;
+  text-align: center;
+}
+
+.community-confirm-modal__header .community-confirm-modal__title {
+  margin: 0;
+  text-align: left;
+}
+
+.community-confirm-modal__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #eef2ff;
+  font-size: 1.75rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.community-confirm-modal__icon[hidden] {
+  display: none !important;
+}
+
+.community-confirm-modal__dialog--app {
+  width: min(480px, 100%);
+  text-align: left;
+}
+
+.community-confirm-modal__dialog--app .community-confirm-modal__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.community-confirm-modal__dialog--app .community-confirm-modal__message {
+  margin-bottom: 16px;
+}
+
+.community-confirm-modal__dialog--app .community-confirm-modal__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  justify-content: stretch;
+}
+
+.community-confirm-modal__dialog--app .community-confirm-modal__actions .btn-primary,
+.community-confirm-modal__dialog--app .community-confirm-modal__actions .btn-secondary {
+  width: 100%;
+  justify-content: center;
+}
+
 .community-confirm-modal__actions {
   display: flex;
   flex-wrap: wrap;

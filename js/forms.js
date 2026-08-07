@@ -1569,7 +1569,7 @@
         <h3 style="color: var(--primary);" data-i18n="unsubscribe.title">Gestionar alertas de lanzamiento</h3>
         <p data-i18n="unsubscribe.intro">Introduce tu correo para verificar tu identidad y cancelar las alertas de App Store o Google Play.</p>
         <form id="unsubForm" onsubmit="return false;" novalidate>
-          <input type="email" id="unsubEmail" name="email" autocomplete="email" data-i18n-placeholder="index.modal.email" placeholder="Tu correo electrónico">
+          <input type="email" id="unsubEmail" name="email" autocomplete="email" data-i18n-placeholder="index.modal.email" placeholder="">
           <button type="button" id="unsubViewSubscriptionsBtn" class="btn-primary" data-i18n="unsubscribe.viewSubscriptions">Ver suscripciones</button>
           <div id="unsubVerificationBox" class="verification-box">
             <p id="unsubVerificationMessage" data-i18n="contact.verify.success">Email validado correctamente.</p>

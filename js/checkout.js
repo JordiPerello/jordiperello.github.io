@@ -115,10 +115,9 @@
           escapeHtml(plan.Id) +
           '"' +
           (isBusy || options.disabled ? " disabled" : "") +
+          (isBusy ? ' aria-busy="true"' : "") +
           ">" +
-          escapeHtml(
-            isBusy ? t("account.buy.redirecting") : t("account.buy.cta")
-          ) +
+          escapeHtml(t("account.buy.cta")) +
           "</button>" +
           "</p>" +
           "</article>"
@@ -127,7 +126,7 @@
       .join("");
 
     return (
-      '<div class="plan-buy-list" id="buy-plans">' +
+      '<div class="plan-buy-list" id="buy-plans-list">' +
       cards +
       '<p class="account-note">' +
       escapeHtml(t("account.buy.note")) +
@@ -154,7 +153,15 @@
     }
   }
 
-  async function startCheckout(planId) {
+  function setLoadingMessage(message) {
+    var messageEl = global.document?.querySelector?.(".tourai-loading-message");
+    if (messageEl && message) {
+      messageEl.textContent = message;
+    }
+  }
+
+  async function startCheckout(planId, options) {
+    options = options || {};
     var url = checkoutUrl();
     if (!url) {
       throw new Error("CONFIG_MISSING");
@@ -163,6 +170,10 @@
     var user = authApi().currentUser();
     if (!user) {
       throw new Error("NOT_SIGNED_IN");
+    }
+
+    if (typeof options.onProgress === "function") {
+      options.onProgress("preparing");
     }
 
     var idToken = await user.getIdToken();
@@ -192,11 +203,22 @@
       throw new Error(body?.error || "checkout_failed");
     }
 
+    if (body.userPlanId && global.TourAiPlanActivation?.savePurchaseContext) {
+      global.TourAiPlanActivation.savePurchaseContext({
+        userPlanId: body.userPlanId,
+        wasFreemiumAtPurchaseStart: options.wasFreemiumAtPurchaseStart === true,
+      });
+    }
+
+    if (typeof options.onProgress === "function") {
+      options.onProgress("redirecting");
+    }
+    setLoadingMessage(t("account.buy.redirecting"));
     global.location.assign(body.checkoutUrl);
     return body;
   }
 
-  function consumeCheckoutQuery(statusEl) {
+  function consumeCheckoutQuery() {
     try {
       var params = new URLSearchParams(global.location.search || "");
       var checkout = params.get("checkout");
@@ -212,26 +234,21 @@
         (global.location.hash || "");
       global.history.replaceState({}, "", next);
 
-      var result = null;
       if (checkout === "success") {
-        result = {
+        return {
           type: "success",
           title: t("account.buy.status.successTitle"),
           message: t("account.buy.status.success"),
         };
-      } else if (checkout === "cancel") {
-        result = {
+      }
+      if (checkout === "cancel") {
+        return {
           type: "cancel",
           title: t("account.buy.status.cancelTitle"),
           message: t("account.buy.status.cancel"),
         };
       }
-
-      if (result && statusEl) {
-        statusEl.textContent = result.message;
-        statusEl.classList.remove("error");
-      }
-      return result;
+      return null;
     } catch (err) {
       return null;
     }

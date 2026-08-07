@@ -762,8 +762,12 @@
   }
 
   function ensureConfirmModal() {
-    if (document.getElementById(MODAL_ID)) {
+    var existing = document.getElementById(MODAL_ID);
+    if (existing && existing.querySelector("#touraiConfirmIcon")) {
       return;
+    }
+    if (existing) {
+      existing.remove();
     }
 
     var modal = document.createElement("div");
@@ -774,8 +778,11 @@
       '<div class="community-confirm-modal__backdrop" data-confirm-cancel tabindex="-1"></div>' +
       '<div class="community-confirm-modal__dialog" role="dialog" aria-modal="true" ' +
       'aria-labelledby="touraiConfirmTitle" aria-describedby="touraiConfirmMessage">' +
+      '<div class="community-confirm-modal__header">' +
+      '<span class="community-confirm-modal__icon" id="touraiConfirmIcon" hidden aria-hidden="true"></span>' +
       '<h2 id="touraiConfirmTitle" class="community-confirm-modal__title"></h2>' +
-      '<p id="touraiConfirmMessage" class="community-confirm-modal__message"></p>' +
+      "</div>" +
+      '<div id="touraiConfirmMessage" class="community-confirm-modal__message"></div>' +
       '<div class="community-confirm-modal__actions">' +
       '<button type="button" class="btn-secondary" id="touraiConfirmCancel"></button>' +
       '<button type="button" class="btn-primary" id="touraiConfirmOk"></button>' +
@@ -809,7 +816,7 @@
 
   window.TourAiConfirm = {
     /**
-     * @param {{ title?: string, message?: string, confirmLabel?: string, cancelLabel?: string, danger?: boolean, alert?: boolean }} options
+     * @param {{ title?: string, message?: string, messageHtml?: string, icon?: string, layout?: string, confirmLabel?: string, cancelLabel?: string, danger?: boolean, alert?: boolean }} options
      * @returns {Promise<boolean>}
      */
     show: function (options) {
@@ -817,18 +824,36 @@
       var opts = options || {};
       var modal = document.getElementById(MODAL_ID);
       var titleEl = document.getElementById("touraiConfirmTitle");
+      var iconEl = document.getElementById("touraiConfirmIcon");
       var messageEl = document.getElementById("touraiConfirmMessage");
       var okBtn = document.getElementById("touraiConfirmOk");
       var cancelBtn = document.getElementById("touraiConfirmCancel");
       var dialog = modal.querySelector(".community-confirm-modal__dialog");
       var isAlert = opts.alert === true;
+      var useAppLayout = opts.layout === "app";
 
       if (resolver) {
         closeConfirm(false);
       }
 
       titleEl.textContent = opts.title || "";
-      messageEl.textContent = opts.message || "";
+      if (opts.messageHtml) {
+        messageEl.innerHTML = opts.messageHtml;
+      } else {
+        messageEl.textContent = opts.message || "";
+      }
+
+      if (iconEl) {
+        var icon = String(opts.icon || "").trim();
+        if (icon) {
+          iconEl.textContent = icon;
+          iconEl.hidden = false;
+        } else {
+          iconEl.textContent = "";
+          iconEl.hidden = true;
+        }
+      }
+
       okBtn.textContent =
         opts.confirmLabel ||
         (isAlert
@@ -845,6 +870,8 @@
         dialog?.classList.remove("community-confirm-modal__dialog--danger");
       }
 
+      dialog?.classList.toggle("community-confirm-modal__dialog--app", useAppLayout);
+
       modal.hidden = false;
       document.body.classList.add("community-confirm-open");
       okBtn.focus();
@@ -853,6 +880,96 @@
         resolver = resolve;
       });
     },
+  };
+})();
+
+/* Premium checkout entry: one handler for every "buy Premium" CTA site-wide. */
+(function (global) {
+  "use strict";
+
+  var HASH = "buy-plans-section";
+
+  function isDashboardPage() {
+    var page = String(global.location.pathname || "").split("/").pop() || "";
+    return /dashboard\.html$/i.test(page);
+  }
+
+  function isBuyPlansLink(link) {
+    if (!(link instanceof HTMLAnchorElement)) {
+      return false;
+    }
+    if (link.getAttribute("data-buy-premium") === "true") {
+      return true;
+    }
+    return /#buy-plans/i.test(link.getAttribute("href") || "");
+  }
+
+  function hidePromoModal() {
+    var modal = global.document.querySelector(
+      "#tourai-site-promo-root [data-promo-modal]"
+    );
+    if (modal) {
+      modal.hidden = true;
+    }
+  }
+
+  function scrollOnDashboard() {
+    if (typeof global.TourAiDashboardScrollToBuyPlans === "function") {
+      global.TourAiDashboardScrollToBuyPlans();
+      return;
+    }
+    var attempts = 0;
+    var timer = global.setInterval(function () {
+      attempts += 1;
+      if (typeof global.TourAiDashboardScrollToBuyPlans === "function") {
+        global.clearInterval(timer);
+        global.TourAiDashboardScrollToBuyPlans();
+        return;
+      }
+      if (attempts >= 40) {
+        global.clearInterval(timer);
+      }
+    }, 50);
+  }
+
+  function handleClick(event) {
+    var link = event.target.closest?.(
+      "a[data-buy-premium='true'], a[href*='#buy-plans']"
+    );
+    if (!link || !isBuyPlansLink(link)) {
+      return;
+    }
+
+    var href = (link.getAttribute("href") || "").trim();
+
+    // Dashboard: account.js handles expand + scroll (after auth when needed).
+    if (isDashboardPage()) {
+      event.preventDefault();
+      hidePromoModal();
+      return;
+    }
+
+    hidePromoModal();
+
+    if (/#buy-plans(?!-section)/i.test(href)) {
+      event.preventDefault();
+      global.location.href = href.replace(/#buy-plans$/i, "#buy-plans-section");
+    }
+  }
+
+  function openFromHash() {
+    if (!isDashboardPage()) {
+      return;
+    }
+    hidePromoModal();
+    scrollOnDashboard();
+  }
+
+  global.document.addEventListener("click", handleClick);
+
+  global.TourAiBuyPlansNav = {
+    openFromHash: openFromHash,
+    scrollOnDashboard: scrollOnDashboard,
   };
 })();
 

@@ -405,6 +405,12 @@
   overflow: hidden;
 }
 
+/* Sticky site nav — keep accordion title below nav on hash / CTA scroll. */
+#buy-plans-section,
+#buy-plans-section .account-accordion__toggle {
+  scroll-margin-top: 6.5rem;
+}
+
 .account-accordion__toggle {
   width: 100%;
   display: flex;
@@ -498,6 +504,60 @@
 
 .plan-freemium-promo .account-note {
   margin-top: 0;
+}
+
+/* ConfirmPage → MessageBlockSelectAndActiveUserPlan (app parity). */
+.plan-activate-confirm__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.plan-activate-confirm__line1 {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #555555;
+}
+
+.plan-activate-confirm__plan-name {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #2f7a98;
+}
+
+.plan-activate-confirm__body {
+  padding-left: 20px;
+}
+
+.plan-activate-confirm__benefit {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 8px;
+  align-items: start;
+}
+
+.plan-activate-confirm__check {
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.plan-activate-confirm__line2 {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #333333;
+}
+
+.plan-activate-confirm__line3 {
+  margin: 24px 0 0;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #333333;
 }
 
 .plan-buy-list {

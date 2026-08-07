@@ -20,6 +20,7 @@
     root: null,
     modalTimer: null,
     firstModalTimer: null,
+    premiumHold: false,
   };
 
   function authApi() {
@@ -124,7 +125,7 @@
       dismiss: t("site.promo.dismiss"),
       railLabel: t("site.promo.freemium.railLabel"),
       modalLead: t("site.promo.freemium.modalLead"),
-      href: "dashboard.html#buy-plans",
+      href: "dashboard.html#buy-plans-section",
     };
   }
 
@@ -228,6 +229,11 @@
       el.textContent = copy.cta;
       if (el.tagName === "A") {
         el.setAttribute("href", copy.href);
+        if (audience === "freemium") {
+          el.setAttribute("data-buy-premium", "true");
+        } else {
+          el.removeAttribute("data-buy-premium");
+        }
       }
     });
     root.querySelectorAll("[data-promo-dismiss-label]").forEach(function (el) {
@@ -325,6 +331,10 @@
   }
 
   function showSurfaces(audience) {
+    if (state.premiumHold) {
+      hideSurfaces();
+      return;
+    }
     var root = ensureRoot(audience);
     root.hidden = false;
     var dismissed = bannerDismissed(audience);
@@ -363,8 +373,16 @@
     }
   }
 
+  function isBuyPlansHash() {
+    var hash = String(global.location.hash || "").toLowerCase();
+    return hash === "#buy-plans" || hash === "#buy-plans-section";
+  }
+
   function showModalIfDue() {
-    if (!state.audience) {
+    if (state.premiumHold || !state.audience) {
+      return;
+    }
+    if (isBuyPlansHash()) {
       return;
     }
     if (cookieBannerVisible() || otherModalOpen()) {
@@ -429,10 +447,51 @@
     }
   }
 
+  /** Hide promo UI as soon as checkout payment succeeds (before success/activation modals). */
+  function onPurchaseSuccess() {
+    state.premiumHold = true;
+    state.audience = null;
+    hideSurfaces();
+  }
+
+  /** Reconcile promo state after the purchased plan is activated in Firestore. */
+  async function onPlanActivated(user) {
+    onPurchaseSuccess();
+
+    if (global.TourAiAccountData?.clearCache) {
+      global.TourAiAccountData.clearCache();
+    }
+
+    await refreshForUser(user || authApi()?.currentUser?.() || null);
+
+    // Firestore can lag right after activation — retry once before giving up.
+    if (state.audience === "freemium") {
+      await new Promise(function (resolve) {
+        global.setTimeout(resolve, 1000);
+      });
+      global.TourAiAccountData?.clearCache?.();
+      hideSurfaces();
+      await refreshForUser(user || authApi()?.currentUser?.() || null);
+    }
+
+    if (!state.audience) {
+      state.premiumHold = false;
+    }
+  }
+
   function boot() {
     // Guests do not need Firebase: show install promo immediately.
     state.audience = "guest";
     showSurfaces("guest");
+
+    global.addEventListener("hashchange", function () {
+      if (isBuyPlansHash()) {
+        hideModal();
+      }
+    });
+    if (isBuyPlansHash()) {
+      hideModal();
+    }
 
     var auth = authApi();
     if (!auth || typeof auth.onAuthStateChanged !== "function") {
@@ -455,6 +514,9 @@
     },
     dismissBanner: dismissBanner,
     showModal: showModalIfDue,
+    hideNow: hideSurfaces,
+    onPurchaseSuccess: onPurchaseSuccess,
+    onPlanActivated: onPlanActivated,
   };
   // Keep legacy alias used while the file was freemium-only.
   global.TourAiFreemiumPromo = global.TourAiSitePromo;

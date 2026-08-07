@@ -44,8 +44,7 @@ Deploy the Cloud Function from `D:\Proyectos\TourAI\firebase` (`createCheckoutSe
 - `js/locales/es-ES.js` — Spanish UI strings (`TourAiEsESMessages`)
 - `js/locales/en-GB.js` — English UI strings (`TourAiEnGBMessages`)
 - Pages keep structure only (`data-i18n`, `data-i18n-html`, `data-i18n-meta`, …); **no user-facing copy in HTML**.
-- JS looks up keys from both tables (optional fallbacks are for migration only — prefer keys in both locale files).
-- Check parity: `node scripts/validate-i18n-keys.js`
+- JS looks up keys from both tables (optional fallbacks in code — prefer keys in both locale files).
 
 ## Run locally with Node (no npm)
 

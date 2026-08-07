@@ -13,12 +13,16 @@ window.TourAiEnGBMessages = {
   "account.buy.error.plan": "That plan is not available. Try another one or come back later.",
   "account.buy.error.rateLimit": "Too many recent pending payments. Wait a moment and try again.",
   "account.buy.error.title": "Could not start payment",
-  "account.buy.note": `Payment is processed by Stripe. After paying, the plan appears under "Your plans" (pending activation in the app if you have not started it yet).`,
+  "account.buy.note": `Payment is processed by Stripe. After paying, the plan appears under "Your plans". If you are on Freemium, you can activate it right after payment.`,
+  "account.buy.preparing": "Preparing payment…",
   "account.buy.redirecting": "Redirecting to Stripe…",
   "account.buy.status.cancel": "Payment cancelled. Nothing was charged.",
   "account.buy.status.cancelTitle": "Payment cancelled",
   "account.buy.status.success": "Payment received. If the plan does not appear yet, wait a few seconds and refresh the dashboard.",
+  "account.buy.status.successDetail": "Thank you for your purchase. Your payment was processed successfully.",
+  "account.buy.status.successPayment": "✅ Payment completed",
   "account.buy.status.successTitle": "Payment received",
+  "account.buy.status.close": "Close",
   "account.buy.title": "Buy a Premium plan",
   "account.buy.tokens": "Allowance: {n}",
   "account.comingSoon": "Coming soon",
@@ -97,6 +101,11 @@ window.TourAiEnGBMessages = {
   "account.plan.acquisition.bonus": "Bonus",
   "account.plan.acquisition.purchase": "Purchase",
   "account.plan.activeTitle": "Active plan",
+  "account.plan.activate.error.generic": "The plan could not be activated. Try again from \"Your plans\".",
+  "account.plan.activate.line1": "When selecting the plan",
+  "account.plan.activate.line2": "It will be activated and you can start using it from this moment",
+  "account.plan.activate.line3": "Are you sure you want to select and activate this plan?",
+  "account.plan.activate.title": "Change plan",
   "account.plan.allowance": "Usage allowance",
   "account.plan.detail.back": "Back",
   "account.plan.detail.error": "The plan details could not be loaded.",
@@ -703,7 +712,7 @@ window.TourAiEnGBMessages = {
             <img src="https://img.freepik.com/premium-photo/young-female-tourist-using-smartphone-platform-applications-helping-tourism-about-travel-map-gps_35674-17150.jpg?w=2000" alt="Traveller using a tourism app on a smartphone" class="app-img" loading="lazy" width="800" height="400">
         </section>
 
-        <p class="app-coming-note">The website is public: anyone can learn about the product. The <a href="login.html" data-auth-account>My account</a> area requires signing in with the same app account. If you already have an account, you can also <a href="dashboard.html#buy-plans">buy Premium plans</a> from the dashboard.</p>
+        <p class="app-coming-note">The website is public: anyone can learn about the product. The <a href="login.html" data-auth-account>My account</a> area requires signing in with the same app account. If you already have an account, you can also <a href="dashboard.html#buy-plans-section" data-buy-premium="true">buy Premium plans</a> from the dashboard.</p>
 
         <h2>App features</h2>
         <div class="services-grid">

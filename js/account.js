@@ -330,7 +330,7 @@
   <h3 class="plan-freemium-promo__title">${title}</h3>
   <p class="plan-freemium-promo__body">${body}</p>
   <p class="plan-freemium-promo__actions">
-    <a class="btn-primary" href="dashboard.html#buy-plans">${cta}</a>
+    <a class="btn-primary" href="dashboard.html#buy-plans-section" data-buy-premium="true">${cta}</a>
   </p>
   <p class="account-note">${note}</p>
 </aside>`;
@@ -2163,12 +2163,12 @@
     }
   }
 
-  function showBuyAlert(title, message) {
+  function showBuyAlert(title, message, confirmLabel) {
     if (window.TourAiConfirm?.show) {
       return window.TourAiConfirm.show({
         title: title,
         message: message,
-        confirmLabel: t("account.alert.ok"),
+        confirmLabel: confirmLabel || t("account.alert.ok"),
         alert: true,
       });
     }
@@ -2183,16 +2183,35 @@
     }
     buyState.busyPlanId = planId;
     paintBuyPlansSection(section);
-    setStatus(t("account.buy.redirecting"), false);
+    window.TourAiLoading?.show?.(t("account.buy.preparing"));
     try {
-      await checkout.startCheckout(planId);
+      var wasFreemium = true;
+      if (window.TourAiPlanActivation?.wasFreemiumAtPurchaseStart) {
+        wasFreemium = await window.TourAiPlanActivation.wasFreemiumAtPurchaseStart(
+          currentUser
+        );
+      } else {
+        wasFreemium = !(await data.fetchActivePlan(currentUser));
+      }
+      await checkout.startCheckout(planId, {
+        wasFreemiumAtPurchaseStart: wasFreemium,
+        onProgress: function (step) {
+          if (step === "redirecting") {
+            const messageEl = document.querySelector(".tourai-loading-message");
+            if (messageEl) {
+              messageEl.textContent = t("account.buy.redirecting");
+            }
+          }
+        },
+      });
+      // Redirect in progress: keep the spinner visible.
     } catch (err) {
       console.error("[TourAI dashboard] checkout", err);
+      window.TourAiLoading?.hide?.();
       buyState.busyPlanId = "";
       paintBuyPlansSection(section);
       const message =
         checkout.mapCheckoutError(err?.message || err) || t("account.buy.error.generic");
-      setStatus(message, true);
       await showBuyAlert(t("account.buy.error.title"), message);
     }
   }
@@ -2373,7 +2392,11 @@
     const willOpen = forceOpen === true ? true : forceOpen === false ? false : !section.classList.contains("is-open");
     section.classList.toggle("is-open", willOpen);
     toggle.setAttribute("aria-expanded", willOpen ? "true" : "false");
-    panel.hidden = !willOpen;
+    if (willOpen) {
+      panel.removeAttribute("hidden");
+    } else {
+      panel.hidden = true;
+    }
 
     if (willOpen) {
       loadSection(section);
@@ -2420,27 +2443,206 @@
     openPlanDetail(card.getAttribute("data-plan-id"));
   });
 
+  function waitForBuyPlansSectionReady(section) {
+    return new Promise(function (resolve) {
+      const state = section.dataset.loadState;
+      if (state === "loaded" || state === "error") {
+        resolve();
+        return;
+      }
+      const observer = new MutationObserver(function () {
+        const next = section.dataset.loadState;
+        if (next === "loaded" || next === "error") {
+          observer.disconnect();
+          resolve();
+        }
+      });
+      observer.observe(section, {
+        attributes: true,
+        attributeFilter: ["data-load-state"],
+      });
+      window.setTimeout(function () {
+        observer.disconnect();
+        resolve();
+      }, 15000);
+    });
+  }
+
+  function stickyNavScrollOffsetPx() {
+    const nav = document.querySelector("nav");
+    if (!nav) {
+      return 96;
+    }
+    return Math.ceil(nav.getBoundingClientRect().height) + 16;
+  }
+
+  function scrollBuyPlansIntoView(section) {
+    const title =
+      section.querySelector(".account-accordion__toggle") || section;
+    const offset = stickyNavScrollOffsetPx();
+
+    function doScroll() {
+      const top = title.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({
+        top: Math.max(0, top),
+        behavior: "smooth",
+      });
+    }
+
+    // Wait for accordion expand + catalog paint (first open shifts layout).
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(doScroll);
+    });
+  }
+
+  function waitForDashboardReady() {
+    if (currentUser && signedInPanel && !signedInPanel.hidden) {
+      return Promise.resolve();
+    }
+    return new Promise(function (resolve) {
+      let attempts = 0;
+      const timer = window.setInterval(function () {
+        attempts += 1;
+        if (currentUser && signedInPanel && !signedInPanel.hidden) {
+          window.clearInterval(timer);
+          resolve();
+          return;
+        }
+        if (attempts >= 120) {
+          window.clearInterval(timer);
+          resolve();
+        }
+      }, 50);
+    });
+  }
+
+  let scrollToBuyPlansPromise = null;
+
+  async function scrollToBuyPlansSection() {
+    if (scrollToBuyPlansPromise) {
+      return scrollToBuyPlansPromise;
+    }
+
+    scrollToBuyPlansPromise = (async function () {
+      const section = document.getElementById("buy-plans-section");
+      if (!section) {
+        return;
+      }
+
+      await waitForDashboardReady();
+      toggleSection(section, true);
+
+      if (currentUser) {
+        const state = section.dataset.loadState;
+        if (state !== "loaded" && state !== "loading" && !buyState.loading) {
+          await loadBuyPlansSection(section);
+        } else if (state === "loading" || buyState.loading) {
+          await waitForBuyPlansSectionReady(section);
+        }
+      }
+
+      scrollBuyPlansIntoView(section);
+    })().finally(function () {
+      scrollToBuyPlansPromise = null;
+    });
+
+    return scrollToBuyPlansPromise;
+  }
+
   function openBuyPlansFromHash() {
     const hash = String(window.location.hash || "").toLowerCase();
     if (hash !== "#buy-plans" && hash !== "#buy-plans-section") {
       return;
     }
-    const section = document.getElementById("buy-plans-section");
-    if (!section) {
-      return;
-    }
-    toggleSection(section, true);
-    section.scrollIntoView({ behavior: "smooth", block: "start" });
+    void scrollToBuyPlansSection();
   }
 
-  setStatus("");
-  const checkoutReturn = window.TourAiCheckout?.consumeCheckoutQuery?.(statusEl);
-  if (checkoutReturn?.message) {
-    showBuyAlert(
-      checkoutReturn.title || t("account.buy.title"),
-      checkoutReturn.message
+  window.TourAiDashboardScrollToBuyPlans = scrollToBuyPlansSection;
+
+  document.addEventListener("click", function (event) {
+    const link = event.target.closest?.(
+      "a[data-buy-premium='true'], a[href*='#buy-plans']"
+    );
+    if (!link || !/\/dashboard\.html/i.test(String(window.location.pathname || ""))) {
+      return;
+    }
+    event.preventDefault();
+    const hash = String(window.location.hash || "").toLowerCase();
+    if (hash !== "#buy-plans-section") {
+      window.location.hash = "buy-plans-section";
+    }
+    void scrollToBuyPlansSection();
+  });
+
+  async function refreshDashboardPlans() {
+    data.clearCache();
+    pagers.plans = { items: [], cursor: null, hasMore: true, loading: false, observer: null };
+    pagers.payments = {
+      items: [],
+      cursor: null,
+      hasMore: true,
+      loading: false,
+      observer: null,
+    };
+    buyState.plans = [];
+    buyState.busyPlanId = "";
+
+    await Promise.all(
+      Array.from(document.querySelectorAll("[data-section]")).map(async function (section) {
+        const key = section.getAttribute("data-section");
+        if (key !== "activePlan" && key !== "plans" && key !== "buyPlans") {
+          return;
+        }
+        section.dataset.loadState = "idle";
+        if (key === "activePlan") {
+          toggleSection(section, true);
+          return;
+        }
+        if (section.classList.contains("is-open")) {
+          await loadSection(section);
+        }
+      })
     );
   }
+
+  function hidePremiumAcquisitionPromos() {
+    document.querySelectorAll(".plan-freemium-promo").forEach(function (el) {
+      el.hidden = true;
+    });
+    window.TourAiSitePromo?.onPurchaseSuccess?.();
+  }
+
+  async function handleCheckoutReturnIfAny() {
+    const checkoutReturn = window.TourAiCheckout?.consumeCheckoutQuery?.();
+    if (!checkoutReturn) {
+      return;
+    }
+
+    if (checkoutReturn.type === "success") {
+      hidePremiumAcquisitionPromos();
+      await showBuyAlert(
+        t("account.buy.status.successPayment"),
+        t("account.buy.status.successDetail"),
+        t("account.buy.status.close")
+      );
+      if (window.TourAiPlanActivation?.tryAfterPaymentAsync && currentUser) {
+        await window.TourAiPlanActivation.tryAfterPaymentAsync(currentUser);
+      }
+      await refreshDashboardPlans();
+      return;
+    }
+
+    if (checkoutReturn.message) {
+      await showBuyAlert(
+        checkoutReturn.title || t("account.buy.title"),
+        checkoutReturn.message
+      );
+    }
+  }
+
+  window.addEventListener("hashchange", openBuyPlansFromHash);
+
+  setStatus("");
 
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape" && planDetailModal?.classList.contains("is-open")) {
@@ -2468,6 +2670,7 @@
       currentUser = user;
       showSignedIn();
       setStatus(statusEl?.textContent || "", false);
+      await handleCheckoutReturnIfAny();
       openBuyPlansFromHash();
     })
     .catch(function (err) {
@@ -2475,7 +2678,6 @@
       redirectToLogin();
     });
 
-  window.addEventListener("hashchange", openBuyPlansFromHash);
   logoutBtn?.addEventListener("click", async function () {
     const ok = await (window.TourAiConfirm?.show
       ? window.TourAiConfirm.show({

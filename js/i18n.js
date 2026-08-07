@@ -69,12 +69,21 @@
   function t(key, locale, vars) {
     syncLocaleMessages();
     const normalized = normalizeLocale(locale) || getLocale();
-    const table = messages[normalized] ?? {};
-    const value = table[key];
-    if (value == null || value === "") {
-      return null;
+    const locales = [
+      normalized,
+      ...config.supportedLocales.filter((code) => code !== normalized),
+    ];
+
+    for (const code of locales) {
+      const table = messages[code] ?? {};
+      const value = table[key];
+      if (value == null || value === "" || value === key) {
+        continue;
+      }
+      return applyVars(value, vars);
     }
-    return applyVars(value, vars);
+
+    return null;
   }
 
   function tOr(key, locale, vars, fallback) {
