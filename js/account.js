@@ -126,17 +126,17 @@
   function stateLabel(state) {
     switch (state) {
       case "active":
-        return t("account.plan.state.active", "En uso");
+        return t("account.plan.state.active");
       case "pending":
-        return t("account.plan.state.pending", "Pendiente de iniciar");
+        return t("account.plan.state.pending");
       case "consumed":
-        return t("account.plan.state.consumed", "Consumido");
+        return t("account.plan.state.consumed");
       case "expired":
-        return t("account.plan.state.expired", "Caducado");
+        return t("account.plan.state.expired");
       case "freemium":
-        return t("account.plan.state.freemium", "Plan gratuito");
+        return t("account.plan.state.freemium");
       default:
-        return t("account.plan.state.other", "Sin clasificar");
+        return t("account.plan.state.other");
     }
   }
 
@@ -156,20 +156,20 @@
 
   function acquisitionLabel(plan) {
     return isBonusPlan(plan)
-      ? t("account.plan.acquisition.bonus", "Bono")
-      : t("account.plan.acquisition.purchase", "Compra");
+      ? t("account.plan.acquisition.bonus")
+      : t("account.plan.acquisition.purchase");
   }
 
   function paymentStatusLabel(status) {
     switch ((status || "").toString()) {
       case "Paid":
-        return t("account.payment.status.paid", "Pagado");
+        return t("account.payment.status.paid");
       case "Pending":
-        return t("account.payment.status.pending", "Pendiente");
+        return t("account.payment.status.pending");
       case "Failed":
-        return t("account.payment.status.failed", "Fallido");
+        return t("account.payment.status.failed");
       case "Free":
-        return t("account.payment.status.free", "Gratis");
+        return t("account.payment.status.free");
       default:
         return status || "—";
     }
@@ -186,7 +186,7 @@
       case "Windows":
         return "Microsoft Store";
       case "Promo":
-        return t("account.payment.method.promo", "Promoción");
+        return t("account.payment.method.promo");
       default:
         return method || "—";
     }
@@ -318,39 +318,19 @@
   }
 
   function renderFreemiumPromoHtml() {
-    const title = escapeHtml(
-      t(
-        "account.plan.freemium.promoTitle",
-        "¿Quieres TourAI sin anuncios?"
-      )
-    );
-    const body = escapeHtml(
-      t(
-        "account.plan.freemium.promoBody",
-        "Ahora usas Freemium: el cupo diario en la app se recarga con anuncios. Hazte con un plan Premium y disfruta de tus vacaciones sin interrupciones."
-      )
-    );
-    const cta = escapeHtml(
-      t(
-        "account.plan.freemium.promoCta",
-        "Abrir TourAI / aviso de lanzamiento"
-      )
-    );
-    const note = escapeHtml(
-      t(
-        "account.plan.freemium.promoNote",
-        "La compra de planes desde la web llegará en la siguiente fase. Mientras tanto, gestiona tu plan desde la app TourAI."
-      )
-    );
+    const title = escapeHtml(t("account.plan.freemium.promoTitle"));
+    const body = escapeHtml(t("account.plan.freemium.promoBody"));
+    const cta = escapeHtml(t("account.plan.freemium.promoCta"));
+    const note = escapeHtml(t("account.plan.freemium.promoNote"));
 
     return `<aside class="plan-freemium-promo" role="note">
   <p class="plan-freemium-promo__eyebrow">${escapeHtml(
-    t("account.plan.state.freemium", "Plan gratuito")
+    t("account.plan.state.freemium")
   )}</p>
   <h3 class="plan-freemium-promo__title">${title}</h3>
   <p class="plan-freemium-promo__body">${body}</p>
   <p class="plan-freemium-promo__actions">
-    <a class="btn-primary" href="index.html#waitlist">${cta}</a>
+    <a class="btn-primary" href="dashboard.html#buy-plans">${cta}</a>
   </p>
   <p class="account-note">${note}</p>
 </aside>`;
@@ -414,7 +394,7 @@
     const end = formatDateTime(plan.EndDate || plan.ExpiryDate);
     const interactiveAttrs = interactive
       ? ` role="button" tabindex="0" data-plan-id="${planId}" aria-label="${escapeHtml(
-          t("account.plan.openDetail", "Ver detalle del plan")
+          t("account.plan.openDetail")
         )}: ${name}"`
       : "";
 
@@ -436,19 +416,19 @@
       <div class="plan-list-card__divider" aria-hidden="true"></div>
       <dl class="plan-list-card__metrics">
         <div>
-          <dt>${t("account.plan.accountType", "Tipo de cuenta")}</dt>
+          <dt>${t("account.plan.accountType")}</dt>
           <dd class="plan-list-card__metric-accent">${accountType}</dd>
         </div>
         <div>
-          <dt>${t("account.plan.acquisition", "Origen")}</dt>
+          <dt>${t("account.plan.acquisition")}</dt>
           <dd class="plan-list-card__metric-accent">${acquisition}</dd>
         </div>
         <div>
-          <dt>${t("account.plan.start", "Inicio")}</dt>
+          <dt>${t("account.plan.start")}</dt>
           <dd class="plan-list-card__metric-date">${escapeHtml(start)}</dd>
         </div>
         <div>
-          <dt>${t("account.plan.end", "Fin")}</dt>
+          <dt>${t("account.plan.end")}</dt>
           <dd class="plan-list-card__metric-date">${escapeHtml(end)}</dd>
         </div>
       </dl>
@@ -459,10 +439,7 @@
     const opts = options || {};
     const ordered = orderPlansLikeApp(plans);
     if (!ordered.length && !opts.loading && !opts.hasMore) {
-      return `<p class="account-empty">${t(
-        "account.plan.empty",
-        "Aún no tienes planes Premium guardados en la cuenta."
-      )}</p>`;
+      return `<p class="account-empty">${t("account.plan.empty")}</p>`;
     }
 
     const cards = ordered.map((plan) => renderPlanCardHtml(plan, { interactive: true })).join("");
@@ -529,10 +506,7 @@
   function renderTokenUsageRowsHtml(usages, options) {
     const opts = options || {};
     if (!usages.length && !opts.loading && !opts.hasMore) {
-      return `<p class="account-empty">${t(
-        "account.plan.usage.empty",
-        "Todavía no hay actividad registrada en este plan."
-      )}</p>`;
+      return `<p class="account-empty">${t("account.plan.usage.empty")}</p>`;
     }
 
     const rows = usages
@@ -546,22 +520,16 @@
       })
       .join("");
 
-    const countLabel = t("account.plan.usage.loaded", "{loaded} registros cargados")
+    const countLabel = t("account.plan.usage.loaded")
       .split("{loaded}")
       .join(String(usages.length));
 
     return `<div class="plan-usage-table" role="table" aria-label="${escapeHtml(
-      t("account.plan.usage.title", "Actividad del plan")
+      t("account.plan.usage.title")
     )}">
       <div class="plan-usage-table__head" role="row">
-        <div class="plan-usage-table__query" role="columnheader">${t(
-          "account.plan.usage.query",
-          "Consulta"
-        )}</div>
-        <div class="plan-usage-table__date" role="columnheader">${t(
-          "account.plan.usage.date",
-          "Fecha"
-        )}</div>
+        <div class="plan-usage-table__query" role="columnheader">${t("account.plan.usage.query")}</div>
+        <div class="plan-usage-table__date" role="columnheader">${t("account.plan.usage.date")}</div>
       </div>
       <div class="plan-usage-table__body" data-usage-body>${rows}</div>
     </div>
@@ -577,19 +545,13 @@
   function renderPlanDetailHtml(plan, usages, options) {
     return `<div class="plan-detail">
       <div class="plan-detail__intro">
-        <h2 class="plan-detail__title">${t("account.plan.detail.title", "Detalle del Plan")}</h2>
-        <p class="plan-detail__subtitle">${t(
-          "account.plan.detail.subtitle",
-          "Detalle del plan y actividad registrada."
-        )}</p>
+        <h2 class="plan-detail__title">${t("account.plan.detail.title")}</h2>
+        <p class="plan-detail__subtitle">${t("account.plan.detail.subtitle")}</p>
       </div>
       ${renderPlanCardHtml(plan, { interactive: false })}
       <div data-usage-panel>${renderTokenUsageRowsHtml(usages || [], options || {})}</div>
       <div class="plan-detail__actions">
-        <button type="button" class="btn-secondary" data-close-plan-detail>${t(
-          "account.plan.detail.back",
-          "Anterior"
-        )}</button>
+        <button type="button" class="btn-secondary" data-close-plan-detail>${t("account.plan.detail.back")}</button>
       </div>
     </div>`;
   }
@@ -597,10 +559,7 @@
   function renderPaymentsHtml(payments, options) {
     const opts = options || {};
     if (!payments.length && !opts.loading && !opts.hasMore) {
-      return `<p class="account-empty">${t(
-        "account.payment.empty",
-        "Todavía no hay pagos registrados."
-      )}</p>`;
+      return `<p class="account-empty">${t("account.payment.empty")}</p>`;
     }
 
     const rows = payments
@@ -622,10 +581,10 @@
         <table class="account-table">
           <thead>
             <tr>
-              <th>${t("account.payment.date", "Fecha")}</th>
-              <th>${t("account.payment.amount", "Importe")}</th>
-              <th>${t("account.payment.method", "Método")}</th>
-              <th>${t("account.payment.status", "Estado")}</th>
+              <th>${t("account.payment.date")}</th>
+              <th>${t("account.payment.amount")}</th>
+              <th>${t("account.payment.method")}</th>
+              <th>${t("account.payment.status")}</th>
             </tr>
           </thead>
           <tbody data-payments-body>${rows}</tbody>
@@ -778,13 +737,13 @@
   function renderProfileCardHtml(profile, user) {
     const displayName =
       (profile.DisplayName && String(profile.DisplayName).trim()) ||
-      t("account.profile.noName", "Sin nombre");
+      t("account.profile.noName");
     const email = profile.Email || profile.AuthEmail || user?.email || "—";
     const accountType = profile.AccountType || "Freemium";
     const typeLabel =
       accountType === "Premium"
-        ? t("account.profile.type.premium", "Premium")
-        : t("account.profile.type.freemium", "Freemium");
+        ? t("account.profile.type.premium")
+        : t("account.profile.type.freemium");
     const birth = formatDate(profile.BirthDate);
     const initials = escapeHtml(profileInitials(displayName, email));
     const photoUrls = profilePhotoUrls(profile, user);
@@ -805,11 +764,11 @@
       <div class="profile-card__divider" aria-hidden="true"></div>
       <dl class="profile-card__metrics">
         <div>
-          <dt>${t("account.profile.type", "Tipo de cuenta")}</dt>
+          <dt>${t("account.profile.type")}</dt>
           <dd class="profile-card__metric-accent">${escapeHtml(typeLabel.toUpperCase())}</dd>
         </div>
         <div>
-          <dt>${t("account.profile.birthDate", "Fecha de nacimiento (opcional)")}</dt>
+          <dt>${t("account.profile.birthDate")}</dt>
           <dd class="profile-card__metric-date">${escapeHtml(birth)}</dd>
         </div>
       </dl>
@@ -1395,18 +1354,18 @@
 
     if (level === strength.Level.Weak) {
       strengthBars[0]?.classList.add("is-active", "is-weak");
-      pwdStrengthLabel.textContent = t("resetPassword.strength.weak", "Débil");
+      pwdStrengthLabel.textContent = t("resetPassword.strength.weak");
       pwdStrengthLabel.classList.add("is-weak");
     } else if (level === strength.Level.Medium) {
       strengthBars[0]?.classList.add("is-active", "is-medium");
       strengthBars[1]?.classList.add("is-active", "is-medium");
-      pwdStrengthLabel.textContent = t("resetPassword.strength.medium", "Media");
+      pwdStrengthLabel.textContent = t("resetPassword.strength.medium");
       pwdStrengthLabel.classList.add("is-medium");
     } else if (level === strength.Level.Strong) {
       strengthBars[0]?.classList.add("is-active", "is-strong");
       strengthBars[1]?.classList.add("is-active", "is-strong");
       strengthBars[2]?.classList.add("is-active", "is-strong");
-      pwdStrengthLabel.textContent = t("resetPassword.strength.strong", "Fuerte");
+      pwdStrengthLabel.textContent = t("resetPassword.strength.strong");
       pwdStrengthLabel.classList.add("is-strong");
     } else {
       pwdStrengthLabel.textContent = "";
@@ -1497,23 +1456,17 @@
     if (hasEditChanges()) {
       const ok = await (window.TourAiConfirm?.show
         ? window.TourAiConfirm.show({
-            title: t("account.confirm.discardEdit.title", "¿Descartar cambios?"),
-            message: t(
-              "account.confirm.discardEdit.body",
-              "Si continúas, perderás los cambios hechos."
-            ),
-            confirmLabel: t("account.confirm.discardEdit.confirm", "Descartar"),
-            cancelLabel: t("account.confirm.cancel", "Cancelar"),
+            title: t("account.confirm.discardEdit.title"),
+            message: t("account.confirm.discardEdit.body"),
+            confirmLabel: t("account.confirm.discardEdit.confirm"),
+            cancelLabel: t("account.confirm.cancel"),
             danger: true,
           })
         : Promise.resolve(
             window.confirm(
-              t("account.confirm.discardEdit.title", "¿Descartar cambios?") +
+              t("account.confirm.discardEdit.title") +
                 "\n\n" +
-                t(
-                  "account.confirm.discardEdit.body",
-                  "Si continúas, perderás los cambios hechos."
-                )
+                t("account.confirm.discardEdit.body")
             )
           ));
       if (!ok) {
@@ -1572,10 +1525,7 @@
     let ok = true;
     const name = (editDisplayName.value || "").trim();
     if (!name) {
-      editDisplayNameError.textContent = t(
-        "account.edit.error.displayName",
-        "El nombre es obligatorio."
-      );
+      editDisplayNameError.textContent = t("account.edit.error.displayName");
       editDisplayNameError.hidden = false;
       ok = false;
     } else {
@@ -1584,10 +1534,7 @@
 
     if (editBirthDateEnabled.checked) {
       if (!editBirthDate.value) {
-        editBirthDateError.textContent = t(
-          "account.edit.error.birthDate",
-          "Indica una fecha de nacimiento válida."
-        );
+        editBirthDateError.textContent = t("account.edit.error.birthDate");
         editBirthDateError.hidden = false;
         ok = false;
       } else {
@@ -1615,10 +1562,7 @@
 
     if (!currentPassword) {
       if (pwdCurrentError) {
-        pwdCurrentError.textContent = t(
-          "account.passwordChange.error.currentRequired",
-          "Introduce tu contraseña actual para verificar el cambio."
-        );
+        pwdCurrentError.textContent = t("account.passwordChange.error.currentRequired");
         pwdCurrentError.hidden = false;
       }
       ok = false;
@@ -1628,28 +1572,19 @@
     const level = strengthApi ? strengthApi.evaluate(password) : 0;
     if (!password || !strengthApi || level < strengthApi.Level.Medium) {
       if (pwdNewError) {
-        pwdNewError.textContent = t(
-          "account.passwordChange.error.weak",
-          "La contraseña debe ser al menos de nivel medio."
-        );
+        pwdNewError.textContent = t("account.passwordChange.error.weak");
         pwdNewError.hidden = false;
       }
       ok = false;
     } else if (password !== confirm) {
       if (pwdNewError) {
-        pwdNewError.textContent = t(
-          "account.passwordChange.error.mismatch",
-          "Las contraseñas no coinciden."
-        );
+        pwdNewError.textContent = t("account.passwordChange.error.mismatch");
         pwdNewError.hidden = false;
       }
       ok = false;
     } else if (currentPassword && password === currentPassword) {
       if (pwdNewError) {
-        pwdNewError.textContent = t(
-          "account.passwordChange.error.same",
-          "La nueva contraseña debe ser distinta de la actual."
-        );
+        pwdNewError.textContent = t("account.passwordChange.error.same");
         pwdNewError.hidden = false;
       }
       ok = false;
@@ -1672,7 +1607,7 @@
 
       currentUser = user;
       showSignedIn();
-      setStatus(t("account.loadingData", "Cargando tu perfil..."), false);
+      setStatus(t("account.loadingData"), false);
       try {
         await loadProfile(user);
         setStatus("", false);
@@ -1680,7 +1615,7 @@
         console.error(err);
         setStatus(
           auth.mapAuthError(err) ||
-            t("account.error.load", "No se pudieron cargar los datos de la cuenta."),
+            t("account.error.load"),
           true
         );
       }
@@ -1693,28 +1628,22 @@
   logoutBtn?.addEventListener("click", async function () {
     const ok = await (window.TourAiConfirm?.show
       ? window.TourAiConfirm.show({
-          title: t("account.confirm.logout.title", "¿Cerrar sesión?"),
-          message: t(
-            "account.confirm.logout.body",
-            "Vas a salir de tu cuenta en este dispositivo. Podrás volver a iniciar sesión cuando quieras."
-          ),
-          confirmLabel: t("account.confirm.logout.confirm", "Cerrar sesión"),
-          cancelLabel: t("account.confirm.cancel", "Cancelar"),
+          title: t("account.confirm.logout.title"),
+          message: t("account.confirm.logout.body"),
+          confirmLabel: t("account.confirm.logout.confirm"),
+          cancelLabel: t("account.confirm.cancel"),
         })
       : Promise.resolve(
           window.confirm(
-            t("account.confirm.logout.title", "¿Cerrar sesión?") +
+            t("account.confirm.logout.title") +
               "\n\n" +
-              t(
-                "account.confirm.logout.body",
-                "Vas a salir de tu cuenta en este dispositivo. Podrás volver a iniciar sesión cuando quieras."
-              )
+              t("account.confirm.logout.body")
           )
         ));
     if (!ok) {
       return;
     }
-    setStatus(t("account.status.signingOut", "Cerrando sesión..."), false);
+    setStatus(t("account.status.signingOut"), false);
     try {
       data.clearCache();
       await auth.signOut();
@@ -1729,23 +1658,17 @@
     const href = deleteAccountBtn.getAttribute("href") || "delete-account.html";
     const ok = await (window.TourAiConfirm?.show
       ? window.TourAiConfirm.show({
-          title: t("account.confirm.delete.title", "¿Eliminar tu cuenta?"),
-          message: t(
-            "account.confirm.delete.body",
-            "Vas a iniciar el proceso de eliminación permanente. Deberás verificar tu correo con un código. Una vez completada, esta acción no se puede deshacer."
-          ),
-          confirmLabel: t("account.confirm.delete.confirm", "Continuar"),
-          cancelLabel: t("account.confirm.cancel", "Cancelar"),
+          title: t("account.confirm.delete.title"),
+          message: t("account.confirm.delete.body"),
+          confirmLabel: t("account.confirm.delete.confirm"),
+          cancelLabel: t("account.confirm.cancel"),
           danger: true,
         })
       : Promise.resolve(
           window.confirm(
-            t("account.confirm.delete.title", "¿Eliminar tu cuenta?") +
+            t("account.confirm.delete.title") +
               "\n\n" +
-              t(
-                "account.confirm.delete.body",
-                "Vas a iniciar el proceso de eliminación permanente. Deberás verificar tu correo con un código. Una vez completada, esta acción no se puede deshacer."
-              )
+              t("account.confirm.delete.body")
           )
         ));
     if (!ok) {
@@ -1846,8 +1769,8 @@
       if (editPhotoError) {
         editPhotoError.textContent =
           err?.message === "PHOTO_TOO_LARGE"
-            ? t("account.edit.photo.error.tooLarge", "La imagen supera 5 MB.")
-            : t("account.edit.photo.error.invalid", "No se pudo leer la imagen seleccionada.");
+            ? t("account.edit.photo.error.tooLarge")
+            : t("account.edit.photo.error.invalid");
         editPhotoError.hidden = false;
       }
     }
@@ -1866,7 +1789,7 @@
     if (editSaveBtn) {
       editSaveBtn.disabled = true;
     }
-    setEditStatus(t("account.edit.saving", "Guardando cambios..."), false);
+    setEditStatus(t("account.edit.saving"), false);
 
     try {
       const shouldSaveCrop = !!(pendingPhotoBlob || editPhotoCropDirty);
@@ -1889,28 +1812,25 @@
           console.warn("[TourAI account] nav enrich failed", navErr);
         }
       }
-      setEditStatus(t("account.edit.saved", "Cambios guardados."), false);
-      setStatus(t("account.edit.saved", "Cambios guardados."), false);
+      setEditStatus(t("account.edit.saved"), false);
+      setStatus(t("account.edit.saved"), false);
       setTimeout(closeEditModal, 600);
     } catch (err) {
       console.error(err);
       let message = auth.mapAuthError(err);
       if (err?.message === "DISPLAY_NAME_REQUIRED") {
-        message = t("account.edit.error.displayName", "El nombre es obligatorio.");
+        message = t("account.edit.error.displayName");
       } else if (err?.message === "BIRTHDATE_INVALID") {
-        message = t("account.edit.error.birthDate", "Indica una fecha de nacimiento válida.");
+        message = t("account.edit.error.birthDate");
       } else if (err?.message === "PHOTO_TOO_LARGE") {
-        message = t("account.edit.photo.error.tooLarge", "La imagen supera 5 MB.");
+        message = t("account.edit.photo.error.tooLarge");
       } else if (err?.message === "PHOTO_INVALID") {
-        message = t("account.edit.photo.error.invalid", "No se pudo leer la imagen seleccionada.");
+        message = t("account.edit.photo.error.invalid");
       } else if (err?.message === "PHOTO_UPLOAD_FAILED" || err?.message === "STORAGE_BUCKET_MISSING") {
-        message = t(
-          "account.edit.photo.error.upload",
-          "No se pudo subir la foto de perfil. Inténtalo de nuevo."
-        );
+        message = t("account.edit.photo.error.upload");
       }
       setEditStatus(
-        message || t("account.edit.error.save", "No se pudieron guardar los cambios."),
+        message || t("account.edit.error.save"),
         true
       );
     } finally {
@@ -1934,45 +1854,36 @@
     if (passwordSaveBtn) {
       passwordSaveBtn.disabled = true;
     }
-    setPasswordStatus(t("account.passwordChange.saving", "Actualizando contraseña..."), false);
+    setPasswordStatus(t("account.passwordChange.saving"), false);
 
     const currentPassword = (pwdCurrent?.value || "").trim();
     const newPassword = (pwdNew?.value || "").trim();
 
     try {
       await auth.changePassword(currentPassword, newPassword);
-      setPasswordStatus(t("account.passwordChange.saved", "Contraseña actualizada."), false);
-      setStatus(t("account.passwordChange.saved", "Contraseña actualizada."), false);
+      setPasswordStatus(t("account.passwordChange.saved"), false);
+      setStatus(t("account.passwordChange.saved"), false);
       setTimeout(closePasswordModal, 600);
     } catch (err) {
       console.error(err);
       let message = auth.mapAuthError(err);
       if (err?.code === "auth/wrong-password" || err?.code === "auth/invalid-credential") {
-        message = t(
-          "account.passwordChange.error.currentWrong",
-          "La contraseña actual no es correcta."
-        );
+        message = t("account.passwordChange.error.currentWrong");
         if (pwdCurrentError) {
           pwdCurrentError.textContent = message;
           pwdCurrentError.hidden = false;
         }
       } else if (err?.code === "auth/requires-recent-login") {
-        message = t(
-          "account.passwordChange.error.recentLogin",
-          "Por seguridad, vuelve a iniciar sesión para cambiar la contraseña."
-        );
+        message = t("account.passwordChange.error.recentLogin");
       } else if (err?.code === "auth/weak-password") {
-        message = t(
-          "account.passwordChange.error.weak",
-          "La contraseña debe ser al menos de nivel medio."
-        );
+        message = t("account.passwordChange.error.weak");
         if (pwdNewError) {
           pwdNewError.textContent = message;
           pwdNewError.hidden = false;
         }
       }
       setPasswordStatus(
-        message || t("account.passwordChange.error.save", "No se pudo actualizar la contraseña."),
+        message || t("account.passwordChange.error.save"),
         true
       );
     } finally {
@@ -2012,6 +1923,7 @@
     plans: { items: [], cursor: null, hasMore: true, loading: false, observer: null },
     payments: { items: [], cursor: null, hasMore: true, loading: false, observer: null },
   };
+  const buyState = { plans: [], busyPlanId: "", loading: false };
   const usagePager = {
     planId: null,
     items: [],
@@ -2160,7 +2072,7 @@
       console.error("[TourAI dashboard] usage page", err);
       setStatus(
         auth.mapAuthError(err) ||
-          t("account.plan.detail.error", "No se pudo cargar el detalle del plan."),
+          t("account.plan.detail.error"),
         true
       );
     } finally {
@@ -2177,7 +2089,7 @@
 
     const plan = data.getPlanById(planId);
     if (!plan) {
-      setStatus(t("account.plan.detail.missing", "No se encontró el plan seleccionado."), true);
+      setStatus(t("account.plan.detail.missing"), true);
       return;
     }
 
@@ -2197,6 +2109,91 @@
       await loadUsagePage(true);
     } finally {
       planDetailBusy = false;
+    }
+  }
+
+  function paintBuyPlansSection(section) {
+    const checkout = window.TourAiCheckout;
+    if (!checkout) {
+      setSectionState(
+        section,
+        "error",
+        `<p class="account-empty account-empty--error">${t("account.buy.error.config")}</p>`
+      );
+      return;
+    }
+    setSectionState(
+      section,
+      "loaded",
+      checkout.renderCatalogHtml(buyState.plans, {
+        busyPlanId: buyState.busyPlanId,
+        disabled: !!buyState.busyPlanId,
+      })
+    );
+  }
+
+  async function loadBuyPlansSection(section) {
+    if (!currentUser || buyState.loading) {
+      return;
+    }
+    const checkout = window.TourAiCheckout;
+    if (!checkout) {
+      paintBuyPlansSection(section);
+      return;
+    }
+    buyState.loading = true;
+    const startedAt = Date.now();
+    setSectionState(section, "loading", data.renderSkeletonHtml("plans"));
+    try {
+      buyState.plans = await checkout.fetchActiveCatalogPlans();
+      await window.TourAiLoading?.ensureMinMs?.(startedAt, 500);
+      paintBuyPlansSection(section);
+    } catch (err) {
+      console.error("[TourAI dashboard] buy plans", err);
+      await window.TourAiLoading?.ensureMinMs?.(startedAt, 500);
+      setSectionState(
+        section,
+        "error",
+        `<p class="account-empty account-empty--error">${
+          auth.mapAuthError(err) || t("account.buy.error.generic")
+        }</p>`
+      );
+    } finally {
+      buyState.loading = false;
+    }
+  }
+
+  function showBuyAlert(title, message) {
+    if (window.TourAiConfirm?.show) {
+      return window.TourAiConfirm.show({
+        title: title,
+        message: message,
+        confirmLabel: t("account.alert.ok"),
+        alert: true,
+      });
+    }
+    window.alert(message);
+    return Promise.resolve(true);
+  }
+
+  async function handleBuyPlanClick(planId, section) {
+    const checkout = window.TourAiCheckout;
+    if (!checkout || !planId || buyState.busyPlanId) {
+      return;
+    }
+    buyState.busyPlanId = planId;
+    paintBuyPlansSection(section);
+    setStatus(t("account.buy.redirecting"), false);
+    try {
+      await checkout.startCheckout(planId);
+    } catch (err) {
+      console.error("[TourAI dashboard] checkout", err);
+      buyState.busyPlanId = "";
+      paintBuyPlansSection(section);
+      const message =
+        checkout.mapCheckoutError(err?.message || err) || t("account.buy.error.generic");
+      setStatus(message, true);
+      await showBuyAlert(t("account.buy.error.title"), message);
     }
   }
 
@@ -2221,10 +2218,7 @@
       loading: pager.loading,
       hasMore: pager.hasMore,
     });
-    const note = t(
-      "account.payment.buyNote",
-      "La compra de planes desde la web llegará en la siguiente fase."
-    );
+    const note = t("account.payment.buyNote");
     html += `<p class="account-note">${note}</p>`;
     setSectionState(section, "loaded", html);
     const sentinel = section.querySelector("[data-payments-sentinel]");
@@ -2263,7 +2257,7 @@
         section,
         "error",
         `<p class="account-empty account-empty--error">${
-          auth.mapAuthError(err) || t("account.error.load", "No se pudieron cargar los datos.")
+          auth.mapAuthError(err) || t("account.error.load")
         }</p>`
       );
       pager.loading = false;
@@ -2304,7 +2298,7 @@
         section,
         "error",
         `<p class="account-empty account-empty--error">${
-          auth.mapAuthError(err) || t("account.error.load", "No se pudieron cargar los datos.")
+          auth.mapAuthError(err) || t("account.error.load")
         }</p>`
       );
       pager.loading = false;
@@ -2340,10 +2334,15 @@
           section,
           "error",
           `<p class="account-empty account-empty--error">${
-            auth.mapAuthError(err) || t("account.error.load", "No se pudieron cargar los datos.")
+            auth.mapAuthError(err) || t("account.error.load")
           }</p>`
         );
       }
+      return;
+    }
+
+    if (key === "buyPlans") {
+      await loadBuyPlansSection(section);
       return;
     }
 
@@ -2360,7 +2359,7 @@
     setSectionState(
       section,
       "loaded",
-      `<p class="account-empty">${t("dashboard.section.unknown", "Sección no disponible.")}</p>`
+      `<p class="account-empty">${t("dashboard.section.unknown")}</p>`
     );
   }
 
@@ -2389,6 +2388,16 @@
   });
 
   document.addEventListener("click", function (event) {
+    const buyBtn = event.target.closest?.("[data-buy-plan]");
+    if (buyBtn) {
+      const section = buyBtn.closest('[data-section="buyPlans"]');
+      if (section) {
+        event.preventDefault();
+        handleBuyPlanClick(buyBtn.getAttribute("data-buy-plan"), section);
+      }
+      return;
+    }
+
     const closer = event.target.closest("[data-close-plan-detail]");
     if (closer) {
       closePlanDetail();
@@ -2410,6 +2419,28 @@
     }
     openPlanDetail(card.getAttribute("data-plan-id"));
   });
+
+  function openBuyPlansFromHash() {
+    const hash = String(window.location.hash || "").toLowerCase();
+    if (hash !== "#buy-plans" && hash !== "#buy-plans-section") {
+      return;
+    }
+    const section = document.getElementById("buy-plans-section");
+    if (!section) {
+      return;
+    }
+    toggleSection(section, true);
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  setStatus("");
+  const checkoutReturn = window.TourAiCheckout?.consumeCheckoutQuery?.(statusEl);
+  if (checkoutReturn?.message) {
+    showBuyAlert(
+      checkoutReturn.title || t("account.buy.title"),
+      checkoutReturn.message
+    );
+  }
 
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape" && planDetailModal?.classList.contains("is-open")) {
@@ -2436,38 +2467,34 @@
       }
       currentUser = user;
       showSignedIn();
-      setStatus("", false);
+      setStatus(statusEl?.textContent || "", false);
+      openBuyPlansFromHash();
     })
     .catch(function (err) {
       console.error(err);
       redirectToLogin();
     });
 
+  window.addEventListener("hashchange", openBuyPlansFromHash);
   logoutBtn?.addEventListener("click", async function () {
     const ok = await (window.TourAiConfirm?.show
       ? window.TourAiConfirm.show({
-          title: t("account.confirm.logout.title", "¿Cerrar sesión?"),
-          message: t(
-            "account.confirm.logout.body",
-            "Vas a salir de tu cuenta en este dispositivo. Podrás volver a iniciar sesión cuando quieras."
-          ),
-          confirmLabel: t("account.confirm.logout.confirm", "Cerrar sesión"),
-          cancelLabel: t("account.confirm.cancel", "Cancelar"),
+          title: t("account.confirm.logout.title"),
+          message: t("account.confirm.logout.body"),
+          confirmLabel: t("account.confirm.logout.confirm"),
+          cancelLabel: t("account.confirm.cancel"),
         })
       : Promise.resolve(
           window.confirm(
-            t("account.confirm.logout.title", "¿Cerrar sesión?") +
+            t("account.confirm.logout.title") +
               "\n\n" +
-              t(
-                "account.confirm.logout.body",
-                "Vas a salir de tu cuenta en este dispositivo. Podrás volver a iniciar sesión cuando quieras."
-              )
+              t("account.confirm.logout.body")
           )
         ));
     if (!ok) {
       return;
     }
-    setStatus(t("account.status.signingOut", "Cerrando sesión..."), false);
+    setStatus(t("account.status.signingOut"), false);
     try {
       data.clearCache();
       await auth.signOut();
@@ -2482,23 +2509,17 @@
     const href = deleteAccountBtn.getAttribute("href") || "delete-account.html";
     const ok = await (window.TourAiConfirm?.show
       ? window.TourAiConfirm.show({
-          title: t("account.confirm.delete.title", "¿Eliminar tu cuenta?"),
-          message: t(
-            "account.confirm.delete.body",
-            "Vas a iniciar el proceso de eliminación permanente. Deberás verificar tu correo con un código. Una vez completada, esta acción no se puede deshacer."
-          ),
-          confirmLabel: t("account.confirm.delete.confirm", "Continuar"),
-          cancelLabel: t("account.confirm.cancel", "Cancelar"),
+          title: t("account.confirm.delete.title"),
+          message: t("account.confirm.delete.body"),
+          confirmLabel: t("account.confirm.delete.confirm"),
+          cancelLabel: t("account.confirm.cancel"),
           danger: true,
         })
       : Promise.resolve(
           window.confirm(
-            t("account.confirm.delete.title", "¿Eliminar tu cuenta?") +
+            t("account.confirm.delete.title") +
               "\n\n" +
-              t(
-                "account.confirm.delete.body",
-                "Vas a iniciar el proceso de eliminación permanente. Deberás verificar tu correo con un código. Una vez completada, esta acción no se puede deshacer."
-              )
+              t("account.confirm.delete.body")
           )
         ));
     if (!ok) {

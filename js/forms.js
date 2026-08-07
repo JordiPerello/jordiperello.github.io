@@ -95,13 +95,10 @@
 
   function getEmailCheckLoadingMessage(context) {
     if (context === "unsubscribe") {
-      return tOrVerification(
-        "unsubscribe.checkingEmail",
-        "Comprobando si tienes alertas activas..."
-      );
+      return tOrVerification("unsubscribe.checkingEmail");
     }
 
-    return tOrVerification("contact.verify.checkingEmail", "Comprobando tu correo...");
+    return tOrVerification("contact.verify.checkingEmail");
   }
 
   function renderEmailVerificationBox(config, ui) {
@@ -345,10 +342,7 @@
   }
 
   function genericActionErrorMessage() {
-    return tOrVerification(
-      "forms.error.generic",
-      "No se pudo completar la acción."
-    );
+    return tOrVerification("forms.error.generic");
   }
 
   function isTechnicalErrorMessage(message) {
@@ -408,10 +402,7 @@
         Number.isFinite(result.body.retryAfterMinutes));
 
     if (!hasRetryHint) {
-      return tOrVerification(
-        "contact.verify.rateLimitedGeneric",
-        "Has solicitado demasiados códigos. Espera unos minutos antes de solicitar otro."
-      );
+      return tOrVerification("contact.verify.rateLimitedGeneric");
     }
 
     const time = formatRetryAfterClock(
@@ -420,7 +411,10 @@
     );
     const locale = window.TourAiI18n?.getLocale?.() ?? "es-ES";
     const template =
-      window.TourAiI18n?.tOr?.(key, locale, { time }, fallback) ?? fallback;
+      window.TourAiI18n?.t?.(key, locale, { time }) ||
+      window.TourAiI18n?.tOr?.(key, locale, { time }, fallback) ||
+      fallback ||
+      "";
     return String(template).split("{time}").join(time);
   }
 
@@ -884,9 +878,14 @@
     verifiedEmail: null,
   };
 
-  function tOr(key, fallback) {
+  function tOr(key, fallbackOrVars, maybeVars) {
     const locale = window.TourAiI18n?.getLocale?.() ?? "es-ES";
-    return window.TourAiI18n?.tOr?.(key, locale, null, fallback) ?? fallback;
+    const vars =
+      fallbackOrVars && typeof fallbackOrVars === "object" && !Array.isArray(fallbackOrVars)
+        ? fallbackOrVars
+        : maybeVars;
+    const fallback = typeof fallbackOrVars === "string" ? fallbackOrVars : undefined;
+    return window.TourAiI18n?.tOr?.(key, locale, vars, fallback) ?? fallback ?? "";
   }
 
   function isValidEmail(email) {
@@ -1054,8 +1053,13 @@
   let alreadySubscribedNoticeKey = null;
   let alreadySubscribedToPlatform = false;
 
-  function tOr(key, fallback, vars) {
+  function tOr(key, fallbackOrVars, maybeVars) {
     const locale = window.TourAiI18n?.getLocale?.() ?? "es-ES";
+    const vars =
+      fallbackOrVars && typeof fallbackOrVars === "object" && !Array.isArray(fallbackOrVars)
+        ? fallbackOrVars
+        : maybeVars;
+    const fallback = typeof fallbackOrVars === "string" ? fallbackOrVars : undefined;
     let result = window.TourAiI18n?.tOr(key, locale, vars, fallback) ?? fallback;
     if (vars) {
       Object.keys(vars).forEach((name) => {
@@ -1072,12 +1076,8 @@
   function showAlreadySubscribedFeedback(platform) {
     window.TourAiFeedback?.show({
       type: "info",
-      title: tOr("index.modal.alreadySubscribed.title", "Ya estás suscrito"),
-      message: tOr(
-        "index.modal.alreadySubscribed",
-        "Este correo ya tiene activada la alerta para {platform}. Si quieres la otra tienda, selecciónala y repite el proceso.",
-        { platform }
-      ),
+      title: tOr("index.modal.alreadySubscribed.title"),
+      message: tOr("index.modal.alreadySubscribed", { platform }),
       onClose: () => closePlatformModal(),
     });
   }
@@ -1154,7 +1154,7 @@
     if (!window.TourAiForms?.isValidEmail(email)) {
       window.TourAiFeedback?.show({
         type: "info",
-        message: tOr("contact.email.invalid", "Introduce una dirección de correo válida."),
+        message: tOr("contact.email.invalid"),
       });
       window.TourAiForms?.allowAutoVerificationRetry?.(email);
       return;
@@ -1165,11 +1165,7 @@
       if (!result.ok) {
         if (result.error === "rate_limited") {
           throw new Error(
-            window.TourAiForms.rateLimitedMessage(
-              result,
-              "contact.verify.rateLimited",
-              "Has solicitado demasiados códigos. No podrás solicitar otro hasta dentro de {time}."
-            )
+            window.TourAiForms.rateLimitedMessage(result, "contact.verify.rateLimited")
           );
         }
         throw new Error(window.TourAiForms.genericActionErrorMessage());
@@ -1199,17 +1195,13 @@
       if (!result.ok) {
         if (result.error === "rate_limited") {
           throw new Error(
-            window.TourAiForms.rateLimitedMessage(
-              result,
-              "contact.verify.rateLimited",
-              "Has solicitado demasiados códigos. No podrás solicitar otro hasta dentro de {time}."
-            )
+            window.TourAiForms.rateLimitedMessage(result, "contact.verify.rateLimited")
           );
         }
         throw new Error(window.TourAiForms.genericActionErrorMessage());
       }
       window.TourAiEmailVerifyModal.setStatus(
-        tOr("contact.verify.resent", "Hemos enviado un nuevo código a tu correo."),
+        tOr("contact.verify.resent"),
         "success"
       );
       window.TourAiEmailVerifyModal.clearAndFocus();
@@ -1261,7 +1253,7 @@
       validateSubscriptionForm();
     } catch (error) {
       window.TourAiEmailVerifyModal.setStatus(
-        tOr("contact.verify.invalidCode", "El código no coincide."),
+        tOr("contact.verify.invalidCode"),
         "error"
       );
       window.TourAiEmailVerifyModal.clearAndFocus();
@@ -1345,9 +1337,10 @@
     const locale = window.TourAiI18n?.getLocale() ?? "es-ES";
     const intro = document.getElementById(activeConfig.introId);
     if (intro && window.TourAiI18n) {
-      const template = intro.getAttribute("data-default-text") ?? intro.textContent ?? "";
       const translated = window.TourAiI18n.t("index.modal.text", locale, { platform });
-      intro.textContent = (translated ?? template).replace("{platform}", platform);
+      if (translated) {
+        intro.textContent = translated;
+      }
     }
 
     window.TourAiForms?.clearWebEmailVerification();
@@ -1387,12 +1380,12 @@
     const privacy = getPrivacyInput()?.checked === true;
     const platform = document.getElementById(activeConfig.platformId)?.innerText ?? "Web";
     const button = getSubmitButton();
-    const originalText = tOr("index.modal.submit", button?.textContent ?? "Activar Alerta");
+    const originalText = tOr("index.modal.submit");
 
     if (!window.TourAiForms?.isValidEmail(email)) {
       window.TourAiFeedback?.show({
         type: "info",
-        message: tOr("contact.email.invalid", "Introduce una dirección de correo válida."),
+        message: tOr("contact.email.invalid"),
       });
       return;
     }
@@ -1405,10 +1398,7 @@
     if (!privacy) {
       window.TourAiFeedback?.show({
         type: "info",
-        message: tOr(
-          "index.modal.privacyRequired",
-          "Debes aceptar el envío de avisos y la política de privacidad para continuar."
-        ),
+        message: tOr("index.modal.privacyRequired"),
       });
       return;
     }
@@ -1419,7 +1409,7 @@
 
     try {
       button.disabled = true;
-      button.textContent = tOr("index.modal.submitting", "ACTIVANDO...");
+      button.textContent = tOr("index.modal.submitting");
       const result = await window.TourAiForms.submitSubscription({
         name: "Launch alert",
         email,
@@ -1435,18 +1425,15 @@
         window.TourAiForms.clearWebEmailVerification();
         window.TourAiFeedback?.show({
           type: "success",
-          title: tOr("index.modal.successTitle", "¡Alerta activada!"),
-          message: tOr(
-            "index.modal.success",
-            "Te avisaremos en cuanto la app esté disponible en la tienda."
-          ),
+          title: tOr("index.modal.successTitle"),
+          message: tOr("index.modal.success"),
         });
       } else if (result.error === "already_subscribed") {
         showAlreadySubscribedFeedback(result.body?.platform ?? platform);
       } else {
         const errorMessages = {
-          email_not_verified: tOr("contact.error.notVerified", "Debes verificar tu correo antes de continuar."),
-          smtp_not_configured: tOr("contact.error.smtp", "El servicio no está disponible temporalmente."),
+          email_not_verified: tOr("contact.error.notVerified"),
+          smtp_not_configured: tOr("contact.error.smtp"),
         };
         throw new Error(errorMessages[result.error] ?? window.TourAiForms.genericActionErrorMessage());
       }
@@ -1511,8 +1498,13 @@
 (function () {
   const MODAL_ID = "storeUnsubscribeModal";
 
-  function tOr(key, fallback, vars) {
+  function tOr(key, fallbackOrVars, maybeVars) {
     const locale = window.TourAiI18n?.getLocale?.() ?? "es-ES";
+    const vars =
+      fallbackOrVars && typeof fallbackOrVars === "object" && !Array.isArray(fallbackOrVars)
+        ? fallbackOrVars
+        : maybeVars;
+    const fallback = typeof fallbackOrVars === "string" ? fallbackOrVars : undefined;
     let result = window.TourAiI18n?.tOr(key, locale, vars, fallback) ?? fallback;
     if (vars) {
       Object.keys(vars).forEach((name) => {
@@ -1713,7 +1705,7 @@
     if (isBusy()) {
       window.TourAiFeedback?.show({
         type: "info",
-        message: tOr("loading.processing", "Procesando..."),
+        message: tOr("loading.processing"),
       });
       return;
     }
@@ -1722,24 +1714,18 @@
     if (!window.TourAiForms?.isValidEmail(email)) {
       window.TourAiFeedback?.show({
         type: "info",
-        message: tOr("contact.email.invalid", "Introduce una dirección de correo válida."),
+        message: tOr("contact.email.invalid"),
       });
       return;
     }
 
     const viewBtn = document.getElementById("unsubViewSubscriptionsBtn");
-    const originalLabel = tOr(
-      "unsubscribe.viewSubscriptions",
-      viewBtn?.textContent ?? "Ver suscripciones"
-    );
+    const originalLabel = tOr("unsubscribe.viewSubscriptions");
 
     try {
       if (viewBtn) {
         viewBtn.disabled = true;
-        viewBtn.textContent = tOr(
-          "unsubscribe.checkingEmail",
-          "Comprobando si tienes alertas activas..."
-        );
+        viewBtn.textContent = tOr("unsubscribe.checkingEmail");
       }
 
       // Same email as the signed-in account → trust session, no OTP.
@@ -1763,7 +1749,7 @@
         type: "error",
         message: window.TourAiForms.toUserFacingErrorMessage(
           error,
-          tOr("unsubscribe.statusError", "No se pudo comprobar tus alertas. Inténtalo de nuevo.")
+          tOr("unsubscribe.statusError")
         ),
       });
     } finally {
@@ -1798,7 +1784,7 @@
     });
     if (!result.ok) {
       throw new Error(
-        tOr("unsubscribe.statusError", "No se pudo comprobar tus alertas. Inténtalo de nuevo.")
+        tOr("unsubscribe.statusError")
       );
     }
 
@@ -1839,7 +1825,7 @@
     if (!window.TourAiForms?.isValidEmail(email)) {
       window.TourAiFeedback?.show({
         type: "info",
-        message: tOr("contact.email.invalid", "Introduce una dirección de correo válida."),
+        message: tOr("contact.email.invalid"),
       });
       window.TourAiForms?.allowAutoVerificationRetry?.(email);
       return;
@@ -1850,11 +1836,7 @@
       if (!result.ok) {
         if (result.error === "rate_limited") {
           throw new Error(
-            window.TourAiForms.rateLimitedMessage(
-              result,
-              "contact.verify.rateLimited",
-              "Has solicitado demasiados códigos. No podrás solicitar otro hasta dentro de {time}."
-            )
+            window.TourAiForms.rateLimitedMessage(result, "contact.verify.rateLimited")
           );
         }
         throw new Error(window.TourAiForms.genericActionErrorMessage());
@@ -1887,17 +1869,13 @@
       if (!result.ok) {
         if (result.error === "rate_limited") {
           throw new Error(
-            window.TourAiForms.rateLimitedMessage(
-              result,
-              "contact.verify.rateLimited",
-              "Has solicitado demasiados códigos. No podrás solicitar otro hasta dentro de {time}."
-            )
+            window.TourAiForms.rateLimitedMessage(result, "contact.verify.rateLimited")
           );
         }
         throw new Error(window.TourAiForms.genericActionErrorMessage());
       }
       window.TourAiEmailVerifyModal.setStatus(
-        tOr("contact.verify.resent", "Hemos enviado un nuevo código a tu correo."),
+        tOr("contact.verify.resent"),
         "success"
       );
       window.TourAiEmailVerifyModal.clearAndFocus();
@@ -1937,7 +1915,7 @@
       await loadSubscriptionStatus({ force: true });
     } catch (error) {
       window.TourAiEmailVerifyModal.setStatus(
-        tOr("contact.verify.invalidCode", "El código no coincide."),
+        tOr("contact.verify.invalidCode"),
         "error"
       );
       window.TourAiEmailVerifyModal.clearAndFocus();
@@ -1948,7 +1926,7 @@
     if (isBusy()) {
       window.TourAiFeedback?.show({
         type: "info",
-        message: tOr("loading.processing", "Procesando..."),
+        message: tOr("loading.processing"),
       });
       return;
     }
@@ -1959,7 +1937,7 @@
     if (!window.TourAiForms?.isWebEmailVerified(email)) {
       window.TourAiFeedback?.show({
         type: "info",
-        message: tOr("contact.error.notVerified", "Debes verificar tu correo antes de continuar."),
+        message: tOr("contact.error.notVerified"),
       });
       return;
     }
@@ -1967,20 +1945,17 @@
     if (platforms.length === 0) {
       window.TourAiFeedback?.show({
         type: "info",
-        message: tOr(
-          "unsubscribe.selectRequired",
-          "Marca al menos una tienda de la que quieras darte de baja."
-        ),
+        message: tOr("unsubscribe.selectRequired"),
       });
       return;
     }
 
     const button = document.getElementById("unsubSubmitBtn");
-    const originalText = tOr("unsubscribe.submit", button?.textContent ?? "Darme de baja");
+    const originalText = tOr("unsubscribe.submit");
 
     try {
       button.disabled = true;
-      button.textContent = tOr("unsubscribe.submitting", "PROCESANDO...");
+      button.textContent = tOr("unsubscribe.submitting");
       const result = await window.TourAiForms.unsubscribeStoreNotifications(email, platforms);
       if (result.ok) {
         resetLoadedStatus();
@@ -1988,11 +1963,8 @@
         window.TourAiForms.clearWebEmailVerification();
         window.TourAiFeedback?.show({
           type: "success",
-          title: tOr("unsubscribe.successTitle", "Baja completada"),
-          message: tOr(
-            "unsubscribe.success",
-            "Hemos cancelado las alertas seleccionadas. Ya no recibirás avisos de esas tiendas."
-          ),
+          title: tOr("unsubscribe.successTitle"),
+          message: tOr("unsubscribe.success"),
         });
         return;
       }
@@ -2000,7 +1972,7 @@
       if (result.error === "not_subscribed") {
         window.TourAiFeedback?.show({
           type: "info",
-          message: tOr("unsubscribe.none", "No tienes alertas activas con este correo."),
+          message: tOr("unsubscribe.none"),
         });
         await loadSubscriptionStatus({ force: true });
         return;

@@ -24,12 +24,28 @@ Live site: https://tourai.es
 
 `D:\Proyectos\Documents\docs-touraiweb\Secrets\site-config.secrets.js`
 
-For local login only, copy it to gitignored `js/site-config.secrets.js` so the browser can load it (agents may read the canonical path directly; do not put secrets in tracked files).
+For local login / checkout, copy it to gitignored `js/site-config.secrets.js` so the browser can load it (agents may read the canonical path directly; do not put secrets in tracked files).
 
 ```powershell
 Copy-Item "D:\Proyectos\Documents\docs-touraiweb\Secrets\site-config.secrets.js" `
   "D:\Proyectos\TourAIWeb\jordiperello.github.io\js\site-config.secrets.js"
 ```
+
+Web Premium checkout (`createCheckoutSessionWeb`) also needs:
+
+- `firebaseAuth.appId` (Firebase web app id)
+- `appCheckRecaptchaSiteKey` (reCAPTCHA v3 site key registered in Firebase App Check)
+- optional `appCheckDebug: true` on localhost (then register the browser debug token in App Check)
+
+Deploy the Cloud Function from `D:\Proyectos\TourAI\firebase` (`createCheckoutSessionWeb`). Fulfillment reuses existing `stripeWebhook`.
+
+## i18n
+
+- `js/locales/es-ES.js` — Spanish UI strings (`TourAiEsESMessages`)
+- `js/locales/en-GB.js` — English UI strings (`TourAiEnGBMessages`)
+- Pages keep structure only (`data-i18n`, `data-i18n-html`, `data-i18n-meta`, …); **no user-facing copy in HTML**.
+- JS looks up keys from both tables (optional fallbacks are for migration only — prefer keys in both locale files).
+- Check parity: `node scripts/validate-i18n-keys.js`
 
 ## Run locally with Node (no npm)
 

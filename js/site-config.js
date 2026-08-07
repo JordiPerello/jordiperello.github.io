@@ -17,6 +17,8 @@ window.TourAiSite.config = {
     "https://us-central1-tourai-production-7dabf.cloudfunctions.net/verifyAccountDeletionVerificationCode",
   accountDeletionDeleteUrl:
     "https://us-central1-tourai-production-7dabf.cloudfunctions.net/deleteUserAccountWeb",
+  createCheckoutSessionWebUrl:
+    "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/createCheckoutSessionWeb",
   defaultLocale: "es-ES",
   supportedLocales: ["es-ES", "en-GB"],
   storeBadges: {

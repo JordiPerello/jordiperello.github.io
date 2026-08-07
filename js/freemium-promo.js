@@ -26,8 +26,8 @@
     return global.TourAiAuth;
   }
 
-  function t(key, fallback) {
-    return authApi()?.t?.(key, fallback) ?? fallback;
+  function t(key, vars) {
+    return authApi()?.t?.(key, vars) ?? key;
   }
 
   function escapeHtml(value) {
@@ -106,36 +106,25 @@
   function copyForAudience(audience) {
     if (audience === "guest") {
       return {
-        title: t("site.promo.guest.title", "Lleva TourAI en el bolsillo"),
-        body: t(
-          "site.promo.guest.body",
-          "Descubre lugares con tu guía IA. Instala la app y empieza a explorar."
-        ),
-        cta: t("site.promo.guest.cta", "Avísame del lanzamiento"),
-        dismiss: t("site.promo.dismiss", "Ahora no"),
-        railLabel: t("site.promo.guest.railLabel", "App"),
-        modalLead: t(
-          "site.promo.guest.modalLead",
-          "TourAI está pensada para usarla en la calle: mapa, chat y narraciones en tu móvil."
-        ),
+        title: t("site.promo.guest.title"),
+        body: t("site.promo.guest.body"),
+        cta: t("site.promo.guest.cta"),
+        dismiss: t("site.promo.dismiss"),
+        railLabel: t("site.promo.guest.railLabel"),
+        modalLead: t("site.promo.guest.modalLead"),
         href: "index.html#waitlist",
       };
     }
 
+    // Signed-in freemium: send them to web Premium checkout (not the launch waitlist).
     return {
-      title: t("site.promo.freemium.title", "¿Quieres TourAI sin anuncios?"),
-      body: t(
-        "site.promo.freemium.body",
-        "Hazte con un plan Premium y disfruta de tus vacaciones sin interrupciones."
-      ),
-      cta: t("site.promo.freemium.cta", "Ver opciones / app"),
-      dismiss: t("site.promo.dismiss", "Ahora no"),
-      railLabel: t("site.promo.freemium.railLabel", "Premium"),
-      modalLead: t(
-        "site.promo.freemium.modalLead",
-        "En Freemium la app usa anuncios para recargar el cupo. Un plan Premium lo evita."
-      ),
-      href: "index.html#waitlist",
+      title: t("site.promo.freemium.title"),
+      body: t("site.promo.freemium.body"),
+      cta: t("site.promo.freemium.cta"),
+      dismiss: t("site.promo.dismiss"),
+      railLabel: t("site.promo.freemium.railLabel"),
+      modalLead: t("site.promo.freemium.modalLead"),
+      href: "dashboard.html#buy-plans",
     };
   }
 
@@ -231,6 +220,11 @@
     setText("[data-promo-modal-body]", copy.body);
 
     root.querySelectorAll("[data-promo-cta]").forEach(function (el) {
+      var hasCta = !!(copy.href && copy.cta);
+      el.hidden = !hasCta;
+      if (!hasCta) {
+        return;
+      }
       el.textContent = copy.cta;
       if (el.tagName === "A") {
         el.setAttribute("href", copy.href);

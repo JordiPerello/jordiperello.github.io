@@ -1,12 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es-ES">
 <head>
     <meta charset="UTF-8">
     <script src="js/site-ui.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Comunidad TourAI: novedades, ayuda, ideas y viajes." data-i18n-meta="doc.meta.community">
+    <meta name="description" content="" data-i18n-meta="doc.meta.community">
     <link rel="canonical" href="https://tourai.es/community.html">
-    <title data-i18n-doc-title="doc.title.community">Comunidad - TourAI</title>
+    <title data-i18n-doc-title="doc.title.community"></title>
     <link rel="icon" type="image/png" href="img/tourai_logo.png">
     <link rel="apple-touch-icon" href="img/tourai_logo.png">
     <link rel="stylesheet" href="css/site.css">
@@ -16,16 +16,16 @@
         <div class="nav-logo-container"><a href="index.html"><img src="img/tourai_logo_inline.png" alt="TourAI"></a></div>
         <div class="menu-icon" onclick="toggleMenu()"><span></span><span></span><span></span></div>
         <div class="nav-links" id="nav-links">
-            <a href="index.html" data-i18n="nav.app">La App</a>
-            <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
-            <a class="active" href="community.html" data-i18n="nav.community">Comunidad</a>
-            <a href="contact.html" data-i18n="nav.contact">Contacto</a>
-            <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
-            <div class="lang-switch" role="group" aria-label="Language">
-                <button type="button" data-set-locale="es-ES" aria-label="Español" title="Español">
+            <a href="index.html" data-i18n="nav.app"></a>
+            <a href="about.html" data-i18n="footer.about"></a>
+            <a class="active" href="community.html" data-i18n="nav.community"></a>
+            <a href="contact.html" data-i18n="nav.contact"></a>
+            <a href="login.html" data-i18n="nav.account"></a>
+            <div class="lang-switch" role="group" data-i18n-aria-label="lang.switcher" aria-label="">
+                <button type="button" data-set-locale="es-ES" data-i18n-aria-label="lang.es" data-i18n-title="lang.es" aria-label="" title="">
                     <img src="img/lang/icon_spanish_flag.png" alt="" width="28" height="28" decoding="async">
                 </button>
-                <button type="button" data-set-locale="en-GB" aria-label="English" title="English">
+                <button type="button" data-set-locale="en-GB" data-i18n-aria-label="lang.en" data-i18n-title="lang.en" aria-label="" title="">
                     <img src="img/lang/icon_united_kingdom_flag.png" alt="" width="28" height="28" decoding="async">
                 </button>
             </div>
@@ -33,49 +33,49 @@
     </nav>
 
     <header class="page-hero community-hero">
-        <p class="community-hero__eyebrow" data-i18n="community.eyebrow">Habla con otros viajeros</p>
-        <h1 data-i18n="community.title">Comunidad</h1>
-        <p data-i18n="community.subtitle">Comparte novedades, pide ayuda, lanza ideas y cuenta tus viajes con TourAI.</p>
-        <p class="community-hero__cta" data-i18n="community.heroCta">Lee los hilos abiertos o publica el tuyo: tu voz suma.</p>
+        <p class="community-hero__eyebrow" data-i18n="community.eyebrow"></p>
+        <h1 data-i18n="community.title"></h1>
+        <p data-i18n="community.subtitle"></p>
+        <p class="community-hero__cta" data-i18n="community.heroCta"></p>
     </header>
 
     <main class="community-shell">
-        <div id="communityTabs" class="community-tabs" role="tablist" aria-label="Secciones">
-            <button type="button" class="community-tab" data-category="news" data-i18n="community.cat.news">Novedades</button>
-            <button type="button" class="community-tab is-active" data-category="help" data-i18n="community.cat.help">Ayuda</button>
-            <button type="button" class="community-tab" data-category="ideas" data-i18n="community.cat.ideas">Ideas</button>
-            <button type="button" class="community-tab" data-category="travel" data-i18n="community.cat.travel">Viajes</button>
+        <div id="communityTabs" class="community-tabs" role="tablist" data-i18n-aria-label="community.tabs.aria" aria-label="">
+            <button type="button" class="community-tab" data-category="news" data-i18n="community.cat.news"></button>
+            <button type="button" class="community-tab is-active" data-category="help" data-i18n="community.cat.help"></button>
+            <button type="button" class="community-tab" data-category="ideas" data-i18n="community.cat.ideas"></button>
+            <button type="button" class="community-tab" data-category="travel" data-i18n="community.cat.travel"></button>
         </div>
-        <p id="communityCatBlurb" class="community-cat-blurb" data-i18n="community.blurb.help">Resuelve dudas y echa una mano a quien empieza con TourAI.</p>
+        <p id="communityCatBlurb" class="community-cat-blurb" data-i18n="community.blurb.help"></p>
         <p id="communityStatus" class="community-status" role="status" aria-live="polite"></p>
-        <div id="communityBlockedBanner" class="community-blocked-banner" hidden role="alert" data-i18n="community.blocked.banner">Usuario bloqueado: puedes leer la comunidad, pero no publicar mensajes.</div>
+        <div id="communityBlockedBanner" class="community-blocked-banner" hidden role="alert" data-i18n="community.blocked.banner"></div>
 
         <section id="communityListView">
             <div class="community-toolbar">
                 <div class="community-search">
-                    <label class="visually-hidden" for="communitySearchInput" data-i18n="community.search.label">Buscar temas</label>
+                    <label class="visually-hidden" for="communitySearchInput" data-i18n="community.search.label"></label>
                     <div class="community-search__field">
-                        <input id="communitySearchInput" type="search" maxlength="80" autocomplete="off" data-i18n-placeholder="community.search.placeholder" placeholder="Buscar por título, autor o texto...">
-                        <button type="button" id="communitySearchSubmit" class="community-search__submit" title="Buscar" data-i18n-title="community.search.submit" aria-label="Buscar">
+                        <input id="communitySearchInput" type="search" maxlength="80" autocomplete="off" data-i18n-placeholder="community.search.placeholder" placeholder="">
+                        <button type="button" id="communitySearchSubmit" class="community-search__submit" title="" data-i18n-title="community.search.submit" data-i18n-aria-label="community.search.submit" aria-label="">
                             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                                 <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
                             </svg>
                         </button>
                     </div>
-                    <button type="button" id="communitySearchClear" class="btn-secondary community-search__clear" hidden data-i18n="community.search.clear">Limpiar</button>
+                    <button type="button" id="communitySearchClear" class="btn-secondary community-search__clear" hidden data-i18n="community.search.clear"></button>
                 </div>
-                <button type="button" id="communityOpenComposer" class="btn-primary community-toolbar__new" hidden data-i18n="community.newTopic">Nuevo tema</button>
+                <button type="button" id="communityOpenComposer" class="btn-primary community-toolbar__new" hidden data-i18n="community.newTopic"></button>
             </div>
             <p id="communityLoginHint" class="community-login-hint">
-                <span data-i18n="community.loginHint">Para publicar necesitas iniciar sesión.</span>
-                <a href="login.html" id="communityLoginLink" data-i18n="community.loginLink">Iniciar sesión</a>
+                <span data-i18n="community.loginHint"></span>
+                <a href="login.html" id="communityLoginLink" data-i18n="community.loginLink"></a>
             </p>
 
             <div id="communityTopics" class="community-topics"></div>
         </section>
 
         <section id="communityDetailView" hidden>
-            <button type="button" class="btn-secondary community-back" id="communityBack" data-i18n="community.back">Volver al listado</button>
+            <button type="button" class="btn-secondary community-back" id="communityBack" data-i18n="community.back"></button>
             <div id="communityDetailMount"></div>
             <div id="communityReplyBox" class="community-compose community-compose--reply" hidden>
                 <div id="communityReplyToBanner" class="community-reply-to" hidden>
@@ -83,31 +83,31 @@
                         <strong id="communityReplyToLabel"></strong>
                         <span id="communityReplyToSnippet"></span>
                     </div>
-                    <button type="button" id="communityReplyToClear" class="community-reply-to__clear" data-i18n="community.replyTo.clear">Cancelar</button>
+                    <button type="button" id="communityReplyToClear" class="community-reply-to__clear" data-i18n="community.replyTo.clear"></button>
                 </div>
                 <form id="communityReplyForm">
-                    <label id="communityReplyBodyLabel" class="visually-hidden" data-i18n="community.yourReply">Tu respuesta</label>
+                    <label id="communityReplyBodyLabel" class="visually-hidden" data-i18n="community.yourReply"></label>
                     <div class="community-rte" data-rte="reply">
-                        <div class="community-rte__toolbar" role="toolbar" aria-label="Formato">
-                            <button type="button" class="community-rte__btn" data-cmd="bold" title="Negrita" aria-label="Negrita"><strong>B</strong></button>
-                            <button type="button" class="community-rte__btn" data-cmd="italic" title="Cursiva" aria-label="Cursiva"><em>I</em></button>
-                            <button type="button" class="community-rte__btn" data-cmd="underline" title="Subrayado" aria-label="Subrayado"><span class="community-rte__u">U</span></button>
-                            <label class="community-rte__color" title="Color de texto">
-                                <span class="visually-hidden" data-i18n="community.rte.color">Color</span>
+                        <div class="community-rte__toolbar" role="toolbar" data-i18n-aria-label="community.toolbar.format" aria-label="">
+                            <button type="button" class="community-rte__btn" data-cmd="bold" data-i18n-title="community.rte.bold" data-i18n-aria-label="community.rte.bold" title="" aria-label=""><strong>B</strong></button>
+                            <button type="button" class="community-rte__btn" data-cmd="italic" data-i18n-title="community.rte.italic" data-i18n-aria-label="community.rte.italic" title="" aria-label=""><em>I</em></button>
+                            <button type="button" class="community-rte__btn" data-cmd="underline" data-i18n-title="community.rte.underline" data-i18n-aria-label="community.rte.underline" title="" aria-label=""><span class="community-rte__u">U</span></button>
+                            <label class="community-rte__color" data-i18n-title="community.editor.textColor" title="">
+                                <span class="visually-hidden" data-i18n="community.rte.color"></span>
                                 <input type="color" data-fore-color value="#0a2a43">
                             </label>
-                            <select class="community-rte__size" data-font-size title="Tamaño" aria-label="Tamaño de letra">
-                                <option value="2" data-i18n="community.rte.size.small">Pequeño</option>
-                                <option value="3" selected data-i18n="community.rte.size.normal">Normal</option>
-                                <option value="4" data-i18n="community.rte.size.large">Grande</option>
-                                <option value="5" data-i18n="community.rte.size.xlarge">Muy grande</option>
+                            <select class="community-rte__size" data-font-size data-i18n-title="community.editor.size" data-i18n-aria-label="community.editor.fontSize" title="" aria-label="">
+                                <option value="2" data-i18n="community.rte.size.small"></option>
+                                <option value="3" selected data-i18n="community.rte.size.normal"></option>
+                                <option value="4" data-i18n="community.rte.size.large"></option>
+                                <option value="5" data-i18n="community.rte.size.xlarge"></option>
                             </select>
-                            <button type="button" class="community-rte__btn community-rte__emoji-toggle" data-emoji-toggle title="Emoticonos" aria-label="Emoticonos" aria-expanded="false">☺</button>
+                            <button type="button" class="community-rte__btn community-rte__emoji-toggle" data-emoji-toggle data-i18n-title="community.rte.emoji" data-i18n-aria-label="community.rte.emoji" title="" aria-label="" aria-expanded="false">?</button>
                         </div>
                         <div class="community-rte__emoji" data-emoji-panel hidden></div>
-                        <div id="communityReplyBody" class="community-rte__editor" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="communityReplyBodyLabel" data-placeholder="Escribe una respuesta..." data-i18n-placeholder="community.yourReply"></div>
+                        <div id="communityReplyBody" class="community-rte__editor" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="communityReplyBodyLabel" data-placeholder="" data-i18n-placeholder="community.yourReply"></div>
                     </div>
-                    <button type="submit" class="btn-primary" data-i18n="community.publish">Publicar</button>
+                    <button type="submit" class="btn-primary" data-i18n="community.publish"></button>
                 </form>
             </div>
         </section>
@@ -116,40 +116,40 @@
     <div id="communityComposerModal" class="community-composer-modal" hidden>
         <div class="community-composer-modal__backdrop" data-close-composer tabindex="-1"></div>
         <div class="community-composer-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="communityComposerTitle">
-            <button type="button" class="community-composer-modal__close" data-close-composer aria-label="Cerrar">×</button>
+            <button type="button" class="community-composer-modal__close" data-close-composer data-i18n-aria-label="ui.close" aria-label="">&times;</button>
             <div id="communityNewTopic" class="community-compose community-compose--modal">
-                <h2 id="communityComposerTitle" data-i18n="community.newTopic">Nuevo tema</h2>
-                <p class="community-compose__hint" data-i18n="community.composeHint">Un buen título y un mensaje claro invitan a más respuestas.</p>
+                <h2 id="communityComposerTitle" data-i18n="community.newTopic"></h2>
+                <p class="community-compose__hint" data-i18n="community.composeHint"></p>
                 <p id="communityComposerStatus" class="community-status" role="status" aria-live="polite"></p>
                 <form id="communityNewTopicForm">
                     <div id="communityComposerTitleField">
-                        <label for="communityTopicTitle" data-i18n="community.field.title">Título</label>
+                        <label for="communityTopicTitle" data-i18n="community.field.title"></label>
                         <input id="communityTopicTitle" type="text" maxlength="120" required autocomplete="off">
                     </div>
-                    <label id="communityTopicBodyLabel" data-i18n="community.field.body">Mensaje</label>
+                    <label id="communityTopicBodyLabel" data-i18n="community.field.body"></label>
                     <div class="community-rte" data-rte="topic">
-                        <div class="community-rte__toolbar" role="toolbar" aria-label="Formato">
-                            <button type="button" class="community-rte__btn" data-cmd="bold" title="Negrita" aria-label="Negrita"><strong>B</strong></button>
-                            <button type="button" class="community-rte__btn" data-cmd="italic" title="Cursiva" aria-label="Cursiva"><em>I</em></button>
-                            <button type="button" class="community-rte__btn" data-cmd="underline" title="Subrayado" aria-label="Subrayado"><span class="community-rte__u">U</span></button>
-                            <label class="community-rte__color" title="Color de texto">
-                                <span class="visually-hidden" data-i18n="community.rte.color">Color</span>
+                        <div class="community-rte__toolbar" role="toolbar" data-i18n-aria-label="community.toolbar.format" aria-label="">
+                            <button type="button" class="community-rte__btn" data-cmd="bold" data-i18n-title="community.rte.bold" data-i18n-aria-label="community.rte.bold" title="" aria-label=""><strong>B</strong></button>
+                            <button type="button" class="community-rte__btn" data-cmd="italic" data-i18n-title="community.rte.italic" data-i18n-aria-label="community.rte.italic" title="" aria-label=""><em>I</em></button>
+                            <button type="button" class="community-rte__btn" data-cmd="underline" data-i18n-title="community.rte.underline" data-i18n-aria-label="community.rte.underline" title="" aria-label=""><span class="community-rte__u">U</span></button>
+                            <label class="community-rte__color" data-i18n-title="community.editor.textColor" title="">
+                                <span class="visually-hidden" data-i18n="community.rte.color"></span>
                                 <input type="color" data-fore-color value="#0a2a43">
                             </label>
-                            <select class="community-rte__size" data-font-size title="Tamaño" aria-label="Tamaño de letra">
-                                <option value="2" data-i18n="community.rte.size.small">Pequeño</option>
-                                <option value="3" selected data-i18n="community.rte.size.normal">Normal</option>
-                                <option value="4" data-i18n="community.rte.size.large">Grande</option>
-                                <option value="5" data-i18n="community.rte.size.xlarge">Muy grande</option>
+                            <select class="community-rte__size" data-font-size data-i18n-title="community.editor.size" data-i18n-aria-label="community.editor.fontSize" title="" aria-label="">
+                                <option value="2" data-i18n="community.rte.size.small"></option>
+                                <option value="3" selected data-i18n="community.rte.size.normal"></option>
+                                <option value="4" data-i18n="community.rte.size.large"></option>
+                                <option value="5" data-i18n="community.rte.size.xlarge"></option>
                             </select>
-                            <button type="button" class="community-rte__btn community-rte__emoji-toggle" data-emoji-toggle title="Emoticonos" aria-label="Emoticonos" aria-expanded="false">☺</button>
+                            <button type="button" class="community-rte__btn community-rte__emoji-toggle" data-emoji-toggle data-i18n-title="community.rte.emoji" data-i18n-aria-label="community.rte.emoji" title="" aria-label="" aria-expanded="false">?</button>
                         </div>
                         <div class="community-rte__emoji" data-emoji-panel hidden></div>
-                        <div id="communityTopicBody" class="community-rte__editor" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="communityTopicBodyLabel" data-placeholder="Escribe tu mensaje..." data-i18n-placeholder="community.placeholder.topic"></div>
+                        <div id="communityTopicBody" class="community-rte__editor" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="communityTopicBodyLabel" data-placeholder="" data-i18n-placeholder="community.placeholder.topic"></div>
                     </div>
                     <div class="community-composer-modal__actions">
-                        <button type="button" class="btn-secondary" data-close-composer data-i18n="community.composer.cancel">Cancelar</button>
-                        <button type="submit" class="btn-primary" data-i18n="community.publish">Publicar</button>
+                        <button type="button" class="btn-secondary" data-close-composer data-i18n="community.composer.cancel"></button>
+                        <button type="submit" class="btn-primary" data-i18n="community.publish"></button>
                     </div>
                 </form>
             </div>
@@ -162,14 +162,14 @@
             <h2 id="communityConfirmTitle" class="community-confirm-modal__title"></h2>
             <p id="communityConfirmMessage" class="community-confirm-modal__message"></p>
             <div class="community-confirm-modal__actions">
-                <button type="button" class="btn-secondary" id="communityConfirmCancel" data-i18n="community.confirm.cancel">Cancelar</button>
-                <button type="button" class="btn-primary" id="communityConfirmOk" data-i18n="community.confirm.ok">Confirmar</button>
+                <button type="button" class="btn-secondary" id="communityConfirmCancel" data-i18n="community.confirm.cancel"></button>
+                <button type="button" class="btn-primary" id="communityConfirmOk" data-i18n="community.confirm.ok"></button>
             </div>
         </div>
     </div>
 
     <div id="communityUserCard" class="community-user-card" hidden role="dialog" aria-modal="false" aria-labelledby="communityUserCardName">
-        <button type="button" class="community-user-card__close" id="communityUserCardClose" aria-label="Cerrar">×</button>
+        <button type="button" class="community-user-card__close" id="communityUserCardClose" data-i18n-aria-label="ui.close" aria-label="">&times;</button>
         <div class="community-user-card__avatar" id="communityUserCardAvatar" aria-hidden="true"></div>
         <div class="community-user-card__body">
             <p class="community-user-card__name" id="communityUserCardName"></p>
@@ -180,40 +180,40 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <h4 data-i18n="footer.explore">Explora</h4>
-                <a href="index.html" data-i18n="nav.app">La App</a>
-                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
-                <a class="active" data-i18n="nav.community">Comunidad</a>
-                <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
-                <a href="contact.html" data-i18n="nav.contact">Contacto</a>
-                <a href="login.html" data-i18n="nav.account">Mi cuenta</a>
+                <h4 data-i18n="footer.explore"></h4>
+                <a href="index.html" data-i18n="nav.app"></a>
+                <a href="about.html" data-i18n="footer.about"></a>
+                <a class="active" data-i18n="nav.community"></a>
+                <a href="reviews.html" data-i18n="nav.reviews"></a>
+                <a href="contact.html" data-i18n="nav.contact"></a>
+                <a href="login.html" data-i18n="nav.account"></a>
             </div>
             <div class="footer-col">
-                <h4 data-i18n="footer.legal">Legal</h4>
-                <a href="privacy.html" data-i18n="footer.privacy">Privacidad</a>
-                <a href="terms.html" data-i18n="footer.terms">Términos</a>
-                <a href="cookies.html" data-i18n="footer.cookies">Cookies</a>
-                <a href="delete-account.html" data-i18n="footer.deleteAccount">Eliminar cuenta</a>
+                <h4 data-i18n="footer.legal"></h4>
+                <a href="privacy.html" data-i18n="footer.privacy"></a>
+                <a href="terms.html" data-i18n="footer.terms"></a>
+                <a href="cookies.html" data-i18n="footer.cookies"></a>
+                <a href="delete-account.html" data-i18n="footer.deleteAccount"></a>
             </div>
             <div class="footer-col">
-                <h4 data-i18n="footer.help">Ayuda</h4>
-                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
-                <a class="active" data-i18n="nav.community">Comunidad</a>
-                <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
-                <a href="contact.html" data-i18n="nav.contact">Contacto</a>
-                <a href="faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a>
-                <a href="whats-new.html" data-i18n="footer.whatsNew">Novedades</a>
+                <h4 data-i18n="footer.help"></h4>
+                <a href="about.html" data-i18n="footer.about"></a>
+                <a class="active" data-i18n="nav.community"></a>
+                <a href="reviews.html" data-i18n="nav.reviews"></a>
+                <a href="contact.html" data-i18n="nav.contact"></a>
+                <a href="faq.html" data-i18n="footer.faq"></a>
+                <a href="whats-new.html" data-i18n="footer.whatsNew"></a>
             </div>
             <div class="footer-col footer-social">
-                <h4 data-i18n="footer.follow">Síguenos</h4>
+                <h4 data-i18n="footer.follow"></h4>
                 <div class="footer-social__links">
                     <a class="footer-social__btn footer-social__btn--instagram" href="https://www.instagram.com/touraiapp/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                         <svg class="footer-social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                        <span data-i18n="footer.instagram">Instagram</span>
+                        <span data-i18n="footer.instagram"></span>
                     </a>
                     <a class="footer-social__btn footer-social__btn--facebook" href="https://www.facebook.com/people/Tourai/61588924171925/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                         <svg class="footer-social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                        <span data-i18n="footer.facebook">Facebook</span>
+                        <span data-i18n="footer.facebook"></span>
                     </a>
                 </div>
             </div>
@@ -222,7 +222,7 @@
         <div class="legal-bottom">
             &copy; <span id="current-year"></span> <strong>TourAI App</strong> -
             <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a>
-            - <span data-i18n="footer.rights">Todos los derechos reservados.</span>
+            - <span data-i18n="footer.rights"></span>
         </div>
     </footer>
 
@@ -231,6 +231,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
     <script src="js/site-config.js"></script>
     <script src="js/site-config.secrets.js"></script>
+    <script src="js/locales/es-ES.js"></script>
     <script src="js/locales/en-GB.js"></script>
     <script src="js/i18n.js"></script>
     <script src="js/auth.js"></script>

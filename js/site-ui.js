@@ -135,7 +135,7 @@
     overlay.innerHTML = `
       <div class="tourai-loading-panel" role="status" aria-live="polite" aria-busy="true">
         <div class="tourai-loading-spinner" aria-hidden="true"></div>
-        <p class="tourai-loading-message" data-default-text="Procesando...">Procesando...</p>
+        <p class="tourai-loading-message" data-default-text="" data-i18n="loading.processing"></p>
       </div>
     `;
     document.body.appendChild(overlay);
@@ -155,7 +155,7 @@
       const overlay = ensureOverlay();
       const messageEl = overlay.querySelector(".tourai-loading-message");
       if (messageEl) {
-        const fallback = messageEl.getAttribute("data-default-text") ?? "Procesando...";
+        const fallback = window.TourAiI18n?.t?.("loading.processing", window.TourAiI18n.getLocale()) ?? messageEl.getAttribute("data-default-text") ?? "";
         messageEl.textContent = message ?? getMessage(fallback);
       }
 
@@ -254,12 +254,9 @@
       const button = document.getElementById("touraiFeedbackCloseBtn");
 
       const defaultTitles = {
-        success: tOr("feedback.success.title", "¡Listo!"),
-        error: tOr(
-          "forms.error.generic",
-          "No se pudo completar la acción."
-        ),
-        info: tOr("feedback.info.title", "Acción necesaria"),
+        success: tOr("feedback.success.title"),
+        error: tOr("forms.error.generic"),
+        info: tOr("feedback.info.title"),
       };
 
       const customTitle =
@@ -280,7 +277,7 @@
         messageEl.hidden = !message;
       }
 
-      button.textContent = options?.buttonText ?? tOr("feedback.close", "Entendido");
+      button.textContent = options?.buttonText ?? tOr("feedback.close");
 
       onCloseCallback = options?.onClose ?? null;
 
@@ -627,7 +624,7 @@
       setText(
         "touraiEmailVerifyTitle",
         opts.title ||
-          tOr("contact.verify.title", "Introduce el código de verificación")
+          tOr("contact.verify.title")
       );
 
       var introEl = document.getElementById("touraiEmailVerifyIntro");
@@ -641,22 +638,19 @@
       setText(
         "touraiEmailVerifySpamHint",
         opts.spamHint ||
-          tOr(
-            "contact.verify.spamHint",
-            "Si no recibes el correo en unos minutos, revisa la carpeta de spam o correo no deseado."
-          )
+          tOr("contact.verify.spamHint")
       );
       setText(
         "touraiEmailVerifySubmit",
-        opts.submitLabel || tOr("contact.verify.submit", "Validar código")
+        opts.submitLabel || tOr("contact.verify.submit")
       );
       setText(
         "touraiEmailVerifyResend",
-        opts.resendLabel || tOr("contact.verify.resend", "Reenviar código")
+        opts.resendLabel || tOr("contact.verify.resend")
       );
       setText(
         "touraiEmailVerifyClose",
-        opts.closeLabel || tOr("contact.verify.close", "Cerrar")
+        opts.closeLabel || tOr("contact.verify.close")
       );
 
       var status = statusEl();
@@ -815,7 +809,7 @@
 
   window.TourAiConfirm = {
     /**
-     * @param {{ title?: string, message?: string, confirmLabel?: string, cancelLabel?: string, danger?: boolean }} options
+     * @param {{ title?: string, message?: string, confirmLabel?: string, cancelLabel?: string, danger?: boolean, alert?: boolean }} options
      * @returns {Promise<boolean>}
      */
     show: function (options) {
@@ -827,6 +821,7 @@
       var okBtn = document.getElementById("touraiConfirmOk");
       var cancelBtn = document.getElementById("touraiConfirmCancel");
       var dialog = modal.querySelector(".community-confirm-modal__dialog");
+      var isAlert = opts.alert === true;
 
       if (resolver) {
         closeConfirm(false);
@@ -835,9 +830,12 @@
       titleEl.textContent = opts.title || "";
       messageEl.textContent = opts.message || "";
       okBtn.textContent =
-        opts.confirmLabel || tOr("account.confirm.ok", "Confirmar");
-      cancelBtn.textContent =
-        opts.cancelLabel || tOr("account.confirm.cancel", "Cancelar");
+        opts.confirmLabel ||
+        (isAlert
+          ? tOr("account.alert.ok")
+          : tOr("account.confirm.ok"));
+      cancelBtn.textContent = opts.cancelLabel || tOr("account.confirm.cancel");
+      cancelBtn.hidden = isAlert;
 
       if (opts.danger) {
         okBtn.classList.add("btn-primary--danger");

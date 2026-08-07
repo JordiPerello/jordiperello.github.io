@@ -1,596 +1,681 @@
+/**
+ * British English (en-GB) UI strings for TourAI web.
+ * Keep in parity with js/locales/es-ES.js.
+ */
 window.TourAiEnGBMessages = {
-  "nav.app": "The App",
-  "nav.community": "Community",
-  "nav.reviews": "Reviews",
-  "nav.contact": "Contact",
-  "nav.account": "My account",
-  "nav.accountSignedIn": "Hi, {name}",
-  "nav.accountSignedInGeneric": "My account",
-  "doc.title.login": "Sign in - TourAI",
-  "doc.meta.login": "Sign in to TourAI to access your account, plans and private web area.",
-  "doc.title.account": "Profile - TourAI",
-  "doc.meta.account": "TourAI profile: view your name, email and account type.",
-  "doc.title.dashboard": "Dashboard - TourAI",
-  "doc.meta.dashboard": "TourAI dashboard: open plans, usage allowance and payments only when you need them.",
-  "doc.title.community": "Community - TourAI",
-  "doc.meta.community": "TourAI community: news, help, ideas and travel tips.",
-  "doc.title.reviews": "Reviews - TourAI",
-  "doc.meta.reviews": "TourAI reviews: optionally rate the website and the app with stars and an optional comment.",
-  "reviews.title": "Reviews",
-  "reviews.subtitle": "You can optionally rate the TourAI website or app. If you rate, stars are required and the comment is optional. Reviews are published after moderation.",
-  "reviews.loginHint": "You need an account to leave a rating (optional).",
-  "reviews.loginLink": "Sign in",
-  "reviews.or": "or",
-  "reviews.registerLink": "create one",
-  "reviews.composeTitle": "Your rating (optional)",
-  "reviews.field.target": "What are you rating?",
-  "reviews.field.stars": "Stars (required to submit)",
-  "reviews.field.comment": "Comment (optional)",
-  "reviews.field.commentPlaceholder": "Tell us what you think...",
-  "reviews.submit": "Submit rating",
-  "reviews.saving": "Sending...",
-  "reviews.saved": "Thanks. Your review was sent and will appear after moderation.",
-  "reviews.pending.yours": "Your review is pending moderation. You can edit it until it is published.",
-  "reviews.alreadyPublished": "You already have a published review for this target. Thank you.",
-  "reviews.pending.title": "Pending moderation",
-  "reviews.pending.empty": "No pending reviews.",
-  "reviews.approve": "Approve",
-  "reviews.reject": "Reject",
-  "reviews.approving": "Approving...",
-  "reviews.rejecting": "Rejecting...",
-  "reviews.approved": "Review approved.",
-  "reviews.rejected": "Review rejected.",
-  "reviews.filter.all": "All",
-  "reviews.target.web": "Web",
-  "reviews.target.app": "App",
-  "reviews.summary.count": "{n} approved reviews",
-  "reviews.empty": "There are no published reviews yet.",
-  "reviews.noComment": "No comment",
-  "reviews.anonymous": "User",
-  "reviews.stars.pick": "{n} stars",
-  "reviews.widget.aria": "Average rating {avg} out of 5 ({n} reviews)",
-  "reviews.widget.ariaEmpty": "See TourAI reviews",
-  "reviews.error.load": "Could not load reviews. Please try again later.",
-  "reviews.error.save": "Could not send the review. Please try again later.",
-  "reviews.error.stars": "Choose a rating from 1 to 5 stars.",
-  "reviews.comment.add": "Add comment",
-  "reviews.comment.edit": "Edit comment",
-  "reviews.comment.save": "Save comment",
-  "reviews.comment.modalTitle": "Your comment",
-  "reviews.comment.modalHint": "You can format text and add emoji, just like in the community.",
-  "reviews.comment.inviteNew": "We invite you to add an optional comment about your rating.",
-  "reviews.comment.inviteExisting": "You already rated. Would you like to add a comment?",
-  "reviews.comment.saved": "Comment saved.",
-  "reviews.comment.needStars": "Choose stars first to save the comment.",
-  "reviews.error.commentLong": "The comment is too long. Please shorten it a little.",
-  "community.title": "Community",
-  "community.subtitle": "Share news, ask for help, pitch ideas and talk about your trips with TourAI.",
-  "community.eyebrow": "Talk with other travellers",
-  "community.heroCta": "Browse open threads or post your own — your voice counts.",
-  "community.cat.news": "News",
-  "community.cat.help": "Help",
-  "community.cat.ideas": "Ideas",
-  "community.cat.travel": "Travel",
-  "community.blurb.news": "Product updates, launches and notes from the TourAI team.",
-  "community.blurb.help": "Solve questions and lend a hand to people getting started with TourAI.",
-  "community.blurb.ideas": "Suggest improvements and bounce ideas with the community.",
-  "community.blurb.travel": "Share routes, spots and tips from your audioguide trips.",
-  "community.loading": "Loading...",
-  "community.emptyTitle": "This section is waiting for its first thread",
-  "community.empty": "There are no topics here yet. Be the one who starts the conversation.",
-  "community.loginHint": "Sign in to post.",
-  "community.loginLink": "Sign in",
-  "community.newTopic": "New topic",
-  "community.composer.cancel": "Cancel",
-  "community.composeHint": "A clear title and message invite more replies.",
-  "community.field.title": "Title",
-  "community.field.body": "Message",
-  "community.placeholder.topic": "Write your message...",
-  "community.rte.color": "Colour",
-  "community.rte.size.small": "Small",
-  "community.rte.size.normal": "Normal",
-  "community.rte.size.large": "Large",
-  "community.rte.size.xlarge": "Extra large",
-  "community.publish": "Publish",
-  "community.saving": "Publishing...",
-  "community.back": "Back to list",
-  "community.replies": "Replies",
-  "community.repliesCount": "{n} replies",
-  "community.repliesCountOne": "1 reply",
-  "community.noReplies": "Be the first to reply.",
-  "community.yourReply": "Your reply",
-  "community.replyTo.action": "Reply",
-  "community.replyTo.label": "In reply to {name}",
-  "community.replyTo.clear": "Cancel",
-  "community.replica.label": "Reply to {name}",
-  "community.replica.show": "Show {n} replies",
-  "community.replica.showOne": "Show 1 reply",
-  "community.replica.check": "View replies",
-  "community.replica.hide": "Hide replies",
-  "community.replica.empty": "No replies yet.",
-  "community.delete": "Delete",
-  "community.edit": "Edit",
-  "community.editTopic": "Edit topic",
-  "community.editReply": "Edit message",
-  "community.confirm.cancel": "Cancel",
-  "community.confirm.ok": "Confirm",
-  "community.confirm.publishTopic.title": "Publish topic?",
-  "community.confirm.publishTopic.body": "Your topic will be visible in this section of the community.",
-  "community.confirm.publishTopic.pending": "Your topic will stay pending review before it appears in the community.",
-  "community.confirm.publishReply.title": "Publish reply?",
-  "community.confirm.publishReply.body": "Your reply will be added to this thread.",
-  "community.confirm.publishReply.pending": "Your reply will stay pending review before it appears in the thread.",
-  "community.confirm.publishReplica.title": "Publish nested reply?",
-  "community.confirm.publishReplica.body": "Your nested reply will appear under the selected answer.",
-  "community.confirm.forbidden.title": "Disallowed words",
-  "community.confirm.forbidden.body": "Your message contains words that may not be allowed. If you continue, it will stay pending review and may be rejected.",
-  "community.confirm.forbidden.continue": "Continue anyway",
-  "legal.reaccept.title": "Legal documents updated",
-  "legal.reaccept.body": "We have updated the Terms and Conditions and/or the Privacy Policy. Read them here and accept to continue (one acceptance covers the app and the website with the same account).",
-  "legal.reaccept.tab.terms": "Terms",
-  "legal.reaccept.tab.privacy": "Privacy",
-  "legal.reaccept.loading": "Loading documents…",
-  "legal.reaccept.error": "The documents could not be loaded. Check your connection and try again.",
-  "legal.reaccept.hint": "If you do not accept, you will be signed out. You can still browse public pages, but not your account area until you accept.",
-  "legal.reaccept.accept": "I have read and accept",
-  "legal.reaccept.decline": "I do not accept · Sign out",
-  "community.pending.review": "Message pending review. It will be published when a moderator approves it.",
-  "community.blocked.banner": "User blocked: you can read the community, but you cannot post messages.",
-  "community.confirm.saveEdit.title": "Save changes?",
-  "community.confirm.saveEdit.body": "The published content will be updated.",
-  "community.savingEdit": "Saving...",
-  "community.confirm.deleteTopic.title": "Delete this topic?",
-  "community.confirm.deleteTopic.body": "It will be permanently deleted. This cannot be undone.",
-  "community.confirm.deleteReply.title": "Delete this reply?",
-  "community.confirm.deleteReply.body": "It will be permanently deleted. This cannot be undone.",
-  "community.confirm.deleteReplica.title": "Delete this nested reply?",
-  "community.confirm.deleteReplica.body": "It will be permanently deleted. This cannot be undone.",
-  "community.anonymous": "User",
-  "community.error.load": "Could not load the community. Please try again later.",
-  "community.error.replies": "The topic opened, but replies could not be loaded.",
-  "community.error.permission": "You do not have permission to view this content.",
-  "community.error.index": "A database index is missing. Please try again in a few minutes.",
-  "community.error.missing": "This topic does not exist or was removed.",
-  "community.error.save": "Could not publish. Please try again later.",
-  "community.error.threadLocked": "Cannot delete: this reply has nested replies.",
-  "community.error.forbidden": "You do not have permission for this action. If rules were just updated, wait a minute and try again.",
-  "community.confirm.deleteFailed.title": "Could not delete",
-  "community.error.title": "Enter a title (max. 120 characters).",
-  "community.error.body": "Enter a message.",
-  "community.error.bodyLong": "The message is too long. Please shorten it a little.",
-  "community.error.auth": "Your session has expired. Please sign in again.",
-  "community.error.policy.title": "Can't publish",
-  "community.error.policy": "This content can't be published because it breaches the Community usage policy. Please revise your text and try again.",
-  "community.error.policy.ok": "Got it",
-  "community.search.label": "Search topics",
-  "community.search.placeholder": "Search by title, author or text...",
-  "community.search.submit": "Search",
-  "community.search.clear": "Clear",
-  "community.search.searching": "Searching...",
-  "community.search.results": "{n} results",
-  "community.search.emptyTitle": "No results",
-  "community.search.empty": "No topics match your search in this section.",
-  "community.user.open": "View profile of {name}",
-  "community.user.loading": "Loading profile...",
-  "community.user.member": "TourAI community member",
-  "community.user.memberSince": "Member since {date}",
-  "login.title": "Sign in",
-  "login.subtitle": "Sign in with your TourAI account (the same as in the app) to open your private area.",
-  "login.email": "Email address",
-  "login.email.placeholder": "you@email.com",
-  "login.password": "Password",
-  "login.password.placeholder": "Your password",
-  "login.remember": "Remember me on this device",
-  "login.submit": "Sign in",
-  "login.forgot": "Recover password",
-  "login.createHint": "Don't have an account yet? <a href=\"register.html\">Create one here</a>. You can also <a href=\"delete-account.html\">delete an account</a>.",
-  "login.error.required": "Enter your email and password.",
-  "login.error.invalidEmail": "Enter a valid email address.",
-  "login.error.disabled": "This account is disabled.",
-  "login.error.credentials": "Incorrect email or password.",
-  "login.error.rateLimited": "Too many attempts. Please wait a few minutes.",
-  "login.error.network": "Network error. Check your connection.",
-  "login.error.config": "Sign-in configuration is not available. For local testing, copy js/site-config.secrets.js and serve the site over http://localhost (do not open the HTML file directly).",
-  "login.error.fileProtocol": "Firebase Auth does not work with file://. Open the site with a local server (e.g. npx serve) or on https://tourai.es after deploy.",
-  "login.error.unauthorizedDomain": "This domain is not authorised in Firebase Authentication.",
-  "login.error.apiKey": "The web access key is not valid. Check the Firebase configuration.",
-  "login.error.referrer": "This origin is not allowed for the Firebase key. Try https://tourai.es or add the domain in Google Cloud (HTTP referrer restrictions).",
-  "login.error.generic": "Could not sign in. Please try again.",
-  "login.error.forgotEmail": "Enter your email so we can send a reset link.",
-  "login.status.signingIn": "Signing in...",
-  "login.status.redirecting": "Signed in. Redirecting...",
-  "login.status.resetSending": "Sending reset link...",
-  "login.status.resetSent": "If an account exists for that email, you will receive a password reset link. Please also check your spam folder.",
-  "login.reset.title": "Recover password",
-  "login.reset.confirm": "A password reset link will be sent to {email}. Continue?",
-  "feedback.close": "Got it",
-  "doc.title.register": "Create account - TourAI",
-  "doc.meta.register": "Create your TourAI account from the website to access the private area.",
-  "register.title": "Create account",
-  "register.subtitle": "Sign up with email and password. You can use the same account in the TourAI app.",
-  "register.name": "Name",
-  "register.name.placeholder": "Your name",
-  "register.email": "Email address",
-  "register.email.placeholder": "you@email.com",
-  "register.password": "Password",
-  "register.password.placeholder": "New password",
-  "register.confirm": "Confirm password",
-  "register.confirm.placeholder": "Repeat the password",
-  "register.terms": "I accept the <a href=\"terms.html\" target=\"_blank\" rel=\"noopener\">terms of use</a> and the <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">privacy policy</a>.",
-  "register.submit": "Create account",
-  "register.loginHint": "Already have an account? <a href=\"login.html\">Sign in</a>. You can also <a href=\"delete-account.html\">delete an existing account</a>.",
-  "register.error.required": "Please fill in all fields.",
-  "register.error.terms": "You must accept the terms of use.",
-  "register.error.emailInUse": "An account with that email already exists.",
-  "register.error.weakPassword": "The password is too weak.",
-  "register.error.notAllowed": "Email/password registration is not enabled.",
-  "register.error.profile": "The account was created, but saving the profile failed. Open My account or try again later.",
-  "register.status.creating": "Creating account...",
-  "register.status.success": "Account created. Signing you in...",
-  "account.title": "Profile",
-  "account.subtitle": "Basic details for your TourAI account. Plans and payments are in the dashboard.",
-  "account.loading": "Checking session...",
-  "account.profile.title": "Your profile",
-  "account.profile.intro": "You are signed in with the same account you use in the TourAI app.",
-  "account.profile.email": "Email",
-  "account.profile.uid": "Account ID",
-  "account.logout": "Sign out",
+  "account.alert.ok": "Got it",
+  "account.buy.cta": "Buy with Stripe",
+  "account.buy.durationDays": "{n} days",
+  "account.buy.empty": "There are no Premium plans available right now.",
+  "account.buy.error.appCheck": "The browser could not be verified (App Check). Reload the page and try again.",
+  "account.buy.error.config": "Checkout URL is missing from the site configuration.",
+  "account.buy.error.generic": "Check your connection and try again. If it keeps failing, reload the page or try later.",
+  "account.buy.error.plan": "That plan is not available. Try another one or come back later.",
+  "account.buy.error.rateLimit": "Too many recent pending payments. Wait a moment and try again.",
+  "account.buy.error.title": "Could not start payment",
+  "account.buy.note": `Payment is processed by Stripe. After paying, the plan appears under "Your plans" (pending activation in the app if you have not started it yet).`,
+  "account.buy.redirecting": "Redirecting to Stripe…",
+  "account.buy.status.cancel": "Payment cancelled. Nothing was charged.",
+  "account.buy.status.cancelTitle": "Payment cancelled",
+  "account.buy.status.success": "Payment received. If the plan does not appear yet, wait a few seconds and refresh the dashboard.",
+  "account.buy.status.successTitle": "Payment received",
+  "account.buy.title": "Buy a Premium plan",
+  "account.buy.tokens": "Allowance: {n}",
+  "account.comingSoon": "Coming soon",
   "account.confirm.cancel": "Cancel",
-  "account.confirm.ok": "Confirm",
-  "account.confirm.logout.title": "Sign out?",
-  "account.confirm.logout.body": "You will leave your account on this device. You can sign back in whenever you want.",
-  "account.confirm.logout.confirm": "Sign out",
-  "account.confirm.delete.title": "Delete your account?",
   "account.confirm.delete.body": "You are about to start the permanent deletion process. You will need to verify your email with a code. Once completed, this cannot be undone.",
   "account.confirm.delete.confirm": "Continue",
-  "account.confirm.discardEdit.title": "Discard changes?",
+  "account.confirm.delete.title": "Delete your account?",
   "account.confirm.discardEdit.body": "If you continue, you will lose the changes you have made.",
   "account.confirm.discardEdit.confirm": "Discard",
-  "account.status.signingOut": "Signing out...",
-  "account.comingSoon": "Coming soon",
+  "account.confirm.discardEdit.title": "Discard changes?",
+  "account.confirm.logout.body": "You will leave your account on this device. You can sign back in whenever you want.",
+  "account.confirm.logout.confirm": "Sign out",
+  "account.confirm.logout.title": "Sign out?",
+  "account.confirm.ok": "Confirm",
   "account.edit": "Edit account",
-  "account.edit.title": "Edit account",
-  "account.edit.subtitle": "Update your profile details. Email cannot be changed.",
+  "account.edit.birthDate.calendar": "Date of birth calendar",
+  "account.edit.birthDate.month": "Month",
+  "account.edit.birthDate.placeholder": "Select a date",
+  "account.edit.birthDate.year": "Year",
+  "account.edit.birthDateHint": "Optional. Used for birthday promotions (BIRTHDATE campaign); if you do not provide it, you will not receive that bonus automatically. If you are a minor under the laws applicable in your country, TourAI must be used under the supervision of a parent or legal guardian. TourAI accepts no responsibility for how a minor may use the app.",
+  "account.edit.birthDateSwitch": "Provide my date of birth",
+  "account.edit.cancel": "Cancel",
+  "account.edit.error.birthDate": "Enter a valid date of birth.",
+  "account.edit.error.displayName": "Name is required.",
+  "account.edit.error.save": "Changes could not be saved.",
+  "account.edit.photo.aria": "Profile photo. Drag to centre; tap to change.",
   "account.edit.photo.change": "Change photo",
   "account.edit.photo.clear": "Clear selection",
+  "account.edit.photo.error.invalid": "The selected image could not be read.",
+  "account.edit.photo.error.tooLarge": "The image exceeds 5 MB.",
+  "account.edit.photo.error.upload": "The profile photo could not be uploaded. Please try again.",
   "account.edit.photo.hint": "Choose an image (max. 5 MB). Drag inside the circle to centre it. It is saved with the same framing as in the app.",
   "account.edit.photo.panHint": "Drag to centre the photo",
-  "account.edit.photo.error.tooLarge": "The image exceeds 5 MB.",
-  "account.edit.photo.error.invalid": "The selected image could not be read.",
-  "account.edit.photo.error.upload": "The profile photo could not be uploaded. Please try again.",
   "account.edit.save": "Save changes",
-  "account.edit.cancel": "Cancel",
-  "account.edit.saving": "Saving changes...",
   "account.edit.saved": "Changes saved.",
-  "account.edit.birthDateSwitch": "Provide my date of birth",
-  "account.edit.birthDate.placeholder": "Select a date",
-  "account.edit.birthDate.month": "Month",
-  "account.edit.birthDate.year": "Year",
-  "account.edit.birthDate.calendar": "Date of birth calendar",
-  "account.edit.birthDateHint": "Optional. Used for birthday promotions (BIRTHDATE campaign); if you do not provide it, you will not receive that bonus automatically. If you are a minor under the laws applicable in your country, TourAI must be used under the supervision of a parent or legal guardian. TourAI accepts no responsibility for how a minor may use the app.",
-  "account.edit.error.displayName": "Name is required.",
-  "account.edit.error.birthDate": "Enter a valid date of birth.",
-  "account.edit.error.save": "Changes could not be saved.",
-  "account.passwordChange.open": "Change password",
-  "account.passwordChange.title": "Change password",
-  "account.passwordChange.subtitle": "Enter your current password and the new one. Changes apply only when you confirm.",
-  "account.passwordChange.hint": "If you forgot it, use “Forgot password?” on the sign-in page.",
-  "account.passwordChange.current": "Current password",
-  "account.passwordChange.new": "New password",
-  "account.passwordChange.repeat": "Repeat new password",
-  "account.passwordChange.confirm": "Confirm",
-  "account.passwordChange.exit": "Exit",
-  "account.passwordChange.saving": "Updating password...",
-  "account.passwordChange.saved": "Password updated.",
-  "account.passwordChange.error.currentRequired": "Enter your current password to verify the change.",
-  "account.passwordChange.error.currentWrong": "The current password is incorrect.",
-  "account.passwordChange.error.weak": "Password must be at least medium strength.",
-  "account.passwordChange.error.mismatch": "Passwords do not match.",
-  "account.passwordChange.error.same": "The new password must be different from the current one.",
-  "account.passwordChange.error.recentLogin": "For security, sign in again to change your password.",
-  "account.passwordChange.error.save": "The password could not be updated.",
-  "account.profile.name": "Name",
-  "account.profile.noName": "No name",
-  "account.profile.type": "Account type",
-  "account.profile.type.premium": "Premium",
-  "account.profile.type.freemium": "Freemium",
-  "account.profile.birthDate": "Date of birth (optional)",
-  "account.loadingData": "Loading your profile...",
+  "account.edit.saving": "Saving changes...",
+  "account.edit.subtitle": "Update your profile details. Email cannot be changed.",
+  "account.edit.title": "Edit account",
   "account.error.load": "Could not load account data.",
   "account.error.permission": "You do not have permission to read this data.",
-  "account.subnav.profile": "Profile",
-  "account.subnav.dashboard": "Dashboard",
-  "dashboard.title": "Dashboard",
-  "dashboard.subtitle": "Open only the section you need: data loads when you expand it.",
-  "dashboard.section.loading": "Loading...",
-  "dashboard.section.collapsed": "Expand to load this information.",
-  "dashboard.section.unknown": "Section unavailable.",
-  "account.plan.activeTitle": "Active plan",
-  "account.plan.listTitle": "Your plans",
-  "account.plan.name": "Plan",
-  "account.plan.allowance": "Usage allowance",
-  "account.plan.period": "Period",
-  "account.plan.status": "Status",
-  "account.plan.start": "Start",
-  "account.plan.end": "End",
+  "account.loading": "Checking session...",
+  "account.loadingData": "Loading your profile...",
+  "account.logout": "Sign out",
+  "account.passwordChange.confirm": "Confirm",
+  "account.passwordChange.current": "Current password",
+  "account.passwordChange.error.currentRequired": "Enter your current password to verify the change.",
+  "account.passwordChange.error.currentWrong": "The current password is incorrect.",
+  "account.passwordChange.error.mismatch": "Passwords do not match.",
+  "account.passwordChange.error.recentLogin": "For security, sign in again to change your password.",
+  "account.passwordChange.error.same": "The new password must be different from the current one.",
+  "account.passwordChange.error.save": "The password could not be updated.",
+  "account.passwordChange.error.weak": "Password must be at least medium strength.",
+  "account.passwordChange.exit": "Exit",
+  "account.passwordChange.hint": "If you forgot it, use “Forgot password?” on the sign-in page.",
+  "account.passwordChange.new": "New password",
+  "account.passwordChange.open": "Change password",
+  "account.passwordChange.repeat": "Repeat new password",
+  "account.passwordChange.saved": "Password updated.",
+  "account.passwordChange.saving": "Updating password...",
+  "account.passwordChange.subtitle": "Enter your current password and the new one. Changes apply only when you confirm.",
+  "account.passwordChange.title": "Change password",
+  "account.payment.amount": "Amount",
+  "account.payment.buyNote": `To buy a Premium plan, use the "Buy a Premium plan" section on this dashboard.`,
+  "account.payment.date": "Date",
+  "account.payment.empty": "There are no payments recorded yet.",
+  "account.payment.listTitle": "Payment history",
+  "account.payment.method": "Method",
+  "account.payment.method.promo": "Promotion",
+  "account.payment.status": "Status",
+  "account.payment.status.failed": "Failed",
+  "account.payment.status.free": "Free",
+  "account.payment.status.paid": "Paid",
+  "account.payment.status.pending": "Pending",
   "account.plan.accountType": "Account type",
   "account.plan.acquisition": "Source",
   "account.plan.acquisition.bonus": "Bonus",
   "account.plan.acquisition.purchase": "Purchase",
-  "account.plan.openDetail": "View plan details",
-  "account.plan.detail.title": "Plan details",
-  "account.plan.detail.subtitle": "Plan details and recorded activity.",
+  "account.plan.activeTitle": "Active plan",
+  "account.plan.allowance": "Usage allowance",
   "account.plan.detail.back": "Back",
-  "account.plan.detail.missing": "The selected plan could not be found.",
   "account.plan.detail.error": "The plan details could not be loaded.",
-  "account.plan.usage.title": "Plan activity",
-  "account.plan.usage.query": "Query",
-  "account.plan.usage.date": "Date",
-  "account.plan.usage.empty": "There is no recorded activity for this plan yet.",
-  "account.plan.usage.loaded": "{loaded} / {total} records loaded",
+  "account.plan.detail.missing": "The selected plan could not be found.",
+  "account.plan.detail.subtitle": "Plan details and recorded activity.",
+  "account.plan.detail.title": "Plan details",
+  "account.plan.empty": "You do not have any Premium plans saved on the account yet.",
+  "account.plan.end": "End",
+  "account.plan.freemium": "You are currently on Freemium in the app. The free daily usage allowance is managed on the device (rewarded ads) and does not appear here.",
+  "account.plan.freemium.promoBody": "You are on Freemium: the daily allowance in the app is topped up with ads. Get a Premium plan and enjoy your trip without interruptions.",
+  "account.plan.freemium.promoCta": "See Premium plans",
+  "account.plan.freemium.promoNote": "You can buy a Premium plan from this dashboard. Payment is handled by Stripe.",
+  "account.plan.freemium.promoTitle": "Want TourAI without ads?",
+  "account.plan.listTitle": "Your plans",
+  "account.plan.name": "Plan",
+  "account.plan.openDetail": "View plan details",
+  "account.plan.period": "Period",
+  "account.plan.start": "Start",
   "account.plan.state.active": "In use",
-  "account.plan.state.pending": "Pending start",
   "account.plan.state.consumed": "Consumed",
   "account.plan.state.expired": "Expired",
   "account.plan.state.freemium": "Free plan",
   "account.plan.state.other": "Unclassified",
-  "account.plan.freemium": "You are currently on Freemium in the app. The free daily usage allowance is managed on the device (rewarded ads) and does not appear here.",
-  "account.plan.freemium.promoTitle": "Want TourAI without ads?",
-  "account.plan.freemium.promoBody": "You are on Freemium: the daily allowance in the app is topped up with ads. Get a Premium plan and enjoy your trip without interruptions.",
-  "account.plan.freemium.promoCta": "Open TourAI / launch alert",
-  "account.plan.freemium.promoNote": "Buying plans from the website will arrive in the next phase. Until then, manage your plan in the TourAI app.",
-  "site.freemiumPromo.title": "Want TourAI without ads?",
-  "site.freemiumPromo.body": "Get a Premium plan and enjoy your trip without interruptions.",
-  "site.freemiumPromo.cta": "See options / app",
-  "site.freemiumPromo.dismiss": "Not now",
-  "site.freemiumPromo.railLabel": "Premium",
-  "site.freemiumPromo.modalLead": "On Freemium the app uses ads to top up your allowance. A Premium plan removes that.",
-  "site.promo.dismiss": "Not now",
-  "site.promo.guest.title": "Take TourAI with you",
-  "site.promo.guest.body": "Discover places with your AI guide. Install the app and start exploring.",
-  "site.promo.guest.cta": "Notify me at launch",
-  "site.promo.guest.railLabel": "App",
-  "site.promo.guest.modalLead": "TourAI is built for the street: map, chat and narrations on your phone.",
-  "site.promo.freemium.title": "Want TourAI without ads?",
-  "site.promo.freemium.body": "Get a Premium plan and enjoy your trip without interruptions.",
-  "site.promo.freemium.cta": "See options / app",
-  "site.promo.freemium.railLabel": "Premium",
-  "site.promo.freemium.modalLead": "On Freemium the app uses ads to top up your allowance. A Premium plan removes that.",
-  "account.plan.empty": "You do not have any Premium plans saved on the account yet.",
-  "account.payment.listTitle": "Payment history",
-  "account.payment.date": "Date",
-  "account.payment.amount": "Amount",
-  "account.payment.method": "Method",
-  "account.payment.status": "Status",
-  "account.payment.status.paid": "Paid",
-  "account.payment.status.pending": "Pending",
-  "account.payment.status.failed": "Failed",
-  "account.payment.status.free": "Free",
-  "account.payment.method.promo": "Promotion",
-  "account.payment.empty": "There are no payments recorded yet.",
-  "account.payment.buyNote": "Buying plans from the website will arrive in the next phase.",
-  "footer.explore": "Explore",
-  "footer.legal": "Legal",
-  "footer.help": "Help",
-  "footer.privacy": "Privacy",
-  "footer.terms": "Terms",
-  "footer.cookies": "Cookies",
-  "footer.about": "About us",
-  "footer.faq": "FAQ",
-  "footer.whatsNew": "What's New",
-  "doc.title.whatsNew": "What's New - TourAI",
-  "doc.meta.whatsNew": "TourAI release notes and version history.",
-  "whatsNew.title": "What's New",
-  "whatsNew.subtitle": "Changes and improvements in each TourAI release.",
-  "whatsNew.loading": "Loading release notes…",
-  "whatsNew.empty": "No release notes have been published yet.",
-  "whatsNew.error": "Could not load What's New. Check your connection and try again.",
-  "whatsNew.versionLabel": "Version {0}",
-  "whatsNew.timelineLabel": "Version history",
-  "footer.deleteAccount": "Delete account",
-  "footer.follow": "Follow us",
-  "footer.instagram": "Instagram",
-  "footer.facebook": "Facebook",
-  "doc.title.deleteAccount": "Delete account - TourAI",
-  "doc.meta.deleteAccount": "Delete your TourAI account and linked personal data with email verification.",
-  "doc.title.resetPassword": "Reset password - TourAI",
-  "doc.meta.resetPassword": "Reset your TourAI account password from a secure link sent by email.",
-  "resetPassword.title": "Reset password",
-  "resetPassword.subtitle": "Choose a new password to keep exploring with your smart travel guide.",
-  "resetPassword.newPassword": "New password",
-  "resetPassword.newPassword.placeholder": "New password",
-  "resetPassword.confirmPassword": "Confirm password",
-  "resetPassword.confirmPassword.placeholder": "Repeat the password",
-  "resetPassword.show": "Show",
-  "resetPassword.hide": "Hide",
-  "resetPassword.show.aria": "Show password",
-  "resetPassword.hide.aria": "Hide password",
-  "resetPassword.generate": "Generate secure password",
-  "resetPassword.hint": "At least 8 characters with uppercase, lowercase and numbers. Add a symbol for stronger security.",
-  "resetPassword.error.weak": "The password is too weak. Use at least 8 characters with uppercase, lowercase and numbers.",
-  "resetPassword.error.mismatch": "Passwords do not match.",
-  "resetPassword.submit": "Save password",
-  "resetPassword.success.title": "Password updated",
-  "resetPassword.success.body": "You can return to the TourAI app and sign in with your new password.",
-  "resetPassword.success.cta": "Go to TourAI",
-  "resetPassword.strength.weak": "Weak",
-  "resetPassword.strength.medium": "Medium",
-  "resetPassword.strength.strong": "Strong",
-  "resetPassword.status.invalidLink": "This link is not valid or has expired. Request a new reset from the TourAI app.",
-  "resetPassword.status.saving": "Saving password...",
-  "resetPassword.status.expired": "The link has expired. Request a new one from the app.",
-  "resetPassword.status.failed": "Could not update the password. Request a new link.",
-  "resetPassword.status.configMissing": "Firebase configuration is not available.",
-  "deleteAccount.title": "Delete TourAI account",
-  "deleteAccount.subtitle": "Request permanent deletion of your account and linked personal data.",
-  "deleteAccount.warning": "This action is irreversible. Your account and usage trail are deleted, including your reviews and the record of places presented by the guide. The shared catalogue is not removed. Community posts are anonymised as \"Anonymous\" (the thread text may remain without your name, email or identifier).",
-  "deleteAccount.email": "Your TourAI account email",
-  "deleteAccount.email.placeholder": "you@email.com",
-  "deleteAccount.email.invalid": "Enter a valid email address.",
-  "deleteAccount.verify.prompt": "Verify your email with the code we will send you.",
-  "deleteAccount.verify.button": "SEND CODE",
-  "deleteAccount.verify.title": "Confirm deletion",
-  "deleteAccount.verify.intro": "We sent a 6-digit code to your email. Enter it to delete your account.",
-  "deleteAccount.verify.code": "Code received by email",
-  "deleteAccount.verify.code.placeholder": "000000",
-  "deleteAccount.verify.submit": "Validate code",
-  "deleteAccount.verify.resend": "Resend code",
-  "deleteAccount.verify.close": "Close",
-  "deleteAccount.verify.spamHint": "If you do not receive the email within a few minutes, check your spam or junk folder.",
-  "deleteAccount.verify.success": "Email validated successfully.",
-  "deleteAccount.verify.successTitle": "Code validated successfully",
-  "deleteAccount.verify.successNext": "Continue with the on-screen steps to permanently delete your account.",
-  "deleteAccount.verify.sending": "Sending code...",
-  "deleteAccount.verify.sent": "Code sent. Check your inbox and spam folder.",
-  "deleteAccount.verify.resent": "A new code has been sent to your email.",
-  "deleteAccount.verify.verifying": "VERIFYING...",
-  "deleteAccount.verify.invalidCode": "The code does not match.",
-  "deleteAccount.verify.expired": "The code has expired. Request a new one.",
-  "deleteAccount.verify.rateLimited": "You've requested too many codes. You won't be able to request another for {time}.",
-  "deleteAccount.verify.sendError": "Could not send the verification code. Please try again.",
+  "account.plan.state.pending": "Pending start",
+  "account.plan.status": "Status",
+  "account.plan.usage.date": "Date",
+  "account.plan.usage.empty": "There is no recorded activity for this plan yet.",
+  "account.plan.usage.loaded": "{loaded} / {total} records loaded",
+  "account.plan.usage.query": "Query",
+  "account.plan.usage.title": "Plan activity",
+  "account.profile.birthDate": "Date of birth (optional)",
+  "account.profile.email": "Email",
+  "account.profile.intro": "You are signed in with the same account you use in the TourAI app.",
+  "account.profile.name": "Name",
+  "account.profile.noName": "No name",
+  "account.profile.title": "Your profile",
+  "account.profile.type": "Account type",
+  "account.profile.type.freemium": "Freemium",
+  "account.profile.type.premium": "Premium",
+  "account.profile.uid": "Account ID",
+  "account.status.signingOut": "Signing out...",
+  "account.subnav.aria": "Account",
+  "account.subnav.dashboard": "Dashboard",
+  "account.subnav.profile": "Profile",
+  "account.subtitle": "Basic details for your TourAI account. Plans and payments are in the dashboard.",
+  "account.title": "Profile",
+  "community.anonymous": "User",
+  "community.back": "Back to list",
+  "community.blocked.banner": "User blocked: you can read the community, but you cannot post messages.",
+  "community.blurb.help": "Solve questions and lend a hand to people getting started with TourAI.",
+  "community.blurb.ideas": "Suggest improvements and bounce ideas with the community.",
+  "community.blurb.news": "Product updates, launches and notes from the TourAI team.",
+  "community.blurb.travel": "Share routes, spots and tips from your audioguide trips.",
+  "community.cat.help": "Help",
+  "community.cat.ideas": "Ideas",
+  "community.cat.news": "News",
+  "community.cat.travel": "Travel",
+  "community.composeHint": "A clear title and message invite more replies.",
+  "community.composer.cancel": "Cancel",
+  "community.confirm.cancel": "Cancel",
+  "community.confirm.deleteFailed.title": "Could not delete",
+  "community.confirm.deleteReplica.body": "It will be permanently deleted. This cannot be undone.",
+  "community.confirm.deleteReplica.title": "Delete this nested reply?",
+  "community.confirm.deleteReply.body": "It will be permanently deleted. This cannot be undone.",
+  "community.confirm.deleteReply.title": "Delete this reply?",
+  "community.confirm.deleteTopic.body": "It will be permanently deleted. This cannot be undone.",
+  "community.confirm.deleteTopic.title": "Delete this topic?",
+  "community.confirm.forbidden.body": "Your message contains words that may not be allowed. If you continue, it will stay pending review and may be rejected.",
+  "community.confirm.forbidden.continue": "Continue anyway",
+  "community.confirm.forbidden.title": "Disallowed words",
+  "community.confirm.ok": "Confirm",
+  "community.confirm.publishReplica.body": "Your nested reply will appear under the selected answer.",
+  "community.confirm.publishReplica.title": "Publish nested reply?",
+  "community.confirm.publishReply.body": "Your reply will be added to this thread.",
+  "community.confirm.publishReply.pending": "Your reply will stay pending review before it appears in the thread.",
+  "community.confirm.publishReply.title": "Publish reply?",
+  "community.confirm.publishTopic.body": "Your topic will be visible in this section of the community.",
+  "community.confirm.publishTopic.pending": "Your topic will stay pending review before it appears in the community.",
+  "community.confirm.publishTopic.title": "Publish topic?",
+  "community.confirm.saveEdit.body": "The published content will be updated.",
+  "community.confirm.saveEdit.title": "Save changes?",
+  "community.delete": "Delete",
+  "community.edit": "Edit",
+  "community.editReply": "Edit message",
+  "community.editTopic": "Edit topic",
+  "community.editor.fontSize": "Font size",
+  "community.editor.size": "Size",
+  "community.editor.textColor": "Text colour",
+  "community.empty": "There are no topics here yet. Be the one who starts the conversation.",
+  "community.emptyTitle": "This section is waiting for its first thread",
+  "community.error.auth": "Your session has expired. Please sign in again.",
+  "community.error.body": "Enter a message.",
+  "community.error.bodyLong": "The message is too long. Please shorten it a little.",
+  "community.error.forbidden": "You do not have permission for this action. If rules were just updated, wait a minute and try again.",
+  "community.error.index": "A database index is missing. Please try again in a few minutes.",
+  "community.error.load": "Could not load the community. Please try again later.",
+  "community.error.missing": "This topic does not exist or was removed.",
+  "community.error.permission": "You do not have permission to view this content.",
+  "community.error.policy": `This content can't be published because it breaches the Community usage policy. Please revise your text and try again.`,
+  "community.error.policy.ok": "Got it",
+  "community.error.policy.title": `Can't publish`,
+  "community.error.replies": "The topic opened, but replies could not be loaded.",
+  "community.error.save": "Could not publish. Please try again later.",
+  "community.error.threadLocked": "Cannot delete: this reply has nested replies.",
+  "community.error.title": "Enter a title (max. 120 characters).",
+  "community.eyebrow": "Talk with other travellers",
+  "community.field.body": "Message",
+  "community.field.title": "Title",
+  "community.heroCta": "Browse open threads or post your own — your voice counts.",
+  "community.loading": "Loading...",
+  "community.loginHint": "Sign in to post.",
+  "community.loginLink": "Sign in",
+  "community.newTopic": "New topic",
+  "community.noReplies": "Be the first to reply.",
+  "community.pending.review": "Message pending review. It will be published when a moderator approves it.",
+  "community.placeholder.topic": "Write your message...",
+  "community.publish": "Publish",
+  "community.replica.check": "View replies",
+  "community.replica.empty": "No replies yet.",
+  "community.replica.hide": "Hide replies",
+  "community.replica.label": "Reply to {name}",
+  "community.replica.show": "Show {n} replies",
+  "community.replica.showOne": "Show 1 reply",
+  "community.replies": "Replies",
+  "community.repliesCount": "{n} replies",
+  "community.repliesCountOne": "1 reply",
+  "community.replyTo.action": "Reply",
+  "community.replyTo.clear": "Cancel",
+  "community.replyTo.label": "In reply to {name}",
+  "community.rte.bold": "Bold",
+  "community.rte.color": "Colour",
+  "community.rte.emoji": "Emoji",
+  "community.rte.italic": "Italic",
+  "community.rte.size.large": "Large",
+  "community.rte.size.normal": "Normal",
+  "community.rte.size.small": "Small",
+  "community.rte.size.xlarge": "Extra large",
+  "community.rte.underline": "Underline",
+  "community.saving": "Publishing...",
+  "community.savingEdit": "Saving...",
+  "community.search.clear": "Clear",
+  "community.search.empty": "No topics match your search in this section.",
+  "community.search.emptyTitle": "No results",
+  "community.search.label": "Search topics",
+  "community.search.placeholder": "Search by title, author or text...",
+  "community.search.results": "{n} results",
+  "community.search.searching": "Searching...",
+  "community.search.submit": "Search",
+  "community.subtitle": "Share news, ask for help, pitch ideas and talk about your trips with TourAI.",
+  "community.tabs.aria": "Sections",
+  "community.title": "Community",
+  "community.toolbar.format": "Formatting",
+  "community.user.loading": "Loading profile...",
+  "community.user.member": "TourAI community member",
+  "community.user.memberSince": "Member since {date}",
+  "community.user.open": "View profile of {name}",
+  "community.yourReply": "Your reply",
+  "contact.direct": "Direct email:",
+  "contact.email": "Email Address",
+  "contact.email.invalid": "Please enter a valid email address (e.g. name@domain.com).",
+  "contact.email.placeholder": "you@email.com",
+  "contact.error": "Failed to send. Please try again.",
+  "contact.error.notVerified": "Verify your email before sending the enquiry.",
+  "contact.error.smtp": "The message service is temporarily unavailable. Please try again later or write to info@tourai.es.",
+  "contact.heading": "Do you have a technical question?",
+  "contact.intro": "Our technical team will reply as soon as possible.",
+  "contact.message": "Message",
+  "contact.message.placeholder": "How can we help?...",
+  "contact.name": "Full Name",
+  "contact.name.placeholder": "E.g. John Smith",
+  "contact.privacy": "I have read and accept the Data Protection Information.",
+  "contact.privacy.note": "We will use your email only to answer this enquiry. No advertising or spam.",
+  "contact.subject": "Subject",
+  "contact.subject.placeholder": "E.g. App issue, business enquiry...",
+  "contact.submit": "SEND ENQUIRY TO TECHNICAL TEAM",
+  "contact.submitting": "SENDING...",
+  "contact.subtitle": "We are here to help you navigate the future of smart tourism.",
+  "contact.success": "Message sent successfully!",
+  "contact.success.title": "Message sent!",
+  "contact.title": "TourAI Contact and Support",
+  "contact.verify.button": "VERIFY EMAIL",
+  "contact.verify.checkingEmail": "Checking your email...",
+  "contact.verify.close": "Close",
+  "contact.verify.code": "Code received by email",
+  "contact.verify.code.placeholder": "000000",
+  "contact.verify.expired": "The code has expired. Request a new one.",
+  "contact.verify.intro": "We have sent a 6-digit code to your email. Enter it below to confirm your address before sending the enquiry.",
+  "contact.verify.invalidCode": "The code does not match.",
+  "contact.verify.prompt": "Verify your email to send the enquiry.",
+  "contact.verify.rateLimited": `You've requested too many codes. You won't be able to request another for {time}.`,
+  "contact.verify.rateLimitedGeneric": `You've requested too many codes. Please wait a few minutes before requesting another.`,
+  "contact.verify.required": "You must verify your email before sending the enquiry.",
+  "contact.verify.resend": "Resend code",
+  "contact.verify.resent": "A new code has been sent to your email.",
+  "contact.verify.sendError": "Could not send the verification code. Please try again.",
+  "contact.verify.sending": "Sending code...",
+  "contact.verify.sent": "Code sent. Check your inbox and spam folder.",
+  "contact.verify.spamHint": "If you do not receive the email within a few minutes, check your spam or junk folder.",
+  "contact.verify.submit": "Validate code",
+  "contact.verify.success": "Email validated successfully.",
+  "contact.verify.title": "Enter the verification code",
+  "contact.verify.verifying": "VERIFYING...",
+  "cookie.accept": "Accept",
+  "cookie.dismiss": "Got it",
+  "cookie.more": "More info",
+  "cookie.reject": "Reject",
+  "cookie.text": "We use necessary technical local storage (language, session and preferences). This website does not use advertising or third-party analytics.",
+  "dashboard.section.collapsed": "Expand to load this information.",
+  "dashboard.section.loading": "Loading...",
+  "dashboard.section.unknown": "Section unavailable.",
+  "dashboard.subtitle": "Open only the section you need: data loads when you expand it.",
+  "dashboard.title": "Dashboard",
   "deleteAccount.confirm": "I understand this action is permanent and I want to delete my account and linked personal data.",
-  "deleteAccount.submit": "DELETE MY ACCOUNT",
   "deleteAccount.deleting": "DELETING...",
-  "deleteAccount.finalConfirm": "Are you sure you want to permanently delete your account?",
-  "deleteAccount.success": "Your account has been deleted. You will receive a confirmation email.",
+  "deleteAccount.email": "Your TourAI account email",
+  "deleteAccount.email.invalid": "Enter a valid email address.",
+  "deleteAccount.email.placeholder": "you@email.com",
+  "deleteAccount.error.failed": "Could not delete the account.",
   "deleteAccount.error.notFound": "No TourAI account exists with that email.",
   "deleteAccount.error.notVerified": "You must verify your email with the code.",
-  "deleteAccount.error.failed": "Could not delete the account.",
+  "deleteAccount.finalConfirm": "Are you sure you want to permanently delete your account?",
   "deleteAccount.help": "Need help?",
   "deleteAccount.help.link": "Contact support",
   "deleteAccount.privacy.link": "Privacy policy",
+  "deleteAccount.submit": "DELETE MY ACCOUNT",
+  "deleteAccount.subtitle": "Request permanent deletion of your account and linked personal data.",
+  "deleteAccount.success": "Your account has been deleted. You will receive a confirmation email.",
+  "deleteAccount.title": "Delete TourAI account",
+  "deleteAccount.verify.button": "SEND CODE",
+  "deleteAccount.verify.close": "Close",
+  "deleteAccount.verify.code": "Code received by email",
+  "deleteAccount.verify.code.placeholder": "000000",
+  "deleteAccount.verify.expired": "The code has expired. Request a new one.",
+  "deleteAccount.verify.intro": "We sent a 6-digit code to your email. Enter it to delete your account.",
+  "deleteAccount.verify.invalidCode": "The code does not match.",
+  "deleteAccount.verify.prompt": "Verify your email with the code we will send you.",
+  "deleteAccount.verify.rateLimited": `You've requested too many codes. You won't be able to request another for {time}.`,
+  "deleteAccount.verify.resend": "Resend code",
+  "deleteAccount.verify.resent": "A new code has been sent to your email.",
+  "deleteAccount.verify.sendError": "Could not send the verification code. Please try again.",
+  "deleteAccount.verify.sending": "Sending code...",
+  "deleteAccount.verify.sent": "Code sent. Check your inbox and spam folder.",
+  "deleteAccount.verify.spamHint": "If you do not receive the email within a few minutes, check your spam or junk folder.",
+  "deleteAccount.verify.submit": "Validate code",
+  "deleteAccount.verify.success": "Email validated successfully.",
+  "deleteAccount.verify.successNext": "Continue with the on-screen steps to permanently delete your account.",
+  "deleteAccount.verify.successTitle": "Code validated successfully",
+  "deleteAccount.verify.title": "Confirm deletion",
+  "deleteAccount.verify.verifying": "VERIFYING...",
+  "deleteAccount.warning": `This action is irreversible. Your account and usage trail are deleted, including your reviews and the record of places presented by the guide. The shared catalogue is not removed. Community posts are anonymised as "Anonymous" (the thread text may remain without your name, email or identifier).`,
+  "doc.meta.about": "Meet the team behind TourAI, the smart tourism app with personalised guides and artificial intelligence.",
+  "doc.meta.account": "TourAI profile: view your name, email and account type.",
+  "doc.meta.audio-guides-vs-group-tours": "Honest comparison between mobile audio guides and group tours: freedom, price, cultural depth and when to choose each option.",
+  "doc.meta.blog": "TourAI blog: travel guides, smart tourism tips, destinations and news about our AI-powered app.",
+  "doc.meta.community": "TourAI community: news, help, ideas and travel tips.",
+  "doc.meta.contact": "Contact the TourAI team for technical support, business enquiries or information about the smart tourism app.",
+  "doc.meta.cookies": "TourAI cookie policy: technical website cookies and AdMob advertising in the app.",
+  "doc.meta.dashboard": "TourAI dashboard: open plans, usage allowance and payments only when you need them.",
+  "doc.meta.deleteAccount": "Delete your TourAI account and linked personal data with email verification.",
+  "doc.meta.faq": "TourAI FAQ: website, app, launch alerts, privacy, cookies, contact and support.",
+  "doc.meta.guides": "TourAI smart audio guides: GPS narrations, curated content and AI to explore cities.",
+  "doc.meta.index": "TourAI: AI-powered travel guide app with chat, voice, maps and GPS narration. Official website and account access.",
+  "doc.meta.kyoto-7-days": "7-day Kyoto itinerary for independent travellers: temples, Gion, Arashiyama, Nara and practical seasonal tips.",
+  "doc.meta.lisbon-algarve-spring": "Spring getaway to Lisbon and the Algarve: neighbourhoods, beaches, gastronomy and a 5-day route through Portugal.",
+  "doc.meta.login": "Sign in to TourAI to access your account, plans and private web area.",
+  "doc.meta.mobile-travel-gps-privacy": "Guide to using your mobile when travelling: data, GPS, eSIM, battery saving and location privacy abroad.",
+  "doc.meta.plan-trip-with-ai": "Practical guide to planning a trip with artificial intelligence: itineraries, budget, documentation and tips for 2026.",
+  "doc.meta.privacy": "TourAI privacy policy: data processing, geolocation, advertising, GDPR rights and contact.",
+  "doc.meta.register": "Create your TourAI account from the website to access the private area.",
+  "doc.meta.resetPassword": "Reset your TourAI account password from a secure link sent by email.",
+  "doc.meta.reviews": "TourAI reviews: optionally rate the website and the app with stars and an optional comment.",
+  "doc.meta.targets": "TourAI destinations 2026: recommended routes and travel trends for independent travellers.",
+  "doc.meta.terms": "TourAI terms and conditions for the website and mobile smart tourism app.",
+  "doc.meta.visit-monuments-without-crowds": "Practical tips for visiting monuments and museums without crowds: timings, bookings, alternative routes and technology.",
+  "doc.meta.what-is-tourai": "Discover what TourAI is, how its AI tour guide works and what sets it apart from a conventional map app.",
+  "doc.meta.whatsNew": "TourAI release notes and version history.",
+  "doc.title.about": "About us - TourAI",
+  "doc.title.account": "Profile - TourAI",
+  "doc.title.audio-guides-vs-group-tours": "Audio guides vs group tours: advantages for independent travellers",
+  "doc.title.blog": "Travel blog and smart tourism - TourAI",
+  "doc.title.community": "Community - TourAI",
+  "doc.title.contact": "Contact - TourAI",
+  "doc.title.cookies": "Cookie Policy - TourAI",
+  "doc.title.dashboard": "Dashboard - TourAI",
+  "doc.title.deleteAccount": "Delete account - TourAI",
+  "doc.title.faq": "FAQ - TourAI Help Centre",
+  "doc.title.guides": "Smart Audio Guides - TourAI",
+  "doc.title.index": "TourAI - The Future of Smart Tourism 2026",
+  "doc.title.kyoto-7-days": "Kyoto in 7 days: cultural route for independent travellers",
+  "doc.title.lisbon-algarve-spring": "Lisbon and the Algarve: spring getaway in Portugal",
+  "doc.title.login": "Sign in - TourAI",
+  "doc.title.mobile-travel-gps-privacy": "Travelling with your mobile: data, GPS and privacy abroad",
+  "doc.title.plan-trip-with-ai": "How to plan a trip with artificial intelligence in 2026",
+  "doc.title.privacy": "Privacy - TourAI",
+  "doc.title.register": "Create account - TourAI",
+  "doc.title.resetPassword": "Reset password - TourAI",
+  "doc.title.reviews": "Reviews - TourAI",
+  "doc.title.targets": "Destinations 2026 - TourAI",
+  "doc.title.terms": "Terms and Conditions - TourAI",
+  "doc.title.visit-monuments-without-crowds": "How to visit monuments without crowds",
+  "doc.title.what-is-tourai": "What is TourAI and how your smart guide works",
+  "doc.title.whatsNew": `What's New - TourAI`,
+  "faq.subtitle": "Help about the website, the app, privacy, launch alerts and contact.",
+  "faq.title": "Frequently Asked Questions",
+  "feedback.close": "Got it",
+  "feedback.error.title": "Could not complete the action.",
+  "feedback.info.title": "Action required",
+  "feedback.success.title": "All done!",
+  "footer.about": "About us",
+  "footer.cookies": "Cookies",
+  "footer.deleteAccount": "Delete account",
+  "footer.explore": "Explore",
+  "footer.facebook": "Facebook",
+  "footer.faq": "FAQ",
+  "footer.follow": "Follow us",
+  "footer.help": "Help",
+  "footer.instagram": "Instagram",
+  "footer.legal": "Legal",
+  "footer.privacy": "Privacy",
   "footer.rights": "All rights reserved.",
-  "cookie.text": "We use necessary technical local storage (language, session and preferences). This website does not use advertising or third-party analytics.",
-  "cookie.more": "More info",
-  "cookie.dismiss": "Got it",
-  "index.hero.title": "TourAI: your AI-powered travel guide",
-  "index.hero.subtitle": "Chat, voice, maps and GPS audio guides to explore every city at your pace. This website is the gateway to the app and your account.",
-  "index.waitlist.title": "Get the launch notification",
-  "index.waitlist.intro": "The TourAI app will be published on the App Store and Google Play. Leave your email and we will notify you as soon as it is available to download.",
-  "index.waitlist.ios": "Notify me on the App Store (iOS)",
-  "index.waitlist.android": "Notify me on Google Play (Android)",
+  "footer.terms": "Terms",
+  "footer.whatsNew": `What's New`,
+  "forms.error.generic": "Could not complete the action.",
+  "img.logo.alt": "TourAI icon",
+  "img.logo.wordmark": "TourAI",
   "index.download.title": "Coming soon on",
-  "index.modal.title": "Early Access",
-  "index.modal.text": "The {platform} version is almost ready. Subscribe to receive the direct download link.",
+  "index.download.unsubscribe": "Manage or cancel launch alerts",
+  "index.hero.subtitle": "Chat, voice, maps and GPS audio guides to explore every city at your pace. This website is the gateway to the app and your account.",
+  "index.hero.title": "TourAI: your AI-powered travel guide",
+  "index.modal.alreadySubscribed": "This email already has an alert enabled for {platform}. To subscribe to the other store, select it and complete the process again.",
+  "index.modal.alreadySubscribed.title": "Already subscribed",
   "index.modal.email": "Your email address",
+  "index.modal.error": "There was an error processing your subscription. Please try again.",
   "index.modal.privacy": "I agree to receive the launch notification and accept the privacy policy.",
   "index.modal.privacyRequired": "You must accept launch alerts and the privacy policy to continue.",
   "index.modal.submit": "Enable Alert",
   "index.modal.submitting": "ENABLING...",
   "index.modal.success": "We will notify you as soon as the app is available in the store.",
-  "index.modal.alreadySubscribed.title": "Already subscribed",
-  "index.modal.alreadySubscribed": "This email already has an alert enabled for {platform}. To subscribe to the other store, select it and complete the process again.",
-  "index.modal.unsubscribeLink": "Want to unsubscribe from launch alerts?",
-  "index.download.unsubscribe": "Manage or cancel launch alerts",
-  "unsubscribe.title": "Manage launch alerts",
-  "unsubscribe.intro": "Enter your email to verify your identity and cancel App Store or Google Play alerts.",
-  "unsubscribe.viewSubscriptions": "View subscriptions",
-  "unsubscribe.selectStores": "Select the stores you want to unsubscribe from:",
-  "unsubscribe.store.ios": "App Store (iOS)",
-  "unsubscribe.store.android": "Google Play (Android)",
-  "unsubscribe.none": "You do not have any active alerts with this email.",
-  "unsubscribe.submit": "Unsubscribe",
-  "unsubscribe.submitting": "PROCESSING...",
-  "unsubscribe.successTitle": "Unsubscribed",
-  "unsubscribe.success": "We have cancelled the selected alerts. You will no longer receive notifications for those stores.",
-  "unsubscribe.error": "We could not complete the unsubscribe request. Please try again.",
-  "unsubscribe.statusError": "We could not check your alerts. Please try again.",
-  "unsubscribe.checkingEmail": "Checking for active alerts...",
-  "unsubscribe.verifyUnregistered":
-    "This email has no registered alerts. Verify your identity to double-check.",
-  "unsubscribe.selectRequired": "Select at least one store to unsubscribe from.",
-  "index.modal.error": "There was an error processing your subscription. Please try again.",
-  "contact.title": "TourAI Contact and Support",
-  "contact.subtitle": "We are here to help you navigate the future of smart tourism.",
-  "contact.heading": "Do you have a technical question?",
-  "contact.intro": "Our technical team will reply as soon as possible.",
-  "contact.name": "Full Name",
-  "contact.name.placeholder": "E.g. John Smith",
-  "contact.email": "Email Address",
-  "contact.email.placeholder": "you@email.com",
-  "contact.subject": "Subject",
-  "contact.subject.placeholder": "E.g. App issue, business enquiry...",
-  "contact.message": "Message",
-  "contact.message.placeholder": "How can we help?...",
-  "contact.privacy": "I have read and accept the Data Protection Information.",
-  "contact.privacy.note": "We will use your email only to answer this enquiry. No advertising or spam.",
-  "contact.submit": "SEND ENQUIRY TO TECHNICAL TEAM",
-  "contact.submitting": "SENDING...",
-  "contact.success": "Message sent successfully!",
-  "contact.error": "Failed to send. Please try again.",
-  "contact.email.invalid": "Please enter a valid email address (e.g. name@domain.com).",
-  "contact.verify.title": "Enter the verification code",
-  "contact.verify.intro": "We have sent a 6-digit code to your email. Enter it below to confirm your address before sending the enquiry.",
-  "contact.verify.code": "Code received by email",
-  "contact.verify.code.placeholder": "000000",
-  "contact.verify.submit": "Validate code",
-  "contact.verify.verifying": "VERIFYING...",
-  "contact.verify.resend": "Resend code",
-  "contact.verify.close": "Close",
-  "contact.verify.spamHint": "If you do not receive the email within a few minutes, check your spam or junk folder.",
-  "contact.verify.sending": "Sending code...",
-  "contact.verify.sent": "Code sent. Check your inbox and spam folder.",
-  "contact.verify.resent": "A new code has been sent to your email.",
-  "contact.verify.success": "Email validated successfully.",
-  "contact.verify.required": "You must verify your email before sending the enquiry.",
-  "contact.verify.prompt": "Verify your email to send the enquiry.",
-  "contact.verify.checkingEmail": "Checking your email...",
-  "contact.verify.button": "VERIFY EMAIL",
-  "contact.verify.invalidCode": "The code does not match.",
-  "contact.verify.expired": "The code has expired. Request a new one.",
-  "contact.verify.rateLimited": "You've requested too many codes. You won't be able to request another for {time}.",
-  "contact.verify.rateLimitedGeneric": "You've requested too many codes. Please wait a few minutes before requesting another.",
-  "contact.verify.sendError": "Could not send the verification code. Please try again.",
-  "forms.error.generic": "Could not complete the action.",
-  "contact.error.notVerified": "Verify your email before sending the enquiry.",
-  "contact.error.smtp": "The message service is temporarily unavailable. Please try again later or write to info@tourai.es.",
-  "loading.processing": "Processing...",
-  "feedback.success.title": "All done!",
-  "feedback.error.title": "Could not complete the action.",
-  "feedback.info.title": "Action required",
-  "feedback.close": "Got it",
   "index.modal.successTitle": "Alert enabled!",
-  "contact.success.title": "Message sent!",
-  "contact.direct": "Direct email:",
-  "faq.title": "Frequently Asked Questions",
-  "faq.subtitle": "Help about the website, the app, privacy, launch alerts and contact.",
+  "index.modal.text": "The {platform} version is almost ready. Subscribe to receive the direct download link.",
+  "index.modal.title": "Early Access",
+  "index.modal.unsubscribeLink": "Want to unsubscribe from launch alerts?",
+  "index.waitlist.android": "Notify me on Google Play (Android)",
+  "index.waitlist.intro": "The TourAI app will be published on the App Store and Google Play. Leave your email and we will notify you as soon as it is available to download.",
+  "index.waitlist.ios": "Notify me on the App Store (iOS)",
+  "index.waitlist.title": "Get the launch notification",
+  "lang.en": "English",
+  "lang.es": "Spanish",
+  "lang.switcher": "Language",
+  "legal.reaccept.accept": "I have read and accept",
+  "legal.reaccept.body": "We have updated the Terms and Conditions and/or the Privacy Policy. Read them here and accept to continue (one acceptance covers the app and the website with the same account).",
+  "legal.reaccept.decline": "I do not accept · Sign out",
+  "legal.reaccept.error": "The documents could not be loaded. Check your connection and try again.",
+  "legal.reaccept.hint": "If you do not accept, you will be signed out. You can still browse public pages, but not your account area until you accept.",
+  "legal.reaccept.loading": "Loading documents…",
+  "legal.reaccept.tab.privacy": "Privacy",
+  "legal.reaccept.tab.terms": "Terms",
+  "legal.reaccept.title": "Legal documents updated",
+  "loading.processing": "Processing...",
+  "login.createHint": `Don't have an account yet? <a href="register.html">Create one here</a>. You can also <a href="delete-account.html">delete an account</a>.`,
+  "login.email": "Email address",
+  "login.email.placeholder": "you@email.com",
+  "login.error.apiKey": "The web access key is not valid. Check the Firebase configuration.",
+  "login.error.config": "Sign-in configuration is not available. For local testing, copy js/site-config.secrets.js and serve the site over http://localhost (do not open the HTML file directly).",
+  "login.error.credentials": "Incorrect email or password.",
+  "login.error.disabled": "This account is disabled.",
+  "login.error.fileProtocol": "Firebase Auth does not work with file://. Open the site with a local server (e.g. npx serve) or on https://tourai.es after deploy.",
+  "login.error.forgotEmail": "Enter your email so we can send a reset link.",
+  "login.error.generic": "Could not sign in. Please try again.",
+  "login.error.invalidEmail": "Enter a valid email address.",
+  "login.error.network": "Network error. Check your connection.",
+  "login.error.rateLimited": "Too many attempts. Please wait a few minutes.",
+  "login.error.referrer": "This origin is not allowed for the Firebase key. Try https://tourai.es or add the domain in Google Cloud (HTTP referrer restrictions).",
+  "login.error.required": "Enter your email and password.",
+  "login.error.unauthorizedDomain": "This domain is not authorised in Firebase Authentication.",
+  "login.forgot": "Recover password",
+  "login.password": "Password",
+  "login.password.placeholder": "Your password",
+  "login.remember": "Remember me on this device",
+  "login.reset.confirm": "A password reset link will be sent to {email}. Continue?",
+  "login.reset.title": "Recover password",
+  "login.status.redirecting": "Signed in. Redirecting...",
+  "login.status.resetSending": "Sending reset link...",
+  "login.status.resetSent": "If an account exists for that email, you will receive a password reset link. Please also check your spam folder.",
+  "login.status.signingIn": "Signing in...",
+  "login.submit": "Sign in",
+  "login.subtitle": "Sign in with your TourAI account (the same as in the app) to open your private area.",
+  "login.title": "Sign in",
+  "nav.account": "My account",
+  "nav.accountSignedIn": "Hi, {name}",
+  "nav.accountSignedInGeneric": "My account",
+  "nav.app": "The App",
+  "nav.community": "Community",
+  "nav.contact": "Contact",
+  "nav.reviews": "Reviews",
+  "page.about.content": `<h2>Who are we?</h2>
+        <p><strong>TourAI</strong> is an independent digital tourism project created by <strong>Jordi Perelló</strong>, a developer and travel enthusiast based in Spain. We were born from a simple idea: that anyone should be able to explore a city with the same depth they would get from a local guide, but at their own pace, in their own language and from their mobile.</p>
+        <p>This website, <strong>tourai.es</strong>, is the official portal of the project: information about the app, contact, support and access to the private account area for registered users.</p>
 
-  "doc.title.index": "TourAI - The Future of Smart Tourism 2026",
-  "doc.title.about": "About us - TourAI",
-  "doc.title.blog": "Travel blog and smart tourism - TourAI",
-  "doc.title.guides": "Smart Audio Guides - TourAI",
-  "doc.title.targets": "Destinations 2026 - TourAI",
-  "doc.title.contact": "Contact - TourAI",
-  "doc.title.faq": "FAQ - TourAI Help Centre",
-  "doc.title.privacy": "Privacy - TourAI",
-  "doc.title.terms": "Terms and Conditions - TourAI",
-  "doc.title.cookies": "Cookie Policy - TourAI",
-  "doc.title.what-is-tourai": "What is TourAI and how your smart guide works",
-  "doc.title.plan-trip-with-ai": "How to plan a trip with artificial intelligence in 2026",
-  "doc.title.audio-guides-vs-group-tours": "Audio guides vs group tours: advantages for independent travellers",
-  "doc.title.kyoto-7-days": "Kyoto in 7 days: cultural route for independent travellers",
-  "doc.title.visit-monuments-without-crowds": "How to visit monuments without crowds",
-  "doc.title.mobile-travel-gps-privacy": "Travelling with your mobile: data, GPS and privacy abroad",
-  "doc.title.lisbon-algarve-spring": "Lisbon and the Algarve: spring getaway in Portugal",
+        <h2>What does TourAI do?</h2>
+        <p>TourAI is a mobile application that combines <strong>artificial intelligence</strong>, <strong>geolocation</strong> and <strong>audio guides</strong> to offer a personalised travel experience:</p>
+        <ul>
+            <li><strong>AI chat:</strong> ask about monuments, history, restaurants or transport and receive contextualised answers.</li>
+            <li><strong>Voice queries:</strong> interact with the app whilst walking, without stopping to type.</li>
+            <li><strong>Interactive maps:</strong> discover nearby points of interest and start GPS-guided walks.</li>
+            <li><strong>Immersive audio guides:</strong> listen to narrations triggered by your location as you approach each point.</li>
+            <li><strong>Freemium and Premium model:</strong> free access with a daily usage allowance, or paid plans without advertising.</li>
+        </ul>
+        <p>The application is currently in development and testing. The iOS and Android versions will be published in the official stores when they are ready.</p>
 
-  "doc.meta.about": "Meet the team behind TourAI, the smart tourism app with personalised guides and artificial intelligence.",
-  "doc.meta.index": "TourAI: AI-powered travel guide app with chat, voice, maps and GPS narration. Official website and account access.",
-  "doc.meta.blog": "TourAI blog: travel guides, smart tourism tips, destinations and news about our AI-powered app.",
-  "doc.meta.contact": "Contact the TourAI team for technical support, business enquiries or information about the smart tourism app.",
-  "doc.meta.cookies": "TourAI cookie policy: technical website cookies and AdMob advertising in the app.",
-  "doc.meta.faq": "TourAI FAQ: website, app, launch alerts, privacy, cookies, contact and support.",
-  "doc.meta.guides": "TourAI smart audio guides: GPS narrations, curated content and AI to explore cities.",
-  "doc.meta.privacy": "TourAI privacy policy: data processing, geolocation, advertising, GDPR rights and contact.",
-  "doc.meta.terms": "TourAI terms and conditions for the website and mobile smart tourism app.",
-  "doc.meta.targets": "TourAI destinations 2026: recommended routes and travel trends for independent travellers.",
-  "doc.meta.what-is-tourai": "Discover what TourAI is, how its AI tour guide works and what sets it apart from a conventional map app.",
-  "doc.meta.plan-trip-with-ai": "Practical guide to planning a trip with artificial intelligence: itineraries, budget, documentation and tips for 2026.",
-  "doc.meta.audio-guides-vs-group-tours": "Honest comparison between mobile audio guides and group tours: freedom, price, cultural depth and when to choose each option.",
-  "doc.meta.kyoto-7-days": "7-day Kyoto itinerary for independent travellers: temples, Gion, Arashiyama, Nara and practical seasonal tips.",
-  "doc.meta.visit-monuments-without-crowds": "Practical tips for visiting monuments and museums without crowds: timings, bookings, alternative routes and technology.",
-  "doc.meta.mobile-travel-gps-privacy": "Guide to using your mobile when travelling: data, GPS, eSIM, battery saving and location privacy abroad.",
-  "doc.meta.lisbon-algarve-spring": "Spring getaway to Lisbon and the Algarve: neighbourhoods, beaches, gastronomy and a 5-day route through Portugal.",
+        <h2>Our mission</h2>
+        <p>We want to democratise access to quality cultural information. We believe that travelling should not depend on booking expensive tours or carrying outdated printed guides. TourAI offers a freemium model in the app with optional Premium plans.</p>
 
+        <div class="info-box">
+            <strong>Direct contact</strong><br>
+            Email: <a href="mailto:info@tourai.es">info@tourai.es</a><br>
+            Web: <a href="https://tourai.es">https://tourai.es</a><br>
+            Project lead: Jordi Perelló
+        </div>
+
+        <h2>Transparency and compliance</h2>
+        <p>We comply with European data protection law (GDPR). You can read our <a href="privacy.html">privacy policy</a>, <a href="terms.html">terms of use</a> and information about <a href="cookies.html">cookies</a>. If you have any questions, write to us from the <a href="contact.html">contact</a> page or check the <a href="faq.html">frequently asked questions</a>.</p>`,
+  "page.about.header": `<h1>About TourAI</h1>
+        <p>Smart, personalised and accessible tourism for every traveller.</p>`,
+  "page.contact.privacyModal": `<h3>Data Protection</h3>
+            <ul>
+                <li><strong>Controller:</strong> Jordi Perelló (TourAI project / TourAI App).</li>
+                <li><strong>Purpose:</strong> Handling and responding to the enquiry submitted. The data will not be used for advertising purposes.</li>
+                <li><strong>Legal basis:</strong> Consent by ticking the box.</li>
+                <li><strong>Recipients:</strong> Data will not be disclosed to third parties for their own commercial purposes. Providers that supply hosting, authentication, database or email-sending services may access the data, acting as processors under TourAI's instructions.</li>
+                <li><strong>Rights:</strong> Access, rectification, erasure, restriction, portability and objection by writing to <a href="mailto:info@tourai.es">info@tourai.es</a>. <strong>Account deletion</strong> is automatic from the app or the <a href="delete-account.html">Delete account</a> page.</li>
+            </ul>
+            <p style="font-size: 0.8em; color: #888; margin-top: 20px;">For further details, please see our full Privacy Policy.</p>`,
+  "page.cookies.content": `<main class="container legal-content">
+            <h2 style="margin-top:0;">1. What are Cookies?</h2>
+            <p><strong>Last updated:</strong> 30 July 2026.</p>
+            <p>Cookies are small text files that websites store in your browser to remember information about your visit. In the mobile App, where advertising applies, we use equivalent advertising identifiers (IDFA or AAID). Similar browser local-storage technologies may also be used (for example, <code>localStorage</code>).</p>
+            
+            <h2>2. Types of Cookies we use</h2>
+            <table>
+                <thead>
+                    <tr><th>Category</th><th>Purpose</th><th>Persistence</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Technical</strong></td><td>Essential for operation: interface language, account session in the private area (authentication), technical form states (for example, email verification on contact, account deletion or launch-alert management) and the record of your choice on the cookie banner (<code>cookies-aceptadas</code>).</td><td>Session / up to 1 year</td></tr>
+                    <tr><td><strong>Preference</strong></td><td>Website language chosen by the user (stored locally in the browser).</td><td>Until you change it or clear the site data</td></tr>
+                </tbody>
+            </table>
+            <p>Volume settings or the last destination consulted in the <strong>app</strong> are saved on the device as local application preferences; <strong>they are not website cookies</strong>.</p>
+            <p>The average rating shown on the website is obtained from our servers; it does <strong>not</strong> involve third-party advertising or analytics cookies.</p>
+
+            <h2>3. Advertising</h2>
+            <p><strong>tourai.es does not use advertising or advertising cookies on the website.</strong> In the app we use <strong>AdMob</strong> in the free version. That platform may use advertising identifiers to show interest-based adverts, subject to your consent when the rules so require. Users with an <strong>active Premium Plan</strong> will not see advertising in the app while the plan is in force.</p>
+
+            <h2>4. How to manage Cookies</h2>
+            <p>You may block or delete them in your browser settings (Chrome, Safari, etc.) or reset your advertising ID in your smartphone privacy settings (iOS/Android). To see the tourai.es cookie banner again, clear the site data (including the <code>cookies-aceptadas</code> key) in your browser.</p>
+        </main>
+
+        <aside class="sidebar">
+            <div class="sidebar-card">
+                <h3>🛡️ Private Browsing</h3>
+                <p style="font-size: 0.9em; margin: 0;">Communication with tourai.es is carried out over HTTPS. Local preferences (language, cookie notice) are stored in your browser only for as long as you keep them.</p>
+            </div>
+
+        </aside>`,
+  "page.cookies.header": `<h1>Cookie Policy</h1>
+        <p>Full transparency about the tracking technologies we use.</p>`,
+  "page.faq.content": `<div class="faq-item">
+            <div class="faq-question">What is TourAI?</div>
+            <div class="faq-answer">
+                <p><strong>TourAI</strong> is a digital tourism project centred on a <strong>mobile app with artificial intelligence</strong> (chat, voice, maps and GPS audio guides). This website is the official landing page: product information, contact, support and access to your account.</p>
+                <p>You can read more in <a href="about.html">About us</a>.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Can I use tourai.es without downloading the app?</div>
+            <div class="faq-answer">
+                <p>Yes. The website is public: you can learn about the product, contact us or join the launch waitlist without an account. The <a href="login.html" data-auth-account>My account</a> area requires signing in.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">When will the application be available?</div>
+            <div class="faq-answer">
+                <p>The iOS and Android app is in the final stage of development. When it is published in the official stores, we will also announce it on this website.</p>
+                <p>If you want to receive an <strong>automatic email</strong> at launch, join the waitlist at the bottom of this page or from the <a href="index.html">home page</a>.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How do launch alerts work?</div>
+            <div class="faq-answer">
+                <p>Choose your platform (iOS or Android), enter your email, verify your identity and agree to receive only the availability notice. <strong>We do not sell or share your email for third-party advertising</strong>; to send the notice we may use email providers that process the data on behalf of TourAI, in accordance with our <a href="privacy.html">privacy policy</a>.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How do I unsubscribe from alerts?</div>
+            <div class="faq-answer">
+                <p>You can cancel App Store or Google Play alerts from the <strong>"Manage or cancel launch alerts"</strong> link on the home page or at the bottom of this page. Before listing or cancelling, you must prove ownership of the email with a verification code, or by being signed in on tourai.es with the same email. You can also write to <a href="mailto:info@tourai.es">info@tourai.es</a>.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How does TourAI protect my personal data?</div>
+            <div class="faq-answer">
+                <p>TourAI only uses, as account identification data, your <strong>email address</strong> (essential to use the service), your <strong>display name or alias</strong> and, optionally, your <strong>date of birth</strong> for birthday bonuses. If you do not want your email to be used, you must delete the account (app or website). We comply with the GDPR: you may exercise your rights and consult the processing detail, including Community anonymisation, in the <a href="privacy.html">privacy policy</a>.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Does tourai.es use cookies or advertising?</div>
+            <div class="faq-answer">
+                <p>We use technical cookies necessary for the site (for example language and preferences). <strong>This website does not display advertising</strong>. AdMob may be used in the free app. See the <a href="cookies.html">cookie policy</a>.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How can I contact the team?</div>
+            <div class="faq-answer">
+                <p>Use the <a href="contact.html">contact form</a> or write directly to <a href="mailto:info@tourai.es">info@tourai.es</a>. We respond to technical, commercial and privacy enquiries.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">In which languages is TourAI available?</div>
+            <div class="faq-answer">
+                <p>The website and the app are designed for <strong>Spanish (Spain)</strong> and <strong>English (United Kingdom)</strong>. You can change the language with the language buttons in the top menu.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Will TourAI be free?</div>
+            <div class="faq-answer">
+                <p>Yes, with a <strong>freemium</strong> model in the app: free access with a daily usage allowance (may include AdMob advertising). There will be temporary Premium plans for more allowance and an advert-free experience. More details on the <a href="index.html">home page</a> and in the <a href="terms.html">terms of use</a>.</p>
+            </div>
+        </div>`,
+  "page.faq.modal.consent": `I agree to receive the launch notification and the <span class="toggle-terms" onclick="toggleTerms()">privacy policy</span>.`,
+  "page.faq.modal.privacyTerms": `<strong>Basic information on data protection:</strong><br>
+                        TourAI will use your email exclusively to send you the availability notice for the application on the selected platform. We will not sell or share your data for third-party advertising; sending may be carried out through email providers acting as processors. You may request cancellation at any time by writing to info@tourai.es. By ticking the box, you confirm that you are over 16 years of age.`,
+  "page.guides.content": `<main class="container">
+            <h2 style="margin-top: 0;">Explore the world at your own pace</h2>
+            <p><strong>TourAI</strong> audio guides remove the need for rigid groups and strict timetables. Discover the history of the world's most fascinating cities with professional, immersive narration.</p>
+            
+            <div class="feature-box">
+                <h3>🎙️ High-Quality Narration</h3>
+                <p>No robotic voices. Enjoy clear, fluent voiceovers designed to immerse you fully in the cultural context of each monument.</p>
+            </div>
+
+            <div class="feature-box">
+                <h3>📍 Location Activation</h3>
+                <p>The app detects your GPS position and suggests nearby points of interest automatically. Just press <em>play</em> and walk.</p>
+            </div>
+
+            <div class="feature-box">
+                <h3>📚 Curated Content</h3>
+                <p>Accurate facts, local anecdotes and historical secrets you will not find in conventional paper guidebooks.</p>
+            </div>
+
+            <div class="feature-box">
+                <h3>🎤 Voice control</h3>
+                <p>During your walk you can pause, skip ahead or ask for more detail using voice commands with the MAX assistant.</p>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="sidebar-info">
+                <h4>Languages</h4>
+                <p>The app is available in <strong>Spanish</strong> and <strong>English</strong>. You can change the language from the side menu.</p>
+            </div>
+
+            <div class="sidebar-info" style="background: #eefdf3; border-color: #4caf50;">
+                <h4>Internet connection</h4>
+                <p>Maps, AI and narrations require a connection. Voice commands are processed on your device.</p>
+            </div>
+        </aside>`,
+  "page.guides.header": `<h1>Immersive Audio Guides</h1>
+        <p>Your own personal guide, straight into your ears.</p>`,
   "page.index.content": `<p class="app-coming-note">The TourAI mobile app is in its final development phase. You can learn about the product here, join the launch waitlist and, if you already have an account, open <a href="login.html" data-auth-account>My account</a>.</p>
 
         <section class="feature-block">
@@ -618,7 +703,7 @@ window.TourAiEnGBMessages = {
             <img src="https://img.freepik.com/premium-photo/young-female-tourist-using-smartphone-platform-applications-helping-tourism-about-travel-map-gps_35674-17150.jpg?w=2000" alt="Traveller using a tourism app on a smartphone" class="app-img" loading="lazy" width="800" height="400">
         </section>
 
-        <p class="app-coming-note">The website is public: anyone can learn about the product. The <a href="login.html" data-auth-account>My account</a> area requires signing in with the same app account. Later you will also be able to view your plans and purchase them from here.</p>
+        <p class="app-coming-note">The website is public: anyone can learn about the product. The <a href="login.html" data-auth-account>My account</a> area requires signing in with the same app account. If you already have an account, you can also <a href="dashboard.html#buy-plans">buy Premium plans</a> from the dashboard.</p>
 
         <h2>App features</h2>
         <div class="services-grid">
@@ -658,85 +743,9 @@ window.TourAiEnGBMessages = {
                 <p>Interface and content in Spanish (Spain) and English (United Kingdom).</p>
             </div>
         </div>`,
-
-
-  "page.about.header": `<h1>About TourAI</h1>
-        <p>Smart, personalised and accessible tourism for every traveller.</p>`,
-
-  "page.about.content": `<h2>Who are we?</h2>
-        <p><strong>TourAI</strong> is an independent digital tourism project created by <strong>Jordi Perelló</strong>, a developer and travel enthusiast based in Spain. We were born from a simple idea: that anyone should be able to explore a city with the same depth they would get from a local guide, but at their own pace, in their own language and from their mobile.</p>
-        <p>This website, <strong>tourai.es</strong>, is the official portal of the project: information about the app, contact, support and access to the private account area for registered users.</p>
-
-        <h2>What does TourAI do?</h2>
-        <p>TourAI is a mobile application that combines <strong>artificial intelligence</strong>, <strong>geolocation</strong> and <strong>audio guides</strong> to offer a personalised travel experience:</p>
-        <ul>
-            <li><strong>AI chat:</strong> ask about monuments, history, restaurants or transport and receive contextualised answers.</li>
-            <li><strong>Voice queries:</strong> interact with the app whilst walking, without stopping to type.</li>
-            <li><strong>Interactive maps:</strong> discover nearby points of interest and start GPS-guided walks.</li>
-            <li><strong>Immersive audio guides:</strong> listen to narrations triggered by your location as you approach each point.</li>
-            <li><strong>Freemium and Premium model:</strong> free access with a daily usage allowance, or paid plans without advertising.</li>
-        </ul>
-        <p>The application is currently in development and testing. The iOS and Android versions will be published in the official stores when they are ready.</p>
-
-        <h2>Our mission</h2>
-        <p>We want to democratise access to quality cultural information. We believe that travelling should not depend on booking expensive tours or carrying outdated printed guides. TourAI offers a freemium model in the app with optional Premium plans.</p>
-
-        <div class="info-box">
-            <strong>Direct contact</strong><br>
-            Email: <a href="mailto:info@tourai.es">info@tourai.es</a><br>
-            Web: <a href="https://tourai.es">https://tourai.es</a><br>
-            Project lead: Jordi Perelló
-        </div>
-
-        <h2>Transparency and compliance</h2>
-        <p>We comply with European data protection law (GDPR). You can read our <a href="privacy.html">privacy policy</a>, <a href="terms.html">terms of use</a> and information about <a href="cookies.html">cookies</a>. If you have any questions, write to us from the <a href="contact.html">contact</a> page or check the <a href="faq.html">frequently asked questions</a>.</p>`,
-
-  "page.guides.header": `<h1>Immersive Audio Guides</h1>
-        <p>Your own personal guide, straight into your ears.</p>`,
-
-  "page.guides.content": `<main class="container">
-            <h2 style="margin-top: 0;">Explore the world at your own pace</h2>
-            <p><strong>TourAI</strong> audio guides remove the need for rigid groups and strict timetables. Discover the history of the world's most fascinating cities with professional, immersive narration.</p>
-            
-            <div class="feature-box">
-                <h3>🎙️ High-Quality Narration</h3>
-                <p>No robotic voices. Enjoy clear, fluent voiceovers designed to immerse you fully in the cultural context of each monument.</p>
-            </div>
-
-            <div class="feature-box">
-                <h3>📍 Location Activation</h3>
-                <p>The app detects your GPS position and suggests nearby points of interest automatically. Just press <em>play</em> and walk.</p>
-            </div>
-
-            <div class="feature-box">
-                <h3>📚 Curated Content</h3>
-                <p>Accurate facts, local anecdotes and historical secrets you will not find in conventional paper guidebooks.</p>
-            </div>
-
-            <div class="feature-box">
-                <h3>🎤 Voice control</h3>
-                <p>During your walk you can pause, skip ahead or ask for more detail using voice commands with the MAX assistant.</p>
-            </div>
-        </main>
-
-        <aside class="sidebar">
-            <div class="sidebar-info">
-                <h4>Languages</h4>
-                <p>The app is available in <strong>Spanish</strong> and <strong>English</strong>. You can change the language from the side menu.</p>
-            </div>
-
-            <div class="sidebar-info" style="background: #eefdf3; border-color: #4caf50;">
-                <h4>Internet connection</h4>
-                <p>Maps, AI and narrations require a connection. Voice commands are processed on your device.</p>
-            </div>
-        </aside>`,
-
-  "page.privacy.header": `<h1>Privacy and Transparency</h1>
-        <p>Committed to protecting your experience and your personal data.</p>`,
-
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
-            <p><strong>Last updated:</strong> 1 August 2026.</p>
+            <p><strong>Last updated:</strong> 3 August 2026.</p>
             <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we regard our users' privacy as a fundamental pillar. This policy explains how we manage information to ensure that the use of our intelligent audio guides and associated website services (account, community and reviews) is safe and transparent.</p>
 
             <h2>2. Data controller</h2>
@@ -768,7 +777,7 @@ window.TourAiEnGBMessages = {
                 <li><strong>Reviews and ratings:</strong> Rating is <strong>voluntary</strong>: you are not obliged to submit a review to use TourAI. If you choose to submit a rating on <a href="reviews.html">Reviews</a>, we process the stars (required to complete submission), the optional comment, the rated target (web or app), your account identifier, the displayed name or alias and the moderation status. Reviews <strong>are not published until a moderator approves them</strong>. Once approved, they are public. We also retain aggregated statistics (sum and number of ratings) without needing to identify each author in the displayed average.</li>
                 <li><strong>Website forms:</strong> If you write to us from <a href="contact.html">Contact</a>, we process the name (if you provide it), email, message and associated verification, solely to handle that enquiry.</li>
                 <li><strong>Launch notices (waitlist):</strong> If you subscribe to the App Store or Google Play availability notice, we process your email address, the chosen platform and associated verification data, for the sole purpose of sending you the publication notice. Legal basis: consent. You may view or cancel alerts from the website ("Manage or cancel launch alerts") after <strong>proving ownership of the email</strong> with a verification code sent to that address or, if you are already signed in on tourai.es with the same email, through that authentication session. You may also write to <a href="mailto:info@tourai.es">info@tourai.es</a>. Sending may be carried out through email providers acting as processors.</li>
-                <li><strong>Local data on the device:</strong> Preferences may be stored locally on the phone or PC (language, app privacy/advertising consent, cookie consent on the website), previously used emails to facilitate sign-in and, if you enable it, biometrics to unlock an already signed-in session. The assistant's speech recognition is preferably processed <strong>on the device</strong>.</li>
+                <li><strong>Local data on the device:</strong> Preferences may be stored locally on the phone or PC (language, app privacy/advertising consent, cookie consent on the website), previously used emails to facilitate sign-in and, if you enable it, biometrics to unlock an already signed-in session. When you open the app for the first time, the <strong>interface language</strong> is taken from the device language (you can change it later in Preferences). For the voice assistant, when you turn on the microphone (or a feature that needs it), the app may, <strong>after your confirmation</strong>, <strong>download and install on the device</strong> a speech-recognition component for the app language at that time; that recognition is preferably processed <strong>on the device</strong>. If you clear the app's data in system settings, that component is removed and may be downloaded again when you turn the microphone back on.</li>
                 <li><strong>Technical diagnostics:</strong> If the app detects a serious error, a technical report may be sent to our team (device, system, screen and, if there is a session, identifier or email) to fix faults. It is not used for advertising.</li>
             </ul>
 
@@ -865,13 +874,11 @@ window.TourAiEnGBMessages = {
             </div>
 
         </aside>`,
-
-  "page.terms.header": `<h1>Terms and Conditions</h1>
-        <p>Legal and regulatory framework for the use of our platform and services.</p>`,
-
+  "page.privacy.header": `<h1>Privacy and Transparency</h1>
+        <p>Committed to protecting your experience and your personal data.</p>`,
   "page.terms.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Acceptance of the Terms</h2>
-            <p><strong>Last updated:</strong> 1 August 2026.</p>
+            <p><strong>Last updated:</strong> 3 August 2026.</p>
             <p>By accessing or using the <strong>TourAI</strong> website and mobile application, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our services or our website.</p>
             <p>Use of the mobile application also implies acceptance of the <strong>full terms embedded in the app</strong> at the time of registration (including age eligibility, payments and permissions). In the event of any difference regarding the mobile service, the app terms prevail.</p>
             
@@ -967,128 +974,142 @@ window.TourAiEnGBMessages = {
             </div>
 
         </aside>`,
-
-  "page.cookies.header": `<h1>Cookie Policy</h1>
-        <p>Full transparency about the tracking technologies we use.</p>`,
-
-  "page.cookies.content": `<main class="container legal-content">
-            <h2 style="margin-top:0;">1. What are Cookies?</h2>
-            <p><strong>Last updated:</strong> 30 July 2026.</p>
-            <p>Cookies are small text files that websites store in your browser to remember information about your visit. In the mobile App, where advertising applies, we use equivalent advertising identifiers (IDFA or AAID). Similar browser local-storage technologies may also be used (for example, <code>localStorage</code>).</p>
-            
-            <h2>2. Types of Cookies we use</h2>
-            <table>
-                <thead>
-                    <tr><th>Category</th><th>Purpose</th><th>Persistence</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>Technical</strong></td><td>Essential for operation: interface language, account session in the private area (authentication), technical form states (for example, email verification on contact, account deletion or launch-alert management) and the record of your choice on the cookie banner (<code>cookies-aceptadas</code>).</td><td>Session / up to 1 year</td></tr>
-                    <tr><td><strong>Preference</strong></td><td>Website language chosen by the user (stored locally in the browser).</td><td>Until you change it or clear the site data</td></tr>
-                </tbody>
-            </table>
-            <p>Volume settings or the last destination consulted in the <strong>app</strong> are saved on the device as local application preferences; <strong>they are not website cookies</strong>.</p>
-            <p>The average rating shown on the website is obtained from our servers; it does <strong>not</strong> involve third-party advertising or analytics cookies.</p>
-
-            <h2>3. Advertising</h2>
-            <p><strong>tourai.es does not use advertising or advertising cookies on the website.</strong> In the app we use <strong>AdMob</strong> in the free version. That platform may use advertising identifiers to show interest-based adverts, subject to your consent when the rules so require. Users with an <strong>active Premium Plan</strong> will not see advertising in the app while the plan is in force.</p>
-
-            <h2>4. How to manage Cookies</h2>
-            <p>You may block or delete them in your browser settings (Chrome, Safari, etc.) or reset your advertising ID in your smartphone privacy settings (iOS/Android). To see the tourai.es cookie banner again, clear the site data (including the <code>cookies-aceptadas</code> key) in your browser.</p>
-        </main>
-
-        <aside class="sidebar">
-            <div class="sidebar-card">
-                <h3>🛡️ Private Browsing</h3>
-                <p style="font-size: 0.9em; margin: 0;">Communication with tourai.es is carried out over HTTPS. Local preferences (language, cookie notice) are stored in your browser only for as long as you keep them.</p>
-            </div>
-
-        </aside>`,
-
-  "page.faq.content": `<div class="faq-item">
-            <div class="faq-question">What is TourAI?</div>
-            <div class="faq-answer">
-                <p><strong>TourAI</strong> is a digital tourism project centred on a <strong>mobile app with artificial intelligence</strong> (chat, voice, maps and GPS audio guides). This website is the official landing page: product information, contact, support and access to your account.</p>
-                <p>You can read more in <a href="about.html">About us</a>.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">Can I use tourai.es without downloading the app?</div>
-            <div class="faq-answer">
-                <p>Yes. The website is public: you can learn about the product, contact us or join the launch waitlist without an account. The <a href="login.html" data-auth-account>My account</a> area requires signing in.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">When will the application be available?</div>
-            <div class="faq-answer">
-                <p>The iOS and Android app is in the final stage of development. When it is published in the official stores, we will also announce it on this website.</p>
-                <p>If you want to receive an <strong>automatic email</strong> at launch, join the waitlist at the bottom of this page or from the <a href="index.html">home page</a>.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">How do launch alerts work?</div>
-            <div class="faq-answer">
-                <p>Choose your platform (iOS or Android), enter your email, verify your identity and agree to receive only the availability notice. <strong>We do not sell or share your email for third-party advertising</strong>; to send the notice we may use email providers that process the data on behalf of TourAI, in accordance with our <a href="privacy.html">privacy policy</a>.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">How do I unsubscribe from alerts?</div>
-            <div class="faq-answer">
-                <p>You can cancel App Store or Google Play alerts from the <strong>"Manage or cancel launch alerts"</strong> link on the home page or at the bottom of this page. Before listing or cancelling, you must prove ownership of the email with a verification code, or by being signed in on tourai.es with the same email. You can also write to <a href="mailto:info@tourai.es">info@tourai.es</a>.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">How does TourAI protect my personal data?</div>
-            <div class="faq-answer">
-                <p>TourAI only uses, as account identification data, your <strong>email address</strong> (essential to use the service), your <strong>display name or alias</strong> and, optionally, your <strong>date of birth</strong> for birthday bonuses. If you do not want your email to be used, you must delete the account (app or website). We comply with the GDPR: you may exercise your rights and consult the processing detail, including Community anonymisation, in the <a href="privacy.html">privacy policy</a>.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">Does tourai.es use cookies or advertising?</div>
-            <div class="faq-answer">
-                <p>We use technical cookies necessary for the site (for example language and preferences). <strong>This website does not display advertising</strong>. AdMob may be used in the free app. See the <a href="cookies.html">cookie policy</a>.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">How can I contact the team?</div>
-            <div class="faq-answer">
-                <p>Use the <a href="contact.html">contact form</a> or write directly to <a href="mailto:info@tourai.es">info@tourai.es</a>. We respond to technical, commercial and privacy enquiries.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">In which languages is TourAI available?</div>
-            <div class="faq-answer">
-                <p>The website and the app are designed for <strong>Spanish (Spain)</strong> and <strong>English (United Kingdom)</strong>. You can change the language with the language buttons in the top menu.</p>
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">Will TourAI be free?</div>
-            <div class="faq-answer">
-                <p>Yes, with a <strong>freemium</strong> model in the app: free access with a daily usage allowance (may include AdMob advertising). There will be temporary Premium plans for more allowance and an advert-free experience. More details on the <a href="index.html">home page</a> and in the <a href="terms.html">terms of use</a>.</p>
-            </div>
-        </div>`,
-
-  "page.faq.modal.consent": `I agree to receive the launch notification and the <span class="toggle-terms" onclick="toggleTerms()">privacy policy</span>.`,
-
-  "page.faq.modal.privacyTerms": `<strong>Basic information on data protection:</strong><br>
-                        TourAI will use your email exclusively to send you the availability notice for the application on the selected platform. We will not sell or share your data for third-party advertising; sending may be carried out through email providers acting as processors. You may request cancellation at any time by writing to info@tourai.es. By ticking the box, you confirm that you are over 16 years of age.`,
-
-  "page.contact.privacyModal": `<h3>Data Protection</h3>
-            <ul>
-                <li><strong>Controller:</strong> Jordi Perelló (TourAI project / TourAI App).</li>
-                <li><strong>Purpose:</strong> Handling and responding to the enquiry submitted. The data will not be used for advertising purposes.</li>
-                <li><strong>Legal basis:</strong> Consent by ticking the box.</li>
-                <li><strong>Recipients:</strong> Data will not be disclosed to third parties for their own commercial purposes. Providers that supply hosting, authentication, database or email-sending services may access the data, acting as processors under TourAI's instructions.</li>
-                <li><strong>Rights:</strong> Access, rectification, erasure, restriction, portability and objection by writing to <a href="mailto:info@tourai.es">info@tourai.es</a>. <strong>Account deletion</strong> is automatic from the app or the <a href="delete-account.html">Delete account</a> page.</li>
-            </ul>
-            <p style="font-size: 0.8em; color: #888; margin-top: 20px;">For further details, please see our full Privacy Policy.</p>`,
-
+  "page.terms.header": `<h1>Terms and Conditions</h1>
+        <p>Legal and regulatory framework for the use of our platform and services.</p>`,
+  "register.confirm": "Confirm password",
+  "register.confirm.placeholder": "Repeat the password",
+  "register.email": "Email address",
+  "register.email.placeholder": "you@email.com",
+  "register.error.emailInUse": "An account with that email already exists.",
+  "register.error.notAllowed": "Email/password registration is not enabled.",
+  "register.error.profile": "The account was created, but saving the profile failed. Open My account or try again later.",
+  "register.error.required": "Please fill in all fields.",
+  "register.error.terms": "You must accept the terms of use.",
+  "register.error.weakPassword": "The password is too weak.",
+  "register.loginHint": `Already have an account? <a href="login.html">Sign in</a>. You can also <a href="delete-account.html">delete an existing account</a>.`,
+  "register.name": "Name",
+  "register.name.placeholder": "Your name",
+  "register.password": "Password",
+  "register.password.placeholder": "New password",
+  "register.status.creating": "Creating account...",
+  "register.status.success": "Account created. Signing you in...",
+  "register.submit": "Create account",
+  "register.subtitle": "Sign up with email and password. You can use the same account in the TourAI app.",
+  "register.terms": `I accept the <a href="terms.html" target="_blank" rel="noopener">terms of use</a> and the <a href="privacy.html" target="_blank" rel="noopener">privacy policy</a>.`,
+  "register.title": "Create account",
+  "resetPassword.confirmPassword": "Confirm password",
+  "resetPassword.confirmPassword.placeholder": "Repeat the password",
+  "resetPassword.error.mismatch": "Passwords do not match.",
+  "resetPassword.error.weak": "The password is too weak. Use at least 8 characters with uppercase, lowercase and numbers.",
+  "resetPassword.generate": "Generate secure password",
+  "resetPassword.hide": "Hide",
+  "resetPassword.hide.aria": "Hide password",
+  "resetPassword.hint": "At least 8 characters with uppercase, lowercase and numbers. Add a symbol for stronger security.",
+  "resetPassword.newPassword": "New password",
+  "resetPassword.newPassword.placeholder": "New password",
+  "resetPassword.show": "Show",
+  "resetPassword.show.aria": "Show password",
+  "resetPassword.status.configMissing": "Firebase configuration is not available.",
+  "resetPassword.status.expired": "The link has expired. Request a new one from the app.",
+  "resetPassword.status.failed": "Could not update the password. Request a new link.",
+  "resetPassword.status.invalidLink": "This link is not valid or has expired. Request a new reset from the TourAI app.",
+  "resetPassword.status.saving": "Saving password...",
+  "resetPassword.strength.medium": "Medium",
+  "resetPassword.strength.strong": "Strong",
+  "resetPassword.strength.weak": "Weak",
+  "resetPassword.submit": "Save password",
+  "resetPassword.subtitle": "Choose a new password to keep exploring with your smart travel guide.",
+  "resetPassword.success.body": "You can return to the TourAI app and sign in with your new password.",
+  "resetPassword.success.cta": "Go to TourAI",
+  "resetPassword.success.title": "Password updated",
+  "resetPassword.title": "Reset password",
+  "reviews.alreadyPublished": "You already have a published review for this target. Thank you.",
+  "reviews.anonymous": "User",
+  "reviews.approve": "Approve",
+  "reviews.approved": "Review approved.",
+  "reviews.approving": "Approving...",
+  "reviews.comment.add": "Add comment",
+  "reviews.comment.edit": "Edit comment",
+  "reviews.comment.inviteExisting": "You already rated. Would you like to add a comment?",
+  "reviews.comment.inviteNew": "We invite you to add an optional comment about your rating.",
+  "reviews.comment.modalHint": "You can format text and add emoji, just like in the community.",
+  "reviews.comment.modalTitle": "Your comment",
+  "reviews.comment.needStars": "Choose stars first to save the comment.",
+  "reviews.comment.save": "Save comment",
+  "reviews.comment.saved": "Comment saved.",
+  "reviews.composeTitle": "Your rating (optional)",
+  "reviews.empty": "There are no published reviews yet.",
+  "reviews.error.commentLong": "The comment is too long. Please shorten it a little.",
+  "reviews.error.load": "Could not load reviews. Please try again later.",
+  "reviews.error.save": "Could not send the review. Please try again later.",
+  "reviews.error.stars": "Choose a rating from 1 to 5 stars.",
+  "reviews.field.comment": "Comment (optional)",
+  "reviews.field.commentPlaceholder": "Tell us what you think...",
+  "reviews.field.stars": "Stars (required to submit)",
+  "reviews.field.target": "What are you rating?",
+  "reviews.filter.all": "All",
+  "reviews.filter.aria": "Filter",
+  "reviews.loginHint": "You need an account to leave a rating (optional).",
+  "reviews.loginLink": "Sign in",
+  "reviews.noComment": "No comment",
+  "reviews.or": "or",
+  "reviews.pending.empty": "No pending reviews.",
+  "reviews.pending.title": "Pending moderation",
+  "reviews.pending.yours": "Your review is pending moderation. You can edit it until it is published.",
+  "reviews.registerLink": "create one",
+  "reviews.reject": "Reject",
+  "reviews.rejected": "Review rejected.",
+  "reviews.rejecting": "Rejecting...",
+  "reviews.saved": "Thanks. Your review was sent and will appear after moderation.",
+  "reviews.saving": "Sending...",
+  "reviews.stars.aria": "Stars",
+  "reviews.stars.pick": "{n} stars",
+  "reviews.submit": "Submit rating",
+  "reviews.subtitle": "You can optionally rate the TourAI website or app. If you rate, stars are required and the comment is optional. Reviews are published after moderation.",
+  "reviews.summary.count": "{n} approved reviews",
+  "reviews.target.app": "App",
+  "reviews.target.web": "Web",
+  "reviews.title": "Reviews",
+  "reviews.widget.aria": "Average rating {avg} out of 5 ({n} reviews)",
+  "reviews.widget.ariaEmpty": "See TourAI reviews",
+  "site.freemiumPromo.body": "Get a Premium plan and enjoy your trip without interruptions.",
+  "site.freemiumPromo.cta": "See Premium plans",
+  "site.freemiumPromo.modalLead": "On Freemium the app uses ads to top up your allowance. A Premium plan removes that.",
+  "site.freemiumPromo.railLabel": "Premium",
+  "site.promo.dismiss": "Not now",
+  "site.promo.freemium.body": "Get a Premium plan and enjoy your trip without interruptions.",
+  "site.promo.freemium.cta": "See Premium plans",
+  "site.promo.freemium.modalLead": "On Freemium the app uses ads to top up your allowance. A Premium plan removes that.",
+  "site.promo.freemium.railLabel": "Premium",
+  "site.promo.freemium.title": "Want TourAI without ads?",
+  "site.promo.guest.body": "Discover places with your AI guide. Install the app and start exploring.",
+  "site.promo.guest.cta": "Notify me at launch",
+  "site.promo.guest.modalLead": "TourAI is built for the street: map, chat and narrations on your phone.",
+  "site.promo.guest.railLabel": "App",
+  "site.promo.guest.title": "Take TourAI with you",
+  "ui.backToTop": "Back to top",
+  "ui.close": "Close",
+  "unsubscribe.checkingEmail": "Checking for active alerts...",
+  "unsubscribe.error": "We could not complete the unsubscribe request. Please try again.",
+  "unsubscribe.intro": "Enter your email to verify your identity and cancel App Store or Google Play alerts.",
+  "unsubscribe.none": "You do not have any active alerts with this email.",
+  "unsubscribe.selectRequired": "Select at least one store to unsubscribe from.",
+  "unsubscribe.selectStores": "Select the stores you want to unsubscribe from:",
+  "unsubscribe.statusError": "We could not check your alerts. Please try again.",
+  "unsubscribe.store.android": "Google Play (Android)",
+  "unsubscribe.store.ios": "App Store (iOS)",
+  "unsubscribe.submit": "Unsubscribe",
+  "unsubscribe.submitting": "PROCESSING...",
+  "unsubscribe.success": "We have cancelled the selected alerts. You will no longer receive notifications for those stores.",
+  "unsubscribe.successTitle": "Unsubscribed",
+  "unsubscribe.title": "Manage launch alerts",
+  "unsubscribe.verifyUnregistered": "This email has no registered alerts. Verify your identity to double-check.",
+  "unsubscribe.viewSubscriptions": "View subscriptions",
+  "whatsNew.empty": "No release notes have been published yet.",
+  "whatsNew.error": `Could not load What's New. Check your connection and try again.`,
+  "whatsNew.loading": "Loading release notes…",
+  "whatsNew.subtitle": "Changes and improvements in each TourAI release.",
+  "whatsNew.timelineLabel": "Version history",
+  "whatsNew.title": `What's New`,
+  "whatsNew.versionLabel": "Version {0}",
 };

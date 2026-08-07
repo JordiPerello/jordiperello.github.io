@@ -68,7 +68,7 @@
     host.innerHTML = "";
     const list = document.createElement("ol");
     list.className = "whats-new-timeline";
-    list.setAttribute("aria-label", t("whatsNew.timelineLabel", "Historial de versiones"));
+    list.setAttribute("aria-label", t("whatsNew.timelineLabel"));
 
     let rendered = 0;
     entries.forEach((entry, index) => {
@@ -89,7 +89,7 @@
 
       const badge = document.createElement("span");
       badge.className = "whats-new-entry__version";
-      badge.textContent = t("whatsNew.versionLabel", "Versión {0}").replace("{0}", version);
+      badge.textContent = t("whatsNew.versionLabel").replace("{0}", version);
       header.appendChild(badge);
 
       const releasedAt = (entry?.ReleasedAt || entry?.releasedAt || "").trim();
@@ -116,7 +116,7 @@
     });
 
     if (!rendered) {
-      renderStatus(host, t("whatsNew.empty", "Todavía no hay novedades publicadas."));
+      renderStatus(host, t("whatsNew.empty"));
       return;
     }
 
@@ -129,7 +129,7 @@
       return;
     }
 
-    renderStatus(host, t("whatsNew.loading", "Cargando novedades…"));
+    renderStatus(host, t("whatsNew.loading"));
 
     try {
       if (!global.TourAiAuth?.ensureFirebase) {
@@ -139,7 +139,7 @@
       const db = global.firebase.firestore();
       const snap = await db.collection("PublicConfig").doc("WhatsNew").get();
       if (!snap.exists) {
-        renderStatus(host, t("whatsNew.empty", "Todavía no hay novedades publicadas."));
+        renderStatus(host, t("whatsNew.empty"));
         return;
       }
       const data = snap.data() || {};
@@ -148,7 +148,7 @@
     } catch {
       renderStatus(
         host,
-        t("whatsNew.error", "No se pudieron cargar las novedades. Comprueba la conexión e inténtalo de nuevo.")
+        t("whatsNew.error")
       );
     }
   }

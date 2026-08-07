@@ -9,5 +9,12 @@
     authDomain: "tourai-production-7dabf.firebaseapp.com",
     projectId: "tourai-production-7dabf",
     storageBucket: "tourai-production-7dabf.firebasestorage.app",
+    // Required for App Check token exchange:
+    appId: "REPLACE_WITH_FIREBASE_WEB_APP_ID",
   };
+
+  // Public reCAPTCHA v3 site key for Firebase App Check (not a server secret).
+  // Register the web app in Firebase Console → App Check → reCAPTCHA v3.
+  window.TourAiSite.config.appCheckRecaptchaSiteKey =
+    "REPLACE_WITH_RECAPTCHA_V3_SITE_KEY";
 })();

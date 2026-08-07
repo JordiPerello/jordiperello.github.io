@@ -7,12 +7,36 @@
   const TourAiAuth = {
     _ready: null,
 
-    /** Fallback if PublicConfig/Legal cannot be read. Live value lives in Firestore. */
-    LegalDocumentsVersion: "2026-08-01",
+    /**
+     * Hardcoded legal acceptance version (keep in sync with App
+     * LegalAcceptancePolicy.CurrentVersion). Bump when Web Privacy/Terms change.
+     */
+    LegalDocumentsVersion: "2026-08-03",
 
-    t(key, fallback) {
+    t(key, fallbackOrVars, maybeVars) {
       const locale = global.TourAiI18n?.getLocale?.();
-      return global.TourAiI18n?.tOr?.(key, locale, null, fallback) ?? fallback;
+      const vars =
+        fallbackOrVars && typeof fallbackOrVars === "object" && !Array.isArray(fallbackOrVars)
+          ? fallbackOrVars
+          : maybeVars && typeof maybeVars === "object"
+            ? maybeVars
+            : null;
+      const fallback =
+        typeof fallbackOrVars === "string" ? fallbackOrVars : undefined;
+      const translated = global.TourAiI18n?.t?.(key, locale, vars);
+      if (translated != null && translated !== "") {
+        return translated;
+      }
+      if (fallback != null && fallback !== "") {
+        if (global.console?.warn) {
+          console.warn("[TourAI i18n] missing key, using fallback:", locale, key);
+        }
+        return fallback;
+      }
+      if (global.console?.warn) {
+        console.warn("[TourAI i18n] missing key:", locale, key);
+      }
+      return key;
     },
 
     getFirebaseConfig() {
@@ -27,6 +51,12 @@
       };
       if (cfg.storageBucket) {
         config.storageBucket = cfg.storageBucket;
+      }
+      if (cfg.appId) {
+        config.appId = cfg.appId;
+      }
+      if (cfg.messagingSenderId) {
+        config.messagingSenderId = cfg.messagingSenderId;
       }
       return config;
     },
@@ -268,60 +298,45 @@
       const code = error?.code || error?.message || "";
       switch (code) {
         case "auth/email-already-in-use":
-          return this.t("register.error.emailInUse", "Ya existe una cuenta con ese correo.");
+          return this.t("register.error.emailInUse");
         case "auth/weak-password":
-          return this.t("register.error.weakPassword", "La contraseña es demasiado débil.");
+          return this.t("register.error.weakPassword");
         case "auth/operation-not-allowed":
-          return this.t("register.error.notAllowed", "El registro por correo no está habilitado.");
+          return this.t("register.error.notAllowed");
         case "auth/invalid-email":
-          return this.t("login.error.invalidEmail", "Introduce un correo válido.");
+          return this.t("login.error.invalidEmail");
         case "auth/user-disabled":
-          return this.t("login.error.disabled", "Esta cuenta está deshabilitada.");
+          return this.t("login.error.disabled");
         case "auth/user-not-found":
         case "auth/wrong-password":
         case "auth/invalid-credential":
-          return this.t("login.error.credentials", "Correo o contraseña incorrectos.");
+          return this.t("login.error.credentials");
         case "auth/too-many-requests":
-          return this.t("login.error.rateLimited", "Demasiados intentos. Espera unos minutos.");
+          return this.t("login.error.rateLimited");
         case "auth/network-request-failed":
-          return this.t("login.error.network", "Error de red. Comprueba tu conexión.");
+          return this.t("login.error.network");
         case "CONFIG_MISSING":
         case "FIREBASE_SDK_MISSING":
         case "FIRESTORE_SDK_MISSING":
-          return this.t(
-            "login.error.config",
-            "Configuración de acceso no disponible. En local, copia js/site-config.secrets.js y sirve la web por http://localhost (no abras el HTML a pelo)."
-          );
+          return this.t("login.error.config");
         case "FILE_PROTOCOL":
-          return this.t(
-            "login.error.fileProtocol",
-            "Firebase Auth no funciona con file://. Abre la web con un servidor local (por ejemplo: npx serve) o en https://tourai.es tras desplegar."
-          );
+          return this.t("login.error.fileProtocol");
         case "auth/unauthorized-domain":
-          return this.t(
-            "login.error.unauthorizedDomain",
-            "Este dominio no está autorizado en Firebase Authentication."
-          );
+          return this.t("login.error.unauthorizedDomain");
         case "auth/invalid-api-key":
         case "auth/api-key-not-valid.-please-pass-a-valid-api-key.":
-          return this.t(
-            "login.error.apiKey",
-            "La clave de acceso web no es válida. Revisa la configuración de Firebase."
-          );
+          return this.t("login.error.apiKey");
         case "permission-denied":
-          return this.t("account.error.permission", "No tienes permiso para leer estos datos.");
+          return this.t("account.error.permission");
         default: {
           const raw = `${code} ${error?.message || ""}`.toLowerCase();
           if (raw.includes("referer") || raw.includes("referrer") || raw.includes("api_key_http_referrer_blocked")) {
-            return this.t(
-              "login.error.referrer",
-              "Este origen no está permitido para la clave de Firebase. Prueba en https://tourai.es o añade el dominio en Google Cloud (restricciones HTTP)."
-            );
+            return this.t("login.error.referrer");
           }
           if (String(code).includes("permission")) {
-            return this.t("account.error.permission", "No tienes permiso para leer estos datos.");
+            return this.t("account.error.permission");
           }
-          return this.t("login.error.generic", "No se pudo iniciar sesión. Inténtalo de nuevo.");
+          return this.t("login.error.generic");
         }
       }
     },
@@ -710,9 +725,9 @@
   function accountLabel(profile) {
     const name = profile.firstName;
     if (!name) {
-      return t("nav.accountSignedInGeneric", "Mi cuenta");
+      return t("nav.accountSignedInGeneric");
     }
-    return t("nav.accountSignedIn", "Hola, {name}", { name: name });
+    return t("nav.accountSignedIn", { name: name });
   }
 
   function accountLinks() {
@@ -750,30 +765,12 @@
     };
   }
 
-  /** Fallback only — live value is PublicConfig/Legal.CurrentVersion in Firestore. */
-  const LEGAL_DOCUMENTS_VERSION = auth.LegalDocumentsVersion || "2026-08-01";
+  /** Hardcoded TourAiAuth.LegalDocumentsVersion (same date as App LegalAcceptancePolicy.CurrentVersion). */
+  const LEGAL_DOCUMENTS_VERSION = auth.LegalDocumentsVersion || "2026-08-03";
   let legalModalBusy = false;
-  let cachedLegalVersion = null;
 
-  async function fetchLegalDocumentsVersion() {
-    if (cachedLegalVersion) {
-      return cachedLegalVersion;
-    }
-    try {
-      const db = await auth.getFirestore();
-      const snap = await db.collection("PublicConfig").doc("Legal").get();
-      if (snap.exists) {
-        const version = String(snap.data()?.CurrentVersion || "").trim();
-        if (version) {
-          cachedLegalVersion = version;
-          return cachedLegalVersion;
-        }
-      }
-    } catch (_) {
-      // Offline / missing doc → fallback embedded version.
-    }
-    cachedLegalVersion = LEGAL_DOCUMENTS_VERSION;
-    return cachedLegalVersion;
+  function getLegalDocumentsVersion() {
+    return LEGAL_DOCUMENTS_VERSION;
   }
 
   function needsLegalReacceptance(profileOrData, currentVersion) {
@@ -855,7 +852,7 @@
   }
 
   async function promptLegalReacceptanceIfNeeded(profile) {
-    const currentVersion = await fetchLegalDocumentsVersion();
+    const currentVersion = getLegalDocumentsVersion();
     if (!currentUser || !profile || !needsLegalReacceptance(profile, currentVersion) || legalModalBusy) {
       return true;
     }
@@ -869,50 +866,44 @@
       overlay.setAttribute("aria-modal", "true");
       overlay.setAttribute(
         "aria-label",
-        t("legal.reaccept.title", "Documentos legales actualizados")
+        t("legal.reaccept.title")
       );
       overlay.innerHTML =
         '<div class="tourai-legal-reaccept__backdrop" aria-hidden="true"></div>' +
         '<div class="tourai-legal-reaccept__dialog">' +
         '<div class="tourai-legal-reaccept__header">' +
         '<h2 class="tourai-legal-reaccept__title">' +
-        escapeHtml(t("legal.reaccept.title", "Documentos legales actualizados")) +
+        escapeHtml(t("legal.reaccept.title")) +
         "</h2>" +
         '<p class="tourai-legal-reaccept__intro">' +
         escapeHtml(
-          t(
-            "legal.reaccept.body",
-            "Hemos actualizado los Términos y Condiciones y/o la Política de Privacidad. Léelos aquí y acéptalos para continuar (una aceptación vale para la app y la web con la misma cuenta)."
-          )
+          t("legal.reaccept.body")
         ) +
         "</p></div>" +
         '<div class="tourai-legal-reaccept__tabs" role="tablist">' +
         '<button type="button" class="tourai-legal-reaccept__tab is-active" role="tab" aria-selected="true" data-legal-tab="terms">' +
-        escapeHtml(t("legal.reaccept.tab.terms", "Términos")) +
+        escapeHtml(t("legal.reaccept.tab.terms")) +
         "</button>" +
         '<button type="button" class="tourai-legal-reaccept__tab" role="tab" aria-selected="false" data-legal-tab="privacy">' +
-        escapeHtml(t("legal.reaccept.tab.privacy", "Privacidad")) +
+        escapeHtml(t("legal.reaccept.tab.privacy")) +
         "</button></div>" +
         '<div class="tourai-legal-reaccept__body">' +
         '<p class="tourai-legal-reaccept__status" data-legal-status>' +
-        escapeHtml(t("legal.reaccept.loading", "Cargando documentos…")) +
+        escapeHtml(t("legal.reaccept.loading")) +
         "</p>" +
         '<div class="tourai-legal-reaccept__panel" data-legal-panel hidden></div></div>' +
         '<div class="tourai-legal-reaccept__footer">' +
         '<p class="tourai-legal-reaccept__hint">' +
         escapeHtml(
-          t(
-            "legal.reaccept.hint",
-            "Si no aceptas, se cerrará tu sesión. Podrás seguir viendo el contenido público de la web, pero no la zona de cuenta hasta que aceptes."
-          )
+          t("legal.reaccept.hint")
         ) +
         "</p>" +
         '<div class="tourai-legal-reaccept__actions">' +
         '<button type="button" class="btn-secondary" data-legal-decline>' +
-        escapeHtml(t("legal.reaccept.decline", "No acepto · Cerrar sesión")) +
+        escapeHtml(t("legal.reaccept.decline")) +
         "</button>" +
         '<button type="button" class="btn-primary" data-legal-accept disabled>' +
-        escapeHtml(t("legal.reaccept.accept", "He leído y acepto")) +
+        escapeHtml(t("legal.reaccept.accept")) +
         "</button></div></div></div>";
 
       document.body.appendChild(overlay);
@@ -940,7 +931,7 @@
         if (statusEl) {
           statusEl.hidden = false;
           statusEl.classList.remove("tourai-legal-reaccept__status--error");
-          statusEl.textContent = t("legal.reaccept.loading", "Cargando documentos…");
+          statusEl.textContent = t("legal.reaccept.loading");
         }
         if (panelEl) {
           panelEl.hidden = true;
@@ -969,10 +960,7 @@
           if (statusEl) {
             statusEl.hidden = false;
             statusEl.classList.add("tourai-legal-reaccept__status--error");
-            statusEl.textContent = t(
-              "legal.reaccept.error",
-              "No se pudieron cargar los documentos. Revisa tu conexión e inténtalo de nuevo."
-            );
+            statusEl.textContent = t("legal.reaccept.error");
           }
         }
       }
@@ -1181,8 +1169,9 @@
         link.setAttribute("data-i18n", link.getAttribute("data-i18n-account-key") || "nav.account");
         link.removeAttribute("data-i18n-account-key");
       }
-      link.textContent = "Mi cuenta";
-      link.setAttribute("data-default-text", "Mi cuenta");
+      const accountLabel = t("nav.account");
+      link.textContent = accountLabel;
+      link.setAttribute("data-default-text", accountLabel);
     });
     if (global.TourAiI18n?.applyTranslations && global.TourAiI18n?.getLocale) {
       global.TourAiI18n.applyTranslations(global.TourAiI18n.getLocale());
@@ -1370,7 +1359,7 @@
     if (window.TourAiLoading) {
       if (busy) {
         window.TourAiLoading.show(
-          statusMessage || t("login.status.signingIn", "Iniciando sesión...")
+          statusMessage || t("login.status.signingIn")
         );
       } else {
         while (window.TourAiLoading.isVisible()) {
@@ -1398,7 +1387,7 @@
     if (auth && typeof auth.mapAuthError === "function") {
       return auth.mapAuthError(err);
     }
-    return t("login.error.generic", "No se pudo iniciar sesión. Inténtalo de nuevo.");
+    return t("login.error.generic");
   }
 
   function rememberChecked() {
@@ -1407,10 +1396,7 @@
 
   if (!auth) {
     setStatus(
-      t(
-        "login.error.config",
-        "No se pudo cargar el módulo de acceso. Recarga la página (Ctrl+F5) o comprueba la consola del navegador."
-      ),
+      t("login.error.config"),
       true
     );
     return;
@@ -1455,7 +1441,7 @@
     const remember = rememberChecked();
 
     if (!email || !password) {
-      setStatus(t("login.error.required", "Introduce correo y contraseña."), true);
+      setStatus(t("login.error.required"), true);
       if (!email && emailInput) {
         emailInput.focus();
       } else if (passwordInput) {
@@ -1464,7 +1450,7 @@
       return;
     }
 
-    const signingInMsg = t("login.status.signingIn", "Iniciando sesión...");
+    const signingInMsg = t("login.status.signingIn");
     setBusy(true, signingInMsg);
 
     try {
@@ -1489,7 +1475,7 @@
           auth.stashNavProfile(credential.user);
         }
       }
-      setStatus(t("login.status.redirecting", "Acceso correcto. Redirigiendo..."), false);
+      setStatus(t("login.status.redirecting"), false);
       window.location.replace(nextUrl());
     } catch (err) {
       console.error("[TourAI login]", err);
@@ -1499,22 +1485,19 @@
   }
 
   async function sendResetLink(email) {
-    const sendingMsg = t("login.status.resetSending", "Enviando enlace de restablecimiento...");
+    const sendingMsg = t("login.status.resetSending");
     setBusy(true, sendingMsg);
     try {
       await auth.sendPasswordReset(email);
       setBusy(false);
-      const okMsg = t(
-        "login.status.resetSent",
-        "Si existe una cuenta con ese correo, recibirás un enlace para restablecer la contraseña. Revisa también la carpeta de spam."
-      );
+      const okMsg = t("login.status.resetSent");
       setStatus(okMsg, false);
       if (window.TourAiFeedback) {
         window.TourAiFeedback.show({
           type: "success",
-          title: t("login.reset.title", "Recuperar contraseña"),
+          title: t("login.reset.title"),
           message: okMsg,
-          buttonText: t("feedback.close", "Entendido"),
+          buttonText: t("feedback.close"),
         });
       }
     } catch (err) {
@@ -1532,7 +1515,7 @@
     const email = (emailInput && emailInput.value ? emailInput.value : "").trim();
     if (!email) {
       setStatus(
-        t("login.error.forgotEmail", "Escribe tu correo para enviarte el enlace de restablecimiento."),
+        t("login.error.forgotEmail"),
         true
       );
       if (emailInput) {
@@ -1541,10 +1524,7 @@
       return;
     }
 
-    const confirmMsg = t(
-      "login.reset.confirm",
-      "Se enviará un enlace para restablecer la contraseña a {email}. ¿Continuar?"
-    ).replace("{email}", email);
+    const confirmMsg = t("login.reset.confirm").replace("{email}", email);
 
     if (!window.confirm(confirmMsg)) {
       return;
@@ -1616,19 +1596,6 @@
     statusEl.classList.toggle("error", !!isError);
   }
 
-  function webDeviceId() {
-    const key = "tourai-web-device-id";
-    let id = localStorage.getItem(key);
-    if (!id) {
-      id =
-        typeof crypto !== "undefined" && crypto.randomUUID
-          ? crypto.randomUUID()
-          : `web-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-      localStorage.setItem(key, id);
-    }
-    return id;
-  }
-
   function updateStrengthUI() {
     if (!strength || !passwordInput || !strengthSection) {
       return strength?.Level?.None ?? 0;
@@ -1645,14 +1612,14 @@
       strengthBars?.[0]?.classList.add("is-active", "is-weak");
       if (strengthLabel) {
         strengthLabel.className = "auth-password-strength__label is-weak";
-        strengthLabel.textContent = t("resetPassword.strength.weak", "Débil");
+        strengthLabel.textContent = t("resetPassword.strength.weak");
       }
     } else if (level === strength.Level.Medium) {
       strengthBars?.[0]?.classList.add("is-active", "is-medium");
       strengthBars?.[1]?.classList.add("is-active", "is-medium");
       if (strengthLabel) {
         strengthLabel.className = "auth-password-strength__label is-medium";
-        strengthLabel.textContent = t("resetPassword.strength.medium", "Media");
+        strengthLabel.textContent = t("resetPassword.strength.medium");
       }
     } else if (level === strength.Level.Strong) {
       strengthBars?.[0]?.classList.add("is-active", "is-strong");
@@ -1660,7 +1627,7 @@
       strengthBars?.[2]?.classList.add("is-active", "is-strong");
       if (strengthLabel) {
         strengthLabel.className = "auth-password-strength__label is-strong";
-        strengthLabel.textContent = t("resetPassword.strength.strong", "Fuerte");
+        strengthLabel.textContent = t("resetPassword.strength.strong");
       }
     }
     return level;
@@ -1688,12 +1655,12 @@
     }
 
     if (!displayName || !email || !password || !confirm) {
-      setStatus(t("register.error.required", "Completa todos los campos."), true);
+      setStatus(t("register.error.required"), true);
       return;
     }
 
     if (!termsInput?.checked) {
-      setStatus(t("register.error.terms", "Debes aceptar los términos de uso."), true);
+      setStatus(t("register.error.terms"), true);
       return;
     }
 
@@ -1703,10 +1670,7 @@
         passwordError.hidden = false;
       }
       setStatus(
-        t(
-          "resetPassword.error.weak",
-          "La contraseña es demasiado débil. Usa al menos 8 caracteres con mayúsculas, minúsculas y números."
-        ),
+        t("resetPassword.error.weak"),
         true
       );
       return;
@@ -1716,14 +1680,14 @@
       if (confirmError) {
         confirmError.hidden = false;
       }
-      setStatus(t("resetPassword.error.mismatch", "Las contraseñas no coinciden."), true);
+      setStatus(t("resetPassword.error.mismatch"), true);
       return;
     }
 
     if (submitBtn) {
       submitBtn.disabled = true;
     }
-    setStatus(t("register.status.creating", "Creando cuenta..."), false);
+    setStatus(t("register.status.creating"), false);
 
     try {
       const credential = await auth.signUp(email, password);
@@ -1732,16 +1696,9 @@
 
       const db = await auth.getFirestore();
       const now = firebase.firestore.Timestamp.now();
-      let legalVersion = auth.LegalDocumentsVersion || "2026-08-01";
-      try {
-        const legalSnap = await db.collection("PublicConfig").doc("Legal").get();
-        const fromConfig = String(legalSnap.data()?.CurrentVersion || "").trim();
-        if (fromConfig) {
-          legalVersion = fromConfig;
-        }
-      } catch (_) {
-        // Keep fallback.
-      }
+      const legalVersion = LEGAL_DOCUMENTS_VERSION;
+      // Do not set DeviceId / SessionLastSeenAt: web auth is not a device session
+      // and must never displace the app single-device guard.
       await db
         .collection("Users")
         .doc(user.uid)
@@ -1755,25 +1712,20 @@
           TermsAccepted: true,
           TermsAcceptedAt: now,
           LegalAcceptedVersion: legalVersion,
-          DeviceId: webDeviceId(),
-          SessionLastSeenAt: now,
           Preferences: "[]",
           PhotoCropOffsetXNorm: 0,
           PhotoCropOffsetYNorm: 0,
           PhotoCropUserScale: 1,
         });
 
-      setStatus(t("register.status.success", "Cuenta creada. Entrando..."), false);
+      setStatus(t("register.status.success"), false);
       window.location.replace(nextUrl());
     } catch (err) {
       console.error(err);
       // Auth may have succeeded while profile write failed — keep session and open dashboard.
       if (auth.currentUser()) {
         setStatus(
-          t(
-            "register.error.profile",
-            "La cuenta se creó, pero hubo un problema al guardar el perfil. Entra en Mi cuenta o reintenta más tarde."
-          ),
+          t("register.error.profile"),
           true
         );
         setTimeout(function () {
@@ -1824,10 +1776,7 @@
   const firebaseConfig = config?.firebaseAuth;
   if (!config || !firebaseConfig?.apiKey) {
     if (statusEl) {
-      statusEl.textContent = t(
-        "resetPassword.status.configMissing",
-        "Configuración de Firebase no disponible."
-      );
+      statusEl.textContent = t("resetPassword.status.configMissing");
       statusEl.classList.add("error");
     }
     if (form) {
@@ -1881,11 +1830,11 @@
     passwordsVisible = visible;
     const type = visible ? "text" : "password";
     const label = visible
-      ? t("resetPassword.hide", "Ocultar")
-      : t("resetPassword.show", "Mostrar");
+      ? t("resetPassword.hide")
+      : t("resetPassword.show");
     const aria = visible
-      ? t("resetPassword.hide.aria", "Ocultar contraseña")
-      : t("resetPassword.show.aria", "Mostrar contraseña");
+      ? t("resetPassword.hide.aria")
+      : t("resetPassword.show.aria");
 
     if (newPasswordInput) {
       newPasswordInput.type = type;
@@ -1921,18 +1870,18 @@
 
     if (level === strength.Level.Weak) {
       strengthBars[0].classList.add("is-active", "is-weak");
-      strengthLabel.textContent = t("resetPassword.strength.weak", "Débil");
+      strengthLabel.textContent = t("resetPassword.strength.weak");
       strengthLabel.className = "auth-password-strength__label is-weak";
     } else if (level === strength.Level.Medium) {
       strengthBars[0].classList.add("is-active", "is-medium");
       strengthBars[1].classList.add("is-active", "is-medium");
-      strengthLabel.textContent = t("resetPassword.strength.medium", "Media");
+      strengthLabel.textContent = t("resetPassword.strength.medium");
       strengthLabel.className = "auth-password-strength__label is-medium";
     } else {
       strengthBars[0].classList.add("is-active", "is-strong");
       strengthBars[1].classList.add("is-active", "is-strong");
       strengthBars[2].classList.add("is-active", "is-strong");
-      strengthLabel.textContent = t("resetPassword.strength.strong", "Fuerte");
+      strengthLabel.textContent = t("resetPassword.strength.strong");
       strengthLabel.className = "auth-password-strength__label is-strong";
     }
   }
@@ -1960,10 +1909,7 @@
 
   if (mode !== "resetPassword" || !oobCode) {
     setStatus(
-      t(
-        "resetPassword.status.invalidLink",
-        "Este enlace no es válido o ha caducado. Solicita un nuevo restablecimiento desde la app TourAI."
-      ),
+      t("resetPassword.status.invalidLink"),
       true
     );
     if (form) {
@@ -2014,10 +1960,7 @@
 
     if (!strength?.meetsMinimum(newPassword)) {
       setStatus(
-        t(
-          "resetPassword.error.weak",
-          "La contraseña es demasiado débil. Usa al menos 8 caracteres con mayúsculas, minúsculas y números."
-        ),
+        t("resetPassword.error.weak"),
         true
       );
       return;
@@ -2025,13 +1968,13 @@
 
     if (newPassword !== confirmPassword) {
       setStatus(
-        t("resetPassword.error.mismatch", "Las contraseñas no coinciden."),
+        t("resetPassword.error.mismatch"),
         true
       );
       return;
     }
 
-    setStatus(t("resetPassword.status.saving", "Guardando contraseña..."), false);
+    setStatus(t("resetPassword.status.saving"), false);
 
     try {
       await auth.confirmPasswordReset(oobCode, newPassword);
@@ -2039,14 +1982,8 @@
     } catch (error) {
       const message =
         error?.code === "auth/expired-action-code"
-          ? t(
-              "resetPassword.status.expired",
-              "El enlace ha caducado. Solicita uno nuevo desde la app."
-            )
-          : t(
-              "resetPassword.status.failed",
-              "No se pudo actualizar la contraseña. Solicita un nuevo enlace."
-            );
+          ? t("resetPassword.status.expired")
+          : t("resetPassword.status.failed");
       setStatus(message, true);
     }
   });

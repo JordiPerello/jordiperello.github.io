@@ -1,13 +1,13 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es-ES">
 <head>
     <meta charset="UTF-8">
     <script src="js/site-ui.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Perfil de TourAI: consulta tu nombre, correo y tipo de cuenta." data-i18n-meta="doc.meta.account">
+    <meta name="description" content="" data-i18n-meta="doc.meta.account">
     <meta name="robots" content="noindex, nofollow">
     <link rel="canonical" href="https://tourai.es/account.html">
-    <title data-i18n-doc-title="doc.title.account">Perfil - TourAI</title>
+    <title data-i18n-doc-title="doc.title.account"></title>
     <link rel="icon" type="image/png" href="img/tourai_logo.png">
     <link rel="apple-touch-icon" href="img/tourai_logo.png">
     <link rel="stylesheet" href="css/site.css">
@@ -18,16 +18,16 @@
         <div class="nav-logo-container"><a href="index.html"><img src="img/tourai_logo_inline.png" alt="TourAI"></a></div>
         <div class="menu-icon" onclick="toggleMenu()"><span></span><span></span><span></span></div>
         <div class="nav-links" id="nav-links">
-            <a href="index.html" data-i18n="nav.app">La App</a>
-            <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
-            <a href="community.html" data-i18n="nav.community">Comunidad</a>
-            <a href="contact.html" data-i18n="nav.contact">Contacto</a>
-            <a class="active" href="login.html" data-i18n="nav.account">Mi cuenta</a>
-            <div class="lang-switch" role="group" aria-label="Language">
-                <button type="button" data-set-locale="es-ES" aria-label="Español" title="Español">
+            <a href="index.html" data-i18n="nav.app"></a>
+            <a href="about.html" data-i18n="footer.about"></a>
+            <a href="community.html" data-i18n="nav.community"></a>
+            <a href="contact.html" data-i18n="nav.contact"></a>
+            <a class="active" href="login.html" data-i18n="nav.account"></a>
+            <div class="lang-switch" role="group" data-i18n-aria-label="lang.switcher" aria-label="">
+                <button type="button" data-set-locale="es-ES" data-i18n-aria-label="lang.es" data-i18n-title="lang.es" aria-label="" title="">
                     <img src="img/lang/icon_spanish_flag.png" alt="" width="28" height="28" decoding="async">
                 </button>
-                <button type="button" data-set-locale="en-GB" aria-label="English" title="English">
+                <button type="button" data-set-locale="en-GB" data-i18n-aria-label="lang.en" data-i18n-title="lang.en" aria-label="" title="">
                     <img src="img/lang/icon_united_kingdom_flag.png" alt="" width="28" height="28" decoding="async">
                 </button>
             </div>
@@ -35,20 +35,20 @@
     </nav>
 
     <header class="page-hero">
-        <h1 data-i18n="account.title">Perfil</h1>
-        <p data-i18n="account.subtitle">Datos básicos de tu cuenta TourAI. Los planes y pagos están en el panel.</p>
+        <h1 data-i18n="account.title"></h1>
+        <p data-i18n="account.subtitle"></p>
     </header>
 
     <main class="account-shell">
         <div id="accountLoading" class="account-card">
-            <p data-i18n="account.loading">Comprobando sesión...</p>
+            <p data-i18n="account.loading"></p>
         </div>
 
         <div id="accountSignedIn" hidden>
             <div class="account-tabs">
-                <nav class="account-subnav" role="tablist" aria-label="Cuenta">
-                    <a class="active" href="account.html" role="tab" aria-selected="true" data-i18n="account.subnav.profile">Perfil</a>
-                    <a href="dashboard.html" role="tab" aria-selected="false" data-i18n="account.subnav.dashboard">Panel</a>
+                <nav class="account-subnav" role="tablist" data-i18n-aria-label="account.subnav.aria" aria-label="">
+                    <a class="active" href="account.html" role="tab" aria-selected="true" data-i18n="account.subnav.profile"></a>
+                    <a href="dashboard.html" role="tab" aria-selected="false" data-i18n="account.subnav.dashboard"></a>
                 </nav>
                 <div class="account-panel" role="tabpanel">
                     <div id="accountProfileMount"></div>
@@ -57,8 +57,8 @@
 
             <div class="account-actions-bar">
                 <div class="account-actions">
-                    <button type="button" id="accountLogout" class="site-btn site-btn--secondary" data-i18n="account.logout">Cerrar sesión</button>
-                    <a id="accountDeleteAccount" class="site-btn site-btn--danger" href="delete-account.html" data-i18n="footer.deleteAccount">Eliminar cuenta</a>
+                    <button type="button" id="accountLogout" class="site-btn site-btn--secondary" data-i18n="account.logout"></button>
+                    <a id="accountDeleteAccount" class="site-btn site-btn--danger" href="delete-account.html" data-i18n="footer.deleteAccount"></a>
                 </div>
                 <p id="accountStatus" class="account-status" role="status" aria-live="polite"></p>
             </div>
@@ -67,28 +67,28 @@
 
     <div id="accountEditModal" class="modal account-edit-modal" hidden aria-hidden="true">
         <div class="modal-content account-edit-modal__content" role="dialog" aria-modal="true" aria-labelledby="accountEditTitle">
-            <button type="button" class="close-modal" data-close-account-edit aria-label="Cerrar">&times;</button>
-            <h2 id="accountEditTitle" data-i18n="account.edit.title">Editar cuenta</h2>
-            <p class="account-edit-modal__subtitle" data-i18n="account.edit.subtitle">Actualiza tus datos de perfil. El correo no se puede cambiar.</p>
+            <button type="button" class="close-modal" data-close-account-edit data-i18n-aria-label="ui.close" aria-label="">&times;</button>
+            <h2 id="accountEditTitle" data-i18n="account.edit.title"></h2>
+            <p class="account-edit-modal__subtitle" data-i18n="account.edit.subtitle"></p>
 
             <form id="accountEditForm" class="account-edit-form" novalidate>
                 <div class="account-edit-form__photo">
-                    <div class="account-edit-form__photo-preview" id="editPhotoPreview" role="img" tabindex="0" aria-label="Foto de perfil. Arrastra para centrar; pulsa para cambiar.">
+                    <div class="account-edit-form__photo-preview" id="editPhotoPreview" role="img" tabindex="0" data-i18n-aria-label="account.edit.photo.aria" aria-label="">
                         <span class="account-edit-form__photo-initials" id="editPhotoInitials">?</span>
                     </div>
                     <div class="account-edit-form__photo-actions">
-                        <button type="button" class="btn-secondary" id="editPhotoPick" data-i18n="account.edit.photo.change">Cambiar foto</button>
-                        <button type="button" class="btn-secondary" id="editPhotoClear" hidden data-i18n="account.edit.photo.clear">Quitar selección</button>
+                        <button type="button" class="btn-secondary" id="editPhotoPick" data-i18n="account.edit.photo.change"></button>
+                        <button type="button" class="btn-secondary" id="editPhotoClear" hidden data-i18n="account.edit.photo.clear"></button>
                     </div>
                     <input id="editPhotoFile" type="file" accept="image/*" hidden>
-                    <p class="account-edit-form__hint" data-i18n="account.edit.photo.hint">Elige una imagen (máx. 5 MB). Arrastra dentro del círculo para centrarla. Se guarda con el mismo encuadre que en la app.</p>
+                    <p class="account-edit-form__hint" data-i18n="account.edit.photo.hint"></p>
                     <p id="editPhotoError" class="account-edit-form__error" hidden></p>
                 </div>
 
-                <label for="editEmail" data-i18n="account.profile.email">Correo</label>
+                <label for="editEmail" data-i18n="account.profile.email"></label>
                 <input id="editEmail" type="email" readonly autocomplete="username">
 
-                <label for="editDisplayName" data-i18n="account.profile.name">Nombre</label>
+                <label for="editDisplayName" data-i18n="account.profile.name"></label>
                 <input id="editDisplayName" type="text" required maxlength="80" autocomplete="name">
                 <p id="editDisplayNameError" class="account-edit-form__error" hidden></p>
 
@@ -96,7 +96,7 @@
                     <div class="account-edit-form__birth-row">
                         <label class="account-edit-form__switch">
                             <input id="editBirthDateEnabled" type="checkbox">
-                            <span id="editBirthDateLabel" data-i18n="account.edit.birthDateSwitch">Indicar mi fecha de nacimiento</span>
+                            <span id="editBirthDateLabel" data-i18n="account.edit.birthDateSwitch"></span>
                         </label>
                         <div class="birthdate-field" id="editBirthDateField">
                             <input
@@ -109,20 +109,20 @@
                             >
                         </div>
                     </div>
-                    <p class="account-edit-form__hint" data-i18n="account.edit.birthDateHint">Opcional. Se usa para promociones de cumpleaños (campaña BIRTHDATE); si no la indicas, no recibirás ese bono automáticamente. Si eres menor de edad según la legislación aplicable en tu país, el uso de TourAI debe realizarse bajo la supervisión de un padre, madre o tutor legal. TourAI no se hace responsable del uso que un menor pueda dar a la aplicación.</p>
+                    <p class="account-edit-form__hint" data-i18n="account.edit.birthDateHint"></p>
                     <p id="editBirthDateError" class="account-edit-form__error" hidden></p>
                 </div>
 
                 <div class="account-edit-form__password-entry">
-                    <button type="button" class="btn-secondary" id="accountPasswordOpen" data-i18n="account.passwordChange.open">Cambiar contraseña</button>
-                    <p class="account-edit-form__hint" data-i18n="account.passwordChange.hint">Si la has olvidado, usa «¿Olvidaste tu contraseña?» en el inicio de sesión.</p>
+                    <button type="button" class="btn-secondary" id="accountPasswordOpen" data-i18n="account.passwordChange.open"></button>
+                    <p class="account-edit-form__hint" data-i18n="account.passwordChange.hint"></p>
                 </div>
 
                 <p id="accountEditStatus" class="account-status" role="status" aria-live="polite"></p>
 
                 <div class="account-edit-form__actions">
-                    <button type="submit" class="btn-primary" id="accountEditSave" data-i18n="account.edit.save">Guardar cambios</button>
-                    <button type="button" class="btn-secondary" data-close-account-edit data-i18n="account.edit.cancel">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="accountEditSave" data-i18n="account.edit.save"></button>
+                    <button type="button" class="btn-secondary" data-close-account-edit data-i18n="account.edit.cancel"></button>
                 </div>
             </form>
         </div>
@@ -130,16 +130,16 @@
 
     <div id="accountPasswordModal" class="modal account-edit-modal account-password-modal" hidden aria-hidden="true">
         <div class="modal-content account-edit-modal__content" role="dialog" aria-modal="true" aria-labelledby="accountPasswordTitle">
-            <button type="button" class="close-modal" data-close-account-password aria-label="Cerrar">&times;</button>
-            <h2 id="accountPasswordTitle" data-i18n="account.passwordChange.title">Cambiar contraseña</h2>
-            <p class="account-edit-modal__subtitle" data-i18n="account.passwordChange.subtitle">Introduce tu contraseña actual y la nueva. El cambio solo se aplica al confirmar.</p>
+            <button type="button" class="close-modal" data-close-account-password data-i18n-aria-label="ui.close" aria-label="">&times;</button>
+            <h2 id="accountPasswordTitle" data-i18n="account.passwordChange.title"></h2>
+            <p class="account-edit-modal__subtitle" data-i18n="account.passwordChange.subtitle"></p>
 
             <form id="accountPasswordForm" class="account-edit-form" novalidate>
-                <label for="pwdCurrent" data-i18n="account.passwordChange.current">Contraseña actual</label>
+                <label for="pwdCurrent" data-i18n="account.passwordChange.current"></label>
                 <input id="pwdCurrent" type="password" autocomplete="current-password" required>
                 <p id="pwdCurrentError" class="account-edit-form__error" hidden></p>
 
-                <label for="pwdNew" data-i18n="account.passwordChange.new">Nueva contraseña</label>
+                <label for="pwdNew" data-i18n="account.passwordChange.new"></label>
                 <input id="pwdNew" type="password" autocomplete="new-password" required>
                 <div id="pwdStrength" class="auth-password-strength" hidden>
                     <div class="auth-password-strength__bars" aria-hidden="true">
@@ -150,15 +150,15 @@
                     <p id="pwdStrengthLabel" class="auth-password-strength__label"></p>
                 </div>
 
-                <label for="pwdConfirm" data-i18n="account.passwordChange.repeat">Repetir nueva contraseña</label>
+                <label for="pwdConfirm" data-i18n="account.passwordChange.repeat"></label>
                 <input id="pwdConfirm" type="password" autocomplete="new-password" required>
                 <p id="pwdNewError" class="account-edit-form__error" hidden></p>
 
                 <p id="accountPasswordStatus" class="account-status" role="status" aria-live="polite"></p>
 
                 <div class="account-edit-form__actions">
-                    <button type="submit" class="btn-primary" id="accountPasswordSave" data-i18n="account.passwordChange.confirm">Confirmar</button>
-                    <button type="button" class="btn-secondary" data-close-account-password data-i18n="account.passwordChange.exit">Salir</button>
+                    <button type="submit" class="btn-primary" id="accountPasswordSave" data-i18n="account.passwordChange.confirm"></button>
+                    <button type="button" class="btn-secondary" data-close-account-password data-i18n="account.passwordChange.exit"></button>
                 </div>
             </form>
         </div>
@@ -167,40 +167,40 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <h4 data-i18n="footer.explore">Explora</h4>
-                <a href="index.html" data-i18n="nav.app">La App</a>
-                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
-                <a href="community.html" data-i18n="nav.community">Comunidad</a>
-                <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
-                <a href="contact.html" data-i18n="nav.contact">Contacto</a>
-                <a class="active" data-i18n="nav.account">Mi cuenta</a>
+                <h4 data-i18n="footer.explore"></h4>
+                <a href="index.html" data-i18n="nav.app"></a>
+                <a href="about.html" data-i18n="footer.about"></a>
+                <a href="community.html" data-i18n="nav.community"></a>
+                <a href="reviews.html" data-i18n="nav.reviews"></a>
+                <a href="contact.html" data-i18n="nav.contact"></a>
+                <a class="active" data-i18n="nav.account"></a>
             </div>
             <div class="footer-col">
-                <h4 data-i18n="footer.legal">Legal</h4>
-                <a href="privacy.html" data-i18n="footer.privacy">Privacidad</a>
-                <a href="terms.html" data-i18n="footer.terms">Términos</a>
-                <a href="cookies.html" data-i18n="footer.cookies">Cookies</a>
-                <a href="delete-account.html" data-i18n="footer.deleteAccount">Eliminar cuenta</a>
+                <h4 data-i18n="footer.legal"></h4>
+                <a href="privacy.html" data-i18n="footer.privacy"></a>
+                <a href="terms.html" data-i18n="footer.terms"></a>
+                <a href="cookies.html" data-i18n="footer.cookies"></a>
+                <a href="delete-account.html" data-i18n="footer.deleteAccount"></a>
             </div>
             <div class="footer-col">
-                <h4 data-i18n="footer.help">Ayuda</h4>
-                <a href="about.html" data-i18n="footer.about">Sobre nosotros</a>
-                <a href="community.html" data-i18n="nav.community">Comunidad</a>
-                <a href="reviews.html" data-i18n="nav.reviews">Opiniones</a>
-                <a href="contact.html" data-i18n="nav.contact">Contacto</a>
-                <a href="faq.html" data-i18n="footer.faq">Preguntas Frecuentes</a>
-                <a href="whats-new.html" data-i18n="footer.whatsNew">Novedades</a>
+                <h4 data-i18n="footer.help"></h4>
+                <a href="about.html" data-i18n="footer.about"></a>
+                <a href="community.html" data-i18n="nav.community"></a>
+                <a href="reviews.html" data-i18n="nav.reviews"></a>
+                <a href="contact.html" data-i18n="nav.contact"></a>
+                <a href="faq.html" data-i18n="footer.faq"></a>
+                <a href="whats-new.html" data-i18n="footer.whatsNew"></a>
             </div>
             <div class="footer-col footer-social">
-                <h4 data-i18n="footer.follow">Síguenos</h4>
+                <h4 data-i18n="footer.follow"></h4>
                 <div class="footer-social__links">
                     <a class="footer-social__btn footer-social__btn--instagram" href="https://www.instagram.com/touraiapp/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                         <svg class="footer-social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                        <span data-i18n="footer.instagram">Instagram</span>
+                        <span data-i18n="footer.instagram"></span>
                     </a>
                     <a class="footer-social__btn footer-social__btn--facebook" href="https://www.facebook.com/people/Tourai/61588924171925/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                         <svg class="footer-social__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                        <span data-i18n="footer.facebook">Facebook</span>
+                        <span data-i18n="footer.facebook"></span>
                     </a>
                 </div>
             </div>
@@ -209,7 +209,7 @@
         <div class="legal-bottom">
             &copy; <span id="current-year"></span> <strong>TourAI App</strong> -
             <a href="mailto:info@tourai.es" class="footer-email">info@tourai.es</a>
-            - <span data-i18n="footer.rights">Todos los derechos reservados.</span>
+            - <span data-i18n="footer.rights"></span>
         </div>
     </footer>
 
@@ -218,6 +218,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
     <script src="js/site-config.js"></script>
     <script src="js/site-config.secrets.js"></script>
+    <script src="js/locales/es-ES.js"></script>
     <script src="js/locales/en-GB.js"></script>
     <script src="js/i18n.js"></script>
     <script src="js/auth.js"></script>

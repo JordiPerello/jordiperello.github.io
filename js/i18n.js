@@ -13,13 +13,16 @@
     [ENGLISH_LOCALE]: {},
   };
 
-  function syncEnglishMessages() {
+  function syncLocaleMessages() {
+    if (window.TourAiEsESMessages && typeof window.TourAiEsESMessages === "object") {
+      messages[SPANISH_LOCALE] = window.TourAiEsESMessages;
+    }
     if (window.TourAiEnGBMessages && typeof window.TourAiEnGBMessages === "object") {
       messages[ENGLISH_LOCALE] = window.TourAiEnGBMessages;
     }
   }
 
-  syncEnglishMessages();
+  syncLocaleMessages();
 
   function isSpanishLocale(locale) {
     return locale === SPANISH_LOCALE || locale === "es";
@@ -48,24 +51,30 @@
     return config.defaultLocale;
   }
 
+  function applyVars(value, vars) {
+    if (!vars || value == null) {
+      return value;
+    }
+    let out = String(value);
+    Object.keys(vars).forEach((name) => {
+      out = out.split(`{${name}}`).join(String(vars[name]));
+    });
+    return out;
+  }
+
+  /**
+   * Lookup copy for a locale table. Returns null if the key is missing.
+   * Both es-ES and en-GB must define keys used from JS.
+   */
   function t(key, locale, vars) {
-    syncEnglishMessages();
-    const normalized = normalizeLocale(locale);
-    // Only en-GB uses the English table; anything else falls back to Spanish source copy.
-    if (!normalized || normalized !== ENGLISH_LOCALE) {
+    syncLocaleMessages();
+    const normalized = normalizeLocale(locale) || getLocale();
+    const table = messages[normalized] ?? {};
+    const value = table[key];
+    if (value == null || value === "") {
       return null;
     }
-    const table = messages[ENGLISH_LOCALE] ?? {};
-    let value = table[key];
-    if (!value) {
-      return null;
-    }
-    if (vars) {
-      Object.keys(vars).forEach((name) => {
-        value = value.replace(`{${name}}`, vars[name]);
-      });
-    }
-    return value;
+    return applyVars(value, vars);
   }
 
   function tOr(key, locale, vars, fallback) {
@@ -90,13 +99,6 @@
 
   function applyHtmlTranslations(locale) {
     document.querySelectorAll("[data-i18n-html]").forEach((element) => {
-      if (!htmlDefaults.has(element)) {
-        htmlDefaults.set(element, element.innerHTML);
-      }
-      if (isSpanishLocale(locale)) {
-        element.innerHTML = htmlDefaults.get(element);
-        return;
-      }
       const key = element.getAttribute("data-i18n-html");
       const translated = t(key, locale);
       if (translated) {
@@ -106,53 +108,30 @@
   }
 
   function applyTranslations(locale) {
-    syncEnglishMessages();
+    syncLocaleMessages();
     const normalized = normalizeLocale(locale);
     document.documentElement.lang = isSpanishLocale(normalized) ? SPANISH_LOCALE : ENGLISH_LOCALE;
 
-    const titleKey = document.querySelector("title")?.getAttribute("data-i18n-doc-title");
-    if (titleKey) {
-      const translatedTitle = isSpanishLocale(normalized)
-        ? document.querySelector("title")?.getAttribute("data-default-title") || document.title
-        : t(titleKey, normalized);
-      if (translatedTitle && normalized === ENGLISH_LOCALE) {
-        if (!document.querySelector("title")?.getAttribute("data-default-title")) {
-          document.querySelector("title")?.setAttribute("data-default-title", document.title);
-        }
-        document.title = translatedTitle;
-      } else if (isSpanishLocale(normalized)) {
-        const defaultTitle = document.querySelector("title")?.getAttribute("data-default-title");
-        if (defaultTitle) {
-          document.title = defaultTitle;
-        }
+    const titleEl = document.querySelector("title");
+    const titleKey = titleEl?.getAttribute("data-i18n-doc-title");
+    if (titleEl && titleKey) {
+      const translatedTitle = t(titleKey, normalized);
+      if (translatedTitle) {
+        titleEl.textContent = translatedTitle;
       }
     }
 
     document.querySelectorAll("meta[data-i18n-meta]").forEach((meta) => {
-      if (!meta.getAttribute("data-default-content")) {
-        meta.setAttribute("data-default-content", meta.getAttribute("content") ?? "");
-      }
       const key = meta.getAttribute("data-i18n-meta");
-      if (isSpanishLocale(normalized)) {
-        meta.setAttribute("content", meta.getAttribute("data-default-content") ?? "");
-      } else {
-        const translated = t(key, normalized);
-        if (translated) {
-          meta.setAttribute("content", translated);
-        }
+      const translated = t(key, normalized);
+      if (translated) {
+        meta.setAttribute("content", translated);
       }
     });
 
     document.querySelectorAll("[data-i18n]").forEach((element) => {
-      if (!element.getAttribute("data-default-text")) {
-        element.setAttribute("data-default-text", element.textContent ?? "");
-      }
       const key = element.getAttribute("data-i18n");
       if (!key) {
-        return;
-      }
-      if (isSpanishLocale(normalized)) {
-        element.textContent = element.getAttribute("data-default-text") ?? "";
         return;
       }
       const platform = element.getAttribute("data-i18n-platform");
@@ -163,15 +142,8 @@
     });
 
     document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
-      if (!element.getAttribute("data-default-placeholder")) {
-        element.setAttribute("data-default-placeholder", element.getAttribute("placeholder") ?? "");
-      }
       const key = element.getAttribute("data-i18n-placeholder");
       if (!key) {
-        return;
-      }
-      if (isSpanishLocale(normalized)) {
-        element.setAttribute("placeholder", element.getAttribute("data-default-placeholder") ?? "");
         return;
       }
       const translated = t(key, normalized);
@@ -181,20 +153,24 @@
     });
 
     document.querySelectorAll("[data-i18n-title]").forEach((element) => {
-      if (!element.getAttribute("data-default-title-attr")) {
-        element.setAttribute("data-default-title-attr", element.getAttribute("title") ?? "");
-      }
       const key = element.getAttribute("data-i18n-title");
       if (!key) {
-        return;
-      }
-      if (isSpanishLocale(normalized)) {
-        element.setAttribute("title", element.getAttribute("data-default-title-attr") ?? "");
         return;
       }
       const translated = t(key, normalized);
       if (translated) {
         element.setAttribute("title", translated);
+      }
+    });
+
+    document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+      const key = element.getAttribute("data-i18n-aria-label");
+      if (!key) {
+        return;
+      }
+      const translated = t(key, normalized);
+      if (translated) {
+        element.setAttribute("aria-label", translated);
       }
     });
 
@@ -246,12 +222,9 @@
     const intro = document.getElementById("modalIntro");
     if (intro && platform && window.TourAiI18n) {
       const locale = event.detail?.locale ?? window.TourAiI18n.getLocale();
-      const template = intro.getAttribute("data-default-text") ?? intro.textContent ?? "";
-      if (locale === ENGLISH_LOCALE) {
-        const translated = window.TourAiI18n.t("index.modal.text", locale, { platform });
-        intro.textContent = (translated ?? template).replace("{platform}", platform);
-      } else {
-        intro.textContent = template.replace("{platform}", platform);
+      const translated = window.TourAiI18n.t("index.modal.text", locale, { platform });
+      if (translated) {
+        intro.textContent = translated;
       }
     }
   });

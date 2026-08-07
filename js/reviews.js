@@ -754,14 +754,14 @@
     if (email.includes("@")) {
       return email.split("@")[0];
     }
-    return t("reviews.anonymous", "Usuario");
+    return t("reviews.anonymous");
   }
 
   function targetLabel(target) {
     if (target === "app") {
-      return t("reviews.target.app", "App");
+      return t("reviews.target.app");
     }
-    return t("reviews.target.web", "Web");
+    return t("reviews.target.web");
   }
 
   function timestampNow() {
@@ -811,10 +811,10 @@
     const label = formatAverageLabel(avg);
     const aria =
       count > 0
-        ? t("reviews.widget.aria", "Valoración media {avg} de 5 ({n} reseñas)")
+        ? t("reviews.widget.aria")
             .replace("{avg}", label)
             .replace("{n}", String(count))
-        : t("reviews.widget.ariaEmpty", "Ver opiniones de TourAI");
+        : t("reviews.widget.ariaEmpty");
 
     el.setAttribute("aria-label", aria);
     el.title = aria;
@@ -851,7 +851,7 @@
     link.setAttribute("data-site-rating", "hero");
     link.setAttribute(
       "aria-label",
-      t("reviews.widget.ariaEmpty", "Ver opiniones de TourAI")
+      t("reviews.widget.ariaEmpty")
     );
     link.innerHTML =
       starsHtml(0, { size: 16, uid: "hero" }) +
@@ -1008,7 +1008,7 @@
       }
       const avg = stats.average;
       const label = formatAverageLabel(avg);
-      const countLabel = t("reviews.summary.count", "{n} reseñas aprobadas").replace(
+      const countLabel = t("reviews.summary.count").replace(
         "{n}",
         String(stats.count || 0)
       );
@@ -1039,7 +1039,7 @@
           '"' +
           (starsLocked ? " disabled" : "") +
           ' aria-label="' +
-          escapeHtml(t("reviews.stars.pick", "{n} estrellas").replace("{n}", String(i))) +
+          escapeHtml(t("reviews.stars.pick").replace("{n}", String(i))) +
           '">' +
           '<svg width="28" height="28" viewBox="0 0 24 24" focusable="false"><path d="' +
           STAR_PATH +
@@ -1060,7 +1060,7 @@
       const target = getSelectedTarget();
       const mine = myReviews[target];
       if (commentEditBtn) {
-        const editLabel = t("reviews.comment.edit", "Editar comentario");
+        const editLabel = t("reviews.comment.edit");
         commentEditBtn.title = editLabel;
         commentEditBtn.setAttribute("aria-label", editLabel);
         commentEditBtn.hidden = !hasComment;
@@ -1083,14 +1083,8 @@
         }
         if (commentInviteText) {
           commentInviteText.textContent = mine
-            ? t(
-                "reviews.comment.inviteExisting",
-                "Ya valoraste. ¿Quieres añadir un comentario?"
-              )
-            : t(
-                "reviews.comment.inviteNew",
-                "Te invitamos a añadir un comentario (opcional) sobre tu valoración."
-              );
+            ? t("reviews.comment.inviteExisting")
+            : t("reviews.comment.inviteNew");
         }
       }
     }
@@ -1138,7 +1132,7 @@
       if (!comment) {
         commentBlock =
           '<p class="reviews-card__comment reviews-card__comment--empty">' +
-          escapeHtml(t("reviews.noComment", "Sin comentario")) +
+          escapeHtml(t("reviews.noComment")) +
           "</p>";
       } else if (review.commentFormat === "html" || looksLikeHtml(comment)) {
         commentBlock =
@@ -1157,7 +1151,7 @@
         escapeHtml(targetLabel(review.target)) +
         "</span>" +
         '<span class="reviews-card__meta">' +
-        escapeHtml(review.authorName || t("reviews.anonymous", "Usuario")) +
+        escapeHtml(review.authorName || t("reviews.anonymous")) +
         " · " +
         escapeHtml(formatWhen(review.createdAt)) +
         "</span></div>" +
@@ -1201,7 +1195,7 @@
       if (!reviews.length && !loading) {
         listEl.innerHTML =
           '<p class="community-empty">' +
-          escapeHtml(t("reviews.empty", "Todavía no hay opiniones publicadas.")) +
+          escapeHtml(t("reviews.empty")) +
           "</p>";
         return;
       }
@@ -1284,7 +1278,7 @@
       } catch (err) {
         console.error("[TourAI reviews] list", err);
         setStatus(
-          t("reviews.error.load", "No se pudieron cargar las opiniones. Inténtalo más tarde."),
+          t("reviews.error.load"),
           true
         );
         hasMore = false;
@@ -1350,19 +1344,13 @@
         if (mine.hidden) {
           starsLocked = false;
           setStatus(
-            t(
-              "reviews.pending.yours",
-              "Tu reseña está pendiente de moderación. Puedes editarla mientras no esté publicada."
-            ),
+            t("reviews.pending.yours"),
             false
           );
         } else {
           starsLocked = true;
           setStatus(
-            t(
-              "reviews.alreadyPublished",
-              "Ya tienes una reseña publicada para este destino. Gracias."
-            ),
+            t("reviews.alreadyPublished"),
             false
           );
         }
@@ -1428,7 +1416,7 @@
       }
       const stars = selectedStars;
       if (!stars || stars < 1 || stars > 5) {
-        setStatus(t("reviews.error.stars", "Elige una valoración de 1 a 5 estrellas."), true);
+        setStatus(t("reviews.error.stars"), true);
         return;
       }
       const target = getSelectedTarget();
@@ -1436,10 +1424,7 @@
       const commentText = plainTextFromHtml(comment);
       if (commentText.length > BODY_MAX_CHARS || comment.length > BODY_MAX_HTML) {
         setStatus(
-          t(
-            "reviews.error.commentLong",
-            "El comentario es demasiado largo. Acórtalo un poco."
-          ),
+          t("reviews.error.commentLong"),
           true
         );
         return;
@@ -1447,10 +1432,7 @@
       const existing = myReviews[target];
       if (existing && !existing.hidden) {
         setStatus(
-          t(
-            "reviews.alreadyPublished",
-            "Ya tienes una reseña publicada para este destino. Gracias."
-          ),
+          t("reviews.alreadyPublished"),
           true
         );
         return;
@@ -1460,7 +1442,7 @@
       if (submitBtn) {
         submitBtn.disabled = true;
       }
-      setStatus(t("reviews.saving", "Enviando..."), false);
+      setStatus(t("reviews.saving"), false);
 
       try {
         const user = await requireUser();
@@ -1481,10 +1463,7 @@
         }
         await firestore.collection("Reviews").doc(id).set(payload, { merge: true });
         setStatus(
-          t(
-            "reviews.saved",
-            "Gracias. Tu reseña se ha enviado y aparecerá cuando la moderemos."
-          ),
+          t("reviews.saved"),
           false
         );
         await loadMyReviews();
@@ -1495,7 +1474,7 @@
           return;
         }
         setStatus(
-          t("reviews.error.save", "No se pudo enviar la reseña. Inténtalo más tarde."),
+          t("reviews.error.save"),
           true
         );
       } finally {
@@ -1515,10 +1494,7 @@
       const commentText = plainTextFromHtml(commentHtml);
       if (commentText.length > BODY_MAX_CHARS || commentHtml.length > BODY_MAX_HTML) {
         setCommentModalStatus(
-          t(
-            "reviews.error.commentLong",
-            "El comentario es demasiado largo. Acórtalo un poco."
-          ),
+          t("reviews.error.commentLong"),
           true
         );
         return;
@@ -1530,10 +1506,7 @@
 
       if (!existing && !selectedStars) {
         setCommentModalStatus(
-          t(
-            "reviews.comment.needStars",
-            "Elige primero las estrellas para guardar el comentario."
-          ),
+          t("reviews.comment.needStars"),
           true
         );
         return;
@@ -1543,14 +1516,14 @@
       if (commentSaveBtn) {
         commentSaveBtn.disabled = true;
       }
-      setCommentModalStatus(t("reviews.saving", "Enviando..."), false);
+      setCommentModalStatus(t("reviews.saving"), false);
 
       try {
         draftCommentHtml = commentHtml;
         if (shouldPersist) {
           await persistReviewComment(commentHtml);
           setStatus(
-            t("reviews.comment.saved", "Comentario guardado."),
+            t("reviews.comment.saved"),
             false
           );
           await loadMyReviews();
@@ -1566,15 +1539,12 @@
         }
         if (String(err?.message) === "NEED_STARS") {
           setCommentModalStatus(
-            t(
-              "reviews.comment.needStars",
-              "Elige primero las estrellas para guardar el comentario."
-            ),
+            t("reviews.comment.needStars"),
             true
           );
         } else {
           setCommentModalStatus(
-            t("reviews.error.save", "No se pudo enviar la reseña. Inténtalo más tarde."),
+            t("reviews.error.save"),
             true
           );
         }
@@ -1673,7 +1643,7 @@
       .catch(function (err) {
         console.error("[TourAI reviews] init", err);
         setStatus(
-          t("reviews.error.load", "No se pudieron cargar las opiniones. Inténtalo más tarde."),
+          t("reviews.error.load"),
           true
         );
       });

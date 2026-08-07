@@ -144,10 +144,10 @@
     confirmTitleEl.textContent = opts.title || "";
     confirmMessageEl.textContent = opts.message || "";
     confirmOkBtn.textContent =
-      opts.confirmLabel || t("community.confirm.ok", "Confirmar");
+      opts.confirmLabel || t("community.confirm.ok");
     if (confirmCancelBtn) {
       confirmCancelBtn.textContent =
-        opts.cancelLabel || t("community.confirm.cancel", "Cancelar");
+        opts.cancelLabel || t("community.confirm.cancel");
     }
     const dialog = confirmModal.querySelector(".community-confirm-modal__dialog");
     if (opts.danger) {
@@ -645,11 +645,8 @@
   }
 
   async function showCommunityPolicyBlocked() {
-    const title = t("community.error.policy.title", "No se puede publicar");
-    const message = t(
-      "community.error.policy",
-      "No se puede publicar: el contenido incumple la política de uso de la Comunidad. Revisa el texto e inténtalo de nuevo."
-    );
+    const title = t("community.error.policy.title");
+    const message = t("community.error.policy");
     setStatus(message, true);
     if (window.TourAiFeedback?.show) {
       window.TourAiFeedback.show({
@@ -662,7 +659,7 @@
     await confirmAction({
       title: title,
       message: message,
-      confirmLabel: t("community.error.policy.ok", "Entendido"),
+      confirmLabel: t("community.error.policy.ok"),
       danger: true,
     });
   }
@@ -1074,7 +1071,7 @@
       displayName:
         nav.displayName ||
         fallbackName ||
-        t("community.anonymous", "Usuario"),
+        t("community.anonymous"),
       photoUrls: urls,
       photoCropOffsetXNorm: Number.isFinite(Number(nav.photoCropOffsetXNorm))
         ? Number(nav.photoCropOffsetXNorm)
@@ -1110,7 +1107,7 @@
     if (!key) {
       return {
         uid: "",
-        displayName: fallbackName || t("community.anonymous", "Usuario"),
+        displayName: fallbackName || t("community.anonymous"),
         photoUrls: [],
         photoCropOffsetXNorm: 0,
         photoCropOffsetYNorm: 0,
@@ -1129,7 +1126,7 @@
     }
     const profile = {
       uid: key,
-      displayName: fallbackName || t("community.anonymous", "Usuario"),
+      displayName: fallbackName || t("community.anonymous"),
       photoUrls: [],
       photoCropOffsetXNorm: 0,
       photoCropOffsetYNorm: 0,
@@ -1285,10 +1282,10 @@
     }
     openAuthorUid = uid;
     if (userCardName) {
-      userCardName.textContent = fallbackName || t("community.anonymous", "Usuario");
+      userCardName.textContent = fallbackName || t("community.anonymous");
     }
     if (userCardMeta) {
-      userCardMeta.textContent = t("community.user.loading", "Cargando perfil...");
+      userCardMeta.textContent = t("community.user.loading");
     }
     if (userCardAvatar) {
       userCardAvatar.textContent = initialsFrom(fallbackName);
@@ -1304,8 +1301,8 @@
     if (userCardMeta) {
       const since = formatMemberSince(profile.createdAt);
       userCardMeta.textContent = since
-        ? t("community.user.memberSince", "Miembro desde {date}").replace("{date}", since)
-        : t("community.user.member", "Miembro de la comunidad TourAI");
+        ? t("community.user.memberSince").replace("{date}", since)
+        : t("community.user.member");
     }
     paintUserCardAvatar(profile);
     positionUserCard(anchor);
@@ -1385,7 +1382,7 @@
     if (email.includes("@")) {
       return email.split("@")[0];
     }
-    return t("community.anonymous", "Usuario");
+    return t("community.anonymous");
   }
 
   function mapTopic(doc) {
@@ -1503,7 +1500,7 @@
     }
     replyToTarget = {
       id: reply.id,
-      authorName: reply.authorName || t("community.anonymous", "Usuario"),
+      authorName: reply.authorName || t("community.anonymous"),
       snippet: makeReplySnippet(reply.body),
     };
     syncReplyToBanner();
@@ -1529,10 +1526,7 @@
     }
     replyToBanner.hidden = false;
     if (replyToLabelEl) {
-      replyToLabelEl.textContent = t(
-        "community.replica.label",
-        "Réplica a {name}"
-      ).replace("{name}", replyToTarget.authorName);
+      replyToLabelEl.textContent = t("community.replica.label").replace("{name}", replyToTarget.authorName);
     }
     if (replyToSnippetEl) {
       replyToSnippetEl.textContent = replyToTarget.snippet
@@ -1572,48 +1566,36 @@
     const message = String(err?.message || "");
     const code = String(err?.code || "");
     if (message === "TOPIC_MISSING") {
-      return t("community.error.missing", "Este tema no existe o fue eliminado.");
+      return t("community.error.missing");
     }
     if (message === "NO_USER") {
-      return t("community.error.auth", "Tu sesión ha caducado. Vuelve a iniciar sesión.");
+      return t("community.error.auth");
     }
     if (code === "permission-denied" || /permission/i.test(message)) {
-      return t(
-        "community.error.permission",
-        "No tienes permiso para ver este contenido."
-      );
+      return t("community.error.permission");
     }
     if (code === "failed-precondition" || /index/i.test(message)) {
-      return t(
-        "community.error.index",
-        "Falta un índice en la base de datos. Inténtalo en unos minutos."
-      );
+      return t("community.error.index");
     }
-    return t("community.error.load", "No se pudo cargar la comunidad. Inténtalo más tarde.");
+    return t("community.error.load");
   }
 
   function saveErrorMessage(err) {
     const message = String(err?.message || "");
     const code = String(err?.code || "");
     if (message === "NO_USER") {
-      return t("community.error.auth", "Tu sesión ha caducado. Vuelve a iniciar sesión.");
+      return t("community.error.auth");
     }
     if (message === "TOPIC_MISSING") {
-      return t("community.error.missing", "Este tema no existe o fue eliminado.");
+      return t("community.error.missing");
     }
     if (message === "THREAD_LOCKED") {
-      return t(
-        "community.error.threadLocked",
-        "No se puede eliminar: esta respuesta tiene réplicas."
-      );
+      return t("community.error.threadLocked");
     }
     if (message === "FORBIDDEN" || code === "permission-denied") {
-      return t(
-        "community.error.forbidden",
-        "No tienes permiso para esta acción. Si acabas de cambiar las reglas, espera un minuto e inténtalo de nuevo."
-      );
+      return t("community.error.forbidden");
     }
-    return t("community.error.save", "No se pudo publicar. Inténtalo más tarde.");
+    return t("community.error.save");
   }
 
   async function requireUser() {
@@ -1661,10 +1643,7 @@
     if (blockedBanner) {
       blockedBanner.hidden = !signedIn || !postingBlocked;
       if (!blockedBanner.hidden) {
-        blockedBanner.textContent = t(
-          "community.blocked.banner",
-          "Usuario bloqueado: puedes leer la comunidad, pero no publicar mensajes."
-        );
+        blockedBanner.textContent = t("community.blocked.banner");
       }
     }
     if (openComposerBtn) {
@@ -1739,7 +1718,7 @@
     setComposerTitleFieldVisible(true);
     const titleEl = document.getElementById("communityComposerTitle");
     if (titleEl) {
-      titleEl.textContent = t("community.newTopic", "Nuevo tema");
+      titleEl.textContent = t("community.newTopic");
     }
   }
 
@@ -1775,7 +1754,7 @@
     if (target.kind === "topic") {
       setComposerTitleFieldVisible(true);
       if (titleEl) {
-        titleEl.textContent = t("community.editTopic", "Editar tema");
+        titleEl.textContent = t("community.editTopic");
       }
       if (topicTitleInput) {
         topicTitleInput.value = currentTopic?.title || "";
@@ -1786,7 +1765,7 @@
     } else {
       setComposerTitleFieldVisible(false);
       if (titleEl) {
-        titleEl.textContent = t("community.editReply", "Editar mensaje");
+        titleEl.textContent = t("community.editReply");
       }
       const reply = findReplyById(target.id);
       if (topicTitleInput) {
@@ -1907,7 +1886,7 @@
         '<button type="button" class="community-msg__reply" data-reply-to="' +
           escapeHtml(opts.id) +
           '">' +
-          escapeHtml(t("community.replyTo.action", "Responder")) +
+          escapeHtml(t("community.replyTo.action")) +
           "</button>"
       );
     }
@@ -1918,7 +1897,7 @@
           '" data-id="' +
           escapeHtml(opts.id) +
           '">' +
-          escapeHtml(t("community.edit", "Editar")) +
+          escapeHtml(t("community.edit")) +
           "</button>"
       );
     }
@@ -1929,7 +1908,7 @@
           '" data-id="' +
           escapeHtml(opts.id) +
           '">' +
-          escapeHtml(t("community.delete", "Eliminar")) +
+          escapeHtml(t("community.delete")) +
           "</button>"
       );
     }
@@ -1958,9 +1937,9 @@
       escapeHtml(name) +
       '" aria-label="' +
       escapeHtml(
-        t("community.user.open", "Ver perfil de {name}").replace(
+        t("community.user.open").replace(
           "{name}",
-          name || t("community.anonymous", "Usuario")
+          name || t("community.anonymous")
         )
       ) +
       '">' +
@@ -2005,16 +1984,16 @@
     const shown = count || (state && state.items ? state.items.length : 0);
     let label;
     if (expanded) {
-      label = t("community.replica.hide", "Ocultar réplicas");
+      label = t("community.replica.hide");
     } else if (shown === 1) {
-      label = t("community.replica.showOne", "Mostrar 1 réplica");
+      label = t("community.replica.showOne");
     } else if (shown > 1) {
-      label = t("community.replica.show", "Mostrar {n} réplicas").replace(
+      label = t("community.replica.show").replace(
         "{n}",
         String(shown)
       );
     } else {
-      label = t("community.replica.check", "Ver réplicas");
+      label = t("community.replica.check");
     }
     return (
       '<button type="button" class="community-replica-toggle" data-toggle-replicas="' +
@@ -2038,7 +2017,7 @@
     } else if (!state.items.length) {
       inner =
         '<p class="community-empty community-empty--replicas">' +
-        escapeHtml(t("community.replica.empty", "No hay réplicas todavía.")) +
+        escapeHtml(t("community.replica.empty")) +
         "</p>";
     } else {
       inner = state.items
@@ -2126,20 +2105,14 @@
         '<span class="community-empty__title">' +
         escapeHtml(
           searchQuery
-            ? t("community.search.emptyTitle", "Sin resultados")
-            : t("community.emptyTitle", "Esta sección espera tu primer hilo")
+            ? t("community.search.emptyTitle")
+            : t("community.emptyTitle")
         ) +
         "</span>" +
         escapeHtml(
           searchQuery
-            ? t(
-                "community.search.empty",
-                "No hay temas que coincidan con tu búsqueda en esta sección."
-              )
-            : t(
-                "community.empty",
-                "Todavía no hay temas aquí. Sé quien abra la conversación."
-              )
+            ? t("community.search.empty")
+            : t("community.empty")
         ) +
         "</div>";
       return;
@@ -2150,8 +2123,8 @@
         const preview = previewFromBody(topic.body, 140);
         const repliesLabel =
           Number(topic.replyCount) === 1
-            ? t("community.repliesCountOne", "1 respuesta")
-            : t("community.repliesCount", "{n} respuestas").replace(
+            ? t("community.repliesCountOne")
+            : t("community.repliesCount").replace(
                 "{n}",
                 String(topic.replyCount || 0)
               );
@@ -2171,9 +2144,9 @@
           escapeHtml(topic.authorName || "") +
           '" aria-label="' +
           escapeHtml(
-            t("community.user.open", "Ver perfil de {name}").replace(
+            t("community.user.open").replace(
               "{name}",
-              topic.authorName || t("community.anonymous", "Usuario")
+              topic.authorName || t("community.anonymous")
             )
           ) +
           '">' +
@@ -2228,8 +2201,8 @@
     const replyTotal = Number(currentTopic.replyCount) || 0;
     const countLabel =
       replyTotal === 1
-        ? t("community.repliesCountOne", "1 respuesta")
-        : t("community.repliesCount", "{n} respuestas").replace(
+        ? t("community.repliesCountOne")
+        : t("community.repliesCount").replace(
             "{n}",
             String(replyTotal)
           );
@@ -2238,7 +2211,7 @@
     if (!replies.length && !repliesLoading) {
       repliesHtml =
         '<p class="community-empty" style="padding:12px 14px">' +
-        escapeHtml(t("community.noReplies", "Sé el primero en responder.")) +
+        escapeHtml(t("community.noReplies")) +
         "</p>";
     } else {
       repliesHtml = replies.map(renderTopLevelReplyBlock).join("");
@@ -2490,7 +2463,7 @@
     if (topicsEl) {
       topicsEl.innerHTML = skeletonHtml("list");
     }
-    setStatus(t("community.search.searching", "Buscando..."), false);
+    setStatus(t("community.search.searching"), false);
     try {
       const matched = await searchTopicsInCategory(currentCategory, query);
       if (gen !== searchGen) {
@@ -2499,7 +2472,7 @@
       topics = matched;
       setStatus(
         topics.length
-          ? t("community.search.results", "{n} resultados").replace(
+          ? t("community.search.results").replace(
               "{n}",
               String(topics.length)
             )
@@ -2550,7 +2523,7 @@
     if (!searchSubmitBtn) {
       return;
     }
-    const label = t("community.search.submit", "Buscar");
+    const label = t("community.search.submit");
     searchSubmitBtn.setAttribute("aria-label", label);
     searchSubmitBtn.setAttribute("title", label);
   }
@@ -2649,10 +2622,7 @@
       console.error("[TourAI community] loadRepliesPage", err);
       repliesHasMore = false;
       setStatus(
-        t(
-          "community.error.replies",
-          "El tema se ha abierto, pero no se pudieron cargar las respuestas."
-        ),
+        t("community.error.replies"),
         true
       );
     } finally {
@@ -2713,7 +2683,7 @@
     try {
       const topic = await getTopic(topicId);
       if (!topic) {
-        setStatus(t("community.error.missing", "Este tema no existe o fue eliminado."), true);
+        setStatus(t("community.error.missing"), true);
         if (detailMount) {
           detailMount.innerHTML = "";
         }
@@ -2765,12 +2735,12 @@
     const bodyHtml = getEditorHtml(topicBodyInput);
     const bodyText = plainTextFromHtml(bodyHtml);
     if (!bodyText) {
-      setStatus(t("community.error.body", "Escribe un mensaje."), true);
+      setStatus(t("community.error.body"), true);
       return;
     }
     if (bodyText.length > BODY_MAX_CHARS || bodyHtml.length > BODY_MAX_HTML) {
       setStatus(
-        t("community.error.bodyLong", "El mensaje es demasiado largo. Acórtalo un poco."),
+        t("community.error.bodyLong"),
         true
       );
       return;
@@ -2782,23 +2752,20 @@
       if (isTopicEdit) {
         title = String(topicTitleInput?.value || "").trim();
         if (!title || title.length > 120) {
-          setStatus(t("community.error.title", "Escribe un título (máx. 120 caracteres)."), true);
+          setStatus(t("community.error.title"), true);
           return;
         }
       }
       const ok = await confirmAction({
-        title: t("community.confirm.saveEdit.title", "¿Guardar cambios?"),
-        message: t(
-          "community.confirm.saveEdit.body",
-          "Se actualizará el contenido publicado."
-        ),
-        confirmLabel: t("community.confirm.ok", "Confirmar"),
+        title: t("community.confirm.saveEdit.title"),
+        message: t("community.confirm.saveEdit.body"),
+        confirmLabel: t("community.confirm.ok"),
       });
       if (!ok) {
         return;
       }
       busy = true;
-      setStatus(t("community.savingEdit", "Guardando..."), false);
+      setStatus(t("community.savingEdit"), false);
       try {
         const user = await requireUser();
         const firestore = await auth.getFirestore();
@@ -2857,15 +2824,12 @@
 
     const title = String(topicTitleInput?.value || "").trim();
     if (!title || title.length > 120) {
-      setStatus(t("community.error.title", "Escribe un título (máx. 120 caracteres)."), true);
+      setStatus(t("community.error.title"), true);
       return;
     }
     if (postingBlocked) {
       setStatus(
-        t(
-          "community.blocked.banner",
-          "Usuario bloqueado: puedes leer la comunidad, pero no publicar mensajes."
-        ),
+        t("community.blocked.banner"),
         true
       );
       return;
@@ -2881,23 +2845,17 @@
       return;
     }
     const ok = await confirmAction({
-      title: t("community.confirm.publishTopic.title", "¿Publicar este tema?"),
+      title: t("community.confirm.publishTopic.title"),
       message: moderation.hidden
-        ? t(
-            "community.confirm.publishTopic.pending",
-            "Tu tema quedará pendiente de revisión antes de mostrarse en la comunidad."
-          )
-        : t(
-            "community.confirm.publishTopic.body",
-            "Tu tema será visible en esta sección de la comunidad."
-          ),
-      confirmLabel: t("community.publish", "Publicar"),
+        ? t("community.confirm.publishTopic.pending")
+        : t("community.confirm.publishTopic.body"),
+      confirmLabel: t("community.publish"),
     });
     if (!ok) {
       return;
     }
     busy = true;
-    setStatus(t("community.saving", "Publicando..."), false);
+    setStatus(t("community.saving"), false);
     try {
       const firestore = await auth.getFirestore();
       const ref = await firestore.collection("CommunityTopics").add({
@@ -2917,10 +2875,7 @@
       closeComposerModal();
       if (moderation.hidden) {
         setStatus(
-          t(
-            "community.pending.review",
-            "Mensaje pendiente de revisión. Se publicará cuando un moderador lo apruebe."
-          ),
+          t("community.pending.review"),
           false
         );
       } else {
@@ -2943,22 +2898,19 @@
     const bodyHtml = getEditorHtml(replyBodyInput);
     const bodyText = plainTextFromHtml(bodyHtml);
     if (!bodyText) {
-      setStatus(t("community.error.body", "Escribe un mensaje."), true);
+      setStatus(t("community.error.body"), true);
       return;
     }
     if (bodyText.length > BODY_MAX_CHARS || bodyHtml.length > BODY_MAX_HTML) {
       setStatus(
-        t("community.error.bodyLong", "El mensaje es demasiado largo. Acórtalo un poco."),
+        t("community.error.bodyLong"),
         true
       );
       return;
     }
     if (postingBlocked) {
       setStatus(
-        t(
-          "community.blocked.banner",
-          "Usuario bloqueado: puedes leer la comunidad, pero no publicar mensajes."
-        ),
+        t("community.blocked.banner"),
         true
       );
       return;
@@ -2972,29 +2924,20 @@
     }
     const ok = await confirmAction({
       title: isReplica
-        ? t("community.confirm.publishReplica.title", "¿Publicar esta réplica?")
-        : t("community.confirm.publishReply.title", "¿Publicar esta respuesta?"),
+        ? t("community.confirm.publishReplica.title")
+        : t("community.confirm.publishReply.title"),
       message: moderation.hidden
-        ? t(
-            "community.confirm.publishReply.pending",
-            "Tu respuesta quedará pendiente de revisión antes de mostrarse en el hilo."
-          )
+        ? t("community.confirm.publishReply.pending")
         : isReplica
-          ? t(
-              "community.confirm.publishReplica.body",
-              "Tu réplica aparecerá bajo la respuesta seleccionada."
-            )
-          : t(
-              "community.confirm.publishReply.body",
-              "Tu respuesta se añadirá a este hilo."
-            ),
-      confirmLabel: t("community.publish", "Publicar"),
+          ? t("community.confirm.publishReplica.body")
+          : t("community.confirm.publishReply.body"),
+      confirmLabel: t("community.publish"),
     });
     if (!ok) {
       return;
     }
     busy = true;
-    setStatus(t("community.saving", "Publicando..."), false);
+    setStatus(t("community.saving"), false);
     try {
       const firestore = await auth.getFirestore();
       const topicRef = firestore.collection("CommunityTopics").doc(currentTopicId);
@@ -3061,10 +3004,7 @@
 
       if (moderation.hidden) {
         setStatus(
-          t(
-            "community.pending.review",
-            "Mensaje pendiente de revisión. Se publicará cuando un moderador lo apruebe."
-          ),
+          t("community.pending.review"),
           false
         );
         return;
@@ -3179,12 +3119,9 @@
       let confirmOpts;
       if (kind === "topic") {
         confirmOpts = {
-          title: t("community.confirm.deleteTopic.title", "¿Eliminar este tema?"),
-          message: t(
-            "community.confirm.deleteTopic.body",
-            "Se eliminará de forma permanente. Esta acción no se puede deshacer."
-          ),
-          confirmLabel: t("community.delete", "Eliminar"),
+          title: t("community.confirm.deleteTopic.title"),
+          message: t("community.confirm.deleteTopic.body"),
+          confirmLabel: t("community.delete"),
           danger: true,
         };
       } else {
@@ -3209,27 +3146,15 @@
         }
         confirmOpts = isReplica
           ? {
-              title: t(
-                "community.confirm.deleteReplica.title",
-                "¿Eliminar esta réplica?"
-              ),
-              message: t(
-                "community.confirm.deleteReplica.body",
-                "Se eliminará de forma permanente. Esta acción no se puede deshacer."
-              ),
-              confirmLabel: t("community.delete", "Eliminar"),
+              title: t("community.confirm.deleteReplica.title"),
+              message: t("community.confirm.deleteReplica.body"),
+              confirmLabel: t("community.delete"),
               danger: true,
             }
           : {
-              title: t(
-                "community.confirm.deleteReply.title",
-                "¿Eliminar esta respuesta?"
-              ),
-              message: t(
-                "community.confirm.deleteReply.body",
-                "Se eliminará de forma permanente. Esta acción no se puede deshacer."
-              ),
-              confirmLabel: t("community.delete", "Eliminar"),
+              title: t("community.confirm.deleteReply.title"),
+              message: t("community.confirm.deleteReply.body"),
+              confirmLabel: t("community.delete"),
               danger: true,
             };
       }
@@ -3299,7 +3224,7 @@
         if (window.TourAiFeedback?.show) {
           window.TourAiFeedback.show({
             type: "error",
-            title: t("community.confirm.deleteFailed.title", "No se pudo eliminar"),
+            title: t("community.confirm.deleteFailed.title"),
             message: msg,
           });
         }
