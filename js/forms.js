@@ -345,6 +345,19 @@
     return tOrVerification("forms.error.generic");
   }
 
+  function mapSendVerificationError(result) {
+    if (!result || result.ok) {
+      return null;
+    }
+    if (result.error === "smtp_not_configured") {
+      return tOrVerification("contact.verify.sendError");
+    }
+    if (result.error === "forbidden_origin") {
+      return tOrVerification("forms.error.generic");
+    }
+    return tOrVerification("contact.verify.sendError");
+  }
+
   function isTechnicalErrorMessage(message) {
     return /failed to fetch|networkerror|load failed|network request failed|internal_error|network_error|request_failed|abort(ed)?|cors/i.test(
       String(message || "")
@@ -618,6 +631,10 @@
 
     genericActionErrorMessage() {
       return genericActionErrorMessage();
+    },
+
+    mapSendVerificationError(result) {
+      return mapSendVerificationError(result);
     },
 
     resetEmailRegistrationCheck() {

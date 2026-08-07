@@ -225,7 +225,10 @@ function openModal() { document.getElementById('privacyModal').style.display = '
                             window.TourAiForms.rateLimitedMessage(result, 'contact.verify.rateLimited')
                         );
                     }
-                    throw new Error(tContact('forms.error.generic'));
+                    throw new Error(
+                        window.TourAiForms?.mapSendVerificationError?.(result) ??
+                            tContact('forms.error.generic')
+                    );
                 }
                 openContactVerifyModal();
             } catch (error) {
@@ -255,7 +258,10 @@ function openModal() { document.getElementById('privacyModal').style.display = '
                             window.TourAiForms.rateLimitedMessage(result, 'contact.verify.rateLimited')
                         );
                     }
-                    throw new Error(tContact('forms.error.generic'));
+                    throw new Error(
+                        window.TourAiForms?.mapSendVerificationError?.(result) ??
+                            tContact('forms.error.generic')
+                    );
                 }
                 window.TourAiEmailVerifyModal.setStatus(
                     tContact('contact.verify.resent'),

@@ -1,22 +1,24 @@
 window.TourAiSite = window.TourAiSite || {};
 
 window.TourAiSite.config = {
-  contactFormUrl: "https://us-central1-tourai-production-7dabf.cloudfunctions.net/sendContactForm",
+  contactFormUrl:
+    "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/sendContactForm",
   contactSendVerificationUrl:
-    "https://us-central1-tourai-production-7dabf.cloudfunctions.net/sendWebContactVerificationCode",
+    "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/sendWebContactVerificationCode",
   contactVerifyCodeUrl:
-    "https://us-central1-tourai-production-7dabf.cloudfunctions.net/verifyWebContactVerificationCode",
-  subscribeFormUrl: "https://us-central1-tourai-production-7dabf.cloudfunctions.net/sendSubscribeNotificationsForm",
+    "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/verifyWebContactVerificationCode",
+  subscribeFormUrl:
+    "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/sendSubscribeNotificationsForm",
   checkStoreSubscriptionUrl:
-    "https://us-central1-tourai-production-7dabf.cloudfunctions.net/checkWebStoreSubscription",
+    "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/checkWebStoreSubscription",
   unsubscribeStoreNotificationsUrl:
-    "https://us-central1-tourai-production-7dabf.cloudfunctions.net/unsubscribeWebStoreNotifications",
+    "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/unsubscribeWebStoreNotifications",
   accountDeletionSendVerificationUrl:
-    "https://us-central1-tourai-production-7dabf.cloudfunctions.net/sendAccountDeletionVerificationCode",
+    "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/sendAccountDeletionVerificationCode",
   accountDeletionVerifyCodeUrl:
-    "https://us-central1-tourai-production-7dabf.cloudfunctions.net/verifyAccountDeletionVerificationCode",
+    "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/verifyAccountDeletionVerificationCode",
   accountDeletionDeleteUrl:
-    "https://us-central1-tourai-production-7dabf.cloudfunctions.net/deleteUserAccountWeb",
+    "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/deleteUserAccountWeb",
   createCheckoutSessionWebUrl:
     "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/createCheckoutSessionWeb",
   defaultLocale: "es-ES",
