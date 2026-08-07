@@ -792,46 +792,21 @@
     return version !== required;
   }
 
-  const legalDocHtmlCache = { terms: null, privacy: null };
-
-  function extractLegalMainHtml(html) {
-    const doc = new DOMParser().parseFromString(String(html || ""), "text/html");
-    const main =
-      doc.querySelector("main.legal-content") ||
-      doc.querySelector("main.container.legal-content") ||
-      doc.querySelector("[data-i18n-html] main") ||
-      doc.querySelector("main");
-    if (!main) {
-      return "";
-    }
-    return main.innerHTML;
-  }
+  const legalDocHtmlCache = {};
 
   async function loadLegalDocumentHtml(kind) {
-    if (legalDocHtmlCache[kind]) {
-      return legalDocHtmlCache[kind];
-    }
-
     const locale = global.TourAiI18n?.getLocale?.() || "es-ES";
-    const i18nKey = kind === "privacy" ? "page.privacy.content" : "page.terms.content";
-    if (locale === "en-GB" && typeof global.TourAiI18n?.t === "function") {
-      const translated = global.TourAiI18n.t(i18nKey, locale);
-      if (translated) {
-        legalDocHtmlCache[kind] = extractLegalMainHtml(translated) || translated;
-        return legalDocHtmlCache[kind];
-      }
+    const cacheKey = kind + ":" + locale;
+    if (legalDocHtmlCache[cacheKey]) {
+      return legalDocHtmlCache[cacheKey];
     }
 
-    const url = kind === "privacy" ? "privacy.html" : "terms.html";
-    const response = await fetch(url, { credentials: "same-origin", cache: "no-cache" });
-    if (!response.ok) {
-      throw new Error("LEGAL_FETCH_FAILED");
-    }
-    legalDocHtmlCache[kind] = extractLegalMainHtml(await response.text());
-    if (!legalDocHtmlCache[kind]) {
+    const html = global.TourAiI18n?.getLegalPageInnerHtml?.(kind, locale);
+    if (!html) {
       throw new Error("LEGAL_PARSE_FAILED");
     }
-    return legalDocHtmlCache[kind];
+    legalDocHtmlCache[cacheKey] = html;
+    return html;
   }
 
   function shouldLeavePrivateAreaAfterLegalDecline() {

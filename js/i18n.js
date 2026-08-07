@@ -116,6 +116,38 @@
     });
   }
 
+  /** Legal page bodies live in locale tables; HTML shells only hold data-i18n-html keys. */
+  const LEGAL_PAGE_CONTENT_KEYS = {
+    terms: "page.terms.content",
+    privacy: "page.privacy.content",
+    cookies: "page.cookies.content",
+  };
+
+  function extractLegalMainHtml(html) {
+    const doc = new DOMParser().parseFromString(String(html || ""), "text/html");
+    const main =
+      doc.querySelector("main.legal-content") ||
+      doc.querySelector("main.container.legal-content") ||
+      doc.querySelector("[data-i18n-html] main") ||
+      doc.querySelector("main");
+    if (!main) {
+      return "";
+    }
+    return main.innerHTML;
+  }
+
+  function getLegalPageInnerHtml(kind, locale) {
+    const key = LEGAL_PAGE_CONTENT_KEYS[kind];
+    if (!key) {
+      return null;
+    }
+    const translated = t(key, locale || getLocale());
+    if (!translated) {
+      return null;
+    }
+    return extractLegalMainHtml(translated) || translated;
+  }
+
   function applyTranslations(locale) {
     syncLocaleMessages();
     const normalized = normalizeLocale(locale);
@@ -217,6 +249,7 @@
     getLocale,
     setLocale,
     applyTranslations,
+    getLegalPageInnerHtml,
     SPANISH_LOCALE,
     ENGLISH_LOCALE,
   };
