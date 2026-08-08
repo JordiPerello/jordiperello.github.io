@@ -246,6 +246,33 @@
   letter-spacing: 0.04em;
 }
 
+.account-payment-status {
+  font-weight: 700;
+}
+
+.account-payment-status--paid {
+  color: #0b6b3a;
+}
+
+.account-payment-status--pending {
+  color: #b8860b;
+}
+
+.account-payment-status--cancelled {
+  color: #c62828;
+  background: #e8ecef;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.account-table tbody tr.account-table__row--cancelled {
+  background: #f3f5f7;
+}
+
+.account-table tbody tr.account-table__row--cancelled td {
+  border-bottom-color: #e0e6eb;
+}
+
 .register-terms {
   display: flex !important;
   align-items: flex-start;

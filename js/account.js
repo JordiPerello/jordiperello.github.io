@@ -192,6 +192,71 @@
     }
   }
 
+  function paymentStatusTone(statusOrRecord) {
+    var status;
+    var failureReason = "";
+    if (statusOrRecord && typeof statusOrRecord === "object") {
+      status = String(statusOrRecord.PaymentStatus || "");
+      failureReason = String(statusOrRecord.PaymentFailureReason || "");
+    } else {
+      status = String(statusOrRecord || "");
+    }
+
+    switch (status) {
+      case "Paid":
+      case "Free":
+        return "paid";
+      case "Pending":
+        return "pending";
+      case "Failed":
+        if (failureReason === "checkout_cancelled_by_user") {
+          return "cancelled";
+        }
+        if (failureReason === "stripe_checkout_session_expired") {
+          return "pending";
+        }
+        return "cancelled";
+      default:
+        return "neutral";
+    }
+  }
+
+  function paymentStatusHtml(statusOrRecord) {
+    const label = paymentStatusLabel(statusOrRecord);
+    const tone = paymentStatusTone(statusOrRecord);
+    if (tone === "neutral") {
+      return escapeHtml(label);
+    }
+    return `<span class="account-payment-status account-payment-status--${tone}">${escapeHtml(
+      label
+    )}</span>`;
+  }
+
+  function stripePaymentStatusTone(stripePaymentStatus, stripeSessionStatus) {
+    if (String(stripeSessionStatus || "") === "cancelled") {
+      return "cancelled";
+    }
+    switch (String(stripePaymentStatus || "")) {
+      case "paid":
+        return "paid";
+      case "unpaid":
+        return "pending";
+      default:
+        return "neutral";
+    }
+  }
+
+  function stripePaymentStatusHtml(stripePaymentStatus, stripeSessionStatus) {
+    const label = stripePaymentStatusLabel(stripePaymentStatus, stripeSessionStatus);
+    const tone = stripePaymentStatusTone(stripePaymentStatus, stripeSessionStatus);
+    if (tone === "neutral") {
+      return escapeHtml(label);
+    }
+    return `<span class="account-payment-status account-payment-status--${tone}">${escapeHtml(
+      label
+    )}</span>`;
+  }
+
   function reconcileStripeCheckoutUrl() {
     return String(global.TourAiSite?.config?.reconcileStripeCheckoutUrl || "").trim();
   }
@@ -662,7 +727,7 @@
           showPaymentStatus
             ? `<div>
           <dt>${t("account.plan.paymentStatus")}</dt>
-          <dd class="plan-list-card__metric-accent">${escapeHtml(paymentStatusLabel(plan))}</dd>
+          <dd class="plan-list-card__metric-accent">${paymentStatusHtml(plan)}</dd>
         </div>`
             : ""
         }
@@ -809,12 +874,15 @@
       .map((payment) => {
         const method = payment.PaymentMethod || payment.PaymentMethodStatus || "—";
         const stripeStatus = resolveStripePaymentStatus(payment);
-        return `<tr>
+        const rowTone = paymentStatusTone(payment);
+        const rowClass =
+          rowTone === "cancelled" ? ' class="account-table__row--cancelled"' : "";
+        return `<tr${rowClass}>
           <td>${formatDate(payment.CreatedAt)}</td>
           <td>${formatMoney(payment.Amount, payment.Currency)}</td>
           <td>${escapeHtml(methodLabel(method))}</td>
-          <td>${escapeHtml(paymentStatusLabel(payment))}</td>
-          <td>${escapeHtml(stripePaymentStatusLabel(stripeStatus, payment.StripeSessionStatus))}</td>
+          <td>${paymentStatusHtml(payment)}</td>
+          <td>${stripePaymentStatusHtml(stripeStatus, payment.StripeSessionStatus)}</td>
         </tr>`;
       })
       .join("");
