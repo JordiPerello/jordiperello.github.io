@@ -25,6 +25,10 @@ window.TourAiSite.config = {
     "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/reconcileStripeCheckout",
   cancelStripeCheckoutUrl:
     "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/cancelStripeCheckout",
+  reconcileGooglePlayPurchaseUrl:
+    "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/reconcileGooglePlayPurchase",
+  reconcileAppleStorePurchaseUrl:
+    "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/reconcileAppleStorePurchase",
   defaultLocale: "es-ES",
   supportedLocales: ["es-ES", "en-GB"],
   storeBadges: {

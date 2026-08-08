@@ -261,6 +261,35 @@
     return String(global.TourAiSite?.config?.reconcileStripeCheckoutUrl || "").trim();
   }
 
+  function reconcileGooglePlayPurchaseUrl() {
+    return String(global.TourAiSite?.config?.reconcileGooglePlayPurchaseUrl || "").trim();
+  }
+
+  function reconcileAppleStorePurchaseUrl() {
+    return String(global.TourAiSite?.config?.reconcileAppleStorePurchaseUrl || "").trim();
+  }
+
+  function hasAnyReconcileUrl() {
+    return Boolean(
+      reconcileStripeCheckoutUrl()
+      || reconcileGooglePlayPurchaseUrl()
+      || reconcileAppleStorePurchaseUrl()
+    );
+  }
+
+  function reconcileUrlForPaymentMethod(method) {
+    switch (String(method || "")) {
+      case "Stripe":
+        return reconcileStripeCheckoutUrl();
+      case "Google":
+        return reconcileGooglePlayPurchaseUrl();
+      case "Apple":
+        return reconcileAppleStorePurchaseUrl();
+      default:
+        return "";
+    }
+  }
+
   function cancelStripeCheckoutUrl() {
     return String(global.TourAiSite?.config?.cancelStripeCheckoutUrl || "").trim();
   }
@@ -351,8 +380,9 @@
     return cancelStripePayment(user, { Id: userPaymentId });
   }
 
-  async function reconcileStripePayment(user, payment) {
-    const url = reconcileStripeCheckoutUrl();
+  async function reconcilePayment(user, payment) {
+    const method = payment?.PaymentMethod || payment?.PaymentMethodStatus || "";
+    const url = reconcileUrlForPaymentMethod(method);
     if (!url || !user || !payment?.Id) {
       return null;
     }
@@ -433,6 +463,10 @@
     return cache.stripeStatusByPaymentId[payment.Id];
   }
 
+  async function reconcileStripePayment(user, payment) {
+    return reconcilePayment(user, payment);
+  }
+
   async function reconcileStripePaymentById(user, userPaymentId) {
     if (!user || !userPaymentId) {
       return null;
@@ -440,28 +474,39 @@
     return reconcileStripePayment(user, { Id: userPaymentId });
   }
 
-  function isPendingStripePayment(payment) {
+  function isPendingReconcilablePayment(payment) {
     const method = payment?.PaymentMethod || payment?.PaymentMethodStatus || "";
+    const reconcilable =
+      method === "Stripe" || method === "Google" || method === "Apple";
     return (
       String(payment?.PaymentStatus || "") === "Pending"
-      && String(method) === "Stripe"
+      && reconcilable
       && String(payment?.StripeSessionStatus || "") !== "expired"
       && String(payment?.StripeSessionStatus || "") !== "cancelled"
     );
   }
 
-  async function enrichStripePaymentStatuses(user, payments) {
+  function isPendingStripePayment(payment) {
+    return isPendingReconcilablePayment(payment)
+      && String(payment?.PaymentMethod || payment?.PaymentMethodStatus || "") === "Stripe";
+  }
+
+  async function enrichPendingPaymentStatuses(user, payments) {
     if (!user || !payments?.length) {
       return;
     }
 
-    const pendingStripe = payments.filter(isPendingStripePayment);
+    const pending = payments.filter(isPendingReconcilablePayment);
 
     await Promise.all(
-      pendingStripe.map(function (payment) {
-        return reconcileStripePayment(user, payment);
+      pending.map(function (payment) {
+        return reconcilePayment(user, payment);
       })
     );
+  }
+
+  async function enrichStripePaymentStatuses(user, payments) {
+    return enrichPendingPaymentStatuses(user, payments);
   }
 
   async function fetchAllPaymentsPages(user) {
@@ -480,19 +525,23 @@
     return cache.payments || [];
   }
 
-  async function reconcileAllPendingStripePayments(user) {
-    if (!user || !reconcileStripeCheckoutUrl()) {
+  async function reconcileAllPendingPayments(user) {
+    if (!user || !hasAnyReconcileUrl()) {
       return;
     }
 
     try {
       const payments = await fetchAllPaymentsPages(user);
-      await enrichStripePaymentStatuses(user, payments);
+      await enrichPendingPaymentStatuses(user, payments);
       cache.plans = null;
       cache.payments = null;
     } catch (err) {
-      console.error("[TourAI account] reconcile pending Stripe payments", err);
+      console.error("[TourAI account] reconcile pending payments", err);
     }
+  }
+
+  async function reconcileAllPendingStripePayments(user) {
+    return reconcileAllPendingPayments(user);
   }
 
   function methodLabel(method) {
@@ -1318,8 +1367,11 @@
     renderPlanDetailHtml,
     renderPaymentsHtml,
     renderSkeletonHtml,
+    enrichPendingPaymentStatuses,
     enrichStripePaymentStatuses,
+    reconcileAllPendingPayments,
     reconcileAllPendingStripePayments,
+    reconcilePayment,
     reconcileStripePayment,
     reconcileStripePaymentById,
     cancelStripePayment,
@@ -2600,16 +2652,20 @@
     });
   }
 
-  async function tryReconcilePendingStripePayments() {
-    if (!currentUser || !data.reconcileAllPendingStripePayments) {
+  async function tryReconcilePendingPayments() {
+    if (!currentUser || !data.reconcileAllPendingPayments) {
       return;
     }
 
     try {
-      await data.reconcileAllPendingStripePayments(currentUser);
+      await data.reconcileAllPendingPayments(currentUser);
     } catch (err) {
       console.error("[TourAI dashboard] reconcile pending payments", err);
     }
+  }
+
+  async function tryReconcilePendingStripePayments() {
+    return tryReconcilePendingPayments();
   }
 
   async function loadPlansPage(section, reset) {
