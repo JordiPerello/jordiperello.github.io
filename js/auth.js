@@ -11,7 +11,7 @@
      * Hardcoded legal acceptance version (keep in sync with App
      * LegalAcceptancePolicy.CurrentVersion). Bump when Web Privacy/Terms change.
      */
-    LegalDocumentsVersion: "2026-08-03",
+    LegalDocumentsVersion: "2026-08-08",
 
     t(key, fallbackOrVars, maybeVars) {
       const locale = global.TourAiI18n?.getLocale?.();
@@ -766,7 +766,7 @@
   }
 
   /** Hardcoded TourAiAuth.LegalDocumentsVersion (same date as App LegalAcceptancePolicy.CurrentVersion). */
-  const LEGAL_DOCUMENTS_VERSION = auth.LegalDocumentsVersion || "2026-08-03";
+  const LEGAL_DOCUMENTS_VERSION = auth.LegalDocumentsVersion || "2026-08-08";
   let legalModalBusy = false;
 
   function getLegalDocumentsVersion() {

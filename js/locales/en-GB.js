@@ -763,7 +763,7 @@ window.TourAiEnGBMessages = {
         </div>`,
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
-            <p><strong>Last updated:</strong> 3 August 2026.</p>
+            <p><strong>Last updated:</strong> 8 August 2026.</p>
             <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we regard our users' privacy as a fundamental pillar. This policy explains how we manage information to ensure that the use of our intelligent audio guides and associated website services (account, community and reviews) is safe and transparent.</p>
 
             <h2>2. Data controller</h2>
@@ -789,6 +789,7 @@ window.TourAiEnGBMessages = {
                 <li><strong>Account security and password reset:</strong> If you request "Forgot your password?" from the app or the website, we send an email with a secure link to <a href="reset-password.html">tourai.es/reset-password.html</a> so you can set a new password. We do not send your current password by email.</li>
                 <li><strong>Registration abuse prevention:</strong> We retain a history of registrations and deletions associated with the same email address (email lifecycle) to limit abusive re-registrations (currently a maximum of <strong>3 registrations in 180 days</strong>). An administrator may unlock the email when appropriate.</li>
                 <li><strong>Bonuses and promotional codes:</strong> Record of the redeemed code, redemption date, associated plan and promotional campaign reference (for example WELCOME, BIRTHDATE), to manage free Premium access (including the automatic welcome bonus on first access where applicable, and pre-assigned email bonuses that take priority over the WELCOME bonus), prevent duplicate use per user and prevent fraud. Bonuses have a maximum activation period of 30 days; purchased plans, 60 days from acquisition. If you redeem a bonus by scanning a QR code, the camera is used on the device to read the code; <strong>we do not store QR images or video recordings</strong>.</li>
+                <li><strong>Premium payments (app and web):</strong> Amount, currency, payment method, payment status (for example paid, pending, cancelled, not completed or failed), gateway session or transaction identifiers (e.g. Stripe) to reconcile payment, record creation date and link to the purchased plan. TourAI <strong>does not store full card numbers</strong>. Purpose: contractual plan management, fraud prevention, incident handling and compliance with accounting obligations where applicable. Legal basis: performance of the contract and legitimate interest in service security.</li>
                 <li><strong>Device and session identifier:</strong> We use a device identifier and a presence signal while you use the app to maintain <strong>a single active session per account</strong> and to close the previous session when you sign in from a new device. On the web, the authentication session may persist in the browser. It is not used to build advertising profiles.</li>
                 <li><strong>Community (user-generated content):</strong> If you post in <a href="community.html">Community</a>, we process the topic title and body, replies, your account identifier, the displayed name or alias, the publication date, the <strong>moderation status</strong> (pending, approved or rejected) and technical metadata associated with moderation. Automated filters of non-permitted terms may <strong>block submission</strong> before the content is stored (that attempt does not enter the moderation queue). Once approved and visible, that content is <strong>public</strong> (viewable without signing in). We may hide it (moderation or voluntary withdrawal by the author) without physically deleting it immediately, in order to preserve thread integrity and service security. We also retain on your account <strong>counters of approved and rejected contributions</strong> and, where applicable, the flag for a <strong>restriction of the ability to post</strong> in the Community, for the purpose of applying the moderation policy described in the Terms.</li>
                 <li><strong>Acceptance of legal texts:</strong> We record whether you have accepted the Terms and the Privacy Policy, the acceptance date and the <strong>acceptance version</strong> in force at that time, in order to evidence contractual consent and to request a new express acceptance when those texts are updated.</li>
@@ -802,7 +803,7 @@ window.TourAiEnGBMessages = {
             <h2>3.1. Legal basis for processing (summary)</h2>
             <p>In general terms, we process your data on the following bases, depending on the type of information:</p>
             <ul>
-                <li><strong>Performance of the contract / provision of the service:</strong> account (app and web), plans, bonus redemption, messages to the assistant, record of places presented by the guide, preferences, community posting and submission of reviews, and other requested features.</li>
+                <li><strong>Performance of the contract / provision of the service:</strong> account (app and web), plans, Premium payments, bonus redemption, messages to the assistant, record of places presented by the guide, preferences, community posting and submission of reviews, and other requested features.</li>
                 <li><strong>Consent:</strong> geolocation, microphone, camera or gallery/photo library (profile photo or bonus QR scanning), contact or notice forms, non-essential cookies where applicable, personalised advertising when the law so requires.</li>
                 <li><strong>Legitimate interest:</strong> security, fraud prevention for promotional codes and abusive re-registrations, moderation of user-generated content (hiding, rejection, removal and, where applicable, restriction of the ability to post), service stability, integrity of public threads and aggregated rating averages, evidencing the accepted version of legal texts, and technical error reports.</li>
                 <li><strong>Legal obligation:</strong> retention of billing data where applicable; responding to authority requests or obligations arising from digital services rules when they apply.</li>
@@ -896,7 +897,7 @@ window.TourAiEnGBMessages = {
         <p>Committed to protecting your experience and your personal data.</p>`,
   "page.terms.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Acceptance of the Terms</h2>
-            <p><strong>Last updated:</strong> 3 August 2026.</p>
+            <p><strong>Last updated:</strong> 8 August 2026.</p>
             <p>By accessing or using the <strong>TourAI</strong> website and mobile application, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our services or our website.</p>
             <p>Use of the mobile application also implies acceptance of the <strong>full terms embedded in the app</strong> at the time of registration (including age eligibility, payments and permissions). In the event of any difference regarding the mobile service, the app terms prevail.</p>
             
@@ -911,6 +912,7 @@ window.TourAiEnGBMessages = {
                 <li>Interactive map with guided walking routes (not turn-by-turn navigation).</li>
                 <li>A record of places already presented by the tourist guide so they are not repeated, which you can clear from the app (see the <a href="privacy.html">Privacy Policy</a> for detail).</li>
                 <li>Redemption of <strong>bonuses or promotional codes</strong> (manual entry or QR scanning with the device camera in the mobile app) to obtain free Premium access in enabled campaigns.</li>
+                <li>Purchase of <strong>paid Premium plans</strong> from the account dashboard on tourai.es via Stripe, with payment history and plan activation after payment is fulfilled.</li>
                 <li>Account on <a href="https://tourai.es">tourai.es</a> for access to the private area (profile and dashboard), when enabled.</li>
                 <li><a href="community.html">Community</a>: public forum of topics and replies (news, help, ideas and travel).</li>
                 <li><a href="reviews.html">Reviews</a>: voluntary star ratings and an optional comment about the website or the app, published after moderation.</li>
@@ -960,6 +962,11 @@ window.TourAiEnGBMessages = {
                 </li>
             </ul>
             <p>Fraudulent or automated redemption of codes, forgery of codes or QR codes, or attempts to exceed per-user or per-code usage limits are prohibited.</p>
+
+            <h2>5.3. Premium payments on the website (tourai.es)</h2>
+            <p>Registered users may purchase Premium plans from the tourai.es <strong>account dashboard</strong>. Payment is processed through <strong>Stripe</strong> (a third-party gateway). TourAI does not store full card numbers.</p>
+            <p>Before redirecting you to Stripe, TourAI creates a plan and payment record in a <strong>pending</strong> state. If you complete payment, the record becomes <strong>paid</strong> and the plan will appear under "Your plans" for activation according to the product rules. If you cancel checkout in Stripe, no charge will be made and the record may show as cancelled. If you leave the process unfinished, it may remain pending until the payment session expires.</p>
+            <p>TourAI may verify the session status with Stripe (for example when you sign in or open the dashboard) to update records. <strong>Payment history</strong> reflects all registered attempts; acquired plans list only those that are <strong>paid or free via bonus</strong>. Full contractual details on withdrawal, refunds and app stores appear in the <strong>terms embedded in the app</strong> (section 8), which supplement this section.</p>
 
             <h2>5.1. Account suspension</h2>
             <p>TourAI may <strong>suspend or block</strong> accounts for fraud, abuse, breach of the Terms (including misuse of the Community or Reviews), or risk to service security. If your account is blocked, you will not be able to sign in until the suspension is lifted. We may also hide or remove your public content. The <strong>restriction of the ability to post in the Community</strong> described in section 3.1 may apply without suspending access to the rest of the service. You may contact <a href="mailto:info@tourai.es">info@tourai.es</a> to lodge a complaint.</p>
