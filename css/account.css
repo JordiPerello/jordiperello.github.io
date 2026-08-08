@@ -260,9 +260,6 @@
 
 .account-payment-status--cancelled {
   color: #c62828;
-  background: #e8ecef;
-  padding: 2px 8px;
-  border-radius: 4px;
 }
 
 .account-table tbody tr.account-table__row--cancelled {
