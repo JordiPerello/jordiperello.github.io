@@ -162,13 +162,28 @@
       : t("account.plan.acquisition.purchase");
   }
 
-  function paymentStatusLabel(status) {
-    switch ((status || "").toString()) {
+  function paymentStatusLabel(statusOrRecord) {
+    var status;
+    var failureReason = "";
+    if (statusOrRecord && typeof statusOrRecord === "object") {
+      status = String(statusOrRecord.PaymentStatus || "");
+      failureReason = String(statusOrRecord.PaymentFailureReason || "");
+    } else {
+      status = String(statusOrRecord || "");
+    }
+
+    switch (status) {
       case "Paid":
         return t("account.payment.status.paid");
       case "Pending":
         return t("account.payment.status.pending");
       case "Failed":
+        if (failureReason === "checkout_cancelled_by_user") {
+          return t("account.payment.status.cancelled");
+        }
+        if (failureReason === "stripe_checkout_session_expired") {
+          return t("account.payment.status.notCompleted");
+        }
         return t("account.payment.status.failed");
       case "Free":
         return t("account.payment.status.free");
@@ -181,11 +196,19 @@
     return String(global.TourAiSite?.config?.reconcileStripeCheckoutUrl || "").trim();
   }
 
+  function cancelStripeCheckoutUrl() {
+    return String(global.TourAiSite?.config?.cancelStripeCheckoutUrl || "").trim();
+  }
+
   function resolveStripePaymentStatus(payment) {
     return String(payment?.StripePaymentStatus || "").trim();
   }
 
-  function stripePaymentStatusLabel(stripePaymentStatus) {
+  function stripePaymentStatusLabel(stripePaymentStatus, stripeSessionStatus) {
+    if (String(stripeSessionStatus || "") === "cancelled") {
+      return t("account.payment.stripeStatus.cancelled");
+    }
+
     switch ((stripePaymentStatus || "").toString()) {
       case "paid":
         return t("account.payment.stripeStatus.paid");
@@ -197,6 +220,70 @@
       default:
         return t("account.payment.stripeStatus.unknown");
     }
+  }
+
+  async function cancelStripePayment(user, payment) {
+    const url = cancelStripeCheckoutUrl();
+    if (!url || !user || !payment?.Id) {
+      return null;
+    }
+
+    const idToken = await user.getIdToken();
+    const appCheckToken = await global.TourAiAppCheck.getToken(false);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + idToken,
+        "X-Firebase-AppCheck": appCheckToken,
+      },
+      body: JSON.stringify({
+        userId: user.uid,
+        userPaymentId: payment.Id,
+      }),
+    });
+
+    let body = null;
+    try {
+      body = await response.json();
+    } catch (err) {
+      body = null;
+    }
+
+    if (!response.ok || !body?.success) {
+      return null;
+    }
+
+    if (cache.payments) {
+      const match = cache.payments.find(function (item) {
+        return item.Id === payment.Id;
+      });
+      if (match && body.cancelled) {
+        match.PaymentStatus = "Failed";
+        match.PaymentFailureReason = body.paymentFailureReason || "checkout_cancelled_by_user";
+        match.StripePaymentStatus = "unpaid";
+        match.StripeSessionStatus = "cancelled";
+      }
+    }
+
+    if (body.cancelled && cache.plans && payment.UserPlanId) {
+      const plan = cache.plans.find(function (item) {
+        return item.Id === payment.UserPlanId;
+      });
+      if (plan) {
+        plan.PaymentStatus = "Failed";
+        plan.PaymentFailureReason = body.paymentFailureReason || "checkout_cancelled_by_user";
+      }
+    }
+
+    return body;
+  }
+
+  async function cancelStripePaymentById(user, userPaymentId) {
+    if (!user || !userPaymentId) {
+      return null;
+    }
+    return cancelStripePayment(user, { Id: userPaymentId });
   }
 
   async function reconcileStripePayment(user, payment) {
@@ -299,6 +386,7 @@
         String(payment.PaymentStatus || "") === "Pending"
         && String(method) === "Stripe"
         && String(payment.StripeSessionStatus || "") !== "expired"
+        && String(payment.StripeSessionStatus || "") !== "cancelled"
       );
     });
 
@@ -566,7 +654,7 @@
           showPaymentStatus
             ? `<div>
           <dt>${t("account.plan.paymentStatus")}</dt>
-          <dd class="plan-list-card__metric-accent">${escapeHtml(paymentStatusLabel(paymentStatus))}</dd>
+          <dd class="plan-list-card__metric-accent">${escapeHtml(paymentStatusLabel(plan))}</dd>
         </div>`
             : ""
         }
@@ -717,8 +805,8 @@
           <td>${formatDate(payment.CreatedAt)}</td>
           <td>${formatMoney(payment.Amount, payment.Currency)}</td>
           <td>${escapeHtml(methodLabel(method))}</td>
-          <td>${escapeHtml(paymentStatusLabel(payment.PaymentStatus))}</td>
-          <td>${escapeHtml(stripePaymentStatusLabel(stripeStatus))}</td>
+          <td>${escapeHtml(paymentStatusLabel(payment))}</td>
+          <td>${escapeHtml(stripePaymentStatusLabel(stripeStatus, payment.StripeSessionStatus))}</td>
         </tr>`;
       })
       .join("");
@@ -1124,6 +1212,8 @@
     enrichStripePaymentStatuses,
     reconcileStripePayment,
     reconcileStripePaymentById,
+    cancelStripePayment,
+    cancelStripePaymentById,
     clearCache,
   };
 })(window);
@@ -2794,6 +2884,19 @@
       }
       await refreshDashboardPlans();
       return;
+    }
+
+    if (checkoutReturn.type === "cancel") {
+      var cancelContext = window.TourAiPlanActivation?.loadPurchaseContext?.();
+      if (cancelContext?.userPaymentId && data.cancelStripePaymentById) {
+        try {
+          await data.cancelStripePaymentById(currentUser, cancelContext.userPaymentId);
+        } catch (err) {
+          console.error("[TourAI dashboard] checkout cancel", err);
+        }
+      }
+      data.clearCache();
+      await refreshDashboardPlans();
     }
 
     if (checkoutReturn.message) {

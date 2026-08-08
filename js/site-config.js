@@ -23,6 +23,8 @@ window.TourAiSite.config = {
     "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/createCheckoutSessionWeb",
   reconcileStripeCheckoutUrl:
     "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/reconcileStripeCheckout",
+  cancelStripeCheckoutUrl:
+    "https://europe-west1-tourai-production-7dabf.cloudfunctions.net/cancelStripeCheckout",
   defaultLocale: "es-ES",
   supportedLocales: ["es-ES", "en-GB"],
   storeBadges: {
