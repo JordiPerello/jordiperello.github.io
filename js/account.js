@@ -440,26 +440,59 @@
     return reconcileStripePayment(user, { Id: userPaymentId });
   }
 
+  function isPendingStripePayment(payment) {
+    const method = payment?.PaymentMethod || payment?.PaymentMethodStatus || "";
+    return (
+      String(payment?.PaymentStatus || "") === "Pending"
+      && String(method) === "Stripe"
+      && String(payment?.StripeSessionStatus || "") !== "expired"
+      && String(payment?.StripeSessionStatus || "") !== "cancelled"
+    );
+  }
+
   async function enrichStripePaymentStatuses(user, payments) {
     if (!user || !payments?.length) {
       return;
     }
 
-    const pendingStripe = payments.filter(function (payment) {
-      const method = payment.PaymentMethod || payment.PaymentMethodStatus || "";
-      return (
-        String(payment.PaymentStatus || "") === "Pending"
-        && String(method) === "Stripe"
-        && String(payment.StripeSessionStatus || "") !== "expired"
-        && String(payment.StripeSessionStatus || "") !== "cancelled"
-      );
-    });
+    const pendingStripe = payments.filter(isPendingStripePayment);
 
     await Promise.all(
       pendingStripe.map(function (payment) {
         return reconcileStripePayment(user, payment);
       })
     );
+  }
+
+  async function fetchAllPaymentsPages(user) {
+    let cursor = null;
+    let hasMore = true;
+
+    while (hasMore) {
+      const page = await fetchPaymentsPage(user, cursor);
+      hasMore = page.hasMore;
+      cursor = page.cursor;
+      if (!page.items.length) {
+        break;
+      }
+    }
+
+    return cache.payments || [];
+  }
+
+  async function reconcileAllPendingStripePayments(user) {
+    if (!user || !reconcileStripeCheckoutUrl()) {
+      return;
+    }
+
+    try {
+      const payments = await fetchAllPaymentsPages(user);
+      await enrichStripePaymentStatuses(user, payments);
+      cache.plans = null;
+      cache.payments = null;
+    } catch (err) {
+      console.error("[TourAI account] reconcile pending Stripe payments", err);
+    }
   }
 
   function methodLabel(method) {
@@ -1286,6 +1319,7 @@
     renderPaymentsHtml,
     renderSkeletonHtml,
     enrichStripePaymentStatuses,
+    reconcileAllPendingStripePayments,
     reconcileStripePayment,
     reconcileStripePaymentById,
     cancelStripePayment,
@@ -2566,6 +2600,18 @@
     });
   }
 
+  async function tryReconcilePendingStripePayments() {
+    if (!currentUser || !data.reconcileAllPendingStripePayments) {
+      return;
+    }
+
+    try {
+      await data.reconcileAllPendingStripePayments(currentUser);
+    } catch (err) {
+      console.error("[TourAI dashboard] reconcile pending payments", err);
+    }
+  }
+
   async function loadPlansPage(section, reset) {
     const pager = pagers.plans;
     if (!currentUser || pager.loading) {
@@ -2585,6 +2631,9 @@
       paintPlansSection(section);
     }
     try {
+      if (reset) {
+        await tryReconcilePendingStripePayments();
+      }
       const page = await data.fetchPlansPage(currentUser, reset ? null : pager.cursor);
       pager.items = reset ? page.items : pager.items.concat(page.items);
       pager.cursor = page.cursor;
@@ -2626,11 +2675,16 @@
       paintPaymentsSection(section);
     }
     try {
+      if (reset) {
+        await tryReconcilePendingStripePayments();
+      }
       const page = await data.fetchPaymentsPage(currentUser, reset ? null : pager.cursor);
       pager.items = reset ? page.items : pager.items.concat(page.items);
       pager.cursor = page.cursor;
       pager.hasMore = page.hasMore;
-      await data.enrichStripePaymentStatuses(currentUser, pager.items);
+      if (!reset) {
+        await data.enrichStripePaymentStatuses(currentUser, page.items);
+      }
     } catch (err) {
       console.error("[TourAI dashboard] payments", err);
       await window.TourAiLoading?.ensureMinMs?.(startedAt, 500);
@@ -2664,6 +2718,7 @@
       const startedAt = Date.now();
       setSectionState(section, "loading", data.renderSkeletonHtml("plans"));
       try {
+        await tryReconcilePendingStripePayments();
         const active = await data.fetchActivePlan(currentUser);
         await window.TourAiLoading?.ensureMinMs?.(startedAt, 500);
         setSectionState(section, "loaded", data.renderActivePlanHtml(active));
@@ -3013,6 +3068,7 @@
       currentUser = user;
       showSignedIn();
       setStatus(statusEl?.textContent || "", false);
+      await tryReconcilePendingStripePayments();
       await handleCheckoutReturnIfAny();
       openBuyPlansFromHash();
     })
