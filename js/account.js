@@ -7,7 +7,7 @@
     profile: null,
     plans: null,
     payments: null,
-    stripeStatusByPaymentId: {},
+    gatewayStatusByPaymentId: {},
     uid: null,
   };
 
@@ -29,7 +29,7 @@
       cache.profile = null;
       cache.plans = null;
       cache.payments = null;
-      cache.stripeStatusByPaymentId = {};
+      cache.gatewayStatusByPaymentId = {};
     }
   }
 
@@ -181,7 +181,9 @@
         if (failureReason === "checkout_cancelled_by_user") {
           return t("account.payment.status.cancelled");
         }
-        if (failureReason === "stripe_checkout_session_expired") {
+        if (failureReason === "stripe_checkout_session_expired"
+          || failureReason === "google_play_checkout_abandoned"
+          || failureReason === "apple_store_checkout_abandoned") {
           return t("account.payment.status.notCompleted");
         }
         return t("account.payment.status.failed");
@@ -212,7 +214,9 @@
         if (failureReason === "checkout_cancelled_by_user") {
           return "cancelled";
         }
-        if (failureReason === "stripe_checkout_session_expired") {
+        if (failureReason === "stripe_checkout_session_expired"
+          || failureReason === "google_play_checkout_abandoned"
+          || failureReason === "apple_store_checkout_abandoned") {
           return "pending";
         }
         return "cancelled";
@@ -232,23 +236,95 @@
     )}</span>`;
   }
 
-  function stripePaymentStatusTone(stripePaymentStatus, stripeSessionStatus) {
-    if (String(stripeSessionStatus || "") === "cancelled") {
+  function resolveGatewaySnapshot(payment) {
+    const cached = payment?.Id ? cache.gatewayStatusByPaymentId[payment.Id] : null;
+    if (cached) {
+      return {
+        paymentStatus: cached.stripePaymentStatus,
+        sessionStatus: cached.stripeSessionStatus,
+        sessionId: cached.sessionId,
+        verificationFailed: cached.verificationFailed === true,
+      };
+    }
+
+    return {
+      paymentStatus: payment?.StripePaymentStatus,
+      sessionStatus: payment?.StripeSessionStatus,
+      sessionId: payment?.PaymentMethodSessionId,
+      verificationFailed: false,
+    };
+  }
+
+  function gatewayPaymentStatusLabel(payment) {
+    const snapshot = resolveGatewaySnapshot(payment);
+    const sessionStatus = String(snapshot.sessionStatus || "");
+    const paymentStatus = String(snapshot.paymentStatus || "");
+    const firestoreStatus = String(payment?.PaymentStatus || "");
+
+    if (snapshot.verificationFailed) {
+      return t("account.payment.status.notVerified");
+    }
+
+    if (sessionStatus === "cancelled") {
+      return t("account.payment.gatewayStatus.cancelled");
+    }
+
+    if (sessionStatus === "expired") {
+      return t("account.payment.gatewayStatus.notCompleted");
+    }
+
+    switch (paymentStatus) {
+      case "paid":
+        return t("account.payment.gatewayStatus.paid");
+      case "unpaid":
+        return t("account.payment.gatewayStatus.notCompleted");
+      default:
+        if (!snapshot.sessionId) {
+          return t("account.payment.gatewayStatus.noReference");
+        }
+
+        if (firestoreStatus === "Pending") {
+          return t("account.payment.gatewayStatus.pending");
+        }
+
+        return t("account.payment.gatewayStatus.unknown");
+    }
+  }
+
+  function gatewayPaymentStatusTone(payment) {
+    const snapshot = resolveGatewaySnapshot(payment);
+    const sessionStatus = String(snapshot.sessionStatus || "");
+    const paymentStatus = String(snapshot.paymentStatus || "");
+
+    if (snapshot.verificationFailed) {
       return "cancelled";
     }
-    switch (String(stripePaymentStatus || "")) {
+
+    if (sessionStatus === "cancelled") {
+      return "cancelled";
+    }
+
+    if (sessionStatus === "expired") {
+      return "pending";
+    }
+
+    switch (paymentStatus) {
       case "paid":
         return "paid";
       case "unpaid":
         return "pending";
       default:
+        if (!snapshot.sessionId && String(payment?.PaymentStatus || "") === "Pending") {
+          return "cancelled";
+        }
+
         return "neutral";
     }
   }
 
-  function stripePaymentStatusHtml(stripePaymentStatus, stripeSessionStatus) {
-    const label = stripePaymentStatusLabel(stripePaymentStatus, stripeSessionStatus);
-    const tone = stripePaymentStatusTone(stripePaymentStatus, stripeSessionStatus);
+  function gatewayPaymentStatusHtml(payment) {
+    const label = gatewayPaymentStatusLabel(payment);
+    const tone = gatewayPaymentStatusTone(payment);
     if (tone === "neutral") {
       return escapeHtml(label);
     }
@@ -295,25 +371,7 @@
   }
 
   function resolveStripePaymentStatus(payment) {
-    return String(payment?.StripePaymentStatus || "").trim();
-  }
-
-  function stripePaymentStatusLabel(stripePaymentStatus, stripeSessionStatus) {
-    if (String(stripeSessionStatus || "") === "cancelled") {
-      return t("account.payment.stripeStatus.cancelled");
-    }
-
-    switch ((stripePaymentStatus || "").toString()) {
-      case "paid":
-        return t("account.payment.stripeStatus.paid");
-      case "unpaid":
-        return t("account.payment.stripeStatus.unpaid");
-      case null:
-      case "":
-        return t("account.payment.stripeStatus.none");
-      default:
-        return t("account.payment.stripeStatus.unknown");
-    }
+    return String(resolveGatewaySnapshot(payment).paymentStatus || "").trim();
   }
 
   async function cancelStripePayment(user, payment) {
@@ -451,16 +509,17 @@
       }
     }
 
-    cache.stripeStatusByPaymentId[payment.Id] = {
+    cache.gatewayStatusByPaymentId[payment.Id] = {
       stripePaymentStatus: body.stripePaymentStatus,
       stripeSessionStatus: body.stripeSessionStatus,
       sessionId: body.sessionId,
       firestoreStatus: body.firestoreStatus,
       reconciled: body.reconciled === true,
       markedFailed: body.markedFailed === true,
+      verificationFailed: false,
     };
 
-    return cache.stripeStatusByPaymentId[payment.Id];
+    return cache.gatewayStatusByPaymentId[payment.Id];
   }
 
   async function reconcileStripePayment(user, payment) {
@@ -955,7 +1014,6 @@
     const rows = payments
       .map((payment) => {
         const method = payment.PaymentMethod || payment.PaymentMethodStatus || "—";
-        const stripeStatus = resolveStripePaymentStatus(payment);
         const rowTone = paymentStatusTone(payment);
         const rowClass =
           rowTone === "cancelled" ? ' class="account-table__row--cancelled"' : "";
@@ -964,7 +1022,7 @@
           <td>${formatMoney(payment.Amount, payment.Currency)}</td>
           <td>${escapeHtml(methodLabel(method))}</td>
           <td>${paymentStatusHtml(payment)}</td>
-          <td>${stripePaymentStatusHtml(stripeStatus, payment.StripeSessionStatus)}</td>
+          <td>${gatewayPaymentStatusHtml(payment)}</td>
         </tr>`;
       })
       .join("");
@@ -980,7 +1038,7 @@
               <th>${t("account.payment.amount")}</th>
               <th>${t("account.payment.method")}</th>
               <th>${t("account.payment.status")}</th>
-              <th>${t("account.payment.stripeStatus")}</th>
+              <th>${t("account.payment.gatewayStatus")}</th>
             </tr>
           </thead>
           <tbody data-payments-body>${rows}</tbody>
@@ -1002,7 +1060,7 @@
     cache.profile = null;
     cache.plans = null;
     cache.payments = null;
-    cache.stripeStatusByPaymentId = {};
+    cache.gatewayStatusByPaymentId = {};
   }
 
   function getStorageBucket() {
