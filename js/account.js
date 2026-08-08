@@ -7,6 +7,7 @@
     profile: null,
     plans: null,
     payments: null,
+    stripeStatusByPaymentId: {},
     uid: null,
   };
 
@@ -28,6 +29,7 @@
       cache.profile = null;
       cache.plans = null;
       cache.payments = null;
+      cache.stripeStatusByPaymentId = {};
     }
   }
 
@@ -173,6 +175,142 @@
       default:
         return status || "—";
     }
+  }
+
+  function reconcileStripeCheckoutUrl() {
+    return String(global.TourAiSite?.config?.reconcileStripeCheckoutUrl || "").trim();
+  }
+
+  function formatStripeSessionRef(sessionId) {
+    const value = String(sessionId || "").trim();
+    if (!value) {
+      return "—";
+    }
+    if (value.length <= 16) {
+      return value;
+    }
+    return "…" + value.slice(-14);
+  }
+
+  function stripePaymentStatusLabel(stripePaymentStatus) {
+    switch ((stripePaymentStatus || "").toString()) {
+      case "paid":
+        return t("account.payment.stripeStatus.paid");
+      case "unpaid":
+        return t("account.payment.stripeStatus.unpaid");
+      case null:
+      case "":
+        return t("account.payment.stripeStatus.none");
+      default:
+        return t("account.payment.stripeStatus.unknown");
+    }
+  }
+
+  async function reconcileStripePayment(user, payment) {
+    const url = reconcileStripeCheckoutUrl();
+    if (!url || !user || !payment?.Id) {
+      return null;
+    }
+
+    const idToken = await user.getIdToken();
+    const appCheckToken = await global.TourAiAppCheck.getToken(false);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + idToken,
+        "X-Firebase-AppCheck": appCheckToken,
+      },
+      body: JSON.stringify({
+        userId: user.uid,
+        userPaymentId: payment.Id,
+      }),
+    });
+
+    let body = null;
+    try {
+      body = await response.json();
+    } catch (err) {
+      body = null;
+    }
+
+    if (!response.ok || !body?.success) {
+      return null;
+    }
+
+    if (body.reconciled && cache.payments) {
+      const match = cache.payments.find(function (item) {
+        return item.Id === payment.Id;
+      });
+      if (match) {
+        match.PaymentStatus = "Paid";
+      }
+    }
+
+    if (body.markedFailed && cache.payments) {
+      const match = cache.payments.find(function (item) {
+        return item.Id === payment.Id;
+      });
+      if (match) {
+        match.PaymentStatus = "Failed";
+      }
+    }
+
+    if (body.reconciled && cache.plans && payment.UserPlanId) {
+      const plan = cache.plans.find(function (item) {
+        return item.Id === payment.UserPlanId;
+      });
+      if (plan) {
+        plan.PaymentStatus = "Paid";
+      }
+    }
+
+    if (body.markedFailed && cache.plans && payment.UserPlanId) {
+      const plan = cache.plans.find(function (item) {
+        return item.Id === payment.UserPlanId;
+      });
+      if (plan) {
+        plan.PaymentStatus = "Failed";
+      }
+    }
+
+    cache.stripeStatusByPaymentId[payment.Id] = {
+      stripePaymentStatus: body.stripePaymentStatus,
+      stripeSessionStatus: body.stripeSessionStatus,
+      sessionId: body.sessionId,
+      firestoreStatus: body.firestoreStatus,
+      reconciled: body.reconciled === true,
+      markedFailed: body.markedFailed === true,
+    };
+
+    return cache.stripeStatusByPaymentId[payment.Id];
+  }
+
+  async function reconcileStripePaymentById(user, userPaymentId) {
+    if (!user || !userPaymentId) {
+      return null;
+    }
+    return reconcileStripePayment(user, { Id: userPaymentId });
+  }
+
+  async function enrichStripePaymentStatuses(user, payments) {
+    if (!user || !payments?.length) {
+      return;
+    }
+
+    const pendingStripe = payments.filter(function (payment) {
+      const method = payment.PaymentMethod || payment.PaymentMethodStatus || "";
+      return (
+        String(payment.PaymentStatus || "") === "Pending"
+        && String(method) === "Stripe"
+      );
+    });
+
+    await Promise.all(
+      pendingStripe.map(function (payment) {
+        return reconcileStripePayment(user, payment);
+      })
+    );
   }
 
   function methodLabel(method) {
@@ -392,6 +530,11 @@
     const acquisition = escapeHtml(acquisitionLabel(plan).toUpperCase());
     const start = formatDateTime(plan.StartDate);
     const end = formatDateTime(plan.EndDate || plan.ExpiryDate);
+    const paymentStatus = String(plan.PaymentStatus || "");
+    const showPaymentStatus =
+      String(plan.AccountType || "") !== "Freemium"
+      && paymentStatus
+      && paymentStatus !== "Paid";
     const interactiveAttrs = interactive
       ? ` role="button" tabindex="0" data-plan-id="${planId}" aria-label="${escapeHtml(
           t("account.plan.openDetail")
@@ -423,6 +566,14 @@
           <dt>${t("account.plan.acquisition")}</dt>
           <dd class="plan-list-card__metric-accent">${acquisition}</dd>
         </div>
+        ${
+          showPaymentStatus
+            ? `<div>
+          <dt>${t("account.plan.paymentStatus")}</dt>
+          <dd class="plan-list-card__metric-accent">${escapeHtml(paymentStatusLabel(paymentStatus))}</dd>
+        </div>`
+            : ""
+        }
         <div>
           <dt>${t("account.plan.start")}</dt>
           <dd class="plan-list-card__metric-date">${escapeHtml(start)}</dd>
@@ -565,11 +716,16 @@
     const rows = payments
       .map((payment) => {
         const method = payment.PaymentMethod || payment.PaymentMethodStatus || "—";
+        const stripeInfo = cache.stripeStatusByPaymentId[payment.Id] || {};
+        const sessionId = payment.PaymentMethodSessionId || stripeInfo.sessionId || "";
+        const stripeStatus = stripeInfo.stripePaymentStatus;
         return `<tr>
           <td>${formatDate(payment.CreatedAt)}</td>
           <td>${formatMoney(payment.Amount, payment.Currency)}</td>
           <td>${escapeHtml(methodLabel(method))}</td>
           <td>${escapeHtml(paymentStatusLabel(payment.PaymentStatus))}</td>
+          <td><code class="account-code">${escapeHtml(formatStripeSessionRef(sessionId))}</code></td>
+          <td>${escapeHtml(stripePaymentStatusLabel(stripeStatus))}</td>
         </tr>`;
       })
       .join("");
@@ -585,6 +741,8 @@
               <th>${t("account.payment.amount")}</th>
               <th>${t("account.payment.method")}</th>
               <th>${t("account.payment.status")}</th>
+              <th>${t("account.payment.stripeRef")}</th>
+              <th>${t("account.payment.stripeStatus")}</th>
             </tr>
           </thead>
           <tbody data-payments-body>${rows}</tbody>
@@ -606,6 +764,7 @@
     cache.profile = null;
     cache.plans = null;
     cache.payments = null;
+    cache.stripeStatusByPaymentId = {};
   }
 
   function getStorageBucket() {
@@ -970,6 +1129,9 @@
     renderPlanDetailHtml,
     renderPaymentsHtml,
     renderSkeletonHtml,
+    enrichStripePaymentStatuses,
+    reconcileStripePayment,
+    reconcileStripePaymentById,
     clearCache,
   };
 })(window);
@@ -2310,6 +2472,7 @@
       pager.items = reset ? page.items : pager.items.concat(page.items);
       pager.cursor = page.cursor;
       pager.hasMore = page.hasMore;
+      await data.enrichStripePaymentStatuses(currentUser, pager.items);
     } catch (err) {
       console.error("[TourAI dashboard] payments", err);
       await window.TourAiLoading?.ensureMinMs?.(startedAt, 500);
@@ -2620,6 +2783,15 @@
 
     if (checkoutReturn.type === "success") {
       hidePremiumAcquisitionPromos();
+      var purchaseContext = window.TourAiPlanActivation?.loadPurchaseContext?.();
+      if (purchaseContext?.userPaymentId && data.reconcileStripePaymentById) {
+        try {
+          await data.reconcileStripePaymentById(currentUser, purchaseContext.userPaymentId);
+        } catch (err) {
+          console.error("[TourAI dashboard] checkout reconcile", err);
+        }
+      }
+      data.clearCache();
       await showBuyAlert(
         t("account.buy.status.successPayment"),
         t("account.buy.status.successDetail"),

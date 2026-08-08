@@ -3,6 +3,7 @@
   "use strict";
 
   var STORAGE_USER_PLAN_ID = "tourai-purchase-user-plan-id";
+  var STORAGE_USER_PAYMENT_ID = "tourai-purchase-user-payment-id";
   var STORAGE_WAS_FREEMIUM = "tourai-was-freemium-at-purchase-start";
 
   function authApi() {
@@ -37,6 +38,12 @@
         return;
       }
       global.sessionStorage.setItem(STORAGE_USER_PLAN_ID, String(context.userPlanId));
+      if (context.userPaymentId) {
+        global.sessionStorage.setItem(
+          STORAGE_USER_PAYMENT_ID,
+          String(context.userPaymentId)
+        );
+      }
       global.sessionStorage.setItem(
         STORAGE_WAS_FREEMIUM,
         context.wasFreemiumAtPurchaseStart ? "1" : "0"
@@ -54,6 +61,9 @@
       }
       return {
         userPlanId: userPlanId,
+        userPaymentId: String(
+          global.sessionStorage.getItem(STORAGE_USER_PAYMENT_ID) || ""
+        ).trim(),
         wasFreemiumAtPurchaseStart:
           global.sessionStorage.getItem(STORAGE_WAS_FREEMIUM) === "1",
       };
@@ -65,6 +75,7 @@
   function clearPurchaseContext() {
     try {
       global.sessionStorage.removeItem(STORAGE_USER_PLAN_ID);
+      global.sessionStorage.removeItem(STORAGE_USER_PAYMENT_ID);
       global.sessionStorage.removeItem(STORAGE_WAS_FREEMIUM);
     } catch (_e) {
       /* ignore */
@@ -217,13 +228,17 @@
       return false;
     }
 
-    var purchasedPlan = await waitForUserPlanPaid(user, context.userPlanId);
-    if (!purchasedPlan) {
-      clearPurchaseContext();
-      return false;
+    if (context.userPaymentId && dataApi()?.reconcileStripePaymentById) {
+      await dataApi().reconcileStripePaymentById(user, context.userPaymentId);
     }
 
     dataApi()?.clearCache?.();
+
+    var purchasedPlan = await fetchUserPlan(user, context.userPlanId);
+    if (!purchasedPlan || String(purchasedPlan.PaymentStatus || "") !== "Paid") {
+      clearPurchaseContext();
+      return false;
+    }
 
     var activePlan = dataApi()?.fetchActivePlan
       ? await dataApi().fetchActivePlan(user)

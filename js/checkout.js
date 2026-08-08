@@ -206,6 +206,7 @@
     if (body.userPlanId && global.TourAiPlanActivation?.savePurchaseContext) {
       global.TourAiPlanActivation.savePurchaseContext({
         userPlanId: body.userPlanId,
+        userPaymentId: body.userPaymentId || "",
         wasFreemiumAtPurchaseStart: options.wasFreemiumAtPurchaseStart === true,
       });
     }
@@ -225,6 +226,8 @@
       if (!checkout) {
         return null;
       }
+      var sessionId = String(params.get("session_id") || "").trim();
+      var planId = params.get("planId");
       params.delete("checkout");
       params.delete("session_id");
       params.delete("planId");
@@ -237,6 +240,8 @@
       if (checkout === "success") {
         return {
           type: "success",
+          sessionId: sessionId,
+          planId: String(planId || "").trim(),
           title: t("account.buy.status.successTitle"),
           message: t("account.buy.status.success"),
         };

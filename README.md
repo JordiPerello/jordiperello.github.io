@@ -37,7 +37,9 @@ Web Premium checkout (`createCheckoutSessionWeb`) also needs:
 - `appCheckRecaptchaSiteKey` (reCAPTCHA v3 site key registered in Firebase App Check)
 - optional `appCheckDebug: true` on localhost (then register the browser debug token in App Check)
 
-Deploy the Cloud Function from `D:\Proyectos\TourAI\firebase` (`createCheckoutSessionWeb`). Fulfillment reuses existing `stripeWebhook`.
+Deploy the Cloud Function from `D:\Proyectos\TourAI\firebase` (`createCheckoutSessionWeb`). Fulfillment reuses `stripeWebhook` on the **Production** Firebase project.
+
+Stripe is in **Test mode** for both Firebase environments until go-live: use `sk_test_...` and a **Test mode** webhook pointing to `https://europe-west1-tourai-production-7dabf.cloudfunctions.net/stripeWebhook` (see `TourAI/firebase/README.md`).
 
 ## i18n
 
