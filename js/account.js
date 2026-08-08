@@ -571,6 +571,14 @@
     }
   }
 
+  function isAcquiredPlan(plan) {
+    if (!plan || String(plan.AccountType || "") === "Freemium") {
+      return false;
+    }
+    const status = String(plan.PaymentStatus || "");
+    return status === "Paid" || status === "Free";
+  }
+
   function orderPlansLikeApp(plans) {
     // Same grouping as UserPlansHistoryView: InUse → Pending → Consumed → Expired → Other.
     const groups = {
@@ -582,7 +590,7 @@
     };
 
     plans.forEach(function (plan) {
-      if (String(plan.AccountType || "") === "Freemium") {
+      if (!isAcquiredPlan(plan)) {
         return;
       }
       const state = planState(plan);
