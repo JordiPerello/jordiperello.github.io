@@ -181,15 +181,8 @@
     return String(global.TourAiSite?.config?.reconcileStripeCheckoutUrl || "").trim();
   }
 
-  function formatStripeSessionRef(sessionId) {
-    const value = String(sessionId || "").trim();
-    if (!value) {
-      return "—";
-    }
-    if (value.length <= 16) {
-      return value;
-    }
-    return "…" + value.slice(-14);
+  function resolveStripePaymentStatus(payment) {
+    return String(payment?.StripePaymentStatus || "").trim();
   }
 
   function stripePaymentStatusLabel(stripePaymentStatus) {
@@ -238,21 +231,23 @@
       return null;
     }
 
-    if (body.reconciled && cache.payments) {
+    if (cache.payments) {
       const match = cache.payments.find(function (item) {
         return item.Id === payment.Id;
       });
       if (match) {
-        match.PaymentStatus = "Paid";
-      }
-    }
-
-    if (body.markedFailed && cache.payments) {
-      const match = cache.payments.find(function (item) {
-        return item.Id === payment.Id;
-      });
-      if (match) {
-        match.PaymentStatus = "Failed";
+        if (body.reconciled) {
+          match.PaymentStatus = "Paid";
+        }
+        if (body.markedFailed) {
+          match.PaymentStatus = "Failed";
+        }
+        if (body.stripePaymentStatus) {
+          match.StripePaymentStatus = body.stripePaymentStatus;
+        }
+        if (body.stripeSessionStatus) {
+          match.StripeSessionStatus = body.stripeSessionStatus;
+        }
       }
     }
 
@@ -303,6 +298,7 @@
       return (
         String(payment.PaymentStatus || "") === "Pending"
         && String(method) === "Stripe"
+        && String(payment.StripeSessionStatus || "") !== "expired"
       );
     });
 
@@ -716,15 +712,12 @@
     const rows = payments
       .map((payment) => {
         const method = payment.PaymentMethod || payment.PaymentMethodStatus || "—";
-        const stripeInfo = cache.stripeStatusByPaymentId[payment.Id] || {};
-        const sessionId = payment.PaymentMethodSessionId || stripeInfo.sessionId || "";
-        const stripeStatus = stripeInfo.stripePaymentStatus;
+        const stripeStatus = resolveStripePaymentStatus(payment);
         return `<tr>
           <td>${formatDate(payment.CreatedAt)}</td>
           <td>${formatMoney(payment.Amount, payment.Currency)}</td>
           <td>${escapeHtml(methodLabel(method))}</td>
           <td>${escapeHtml(paymentStatusLabel(payment.PaymentStatus))}</td>
-          <td><code class="account-code">${escapeHtml(formatStripeSessionRef(sessionId))}</code></td>
           <td>${escapeHtml(stripePaymentStatusLabel(stripeStatus))}</td>
         </tr>`;
       })
@@ -741,7 +734,6 @@
               <th>${t("account.payment.amount")}</th>
               <th>${t("account.payment.method")}</th>
               <th>${t("account.payment.status")}</th>
-              <th>${t("account.payment.stripeRef")}</th>
               <th>${t("account.payment.stripeStatus")}</th>
             </tr>
           </thead>
