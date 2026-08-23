@@ -765,7 +765,7 @@ window.TourAiEnGBMessages = {
         </div>`,
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
-            <p><strong>Last updated:</strong> 8 August 2026.</p>
+            <p><strong>Last updated:</strong> 23 August 2026.</p>
             <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we regard our users' privacy as a fundamental pillar. This policy explains how we manage information to ensure that the use of our intelligent audio guides and associated website services (account, community and reviews) is safe and transparent.</p>
 
             <h2>2. Data controller</h2>
@@ -787,7 +787,7 @@ window.TourAiEnGBMessages = {
             <ul>
                 <li><strong>Geographic location:</strong> Used with your permission to offer audio guides and contextual content for nearby points of interest. We do not store a history of your movements or a permanent route.</li>
                 <li><strong>Places presented by the tourist guide:</strong> To avoid repeating the same point of interest on later routes, we associate with your account a record of places the guide has started to present to you (place identifier, name, category and technical registration and silence dates). This record <strong>is not a route or movement history</strong>: it does not store your GPS trail. It may be stored in the cloud linked to your account and, while you use the app, also in device memory. The record may be created when presentation of the place begins, even if you do not finish listening to the narration or move on to the next place. It is kept while it remains useful to avoid repeating that place (a silence period by category) and is deleted if you clear the list in the app (<strong>Edit account → Visited and saved places</strong>, with periods such as last hour, 24 hours, week or all), when the silence no longer applies for the service, or when the account is deleted.</li>
-                <li><strong>Messages to the assistant:</strong> We temporarily retain the message history associated with your account to provide the chat service. These messages are deleted automatically after <strong>14 days</strong> and also when the account is deleted.</li>
+                <li><strong>Messages to the assistant (chat):</strong> The artificial intelligence chat is <strong>ephemeral</strong>: queries and replies are processed to provide the service <strong>while you use the application</strong>, but we <strong>do not store a conversation history</strong> linked to your account or in the cloud. When you <strong>close the application</strong>, the conversation <strong>disappears</strong> from the device. During the session, messages may be kept in device memory and sent to AI providers needed to generate the reply.</li>
                 <li><strong>Account security and password reset:</strong> If you request "Forgot your password?" from the app or the website, we send an email with a secure link to <a href="reset-password.html">tourai.es/reset-password.html</a> so you can set a new password. We do not send your current password by email.</li>
                 <li><strong>Registration abuse prevention:</strong> We retain a history of registrations and deletions associated with the same email address (email lifecycle) to limit abusive re-registrations (currently a maximum of <strong>3 registrations in 180 days</strong>). An administrator may unlock the email when appropriate.</li>
                 <li><strong>Bonuses and promotional codes:</strong> Record of the redeemed code, redemption date, associated plan and promotional campaign reference (for example WELCOME, BIRTHDATE), to manage free Premium access (including the automatic welcome bonus on first access where applicable, and pre-assigned email bonuses that take priority over the WELCOME bonus), prevent duplicate use per user and prevent fraud. Bonuses have a maximum activation period of 30 days; purchased plans, 60 days from acquisition. If you redeem a bonus by scanning a QR code, the camera is used on the device to read the code; <strong>we do not store QR images or video recordings</strong>.</li>
@@ -805,7 +805,7 @@ window.TourAiEnGBMessages = {
             <h2>3.1. Legal basis for processing (summary)</h2>
             <p>In general terms, we process your data on the following bases, depending on the type of information:</p>
             <ul>
-                <li><strong>Performance of the contract / provision of the service:</strong> account (app and web), plans, Premium payments, bonus redemption, messages to the assistant, record of places presented by the guide, preferences, community posting and submission of reviews, and other requested features.</li>
+                <li><strong>Performance of the contract / provision of the service:</strong> account (app and web), plans, Premium payments, bonus redemption, ephemeral assistant chat, record of places presented by the guide, preferences, community posting and submission of reviews, and other requested features.</li>
                 <li><strong>Consent:</strong> geolocation, microphone, camera or gallery/photo library (profile photo or bonus QR scanning), contact or notice forms, non-essential cookies where applicable, personalised advertising when the law so requires.</li>
                 <li><strong>Legitimate interest:</strong> security, fraud prevention for promotional codes and abusive re-registrations, moderation of user-generated content (hiding, rejection, removal and, where applicable, restriction of the ability to post), service stability, integrity of public threads and aggregated rating averages, evidencing the accepted version of legal texts, and technical error reports.</li>
                 <li><strong>Legal obligation:</strong> retention of billing data where applicable; responding to authority requests or obligations arising from digital services rules when they apply.</li>
@@ -844,7 +844,7 @@ window.TourAiEnGBMessages = {
             <p>
                 After verification, we delete the trail of your account and of your usage history: authentication and profile
                 (email, display name or alias, date of birth if you provided it, photo if any, identifier),
-                plans, usage history, the record of places presented by the guide, bonus redemptions, assistant messages,
+                plans, usage history, the record of places presented by the guide, bonus redemptions,
                 associated payment data stored in our systems, linked preferences and <strong>reviews or ratings</strong>
                 (pending and published; the aggregated average is updated). No reference to your account or to the usage
                 history generated by you remains.
@@ -899,7 +899,7 @@ window.TourAiEnGBMessages = {
         <p>Committed to protecting your experience and your personal data.</p>`,
   "page.terms.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Acceptance of the Terms</h2>
-            <p><strong>Last updated:</strong> 8 August 2026.</p>
+            <p><strong>Last updated:</strong> 23 August 2026.</p>
             <p>By accessing or using the <strong>TourAI</strong> website and mobile application, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our services or our website.</p>
             <p>Use of the mobile application also implies acceptance of the <strong>full terms embedded in the app</strong> at the time of registration (including age eligibility, payments and permissions). In the event of any difference regarding the mobile service, the app terms prevail.</p>
             

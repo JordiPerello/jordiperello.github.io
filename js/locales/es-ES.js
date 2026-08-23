@@ -761,7 +761,7 @@ window.TourAiEsESMessages = {
         </div>`,
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Compromiso de Privacidad</h2>
-            <p><strong>Última actualización:</strong> 8 de agosto de 2026.</p>
+            <p><strong>Última actualización:</strong> 23 de agosto de 2026.</p>
             <p>En <strong>TourAI</strong>, accesible desde <a href="https://tourai.es">tourai.es</a>, consideramos que la privacidad de nuestros usuarios es un pilar fundamental. Esta política detalla cómo gestionamos la información para garantizar que el uso de nuestras audioguías inteligentes y de los servicios asociados en la web (cuenta, comunidad y opiniones) sea seguro y transparente.</p>
 
             <h2>2. Responsable del tratamiento</h2>
@@ -783,7 +783,7 @@ window.TourAiEsESMessages = {
             <ul>
                 <li><strong>Ubicación geográfica:</strong> Utilizada bajo tu permiso para ofrecerte audioguías y contenido contextual de los puntos de interés cercanos. No almacenamos un historial de tus movimientos ni un recorrido permanente.</li>
                 <li><strong>Lugares presentados por el guía turístico:</strong> Para no repetirte el mismo punto de interés en rutas posteriores, asociamos a tu cuenta un registro de los lugares que el guía te ha empezado a presentar (identificador del lugar, nombre, categoría y fechas técnicas de registro y de silencio). Este registro <strong>no es un historial de recorrido ni de movimientos</strong>: no guarda tu trayectoria GPS. Puede guardarse en la nube vinculada a tu cuenta y, durante el uso de la app, también en memoria del dispositivo. El registro puede crearse cuando comienza la presentación del lugar, aunque no termines de escuchar la narración o pases al siguiente. Se conserva mientras resulte útil para no repetir ese lugar (periodo de silencio por categoría) y se elimina si borras la lista desde la app (<strong>Editar cuenta → Sitios visitados y guardados</strong>, con periodos como última hora, 24 horas, semana o todo), cuando deja de aplicar el silencio a efectos del servicio, o al eliminar la cuenta.</li>
-                <li><strong>Mensajes al asistente:</strong> Conservamos temporalmente el historial de mensajes asociados a tu cuenta para prestar el servicio de chat. Estos mensajes se eliminan de forma automática a los <strong>14 días</strong> y también al borrar la cuenta.</li>
+                <li><strong>Mensajes al asistente (chat):</strong> El chat con inteligencia artificial es <strong>efímero</strong>: las consultas y respuestas se procesan para prestar el servicio <strong>mientras usas la aplicación</strong>, pero <strong>no guardamos un historial de conversación</strong> asociado a tu cuenta ni en la nube. Al <strong>cerrar la aplicación</strong>, la conversación <strong>desaparece</strong> del dispositivo. Durante la sesión, los mensajes pueden mantenerse en memoria del dispositivo y transmitirse a proveedores de IA necesarios para generar la respuesta.</li>
                 <li><strong>Seguridad de la cuenta y restablecimiento de contraseña:</strong> Si solicitas «¿Olvidaste tu contraseña?» desde la app o la web, enviamos un correo con un enlace seguro a <a href="reset-password.html">tourai.es/reset-password.html</a> para que definas una nueva contraseña. No enviamos tu contraseña actual por correo.</li>
                 <li><strong>Prevención de abuso en el registro:</strong> Conservamos un historial de altas y bajas asociadas a un mismo correo (ciclo de vida del email) para limitar re-registros abusivos (actualmente, como máximo <strong>3 registros en 180 días</strong>). Un administrador puede desbloquear el correo cuando proceda.</li>
                 <li><strong>Bonos y códigos promocionales:</strong> Registro del código canjeado, fecha de canje, plan asociado y referencia de la campaña promocional (por ejemplo WELCOME, BIRTHDATE), para gestionar el acceso Premium gratuito (incluido el bono de bienvenida automático en el primer acceso cuando proceda, bonos pre-asignados por email con prioridad sobre el bono WELCOME), evitar usos duplicados por usuario y prevenir fraude. Los bonos tienen un plazo máximo de activación de 30 días; los planes de compra, 60 días desde la adquisición. Si canjeas un bono escaneando un QR, la cámara se utiliza en el dispositivo para leer el código; <strong>no almacenamos imágenes del QR ni grabaciones de vídeo</strong>.</li>
@@ -801,7 +801,7 @@ window.TourAiEsESMessages = {
             <h2>3.1. Base legal del tratamiento (resumen)</h2>
             <p>En términos generales, tratamos tus datos sobre las siguientes bases, según el tipo de información:</p>
             <ul>
-                <li><strong>Ejecución del contrato / prestación del servicio:</strong> cuenta (app y web), planes, pagos Premium, canje de bonos, mensajes al asistente, registro de lugares presentados por el guía, preferencias, publicación de comunidad y envío de opiniones, y demás funcionalidades solicitadas.</li>
+                <li><strong>Ejecución del contrato / prestación del servicio:</strong> cuenta (app y web), planes, pagos Premium, canje de bonos, chat efímero con el asistente, registro de lugares presentados por el guía, preferencias, publicación de comunidad y envío de opiniones, y demás funcionalidades solicitadas.</li>
                 <li><strong>Consentimiento:</strong> geolocalización, micrófono, cámara o galería/biblioteca de fotos (foto de perfil o escaneo de QR de bonos), formularios de contacto o avisos, cookies no estrictamente necesarias cuando proceda, publicidad personalizada cuando la ley lo exija.</li>
                 <li><strong>Interés legítimo:</strong> seguridad, prevención de fraude en códigos promocionales y en re-registros abusivos, moderación de contenidos generados por usuarios (ocultación, rechazo, retirada y, en su caso, restricción de la facultad de publicar), estabilidad del servicio, integridad de hilos públicos y medias de valoración agregadas, acreditación de la versión de textos legales aceptada, e informes técnicos de error.</li>
                 <li><strong>Obligación legal:</strong> conservación de datos de facturación cuando corresponda; atención a requerimientos de autoridades o a obligaciones derivadas de la normativa de servicios digitales cuando resulten aplicables.</li>
@@ -840,7 +840,7 @@ window.TourAiEsESMessages = {
             <p>
                 Tras la verificación, eliminamos el rastro de tu cuenta y de tu trayectoria de uso: autenticación y perfil
                 (correo, nombre o alias, fecha de nacimiento si la hubieras facilitado, foto si existía, identificador),
-                planes, historial de uso, registro de lugares presentados por el guía, canjes de bonos, mensajes del asistente,
+                planes, historial de uso, registro de lugares presentados por el guía, canjes de bonos,
                 datos de pago asociados almacenados en nuestros sistemas, preferencias vinculadas y
                 <strong>opiniones o valoraciones</strong> (pendientes y publicadas; se actualiza la media agregada).
                 No permanece referencia a tu cuenta ni al historial de uso generado por ti.
@@ -895,7 +895,7 @@ window.TourAiEsESMessages = {
             <p>Comprometidos con la protección de tu experiencia y tus datos personales.</p>`,
   "page.terms.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Aceptación de los Términos</h2>
-            <p><strong>Última actualización:</strong> 8 de agosto de 2026.</p>
+            <p><strong>Última actualización:</strong> 23 de agosto de 2026.</p>
             <p>Al acceder o utilizar el sitio web y la aplicación móvil de <strong>TourAI</strong>, usted acepta quedar vinculado por estos Términos y Condiciones. Si no está de acuerdo con alguna parte de estos términos, no podrá utilizar nuestros servicios ni nuestra web.</p>
             <p>El uso de la aplicación móvil implica, además, la aceptación de los <strong>términos completos embebidos en la app</strong> en el momento del registro (incluidas elegibilidad de edad, pagos y permisos). En caso de diferencia sobre el servicio móvil, prevalecen los términos de la app.</p>
             
