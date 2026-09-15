@@ -373,7 +373,7 @@ window.TourAiEnGBMessages = {
   "doc.meta.blog": "TourAI blog: travel guides, smart tourism tips, destinations and news about our AI-powered app.",
   "doc.meta.community": "TourAI community: news, help, ideas and travel tips.",
   "doc.meta.contact": "Contact the TourAI team for technical support, business enquiries or information about the smart tourism app.",
-  "doc.meta.cookies": "TourAI cookie policy: technical website cookies and AdMob advertising in the app.",
+  "doc.meta.cookies": "TourAI cookie policy: technical website cookies and in-app advertising (Unity LevelPlay).",
   "doc.meta.dashboard": "TourAI dashboard: open plans, usage allowance and payments only when you need them.",
   "doc.meta.deleteAccount": "Delete your TourAI account and linked personal data with email verification.",
   "doc.meta.faq": "TourAI FAQ: website, app, launch alerts, privacy, cookies, contact and support.",
@@ -552,7 +552,7 @@ window.TourAiEnGBMessages = {
             <p style="font-size: 0.8em; color: #888; margin-top: 20px;">For further details, please see our full Privacy Policy.</p>`,
   "page.cookies.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. What are Cookies?</h2>
-            <p><strong>Last updated:</strong> 30 July 2026.</p>
+            <p><strong>Last updated:</strong> 15 September 2026.</p>
             <p>Cookies are small text files that websites store in your browser to remember information about your visit. In the mobile App, where advertising applies, we use equivalent advertising identifiers (IDFA or AAID). Similar browser local-storage technologies may also be used (for example, <code>localStorage</code>).</p>
             
             <h2>2. Types of Cookies we use</h2>
@@ -569,7 +569,7 @@ window.TourAiEnGBMessages = {
             <p>The average rating shown on the website is obtained from our servers; it does <strong>not</strong> involve third-party advertising or analytics cookies.</p>
 
             <h2>3. Advertising</h2>
-            <p><strong>tourai.es does not use advertising or advertising cookies on the website.</strong> In the app we use <strong>AdMob</strong> in the free version. That platform may use advertising identifiers to show interest-based adverts, subject to your consent when the rules so require. Users with an <strong>active Premium Plan</strong> will not see advertising in the app while the plan is in force.</p>
+            <p><strong>tourai.es does not use advertising or advertising cookies on the website.</strong> In the free version of the app we use <strong>Unity LevelPlay</strong> (Unity Technologies mediation platform). LevelPlay may connect to partner ad networks and use device advertising identifiers (AAID/IDFA) to show interest-based adverts, subject to your consent when the rules so require. Users with an <strong>active Premium Plan</strong> will not see advertising in the app while the plan is in force.</p>
 
             <h2>4. How to manage Cookies</h2>
             <p>You may block or delete them in your browser settings (Chrome, Safari, etc.) or reset your advertising ID in your smartphone privacy settings (iOS/Android). To see the tourai.es cookie banner again, clear the site data (including the <code>cookies-aceptadas</code> key) in your browser.</p>
@@ -631,7 +631,7 @@ window.TourAiEnGBMessages = {
         <div class="faq-item">
             <div class="faq-question">Does tourai.es use cookies or advertising?</div>
             <div class="faq-answer">
-                <p>We use technical cookies necessary for the site (for example language and preferences). <strong>This website does not display advertising</strong>. AdMob may be used in the free app. See the <a href="cookies.html">cookie policy</a>.</p>
+                <p>We use technical cookies necessary for the site (for example language and preferences). <strong>This website does not display advertising</strong>. Unity LevelPlay (ad mediation) may be used in the free app. See the <a href="cookies.html">cookie policy</a>.</p>
             </div>
         </div>
 
@@ -652,7 +652,7 @@ window.TourAiEnGBMessages = {
         <div class="faq-item">
             <div class="faq-question">Will TourAI be free?</div>
             <div class="faq-answer">
-                <p>Yes, with a <strong>freemium</strong> model in the app: free access with a daily usage allowance (may include AdMob advertising). There will be temporary Premium plans for more allowance and an advert-free experience. More details on the <a href="index.html">home page</a> and in the <a href="terms.html">terms of use</a>.</p>
+                <p>Yes, with a <strong>freemium</strong> model in the app: free access with a daily usage allowance (may include advertising via Unity LevelPlay). There will be temporary Premium plans for more allowance and an advert-free experience. More details on the <a href="index.html">home page</a> and in the <a href="terms.html">terms of use</a>.</p>
             </div>
         </div>`,
   "page.faq.modal.consent": `I agree to receive the launch notification and the <span class="toggle-terms" onclick="toggleTerms()">privacy policy</span>.`,
@@ -750,7 +750,7 @@ window.TourAiEnGBMessages = {
             <div class="service-card">
                 <span class="price-tag">Freemium</span>
                 <h4>Free access</h4>
-                <p>Use the app with a daily usage allowance. The free tier may include responsible advertising (AdMob).</p>
+                <p>Use the app with a daily usage allowance. The free tier may include responsible advertising (Unity LevelPlay).</p>
             </div>
             <div class="service-card">
                 <span class="price-tag">Premium</span>
@@ -765,7 +765,7 @@ window.TourAiEnGBMessages = {
         </div>`,
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
-            <p><strong>Last updated:</strong> 23 August 2026.</p>
+            <p><strong>Last updated:</strong> 15 September 2026.</p>
             <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we regard our users' privacy as a fundamental pillar. This policy explains how we manage information to ensure that the use of our intelligent audio guides and associated website services (account, community and reviews) is safe and transparent.</p>
 
             <h2>2. Data controller</h2>
@@ -812,12 +812,12 @@ window.TourAiEnGBMessages = {
             </ul>
             
             <h2>4. Responsible Advertising</h2>
-            <p>TourAI may be funded through Google advertising <strong>in the mobile application</strong> to maintain Freemium access:</p>
+            <p>TourAI may be funded through third-party advertising <strong>in the mobile application</strong> (mediated via Unity LevelPlay) to maintain Freemium access:</p>
             <ul>
                 <li><strong>Web (tourai.es):</strong> we do not use advertising on the website.</li>
-                <li><strong>AdMob (App):</strong> In the free version of the app we use industry-standard identifiers (IDFA/AAID). Users with active Premium do not see advertising while the plan is in force.</li>
+                <li><strong>Unity LevelPlay (App):</strong> In the free version of the app we use the <strong>Unity LevelPlay</strong> mediation platform, which may use device advertising identifiers (IDFA/AAID) and connect to partner networks. Users with active Premium do not see advertising while the plan is in force.</li>
             </ul>
-            <p>You can manage or disable app ad personalisation at any time through <a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.</p>
+            <p>You can manage or disable app ad personalisation in your device settings and consult the <a href="https://unity.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Unity privacy policy</a>.</p>
 
             <h2>4.1. Providers and transfers</h2>
             <p>To provide the service we use customary providers (cloud authentication and storage — including authentication and database services —, transactional email, maps, artificial intelligence models, speech synthesis, app stores, payment gateways and advertising). Part of the processing may take place outside the European Economic Area. In those cases we apply the safeguards provided for in applicable law (for example, standard contractual clauses or other appropriate measures). The detail of categories of processors and transfers may be expanded following legal review.</p>
@@ -899,7 +899,7 @@ window.TourAiEnGBMessages = {
         <p>Committed to protecting your experience and your personal data.</p>`,
   "page.terms.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Acceptance of the Terms</h2>
-            <p><strong>Last updated:</strong> 23 August 2026.</p>
+            <p><strong>Last updated:</strong> 15 September 2026.</p>
             <p>By accessing or using the <strong>TourAI</strong> website and mobile application, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our services or our website.</p>
             <p>Use of the mobile application also implies acceptance of the <strong>full terms embedded in the app</strong> at the time of registration (including age eligibility, payments and permissions). In the event of any difference regarding the mobile service, the app terms prevail.</p>
             
@@ -946,7 +946,7 @@ window.TourAiEnGBMessages = {
             <h2>5. Advertising, Premium Plans and Promotional Bonuses</h2>
             <p>To ensure universal access to culture, TourAI offers a hybrid model in the mobile application (full contractual details appear in the terms embedded in the app):</p>
             <ul>
-                <li><strong>Free Access (Freemium):</strong> Supported by third-party advertising in the app (Google AdMob). It may include rewarded adverts that temporarily expand the usage allowance. The tourai.es website does not use advertising.</li>
+                <li><strong>Free Access (Freemium):</strong> Supported by third-party advertising in the app via <strong>Unity LevelPlay</strong> (Unity Technologies ad mediation). It may include rewarded adverts that temporarily expand the usage allowance. The tourai.es website does not use advertising.</li>
                 <li><strong>Premium Plans:</strong> Temporary paid plans (for example, 1 day or weekend) with a greater service usage allowance and an advert-free experience while the plan is active.</li>
                 <li><strong>Promotional bonuses:</strong> TourAI may grant free Premium access through alphanumeric codes or QR codes distributed in campaigns (WELCOME campaign on first registration, BIRTHDATE campaign for birthdays, bonuses pre-assigned to the user's email or other campaign codes). In particular:
                     <ul>

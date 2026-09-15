@@ -63,8 +63,8 @@ If sign-in fails on localhost, add `localhost` / `127.0.0.1` under Firebase Auth
 
 ## Notes
 
-- The website does **not** show advertising (AdMob is app-only).
-- App freemium ads use AdMob in the mobile app only.
+- The website does **not** show advertising (Unity LevelPlay is app-only).
+- App freemium ads use Unity LevelPlay mediation in the mobile app only.
 - Front-end JS is intentionally few modules: `site-ui.js`, `auth.js`, `forms.js`, `account.js`, `community.js` (+ config / i18n).
 
 ---
