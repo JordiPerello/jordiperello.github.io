@@ -207,7 +207,7 @@
       global.TourAiPlanActivation.savePurchaseContext({
         userPlanId: body.userPlanId,
         userPaymentId: body.userPaymentId || "",
-        wasFreemiumAtPurchaseStart: options.wasFreemiumAtPurchaseStart === true,
+        noActivePlanAtPurchaseStart: options.noActivePlanAtPurchaseStart === true,
       });
     }
 

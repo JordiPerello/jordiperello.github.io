@@ -135,18 +135,12 @@
         return t("account.plan.state.consumed");
       case "expired":
         return t("account.plan.state.expired");
-      case "freemium":
-        return t("account.plan.state.freemium");
       default:
         return t("account.plan.state.other");
     }
   }
 
   function planStatusMeta(plan) {
-    const accountType = String(plan.AccountType || "Premium");
-    if (accountType === "Freemium") {
-      return { state: "freemium", label: stateLabel("freemium") };
-    }
     const state = planState(plan);
     return { state: state, label: stateLabel(state) };
   }
@@ -739,26 +733,26 @@
       ? plansOrActive.find((p) => planState(p) === "active")
       : plansOrActive;
     if (!active) {
-      return renderFreemiumPromoHtml();
+      return renderNoActivePlanPromoHtml();
     }
 
     return `<div class="plan-list">${renderPlanCardHtml(active, { interactive: true })}</div>`;
   }
 
-  function renderFreemiumPromoHtml() {
-    const title = escapeHtml(t("account.plan.freemium.promoTitle"));
-    const body = escapeHtml(t("account.plan.freemium.promoBody"));
-    const cta = escapeHtml(t("account.plan.freemium.promoCta"));
-    const note = escapeHtml(t("account.plan.freemium.promoNote"));
+  function renderNoActivePlanPromoHtml() {
+    const title = escapeHtml(t("account.plan.noActive.promoTitle"));
+    const body = escapeHtml(t("account.plan.noActive.promoBody"));
+    const cta = escapeHtml(t("account.plan.noActive.promoCta"));
+    const note = escapeHtml(t("account.plan.noActive.promoNote"));
 
-    return `<aside class="plan-freemium-promo" role="note">
-  <p class="plan-freemium-promo__eyebrow">${escapeHtml(
-    t("account.plan.state.freemium")
+    return `<aside class="plan-no-active-promo" role="note">
+  <p class="plan-no-active-promo__eyebrow">${escapeHtml(
+    t("account.plan.noActive.eyebrow")
   )}</p>
-  <h3 class="plan-freemium-promo__title">${title}</h3>
-  <p class="plan-freemium-promo__body">${body}</p>
-  <p class="plan-freemium-promo__actions">
-    <a class="btn-primary" href="dashboard.html#buy-plans-section" data-buy-premium="true">${cta}</a>
+  <h3 class="plan-no-active-promo__title">${title}</h3>
+  <p class="plan-no-active-promo__body">${body}</p>
+  <p class="plan-no-active-promo__actions">
+    <a class="btn-primary" href="dashboard.html#buy-plans-section" data-buy-plans="true">${cta}</a>
   </p>
   <p class="account-note">${note}</p>
 </aside>`;
@@ -778,7 +772,7 @@
   }
 
   function isAcquiredPlan(plan) {
-    if (!plan || String(plan.AccountType || "") === "Freemium") {
+    if (!plan) {
       return false;
     }
     const status = String(plan.PaymentStatus || "");
@@ -824,15 +818,11 @@
     const planId = escapeHtml(plan.Id || "");
     const name = escapeHtml(plan.PlanName || plan.PlanId || "—");
     const description = String(plan.PlanDescription || "").trim();
-    const accountType = escapeHtml(String(plan.AccountType || "Premium").toUpperCase());
     const acquisition = escapeHtml(acquisitionLabel(plan).toUpperCase());
     const start = formatDateTime(plan.StartDate);
     const end = formatDateTime(plan.EndDate || plan.ExpiryDate);
     const paymentStatus = String(plan.PaymentStatus || "");
-    const showPaymentStatus =
-      String(plan.AccountType || "") !== "Freemium"
-      && paymentStatus
-      && paymentStatus !== "Paid";
+    const showPaymentStatus = paymentStatus && paymentStatus !== "Paid";
     const interactiveAttrs = interactive
       ? ` role="button" tabindex="0" data-plan-id="${planId}" aria-label="${escapeHtml(
           t("account.plan.openDetail")
@@ -856,10 +846,6 @@
       }
       <div class="plan-list-card__divider" aria-hidden="true"></div>
       <dl class="plan-list-card__metrics">
-        <div>
-          <dt>${t("account.plan.accountType")}</dt>
-          <dd class="plan-list-card__metric-accent">${accountType}</dd>
-        </div>
         <div>
           <dt>${t("account.plan.acquisition")}</dt>
           <dd class="plan-list-card__metric-accent">${acquisition}</dd>
@@ -1189,16 +1175,14 @@
     );
   }
 
-  function renderProfileCardHtml(profile, user) {
+  function renderProfileCardHtml(profile, user, hasActivePlan) {
     const displayName =
       (profile.DisplayName && String(profile.DisplayName).trim()) ||
       t("account.profile.noName");
     const email = profile.Email || profile.AuthEmail || user?.email || "—";
-    const accountType = profile.AccountType || "Freemium";
-    const typeLabel =
-      accountType === "Premium"
-        ? t("account.profile.type.premium")
-        : t("account.profile.type.freemium");
+    const activePlanLabel = hasActivePlan
+      ? t("account.profile.activePlan.yes")
+      : t("account.profile.activePlan.no");
     const birth = formatDate(profile.BirthDate);
     const initials = escapeHtml(profileInitials(displayName, email));
     const photoUrls = profilePhotoUrls(profile, user);
@@ -1219,8 +1203,8 @@
       <div class="profile-card__divider" aria-hidden="true"></div>
       <dl class="profile-card__metrics">
         <div>
-          <dt>${t("account.profile.type")}</dt>
-          <dd class="profile-card__metric-accent">${escapeHtml(typeLabel.toUpperCase())}</dd>
+          <dt>${t("account.profile.activePlan")}</dt>
+          <dd class="profile-card__metric-accent">${escapeHtml(activePlanLabel)}</dd>
         </div>
         <div>
           <dt>${t("account.profile.birthDate")}</dt>
@@ -1753,11 +1737,21 @@
     }
   }
 
-  function renderProfile() {
+  async function renderProfile() {
     if (!profileMount || !currentUser || !currentProfile) {
       return;
     }
-    profileMount.innerHTML = data.renderProfileCardHtml(currentProfile, currentUser);
+    let hasActivePlan = false;
+    try {
+      hasActivePlan = !!(await data.fetchActivePlan(currentUser));
+    } catch (_err) {
+      hasActivePlan = false;
+    }
+    profileMount.innerHTML = data.renderProfileCardHtml(
+      currentProfile,
+      currentUser,
+      hasActivePlan
+    );
     hydrateProfileAvatar(profileMount);
     if (window.TourAiI18n?.applyTranslations && window.TourAiI18n?.getLocale) {
       window.TourAiI18n.applyTranslations(window.TourAiI18n.getLocale());
@@ -2649,16 +2643,16 @@
     paintBuyPlansSection(section);
     window.TourAiLoading?.show?.(t("account.buy.preparing"));
     try {
-      var wasFreemium = true;
-      if (window.TourAiPlanActivation?.wasFreemiumAtPurchaseStart) {
-        wasFreemium = await window.TourAiPlanActivation.wasFreemiumAtPurchaseStart(
+      var noActivePlan = true;
+      if (window.TourAiPlanActivation?.noActivePlanAtPurchaseStart) {
+        noActivePlan = await window.TourAiPlanActivation.noActivePlanAtPurchaseStart(
           currentUser
         );
       } else {
-        wasFreemium = !(await data.fetchActivePlan(currentUser));
+        noActivePlan = !(await data.fetchActivePlan(currentUser));
       }
       await checkout.startCheckout(planId, {
-        wasFreemiumAtPurchaseStart: wasFreemium,
+        noActivePlanAtPurchaseStart: noActivePlan,
         onProgress: function (step) {
           if (step === "redirecting") {
             const messageEl = document.querySelector(".tourai-loading-message");
@@ -3051,7 +3045,7 @@
 
   document.addEventListener("click", function (event) {
     const link = event.target.closest?.(
-      "a[data-buy-premium='true'], a[href*='#buy-plans']"
+      "a[data-buy-plans='true'], a[href*='#buy-plans']"
     );
     if (!link || !/\/dashboard\.html/i.test(String(window.location.pathname || ""))) {
       return;
@@ -3095,8 +3089,8 @@
     );
   }
 
-  function hidePremiumAcquisitionPromos() {
-    document.querySelectorAll(".plan-freemium-promo").forEach(function (el) {
+  function hideNoActivePlanPromos() {
+    document.querySelectorAll(".plan-no-active-promo").forEach(function (el) {
       el.hidden = true;
     });
     window.TourAiSitePromo?.onPurchaseSuccess?.();
@@ -3109,7 +3103,7 @@
     }
 
     if (checkoutReturn.type === "success") {
-      hidePremiumAcquisitionPromos();
+      hideNoActivePlanPromos();
       var purchaseContext = window.TourAiPlanActivation?.loadPurchaseContext?.();
       if (purchaseContext?.userPaymentId && data.reconcileStripePaymentById) {
         try {

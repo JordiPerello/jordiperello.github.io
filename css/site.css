@@ -854,7 +854,7 @@ body.tourai-feedback-open {
   }
 }
 
-/* First-party site promo: guests (install app) + freemium (Premium). Not third-party ads. */
+/* First-party site promo: guests (install app) + signed-in without active plan. Not third-party ads. */
 .site-promo__banner {
   position: fixed;
   left: 16px;

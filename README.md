@@ -31,7 +31,7 @@ Copy-Item "D:\Proyectos\Documents\docs-touraiweb\Secrets\site-config.secrets.js"
   "D:\Proyectos\TourAIWeb\jordiperello.github.io\js\site-config.secrets.js"
 ```
 
-Web Premium checkout (`createCheckoutSessionWeb`) also needs:
+Web plan checkout (`createCheckoutSessionWeb`) also needs:
 
 - `firebaseAuth.appId` (Firebase web app id)
 - `appCheckRecaptchaSiteKey` (reCAPTCHA v3 site key registered in Firebase App Check)
@@ -64,8 +64,8 @@ If sign-in fails on localhost, add `localhost` / `127.0.0.1` under Firebase Auth
 ## Notes
 
 - The website does **not** show advertising (Unity LevelPlay is app-only).
-- App freemium ads use Unity LevelPlay mediation in the mobile app only.
-- Front-end JS is intentionally few modules: `site-ui.js`, `auth.js`, `forms.js`, `account.js`, `community.js` (+ config / i18n).
+- App upsell ads (no active plan) use Unity LevelPlay mediation in the mobile app only.
+- Front-end JS is intentionally few modules: `site-ui.js`, `site-promo.js`, `auth.js`, `forms.js`, `account.js`, `community.js` (+ config / i18n).
 
 ---
 © TourAI. All rights reserved.

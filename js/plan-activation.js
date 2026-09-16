@@ -2,9 +2,9 @@
 (function (global) {
   "use strict";
 
+  var STORAGE_NO_ACTIVE_PLAN = "tourai-no-active-plan-at-purchase-start";
   var STORAGE_USER_PLAN_ID = "tourai-purchase-user-plan-id";
   var STORAGE_USER_PAYMENT_ID = "tourai-purchase-user-payment-id";
-  var STORAGE_WAS_FREEMIUM = "tourai-was-freemium-at-purchase-start";
 
   function authApi() {
     return global.TourAiAuth;
@@ -45,8 +45,8 @@
         );
       }
       global.sessionStorage.setItem(
-        STORAGE_WAS_FREEMIUM,
-        context.wasFreemiumAtPurchaseStart ? "1" : "0"
+        STORAGE_NO_ACTIVE_PLAN,
+        context.noActivePlanAtPurchaseStart ? "1" : "0"
       );
     } catch (_e) {
       /* ignore */
@@ -64,8 +64,8 @@
         userPaymentId: String(
           global.sessionStorage.getItem(STORAGE_USER_PAYMENT_ID) || ""
         ).trim(),
-        wasFreemiumAtPurchaseStart:
-          global.sessionStorage.getItem(STORAGE_WAS_FREEMIUM) === "1",
+        noActivePlanAtPurchaseStart:
+          global.sessionStorage.getItem(STORAGE_NO_ACTIVE_PLAN) === "1",
       };
     } catch (_e2) {
       return null;
@@ -76,13 +76,13 @@
     try {
       global.sessionStorage.removeItem(STORAGE_USER_PLAN_ID);
       global.sessionStorage.removeItem(STORAGE_USER_PAYMENT_ID);
-      global.sessionStorage.removeItem(STORAGE_WAS_FREEMIUM);
+      global.sessionStorage.removeItem(STORAGE_NO_ACTIVE_PLAN);
     } catch (_e) {
       /* ignore */
     }
   }
 
-  async function wasFreemiumAtPurchaseStart(user) {
+  async function noActivePlanAtPurchaseStart(user) {
     if (!user || !dataApi()?.fetchActivePlan) {
       return true;
     }
@@ -133,14 +133,14 @@
     return included <= 0 || consumed < included;
   }
 
-  function shouldPromptPlanActivation(wasFreemium, purchasedPlan, activePlan) {
+  function shouldPromptPlanActivation(noActivePlanAtPurchase, purchasedPlan, activePlan) {
     if (activePlan && String(activePlan.Id) === String(purchasedPlan.Id)) {
       return false;
     }
     if (isPlanInUse(purchasedPlan)) {
       return false;
     }
-    return wasFreemium || !activePlan;
+    return noActivePlanAtPurchase || !activePlan;
   }
 
   function escapeHtml(value) {
@@ -246,7 +246,7 @@
 
     if (
       !shouldPromptPlanActivation(
-        context.wasFreemiumAtPurchaseStart,
+        context.noActivePlanAtPurchaseStart,
         purchasedPlan,
         activePlan
       )
@@ -283,7 +283,7 @@
   }
 
   global.TourAiPlanActivation = {
-    wasFreemiumAtPurchaseStart: wasFreemiumAtPurchaseStart,
+    noActivePlanAtPurchaseStart: noActivePlanAtPurchaseStart,
     savePurchaseContext: savePurchaseContext,
     loadPurchaseContext: loadPurchaseContext,
     clearPurchaseContext: clearPurchaseContext,

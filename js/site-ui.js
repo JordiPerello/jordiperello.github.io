@@ -883,7 +883,7 @@
   };
 })();
 
-/* Premium checkout entry: one handler for every "buy Premium" CTA site-wide. */
+/* Plan checkout entry: one handler for every "buy plans" CTA site-wide. */
 (function (global) {
   "use strict";
 
@@ -898,7 +898,7 @@
     if (!(link instanceof HTMLAnchorElement)) {
       return false;
     }
-    if (link.getAttribute("data-buy-premium") === "true") {
+    if (link.getAttribute("data-buy-plans") === "true") {
       return true;
     }
     return /#buy-plans/i.test(link.getAttribute("href") || "");
@@ -934,7 +934,7 @@
 
   function handleClick(event) {
     var link = event.target.closest?.(
-      "a[data-buy-premium='true'], a[href*='#buy-plans']"
+      "a[data-buy-plans='true'], a[href*='#buy-plans']"
     );
     if (!link || !isBuyPlansLink(link)) {
       return;

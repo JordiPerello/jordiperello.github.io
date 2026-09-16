@@ -1,7 +1,7 @@
 /* TourAI first-party site promo (not third-party ads).
  * - Guests: encourage installing / launch alert for the app.
- * - Signed-in freemium: encourage a Premium plan.
- * - Premium: hidden.
+ * - Signed-in without active plan: encourage buying or activating a plan.
+ * - Active plan: hidden.
  */
 (function (global) {
   "use strict";
@@ -20,7 +20,7 @@
     root: null,
     modalTimer: null,
     firstModalTimer: null,
-    premiumHold: false,
+    activePlanHold: false,
   };
 
   function authApi() {
@@ -55,7 +55,7 @@
   }
 
   function planIsActive(plan) {
-    if (!plan || String(plan.AccountType || "") === "Freemium") {
+    if (!plan) {
       return false;
     }
     var now = Date.now();
@@ -81,7 +81,7 @@
     try {
       if (global.TourAiAccountData && typeof global.TourAiAccountData.fetchActivePlan === "function") {
         var active = await global.TourAiAccountData.fetchActivePlan(user);
-        return active ? null : "freemium";
+        return active ? null : "noPlan";
       }
 
       var db = await authApi().getFirestore();
@@ -98,7 +98,7 @@
           return null;
         }
       }
-      return "freemium";
+      return "noPlan";
     } catch (err) {
       return null;
     }
@@ -117,14 +117,14 @@
       };
     }
 
-    // Signed-in freemium: send them to web Premium checkout (not the launch waitlist).
+    // Signed-in without active plan: send them to plan checkout (not the launch waitlist).
     return {
-      title: t("site.promo.freemium.title"),
-      body: t("site.promo.freemium.body"),
-      cta: t("site.promo.freemium.cta"),
+      title: t("site.promo.noPlan.title"),
+      body: t("site.promo.noPlan.body"),
+      cta: t("site.promo.noPlan.cta"),
       dismiss: t("site.promo.dismiss"),
-      railLabel: t("site.promo.freemium.railLabel"),
-      modalLead: t("site.promo.freemium.modalLead"),
+      railLabel: t("site.promo.noPlan.railLabel"),
+      modalLead: t("site.promo.noPlan.modalLead"),
       href: "dashboard.html#buy-plans-section",
     };
   }
@@ -229,10 +229,10 @@
       el.textContent = copy.cta;
       if (el.tagName === "A") {
         el.setAttribute("href", copy.href);
-        if (audience === "freemium") {
-          el.setAttribute("data-buy-premium", "true");
+        if (audience === "noPlan") {
+          el.setAttribute("data-buy-plans", "true");
         } else {
-          el.removeAttribute("data-buy-premium");
+          el.removeAttribute("data-buy-plans");
         }
       }
     });
@@ -331,7 +331,7 @@
   }
 
   function showSurfaces(audience) {
-    if (state.premiumHold) {
+    if (state.activePlanHold) {
       hideSurfaces();
       return;
     }
@@ -379,7 +379,7 @@
   }
 
   function showModalIfDue() {
-    if (state.premiumHold || !state.audience) {
+    if (state.activePlanHold || !state.audience) {
       return;
     }
     if (isBuyPlansHash()) {
@@ -407,7 +407,7 @@
     if (state.firstModalTimer) {
       clearTimeout(state.firstModalTimer);
     }
-    // Guests see the spot sooner; freemium can wait a bit longer.
+    // Guests see the spot sooner; signed-in users without a plan wait a bit longer.
     var firstDelayMs = audience === "guest" ? 8000 : 20000;
     state.firstModalTimer = setTimeout(function () {
       if (state.audience) {
@@ -449,7 +449,7 @@
 
   /** Hide promo UI as soon as checkout payment succeeds (before success/activation modals). */
   function onPurchaseSuccess() {
-    state.premiumHold = true;
+    state.activePlanHold = true;
     state.audience = null;
     hideSurfaces();
   }
@@ -465,7 +465,7 @@
     await refreshForUser(user || authApi()?.currentUser?.() || null);
 
     // Firestore can lag right after activation — retry once before giving up.
-    if (state.audience === "freemium") {
+    if (state.audience === "noPlan") {
       await new Promise(function (resolve) {
         global.setTimeout(resolve, 1000);
       });
@@ -475,7 +475,7 @@
     }
 
     if (!state.audience) {
-      state.premiumHold = false;
+      state.activePlanHold = false;
     }
   }
 
@@ -518,6 +518,4 @@
     onPurchaseSuccess: onPurchaseSuccess,
     onPlanActivated: onPlanActivated,
   };
-  // Keep legacy alias used while the file was freemium-only.
-  global.TourAiFreemiumPromo = global.TourAiSitePromo;
 })(window);

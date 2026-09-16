@@ -6,14 +6,14 @@ window.TourAiEsESMessages = {
   "account.alert.ok": "Entendido",
   "account.buy.cta": "Comprar con Stripe",
   "account.buy.durationDays": "{n} días",
-  "account.buy.empty": "No hay planes Premium disponibles en este momento.",
+  "account.buy.empty": "No hay planes disponibles en este momento.",
   "account.buy.error.appCheck": "No se pudo verificar el navegador (App Check). Recarga la página e inténtalo de nuevo.",
   "account.buy.error.config": "Falta la URL de checkout en la configuración del sitio.",
   "account.buy.error.generic": "Revisa tu conexión e inténtalo de nuevo. Si el problema continúa, recarga la página o prueba más tarde.",
   "account.buy.error.plan": "Ese plan no está disponible. Prueba otro o vuelve más tarde.",
   "account.buy.error.rateLimit": "Hay demasiados pagos pendientes recientes. Espera un momento e inténtalo de nuevo.",
   "account.buy.error.title": "Error al iniciar el pago",
-  "account.buy.note": "El pago lo procesa Stripe. Tras pagarlo, el plan aparece en «Tus planes». Si usas Freemium, podrás activarlo justo después del pago.",
+  "account.buy.note": "El pago lo procesa Stripe. Tras pagarlo, el plan aparece en «Tus planes». Podrás activarlo justo después del pago.",
   "account.buy.preparing": "Preparando el pago…",
   "account.buy.redirecting": "Redirigiendo a Stripe…",
   "account.buy.status.cancel": "Pago cancelado. No se ha cobrado nada.",
@@ -23,9 +23,8 @@ window.TourAiEsESMessages = {
   "account.buy.status.successDetail": "Gracias por tu compra. Tu pago ha sido procesado con éxito.",
   "account.buy.status.successPayment": "✅ Pago completado",
   "account.buy.status.successTitle": "Pago recibido",
-  "account.buy.title": "Comprar plan Premium",
+  "account.buy.title": "Adquirir plan",
   "account.buy.tokens": "Cupo: {n}",
-  "account.comingSoon": "Próximamente",
   "account.confirm.cancel": "Cancelar",
   "account.confirm.delete.body": "Vas a iniciar el proceso de eliminación permanente. Deberás verificar tu correo con un código. Una vez completada, esta acción no se puede deshacer.",
   "account.confirm.delete.confirm": "Continuar",
@@ -85,7 +84,7 @@ window.TourAiEsESMessages = {
   "account.passwordChange.subtitle": "Introduce tu contraseña actual y la nueva. El cambio solo se aplica al confirmar.",
   "account.passwordChange.title": "Cambiar contraseña",
   "account.payment.amount": "Importe",
-  "account.payment.buyNote": "Para comprar un plan Premium, usa la sección «Comprar plan Premium» de este panel.",
+  "account.payment.buyNote": "Para adquirir un plan, usa la sección «Adquirir plan» de este panel.",
   "account.payment.date": "Fecha",
   "account.payment.empty": "Todavía no hay pagos registrados.",
   "account.payment.listTitle": "Historial de pagos",
@@ -117,31 +116,26 @@ window.TourAiEsESMessages = {
   "account.plan.activate.line3": "¿Seguro que quieres seleccionar y activar este plan?",
   "account.plan.activate.title": "Cambiar de Plan",
   "account.plan.activeTitle": "Plan en uso",
-  "account.plan.allowance": "Cupo de uso",
   "account.plan.detail.back": "Anterior",
   "account.plan.detail.error": "No se pudo cargar el detalle del plan.",
   "account.plan.detail.missing": "No se encontró el plan seleccionado.",
   "account.plan.detail.subtitle": "Detalle del plan y actividad registrada.",
   "account.plan.detail.title": "Detalle del Plan",
-  "account.plan.empty": "Aún no tienes planes Premium guardados en la cuenta.",
+  "account.plan.empty": "Aún no tienes planes guardados en la cuenta.",
   "account.plan.end": "Fin",
-  "account.plan.freemium": "Ahora mismo usas Freemium en la app. El cupo diario de uso gratuito se gestiona en el dispositivo (anuncios recompensados) y no aparece aquí.",
-  "account.plan.freemium.promoBody": "Ahora usas Freemium: el cupo diario en la app se recarga con anuncios. Hazte con un plan Premium y disfruta de tus vacaciones sin interrupciones.",
-  "account.plan.freemium.promoCta": "Ver planes Premium",
-  "account.plan.freemium.promoNote": "Puedes comprar un plan Premium desde este panel. El pago lo procesa Stripe.",
-  "account.plan.freemium.promoTitle": "¿Quieres TourAI sin anuncios?",
+  "account.plan.noActive.eyebrow": "Sin plan activo",
+  "account.plan.noActive.promoBody": "Para usar el mapa, el chat y las audioguías necesitas un plan activo. Puedes adquirir uno o canjear un bono promocional.",
+  "account.plan.noActive.promoCta": "Ver planes",
+  "account.plan.noActive.promoNote": "Puedes adquirir un plan desde este panel. El pago lo procesa Stripe.",
+  "account.plan.noActive.promoTitle": "Activa TourAI con un plan",
   "account.plan.listTitle": "Tus planes",
-  "account.plan.name": "Plan",
   "account.plan.openDetail": "Ver detalle del plan",
-  "account.plan.period": "Periodo",
   "account.plan.start": "Inicio",
   "account.plan.state.active": "En uso",
   "account.plan.state.consumed": "Consumido",
   "account.plan.state.expired": "Caducado",
-  "account.plan.state.freemium": "Plan gratuito",
   "account.plan.state.other": "Sin clasificar",
   "account.plan.state.pending": "Pendiente de iniciar",
-  "account.plan.status": "Estado",
   "account.plan.usage.date": "Fecha",
   "account.plan.usage.empty": "Todavía no hay actividad registrada en este plan.",
   "account.plan.usage.loaded": "{loaded} registros cargados",
@@ -149,14 +143,11 @@ window.TourAiEsESMessages = {
   "account.plan.usage.title": "Actividad del plan",
   "account.profile.birthDate": "Fecha de nacimiento (opcional)",
   "account.profile.email": "Correo",
-  "account.profile.intro": "Datos de tu cuenta TourAI.",
   "account.profile.name": "Nombre",
   "account.profile.noName": "Sin nombre",
-  "account.profile.title": "Tu perfil",
-  "account.profile.type": "Tipo de cuenta",
-  "account.profile.type.freemium": "Freemium",
-  "account.profile.type.premium": "Premium",
-  "account.profile.uid": "ID de usuario",
+  "account.profile.activePlan": "Plan activo",
+  "account.profile.activePlan.no": "No",
+  "account.profile.activePlan.yes": "Sí",
   "account.status.signingOut": "Cerrando sesión...",
   "account.subnav.aria": "Cuenta",
   "account.subnav.dashboard": "Panel",
@@ -373,7 +364,7 @@ window.TourAiEsESMessages = {
   "doc.meta.blog": "TourAI blog: travel guides, smart tourism tips, destinations and news about our AI-powered app.",
   "doc.meta.community": "Comunidad TourAI: novedades, ayuda, ideas y viajes.",
   "doc.meta.contact": "Contacta con el equipo de TourAI para soporte técnico, consultas comerciales o información sobre la app de turismo inteligente.",
-  "doc.meta.cookies": "Política de cookies de TourAI: cookies técnicas de la web y publicidad en la app (Unity LevelPlay).",
+  "doc.meta.cookies": "Política de cookies de TourAI: cookies y almacenamiento técnico de la web.",
   "doc.meta.dashboard": "Panel de TourAI: consulta planes, cupo de uso e historial de pagos cuando lo necesites.",
   "doc.meta.deleteAccount": "Elimina tu cuenta de TourAI y los datos personales vinculados, con verificación por correo electrónico.",
   "doc.meta.faq": "Preguntas frecuentes sobre TourAI: descarga, alertas de lanzamiento, privacidad, funciones de la app y soporte.",
@@ -384,7 +375,7 @@ window.TourAiEsESMessages = {
   "doc.meta.login": "Inicia sesión en TourAI para acceder a tu cuenta, planes y zona privada en la web.",
   "doc.meta.mobile-travel-gps-privacy": "Guide to using your mobile when travelling: data, GPS, eSIM, battery saving and location privacy abroad.",
   "doc.meta.plan-trip-with-ai": "Practical guide to planning a trip with artificial intelligence: itineraries, budget, documentation and tips for 2026.",
-  "doc.meta.privacy": "Política de privacidad de TourAI: tratamiento de datos, geolocalización, publicidad, derechos GDPR y contacto.",
+  "doc.meta.privacy": "Política de privacidad de TourAI: tratamiento de datos, geolocalización, derechos GDPR y contacto.",
   "doc.meta.register": "Crea tu cuenta TourAI desde la web para acceder a la zona privada.",
   "doc.meta.resetPassword": "Restablece la contraseña de tu cuenta TourAI desde un enlace seguro enviado por correo.",
   "doc.meta.reviews": "Opiniones de TourAI: puedes valorar la web y la app de forma voluntaria. Si valoras, las estrellas son necesarias y el comentario es opcional.",
@@ -522,11 +513,11 @@ window.TourAiEsESMessages = {
             <li><strong>Consultas por voz:</strong> interactúa con la app mientras caminas, sin detenerte a escribir.</li>
             <li><strong>Mapas interactivos:</strong> descubre puntos de interés cercanos e inicia recorridos guiados a pie por GPS.</li>
             <li><strong>Audioguías inmersivas:</strong> escucha narraciones activadas por tu ubicación al acercarte a cada punto.</li>
-            <li><strong>Modelo Freemium y Premium:</strong> acceso gratuito con cupo diario de uso, o planes de pago sin publicidad.</li>
+            <li><strong>Planes y bonos:</strong> adquiere un plan temporal o canjea un bono promocional para usar mapa, chat y audioguías.</li>
         </ul>
         <p>La aplicación se encuentra actualmente en fase de desarrollo y pruebas. Las versiones para iOS y Android se publicarán en las tiendas oficiales cuando estén listas.</p>
         <h2>Nuestra misión</h2>
-        <p>Queremos democratizar el acceso a información cultural de calidad. Creemos que viajar no debería depender de contratar tours caros ni de llevar guías impresas obsoletas. TourAI ofrece un modelo freemium en la app con planes Premium opcionales.</p>
+        <p>Queremos democratizar el acceso a información cultural de calidad. Creemos que viajar no debería depender de contratar tours caros ni de llevar guías impresas obsoletas. TourAI funciona con planes temporales y bonos promocionales que desbloquean el acceso completo a la app.</p>
         <div class="info-box">
             <strong>Contacto directo</strong><br>
             Correo electrónico: <a href="mailto:info@tourai.es">info@tourai.es</a><br>
@@ -548,8 +539,8 @@ window.TourAiEsESMessages = {
             <p style="font-size: 0.8em; color: #888; margin-top: 20px;">Para más detalles, consulte nuestra Política de Privacidad completa.</p>`,
   "page.cookies.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. ¿Qué son las Cookies?</h2>
-            <p><strong>Última actualización:</strong> 15 de septiembre de 2026.</p>
-            <p>Las cookies son pequeños archivos de texto que los sitios web almacenan en su navegador para recordar información sobre su visita. En la App móvil, cuando aplica publicidad, utilizamos identificadores publicitarios equivalentes (IDFA o AAID). También pueden usarse tecnologías similares de almacenamiento local en el navegador (por ejemplo, <code>localStorage</code>).</p>
+            <p><strong>Última actualización:</strong> 16 de septiembre de 2026.</p>
+            <p>Las cookies son pequeños archivos de texto que los sitios web almacenan en su navegador para recordar información sobre su visita. También pueden usarse tecnologías similares de almacenamiento local en el navegador (por ejemplo, <code>localStorage</code>).</p>
             
             <h2>2. Tipos de Cookies que utilizamos</h2>
             <table>
@@ -562,13 +553,10 @@ window.TourAiEsESMessages = {
                 </tbody>
             </table>
             <p>Los ajustes de volumen o del último destino consultado en la <strong>app</strong> se guardan en el dispositivo como preferencias locales de la aplicación; <strong>no son cookies del sitio web</strong>.</p>
-            <p>La media de valoraciones mostrada en la web se obtiene de nuestros servidores; <strong>no</strong> implica cookies de publicidad ni de analítica de terceros.</p>
+            <p>La media de valoraciones mostrada en la web se obtiene de nuestros servidores; <strong>no</strong> implica cookies de analítica de terceros.</p>
 
-            <h2>3. Publicidad</h2>
-            <p><strong>tourai.es no usa publicidad ni cookies publicitarias en la web.</strong> En la app utilizamos <strong>Unity LevelPlay</strong> (plataforma de mediación de Unity Technologies) en la versión gratuita. LevelPlay puede conectar con redes publicitarias partner y usar identificadores publicitarios del dispositivo (AAID/IDFA) para mostrar anuncios basados en intereses, sujeto a tu consentimiento cuando la normativa lo exija. Los usuarios con un <strong>Plan Premium activo</strong> no verán publicidad en la app mientras el plan esté vigente.</p>
-
-            <h2>4. Cómo gestionar las Cookies</h2>
-            <p>Puede bloquearlas o eliminarlas en los ajustes de su navegador (Chrome, Safari, etc.) o resetear su ID publicitario en los ajustes de privacidad de su smartphone (iOS/Android). Para volver a ver el banner de cookies de tourai.es, borre los datos del sitio (incluida la clave <code>cookies-aceptadas</code>) en su navegador.</p>
+            <h2>3. Cómo gestionar las Cookies</h2>
+            <p>Puede bloquearlas o eliminarlas en los ajustes de su navegador (Chrome, Safari, etc.). Para volver a ver el banner de cookies de tourai.es, borre los datos del sitio (incluida la clave <code>cookies-aceptadas</code>) en su navegador.</p>
         </main>
 
         <aside class="sidebar">
@@ -625,9 +613,9 @@ window.TourAiEsESMessages = {
         </div>
 
         <div class="faq-item">
-            <div class="faq-question">¿Tourai.es utiliza cookies o publicidad?</div>
+            <div class="faq-question">¿Tourai.es utiliza cookies?</div>
             <div class="faq-answer">
-                <p>Usamos cookies técnicas necesarias para el sitio (por ejemplo idioma y preferencias). <strong>Esta web no muestra publicidad</strong>. En la app gratuita puede usarse Unity LevelPlay (mediación publicitaria). Consulta la <a href="cookies.html">política de cookies</a>.</p>
+                <p>Usamos cookies técnicas necesarias para el sitio (por ejemplo idioma y preferencias). Consulta la <a href="cookies.html">política de cookies</a>.</p>
             </div>
         </div>
 
@@ -646,9 +634,9 @@ window.TourAiEsESMessages = {
         </div>
 
         <div class="faq-item">
-            <div class="faq-question">¿TourAI será gratuito?</div>
+            <div class="faq-question">¿Cómo accedo a TourAI?</div>
             <div class="faq-answer">
-                <p>Sí, con un modelo <strong>freemium</strong> en la app: acceso gratuito con un cupo diario de uso (puede incluir publicidad mediante Unity LevelPlay). Habrá planes Premium temporales para más cupo y experiencia sin anuncios. Más detalles en la <a href="index.html">página principal</a> y en <a href="terms.html">términos de uso</a>.</p>
+                <p>Necesitas un <strong>plan activo</strong> para usar mapa, chat y audioguías. Puedes adquirir un plan temporal desde el panel de cuenta en tourai.es o canjear un bono promocional en la app. Más detalles en la <a href="index.html">página principal</a> y en los <a href="terms.html">términos de uso</a>.</p>
             </div>
         </div>`,
   "page.faq.modal.consent": `Acepto recibir la notificación de lanzamiento y la <span class="toggle-terms" onclick="toggleTerms()">política de privacidad</span>.`,
@@ -719,7 +707,7 @@ window.TourAiEsESMessages = {
             <img src="https://img.freepik.com/premium-photo/young-female-tourist-using-smartphone-platform-applications-helping-tourism-about-travel-map-gps_35674-17150.jpg?w=2000" alt="Turista usando la app en el móvil" class="app-img" loading="lazy" width="800" height="400">
         </section>
 
-        <p class="app-coming-note">La web es pública: cualquiera puede informarse. La zona de <a href="login.html" data-auth-account>Mi cuenta</a> requiere iniciar sesión con la misma cuenta de la app. Si ya tienes cuenta, también puedes <a href="dashboard.html#buy-plans-section" data-buy-premium="true">comprar planes Premium</a> desde el panel.</p>
+        <p class="app-coming-note">La web es pública: cualquiera puede informarse. La zona de <a href="login.html" data-auth-account>Mi cuenta</a> requiere iniciar sesión con la misma cuenta de la app. Si ya tienes cuenta, también puedes <a href="dashboard.html#buy-plans-section" data-buy-plans="true">adquirir un plan</a> desde el panel.</p>
 
         <h2>Funcionalidades de la app</h2>
         <div class="services-grid">
@@ -741,17 +729,17 @@ window.TourAiEsESMessages = {
             </div>
         </div>
 
-        <h2>Modelo Freemium y Premium</h2>
+        <h2>Planes y bonos</h2>
         <div class="services-grid">
             <div class="service-card">
-                <span class="price-tag">Freemium</span>
-                <h4>Acceso gratuito</h4>
-                <p>Usa la app con un cupo diario de uso. La versión gratuita puede incluir publicidad responsable (Unity LevelPlay).</p>
+                <span class="price-tag">Planes</span>
+                <h4>Planes temporales</h4>
+                <p>Adquiere planes de 1 día, fin de semana u otros periodos para usar mapa, chat y audioguías con cupo de uso incluido.</p>
             </div>
             <div class="service-card">
-                <span class="price-tag">Premium</span>
-                <h4>Planes temporales</h4>
-                <p>Contrata planes de 1 día, fin de semana u otros periodos para más cupo de uso y experiencia sin publicidad.</p>
+                <span class="price-tag">Bonos</span>
+                <h4>Bonos promocionales</h4>
+                <p>Canjea códigos o QR de campañas (bienvenida, cumpleaños u otras) para activar un plan gratuito.</p>
             </div>
             <div class="service-card">
                 <span class="price-tag">Idiomas</span>
@@ -761,7 +749,7 @@ window.TourAiEsESMessages = {
         </div>`,
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Compromiso de Privacidad</h2>
-            <p><strong>Última actualización:</strong> 15 de septiembre de 2026.</p>
+            <p><strong>Última actualización:</strong> 16 de septiembre de 2026.</p>
             <p>En <strong>TourAI</strong>, accesible desde <a href="https://tourai.es">tourai.es</a>, consideramos que la privacidad de nuestros usuarios es un pilar fundamental. Esta política detalla cómo gestionamos la información para garantizar que el uso de nuestras audioguías inteligentes y de los servicios asociados en la web (cuenta, comunidad y opiniones) sea seguro y transparente.</p>
 
             <h2>2. Responsable del tratamiento</h2>
@@ -786,37 +774,29 @@ window.TourAiEsESMessages = {
                 <li><strong>Mensajes al asistente (chat):</strong> El chat con inteligencia artificial es <strong>efímero</strong>: las consultas y respuestas se procesan para prestar el servicio <strong>mientras usas la aplicación</strong>, pero <strong>no guardamos un historial de conversación</strong> asociado a tu cuenta ni en la nube. Al <strong>cerrar la aplicación</strong>, la conversación <strong>desaparece</strong> del dispositivo. Durante la sesión, los mensajes pueden mantenerse en memoria del dispositivo y transmitirse a proveedores de IA necesarios para generar la respuesta.</li>
                 <li><strong>Seguridad de la cuenta y restablecimiento de contraseña:</strong> Si solicitas «¿Olvidaste tu contraseña?» desde la app o la web, enviamos un correo con un enlace seguro a <a href="reset-password.html">tourai.es/reset-password.html</a> para que definas una nueva contraseña. No enviamos tu contraseña actual por correo.</li>
                 <li><strong>Prevención de abuso en el registro:</strong> Conservamos un historial de altas y bajas asociadas a un mismo correo (ciclo de vida del email) para limitar re-registros abusivos (actualmente, como máximo <strong>3 registros en 180 días</strong>). Un administrador puede desbloquear el correo cuando proceda.</li>
-                <li><strong>Bonos y códigos promocionales:</strong> Registro del código canjeado, fecha de canje, plan asociado y referencia de la campaña promocional (por ejemplo WELCOME, BIRTHDATE), para gestionar el acceso Premium gratuito (incluido el bono de bienvenida automático en el primer acceso cuando proceda, bonos pre-asignados por email con prioridad sobre el bono WELCOME), evitar usos duplicados por usuario y prevenir fraude. Los bonos tienen un plazo máximo de activación de 30 días; los planes de compra, 60 días desde la adquisición. Si canjeas un bono escaneando un QR, la cámara se utiliza en el dispositivo para leer el código; <strong>no almacenamos imágenes del QR ni grabaciones de vídeo</strong>.</li>
-                <li><strong>Pagos Premium (app y web):</strong> Importe, moneda, método de pago, estado del pago (por ejemplo pagado, pendiente, cancelado, no completado o fallido), identificadores de la sesión o transacción en la pasarela (p. ej. Stripe) para conciliar el pago, fecha de creación del registro y vínculo con el plan contratado. TourAI <strong>no almacena números completos de tarjeta</strong>. Finalidad: gestión contractual del plan, prevención de fraude, atención de incidencias y cumplimiento de obligaciones contables cuando proceda. Base jurídica: ejecución del contrato e interés legítimo en la seguridad del servicio.</li>
-                <li><strong>Identificador de dispositivo y sesión:</strong> Utilizamos un identificador de tu dispositivo y una señal de presencia mientras usas la app para mantener <strong>una única sesión activa por cuenta</strong> y gestionar el cierre de la sesión anterior cuando inicias sesión desde un nuevo dispositivo. En la web puede persistir la sesión de autenticación en el navegador. No se emplea para elaborar perfiles publicitarios.</li>
+                <li><strong>Bonos y códigos promocionales:</strong> Registro del código canjeado, fecha de canje, plan asociado y referencia de la campaña promocional (por ejemplo WELCOME, BIRTHDATE), para gestionar la activación de un plan gratuito (incluido el bono de bienvenida automático en el primer acceso cuando proceda, bonos pre-asignados por email con prioridad sobre el bono WELCOME), evitar usos duplicados por usuario y prevenir fraude. Los bonos tienen un plazo máximo de activación de 30 días; los planes de compra, 60 días desde la adquisición. Si canjeas un bono escaneando un QR, la cámara se utiliza en el dispositivo para leer el código; <strong>no almacenamos imágenes del QR ni grabaciones de vídeo</strong>.</li>
+                <li><strong>Pagos de planes (app y web):</strong> Importe, moneda, método de pago, estado del pago (por ejemplo pagado, pendiente, cancelado, no completado o fallido), identificadores de la sesión o transacción en la pasarela (p. ej. Stripe) para conciliar el pago, fecha de creación del registro y vínculo con el plan contratado. TourAI <strong>no almacena números completos de tarjeta</strong>. Finalidad: gestión contractual del plan, prevención de fraude, atención de incidencias y cumplimiento de obligaciones contables cuando proceda. Base jurídica: ejecución del contrato e interés legítimo en la seguridad del servicio.</li>
+                <li><strong>Identificador de dispositivo y sesión:</strong> Utilizamos un identificador de tu dispositivo y una señal de presencia mientras usas la app para mantener <strong>una única sesión activa por cuenta</strong> y gestionar el cierre de la sesión anterior cuando inicias sesión desde un nuevo dispositivo. En la web puede persistir la sesión de autenticación en el navegador. No se emplea para elaborar perfiles comerciales de terceros.</li>
                 <li><strong>Comunidad (contenido generado por el usuario):</strong> Si publicas en <a href="community.html">Comunidad</a>, tratamos el título y el cuerpo del tema, las respuestas, tu identificador de cuenta, el nombre o alias mostrado, la fecha de publicación, el <strong>estado de moderación</strong> (pendiente, aprobado o rechazado) y metadatos técnicos asociados a la moderación. Pueden aplicarse filtros automatizados de términos no permitidos que <strong>impiden el envío</strong> antes de almacenar el contenido (ese intento no entra en la cola de moderación). Ese contenido, una vez aprobado y visible, es <strong>público</strong> (consultable sin iniciar sesión). Podemos ocultarlo (moderación o baja voluntaria del autor) sin borrarlo físicamente de inmediato, para preservar la integridad de los hilos y la seguridad del servicio. Asimismo, conservamos en tu cuenta <strong>contadores de aportaciones aprobadas y rechazadas</strong> y, cuando proceda, la marca de <strong>restricción de la facultad de publicar</strong> en la Comunidad, con la finalidad de aplicar la política de moderación descrita en los Términos.</li>
                 <li><strong>Aceptación de textos legales:</strong> Registramos si has aceptado los Términos y la Política de Privacidad, la fecha de aceptación y la <strong>versión de aceptación</strong> vigente en ese momento, a fin de acreditar el consentimiento contractual y solicitar una nueva aceptación expresa cuando dichos textos se actualicen.</li>
                 <li><strong>Opiniones y valoraciones:</strong> Valorar es <strong>voluntario</strong>: no estás obligado a enviar una opinión para usar TourAI. Si decides enviar una valoración en <a href="reviews.html">Opiniones</a>, tratamos las estrellas (necesarias para completar el envío), el comentario opcional, el destino valorado (web o app), tu identificador de cuenta, el nombre o alias mostrado y el estado de moderación. Las reseñas <strong>no se publican hasta que un moderador las aprueba</strong>. Una vez aprobadas, son públicas. Conservamos también estadísticas agregadas (suma y número de valoraciones) sin necesidad de identificar a cada autor en la media mostrada.</li>
                 <li><strong>Formularios de la web:</strong> Si nos escribes desde <a href="contact.html">Contacto</a>, tratamos el nombre (si lo facilitas), el correo, el mensaje y la verificación asociada, solo para atender esa consulta.</li>
                 <li><strong>Avisos de lanzamiento (lista de espera):</strong> Si te suscribes al aviso de disponibilidad en App Store o Google Play, tratamos tu correo electrónico, la plataforma elegida y los datos de verificación asociados, con la finalidad exclusiva de enviarte el aviso de publicación. Base jurídica: consentimiento. Puedes consultar o cancelar las alertas desde la web («Gestionar o cancelar alertas de lanzamiento»), tras <strong>acreditar la titularidad del correo</strong> mediante un código de verificación enviado a esa dirección o, si ya tienes sesión iniciada en tourai.es con el mismo correo, mediante esa sesión de autenticación. También puedes escribir a <a href="mailto:info@tourai.es">info@tourai.es</a>. El envío puede realizarse a través de proveedores de correo electrónico que actúan como encargados del tratamiento.</li>
-                <li><strong>Datos locales en el dispositivo:</strong> En el teléfono o el PC pueden guardarse preferencias locales (idioma, consentimiento de privacidad/publicidad de la app, consentimiento de cookies en la web), correos usados previamente para facilitar el inicio de sesión y, si lo activas, el uso de biometría para desbloquear una sesión ya iniciada. Al abrir la app por primera vez, el <strong>idioma de la interfaz</strong> se toma del idioma del dispositivo (puedes cambiarlo después en Preferencias). Para el asistente de voz, cuando actives el micrófono (o una función que lo requiera), la app puede, <strong>tras tu confirmación</strong>, <strong>descargar e instalar en el dispositivo</strong> un componente de reconocimiento de voz según el idioma de la aplicación en ese momento; ese reconocimiento se procesa preferentemente <strong>en el dispositivo</strong>. Si borras los datos de la aplicación en el sistema, ese componente se elimina y podrá volver a descargarse cuando vuelvas a activar el micrófono.</li>
-                <li><strong>Diagnóstico técnico:</strong> Si la app detecta un error grave, puede enviarse un informe técnico a nuestro equipo (dispositivo, sistema, pantalla y, si hay sesión, identificador o correo) para corregir fallos. No se utiliza para publicidad.</li>
+                <li><strong>Datos locales en el dispositivo:</strong> En el teléfono o el PC pueden guardarse preferencias locales (idioma, consentimiento de privacidad de la app, consentimiento de cookies en la web), correos usados previamente para facilitar el inicio de sesión y, si lo activas, el uso de biometría para desbloquear una sesión ya iniciada. Al abrir la app por primera vez, el <strong>idioma de la interfaz</strong> se toma del idioma del dispositivo (puedes cambiarlo después en Preferencias). Para el asistente de voz, cuando actives el micrófono (o una función que lo requiera), la app puede, <strong>tras tu confirmación</strong>, <strong>descargar e instalar en el dispositivo</strong> un componente de reconocimiento de voz según el idioma de la aplicación en ese momento; ese reconocimiento se procesa preferentemente <strong>en el dispositivo</strong>. Si borras los datos de la aplicación en el sistema, ese componente se elimina y podrá volver a descargarse cuando vuelvas a activar el micrófono.</li>
+                <li><strong>Diagnóstico técnico:</strong> Si la app detecta un error grave, puede enviarse un informe técnico a nuestro equipo (dispositivo, sistema, pantalla y, si hay sesión, identificador o correo) para corregir fallos. No se utiliza con fines comerciales de terceros.</li>
             </ul>
 
             <h2>3.1. Base legal del tratamiento (resumen)</h2>
             <p>En términos generales, tratamos tus datos sobre las siguientes bases, según el tipo de información:</p>
             <ul>
-                <li><strong>Ejecución del contrato / prestación del servicio:</strong> cuenta (app y web), planes, pagos Premium, canje de bonos, chat efímero con el asistente, registro de lugares presentados por el guía, preferencias, publicación de comunidad y envío de opiniones, y demás funcionalidades solicitadas.</li>
-                <li><strong>Consentimiento:</strong> geolocalización, micrófono, cámara o galería/biblioteca de fotos (foto de perfil o escaneo de QR de bonos), formularios de contacto o avisos, cookies no estrictamente necesarias cuando proceda, publicidad personalizada cuando la ley lo exija.</li>
+                <li><strong>Ejecución del contrato / prestación del servicio:</strong> cuenta (app y web), planes, pagos de planes, canje de bonos, chat efímero con el asistente, registro de lugares presentados por el guía, preferencias, publicación de comunidad y envío de opiniones, y demás funcionalidades solicitadas.</li>
+                <li><strong>Consentimiento:</strong> geolocalización, micrófono, cámara o galería/biblioteca de fotos (foto de perfil o escaneo de QR de bonos), formularios de contacto o avisos, cookies no estrictamente necesarias cuando proceda.</li>
                 <li><strong>Interés legítimo:</strong> seguridad, prevención de fraude en códigos promocionales y en re-registros abusivos, moderación de contenidos generados por usuarios (ocultación, rechazo, retirada y, en su caso, restricción de la facultad de publicar), estabilidad del servicio, integridad de hilos públicos y medias de valoración agregadas, acreditación de la versión de textos legales aceptada, e informes técnicos de error.</li>
                 <li><strong>Obligación legal:</strong> conservación de datos de facturación cuando corresponda; atención a requerimientos de autoridades o a obligaciones derivadas de la normativa de servicios digitales cuando resulten aplicables.</li>
             </ul>
             
-            <h2>4. Publicidad Responsable</h2>
-            <p>TourAI puede financiarse mediante publicidad de terceros <strong>en la aplicación móvil</strong> (mediación mediante Unity LevelPlay) para mantener el acceso Freemium:</p>
-            <ul>
-                <li><strong>Web (tourai.es):</strong> no usamos publicidad en la web.</li>
-                <li><strong>Unity LevelPlay (App):</strong> En la versión gratuita de la app empleamos la plataforma de mediación <strong>Unity LevelPlay</strong>, que puede utilizar identificadores publicitarios del dispositivo (IDFA/AAID) y conectar con redes partner. Los usuarios con Premium activo no ven publicidad mientras el plan esté vigente.</li>
-            </ul>
-            <p>Puedes gestionar o desactivar la personalización de anuncios de la app en los ajustes de tu dispositivo y consultar la <a href="https://unity.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">política de privacidad de Unity</a>.</p>
-
-            <h2>4.1. Proveedores y transferencias</h2>
-            <p>Para prestar el servicio utilizamos proveedores habituales (autenticación y almacenamiento en la nube —incluidos servicios de autenticación y base de datos—, correo transaccional, mapas, modelos de inteligencia artificial, síntesis de voz, tiendas de aplicaciones, pasarelas de pago y publicidad). Parte del tratamiento puede realizarse fuera del Espacio Económico Europeo. En esos casos aplicamos las garantías previstas en la normativa aplicable (por ejemplo, cláusulas contractuales tipo u otras medidas adecuadas). El detalle de categorías de encargados y transferencias puede ampliarse tras la revisión jurídica.</p>
+            <h2>4. Proveedores y transferencias</h2>
+            <p>Para prestar el servicio utilizamos proveedores habituales (autenticación y almacenamiento en la nube —incluidos servicios de autenticación y base de datos—, correo transaccional, mapas, modelos de inteligencia artificial, síntesis de voz, tiendas de aplicaciones y pasarelas de pago). Parte del tratamiento puede realizarse fuera del Espacio Económico Europeo. En esos casos aplicamos las garantías previstas en la normativa aplicable (por ejemplo, cláusulas contractuales tipo u otras medidas adecuadas). El detalle de categorías de encargados y transferencias puede ampliarse tras la revisión jurídica.</p>
             
             <h2 id="delete-account">5. Tus Derechos (RGPD)</h2>
             <p>De acuerdo con la normativa vigente, puedes ejercer los derechos de <strong>acceso</strong>, <strong>rectificación</strong>, <strong>supresión</strong>, <strong>limitación del tratamiento</strong>, <strong>portabilidad</strong> y <strong>oposición</strong>, así como retirar el consentimiento cuando el tratamiento se base en él, escribiendo a <a href="mailto:info@tourai.es">info@tourai.es</a>. También puedes presentar una reclamación ante la <strong>Agencia Española de Protección de Datos</strong> (<a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">www.aepd.es</a>).</p>
@@ -895,7 +875,7 @@ window.TourAiEsESMessages = {
             <p>Comprometidos con la protección de tu experiencia y tus datos personales.</p>`,
   "page.terms.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Aceptación de los Términos</h2>
-            <p><strong>Última actualización:</strong> 15 de septiembre de 2026.</p>
+            <p><strong>Última actualización:</strong> 16 de septiembre de 2026.</p>
             <p>Al acceder o utilizar el sitio web y la aplicación móvil de <strong>TourAI</strong>, usted acepta quedar vinculado por estos Términos y Condiciones. Si no está de acuerdo con alguna parte de estos términos, no podrá utilizar nuestros servicios ni nuestra web.</p>
             <p>El uso de la aplicación móvil implica, además, la aceptación de los <strong>términos completos embebidos en la app</strong> en el momento del registro (incluidas elegibilidad de edad, pagos y permisos). En caso de diferencia sobre el servicio móvil, prevalecen los términos de la app.</p>
             
@@ -905,12 +885,11 @@ window.TourAiEsESMessages = {
             <h2>2. Descripción del Servicio</h2>
             <p>TourAI proporciona un servicio de asistencia turística mediante audioguías inmersivas y geolocalizadas, y un portal web asociado. El servicio incluye:</p>
             <ul>
-                <li>Chat con IA, consultas por voz y narraciones de audio geolocalizadas (requieren conexión a internet).</li>
-                <li>Geolocalización para sugerencias de puntos de interés en tiempo real.</li>
-                <li>Mapa interactivo con rutas guiadas a pie (no es navegación turn-by-turn).</li>
+                <li>Chat con IA, consultas por voz, narraciones de audio geolocalizadas y mapa interactivo con rutas guiadas a pie (requieren conexión a internet y un <strong>plan activo</strong> en la app; no es navegación turn-by-turn).</li>
+                <li>Geolocalización para sugerencias de puntos de interés en tiempo real (con plan activo en la app).</li>
                 <li>Registro de lugares ya presentados por el guía turístico para no repetirlos, con posibilidad de borrar esa lista desde la app (detalle en la <a href="privacy.html">Política de Privacidad</a>).</li>
-                <li>Canje de <strong>bonos o códigos promocionales</strong> (introducción manual o escaneo de QR con la cámara del dispositivo en la app móvil) para obtener acceso Premium gratuito en campañas habilitadas.</li>
-                <li>Contratación de <strong>planes Premium de pago</strong> desde el panel de cuenta en tourai.es mediante Stripe, con historial de pagos y activación del plan tras el pago cumplido.</li>
+                <li>Canje de <strong>bonos o códigos promocionales</strong> (introducción manual o escaneo de QR con la cámara del dispositivo en la app móvil) para activar un plan gratuito en campañas habilitadas.</li>
+                <li>Contratación de <strong>planes de pago</strong> desde el panel de cuenta en tourai.es mediante Stripe, con historial de pagos y activación del plan tras el pago cumplido.</li>
                 <li>Cuenta en <a href="https://tourai.es">tourai.es</a> para acceso a la zona privada (perfil y panel), cuando esté habilitada.</li>
                 <li><a href="community.html">Comunidad</a>: foro público de temas y respuestas (novedades, ayuda, ideas y viajes).</li>
                 <li><a href="reviews.html">Opiniones</a>: valoraciones voluntarias con estrellas y comentario opcional sobre la web o la app, publicadas tras moderación.</li>
@@ -939,12 +918,12 @@ window.TourAiEsESMessages = {
             <h2>4. Propiedad Intelectual</h2>
             <p>Todo el contenido propio de TourAI — incluyendo textos de guías generados por IA, audios, logotipos, diseños, código fuente y catálogo compartido de puntos de interés — es propiedad exclusiva de TourAI o cuenta con las licencias correspondientes. Queda prohibida la reproducción o distribución sin autorización expresa. El contenido generado por usuarios se rige por la sección 3.1.</p>
 
-            <h2>5. Publicidad, Planes Premium y Bonos promocionales</h2>
-            <p>Para garantizar el acceso universal a la cultura, TourAI ofrece un modelo híbrido en la aplicación móvil (los detalles contractuales completos figuran en los términos embebidos en la app):</p>
+            <h2>5. Planes y bonos promocionales</h2>
+            <p>El acceso al mapa, al chat con inteligencia artificial, a las audioguías y a las funciones de recorrido en la aplicación móvil requiere un <strong>plan activo</strong> (los detalles contractuales completos figuran en los términos embebidos en la app):</p>
             <ul>
-                <li><strong>Acceso Gratuito (Freemium):</strong> Sostenido mediante publicidad de terceros en la app mediante <strong>Unity LevelPlay</strong> (mediación publicitaria de Unity Technologies). Puede incluir anuncios recompensados que amplían temporalmente el cupo de uso. La web tourai.es no usa publicidad.</li>
-                <li><strong>Planes Premium:</strong> Planes temporales de pago (por ejemplo, 1 día o fin de semana) con mayor cupo de uso del servicio y experiencia sin publicidad mientras el plan esté activo.</li>
-                <li><strong>Bonos promocionales:</strong> TourAI puede otorgar acceso Premium gratuito mediante códigos alfanuméricos o códigos QR distribuidos en campañas (campaña WELCOME al registrarse por primera vez, campaña BIRTHDATE por cumpleaños, bonos pre-asignados al correo del usuario u otros códigos de campaña). En particular:
+                <li><strong>Sin plan activo:</strong> acceso limitado a la cuenta, información general y creatividades propias de TourAI orientadas a la contratación o activación de un plan.</li>
+                <li><strong>Planes de pago:</strong> planes temporales (por ejemplo, 1 día o fin de semana) con cupo de uso del servicio mientras el plan esté activo.</li>
+                <li><strong>Bonos promocionales:</strong> TourAI puede otorgar un plan activo gratuito mediante códigos alfanuméricos o códigos QR distribuidos en campañas (campaña WELCOME al registrarse por primera vez, campaña BIRTHDATE por cumpleaños, bonos pre-asignados al correo del usuario u otros códigos de campaña). En particular:
                     <ul>
                         <li>Los bonos quedan <strong>asociados a la cuenta del usuario</strong>; no son transferibles, revendibles ni canjeables por dinero.</li>
                         <li>Si existe un <strong>bono pre-asignado al email</strong> del usuario (campaña distinta de WELCOME, por ejemplo BIRTHDATE u otra promoción activa), tiene <strong>prioridad</strong> sobre el bono de bienvenida. Si el usuario canjea otro bono promocional después del primer acceso, el bono WELCOME queda en pausa.</li>
@@ -961,8 +940,8 @@ window.TourAiEsESMessages = {
             </ul>
             <p>Queda prohibido el canje fraudulento o automatizado de códigos, la falsificación de códigos o QR, o el intento de superar los límites de uso por usuario o por código.</p>
 
-            <h2>5.3. Pagos Premium en la web (tourai.es)</h2>
-            <p>Los usuarios registrados pueden contratar planes Premium desde el <strong>panel de cuenta</strong> de tourai.es. El pago se procesa mediante <strong>Stripe</strong> (pasarela de terceros). TourAI no almacena números completos de tarjeta.</p>
+            <h2>5.3. Pagos de planes en la web (tourai.es)</h2>
+            <p>Los usuarios registrados pueden contratar planes desde el <strong>panel de cuenta</strong> de tourai.es. El pago se procesa mediante <strong>Stripe</strong> (pasarela de terceros). TourAI no almacena números completos de tarjeta.</p>
             <p>Antes de redirigirte a Stripe, TourAI crea un registro de plan y de pago en estado <strong>pendiente</strong>. Si completas el pago, el registro pasa a <strong>pagado</strong> y el plan aparecerá en «Tus planes» para activarlo conforme a las reglas del producto. Si cancelas el checkout en Stripe, no se realizará el cargo y el registro puede mostrarse como cancelado. Si abandonas el proceso, puede permanecer pendiente hasta que expire la sesión de pago.</p>
             <p>TourAI puede verificar el estado de la sesión ante Stripe (por ejemplo, al iniciar sesión o al abrir el panel) para actualizar los registros. El <strong>historial de pagos</strong> refleja todos los intentos registrados; los planes adquiridos solo listan los <strong>pagados o gratuitos por bono</strong>. Los detalles contractuales completos sobre desistimiento, reembolsos y tiendas de aplicación figuran en los <strong>términos embebidos en la app</strong> (sección 8), que complementan este apartado.</p>
 
@@ -970,7 +949,7 @@ window.TourAiEsESMessages = {
             <p>TourAI puede <strong>suspender o bloquear</strong> cuentas por fraude, abuso, incumplimiento de los Términos (incluido el mal uso de la Comunidad o de las Opiniones), o riesgo para la seguridad del servicio. Si tu cuenta queda bloqueada, no podrás iniciar sesión hasta que se revoque la suspensión. Podemos además ocultar o retirar tu contenido público. La <strong>restricción de la facultad de publicar en la Comunidad</strong> descrita en la sección 3.1 podrá aplicarse sin suspender el acceso al resto del servicio. Puedes contactar con <a href="mailto:info@tourai.es">info@tourai.es</a> para presentar una reclamación.</p>
 
             <h2>5.2. Sesión única por dispositivo</h2>
-            <p>Cada cuenta mantiene <strong>una única sesión activa</strong>, asociada al dispositivo desde el que has iniciado sesión. Si intentas acceder desde otro dispositivo, podrás elegir cerrar la sesión abierta para continuar; el dispositivo anterior se desconectará en cuanto detecte el cambio. Cerrar sesión de forma ordenada libera la sesión al instante; si la app se cierra de forma forzada o el dispositivo se apaga, la sesión se libera automáticamente tras un breve periodo de inactividad. No compartas tus credenciales: si otra persona quiere usar TourAI, recomendamos crear una cuenta Freemium gratuita independiente. Consulta el detalle completo en los términos de la aplicación móvil.</p>
+            <p>Cada cuenta mantiene <strong>una única sesión activa</strong>, asociada al dispositivo desde el que has iniciado sesión. Si intentas acceder desde otro dispositivo, podrás elegir cerrar la sesión abierta para continuar; el dispositivo anterior se desconectará en cuanto detecte el cambio. Cerrar sesión de forma ordenada libera la sesión al instante; si la app se cierra de forma forzada o el dispositivo se apaga, la sesión se libera automáticamente tras un breve periodo de inactividad. No compartas tus credenciales: si otra persona quiere usar TourAI, recomendamos crear una cuenta independiente. Consulta el detalle completo en los términos de la aplicación móvil.</p>
 
             <h2>6. Permisos del dispositivo (app móvil)</h2>
             <p>La aplicación puede solicitar permisos de ubicación, micrófono, cámara, galería o biblioteca de fotos (foto de perfil) y biometría opcional. La denegación puede limitar funcionalidades. Consulte los términos completos de la app para el detalle.</p>
@@ -1095,16 +1074,12 @@ window.TourAiEsESMessages = {
   "reviews.title": "Opiniones",
   "reviews.widget.aria": "Valoración media {avg} de 5 ({n} reseñas)",
   "reviews.widget.ariaEmpty": "Ver opiniones de TourAI",
-  "site.freemiumPromo.body": "Hazte con un plan Premium y disfruta de tus vacaciones sin interrupciones.",
-  "site.freemiumPromo.cta": "Ver planes Premium",
-  "site.freemiumPromo.modalLead": "En Freemium la app usa anuncios para recargar el cupo. Un plan Premium lo evita.",
-  "site.freemiumPromo.railLabel": "Premium",
   "site.promo.dismiss": "Ahora no",
-  "site.promo.freemium.body": "Hazte con un plan Premium y disfruta de tus vacaciones sin interrupciones.",
-  "site.promo.freemium.cta": "Ver planes Premium",
-  "site.promo.freemium.modalLead": "En Freemium la app usa anuncios para recargar el cupo. Un plan Premium lo evita.",
-  "site.promo.freemium.railLabel": "Premium",
-  "site.promo.freemium.title": "¿Quieres TourAI sin anuncios?",
+  "site.promo.noPlan.body": "Activa un plan para usar el mapa, el chat y las audioguías sin interrupciones.",
+  "site.promo.noPlan.cta": "Ver planes",
+  "site.promo.noPlan.modalLead": "Sin un plan activo el acceso al recorrido es limitado. Adquiere un plan o canjea un bono.",
+  "site.promo.noPlan.railLabel": "Planes",
+  "site.promo.noPlan.title": "¿Quieres usar TourAI en tu viaje?",
   "site.promo.guest.body": "Descubre lugares con tu guía IA. Instala la app y empieza a explorar.",
   "site.promo.guest.cta": "Avísame del lanzamiento",
   "site.promo.guest.modalLead": "TourAI está pensada para usarla en la calle: mapa, chat y narraciones en tu móvil.",
