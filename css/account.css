@@ -514,6 +514,52 @@
   color: #333333;
 }
 
+.plan-buy-catalog {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.plan-type-accordions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.plan-type-accordion {
+  border: 1px solid #d7e6f2;
+  border-radius: 12px;
+  background: #f7fbff;
+}
+
+.plan-type-accordion .account-accordion__toggle {
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.plan-type-accordion__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.plan-type-accordion__subtitle {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #555;
+  line-height: 1.45;
+}
+
+.plan-type-accordion .account-accordion__panel {
+  padding: 0 12px 12px;
+}
+
+.plan-type-accordion .plan-buy-list {
+  padding-top: 8px;
+}
+
 .plan-buy-list {
   display: flex;
   flex-direction: column;

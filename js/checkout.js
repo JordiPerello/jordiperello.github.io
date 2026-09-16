@@ -26,6 +26,66 @@
     return String(global.TourAiSite?.config?.createCheckoutSessionWebUrl || "").trim();
   }
 
+  var PLAN_CATALOG_TYPE_ORDER = {
+    TourGuide: 0,
+    TourGuideChatAI: 1,
+    AudioGuide: 2,
+    AudioGuideChatAI: 3,
+    ChatAI: 4,
+  };
+
+  function getTypeSortOrder(type) {
+    var key = String(type || "").trim();
+    if (Object.prototype.hasOwnProperty.call(PLAN_CATALOG_TYPE_ORDER, key)) {
+      return PLAN_CATALOG_TYPE_ORDER[key];
+    }
+    return 100;
+  }
+
+  function getTypeTitle(type) {
+    var key = String(type || "").trim();
+    var i18nKey = "account.buy.catalogType." + key;
+    var label = t(i18nKey);
+    return label === i18nKey ? key : label;
+  }
+
+  function getTypeSubtitle(type) {
+    var key = String(type || "").trim();
+    var i18nKey = "account.buy.catalogTypeSubtitle." + key;
+    var label = t(i18nKey);
+    return label === i18nKey ? "" : label;
+  }
+
+  function groupPlansByType(plans) {
+    var map = {};
+    plans.forEach(function (plan) {
+      var type = String(plan.Type || "").trim();
+      if (!map[type]) {
+        map[type] = [];
+      }
+      map[type].push(plan);
+    });
+    return Object.keys(map)
+      .sort(function (left, right) {
+        var orderCompare = getTypeSortOrder(left) - getTypeSortOrder(right);
+        if (orderCompare !== 0) {
+          return orderCompare;
+        }
+        return left.localeCompare(right);
+      })
+      .map(function (type) {
+        return {
+          type: type,
+          plans: map[type].slice().sort(function (left, right) {
+            return (
+              left.PriceCents - right.PriceCents ||
+              left.DurationDays - right.DurationDays
+            );
+          }),
+        };
+      });
+  }
+
   function formatPrice(priceCents, currency) {
     var cents = Number(priceCents) || 0;
     var code = String(currency || "eur").toUpperCase();
@@ -57,16 +117,111 @@
         Id: id,
         Name: data.Name || id,
         Description: data.Description || "",
+        Type: String(data.Type || "").trim(),
         PriceCents: priceCents,
         Currency: data.Currency || "eur",
         DurationDays: Number(data.DurationDays) || 0,
         TokensIncluded: Number(data.TokensIncluded) || 0,
       });
     });
-    plans.sort(function (a, b) {
-      return a.PriceCents - b.PriceCents || a.DurationDays - b.DurationDays;
-    });
     return plans;
+  }
+
+  function renderPlanBuyCard(plan, options) {
+    var duration =
+      plan.DurationDays > 0
+        ? t("account.buy.durationDays", { n: String(plan.DurationDays) })
+        : "";
+    var tokens =
+      plan.TokensIncluded > 0
+        ? t("account.buy.tokens", { n: String(plan.TokensIncluded) })
+        : "";
+    var meta = [duration, tokens].filter(Boolean).join(" · ");
+    var busyId = options.busyPlanId || "";
+    var isBusy = busyId && busyId === plan.Id;
+    return (
+      '<article class="plan-buy-card" data-plan-id="' +
+      escapeHtml(plan.Id) +
+      '">' +
+      '<div class="plan-buy-card__copy">' +
+      '<h3 class="plan-buy-card__title">' +
+      escapeHtml(plan.Name) +
+      "</h3>" +
+      (plan.Description
+        ? '<p class="plan-buy-card__body">' + escapeHtml(plan.Description) + "</p>"
+        : "") +
+      (meta ? '<p class="plan-buy-card__meta">' + escapeHtml(meta) + "</p>" : "") +
+      '<p class="plan-buy-card__price">' +
+      escapeHtml(formatPrice(plan.PriceCents, plan.Currency)) +
+      "</p>" +
+      "</div>" +
+      '<p class="plan-buy-card__actions">' +
+      '<button type="button" class="btn-primary" data-buy-plan="' +
+      escapeHtml(plan.Id) +
+      '"' +
+      (isBusy || options.disabled ? " disabled" : "") +
+      (isBusy ? ' aria-busy="true"' : "") +
+      ">" +
+      escapeHtml(t("account.buy.cta")) +
+      "</button>" +
+      "</p>" +
+      "</article>"
+    );
+  }
+
+  function togglePlanTypeAccordion(section, forceOpen) {
+    var toggle = section.querySelector(".account-accordion__toggle");
+    var panel = section.querySelector(".account-accordion__panel");
+    if (!toggle || !panel) {
+      return false;
+    }
+
+    var willOpen =
+      forceOpen === true
+        ? true
+        : forceOpen === false
+          ? false
+          : !section.classList.contains("is-open");
+    section.classList.toggle("is-open", willOpen);
+    toggle.setAttribute("aria-expanded", willOpen ? "true" : "false");
+    if (willOpen) {
+      panel.removeAttribute("hidden");
+    } else {
+      panel.hidden = true;
+    }
+    return willOpen;
+  }
+
+  function collapseSiblingPlanTypeAccordions(openedSection) {
+    var host = openedSection.closest(".plan-type-accordions");
+    if (!host) {
+      return;
+    }
+    host.querySelectorAll(".plan-type-accordion.is-open").forEach(function (section) {
+      if (section !== openedSection) {
+        togglePlanTypeAccordion(section, false);
+      }
+    });
+  }
+
+  function wirePlanTypeAccordions(root) {
+    if (!root) {
+      return;
+    }
+    root.querySelectorAll(".plan-type-accordion").forEach(function (section) {
+      var toggle = section.querySelector(".account-accordion__toggle");
+      if (!toggle || toggle.dataset.planTypeAccordionWired === "true") {
+        return;
+      }
+      toggle.dataset.planTypeAccordionWired = "true";
+      toggle.addEventListener("click", function () {
+        var wasOpen = section.classList.contains("is-open");
+        if (!wasOpen) {
+          collapseSiblingPlanTypeAccordions(section);
+        }
+        togglePlanTypeAccordion(section);
+      });
+    });
   }
 
   function renderCatalogHtml(plans, options) {
@@ -77,57 +232,48 @@
       );
     }
 
-    var busyId = options.busyPlanId || "";
-    var cards = plans
-      .map(function (plan) {
-        var duration =
-          plan.DurationDays > 0
-            ? t("account.buy.durationDays", { n: String(plan.DurationDays) })
-            : "";
-        var tokens =
-          plan.TokensIncluded > 0
-            ? t("account.buy.tokens", { n: String(plan.TokensIncluded) })
-            : "";
-        var meta = [duration, tokens].filter(Boolean).join(" · ");
-        var isBusy = busyId && busyId === plan.Id;
+    var groups = groupPlansByType(plans);
+    var sections = groups
+      .map(function (group) {
+        var title = getTypeTitle(group.type);
+        var subtitle = getTypeSubtitle(group.type);
+        var cards = group.plans
+          .map(function (plan) {
+            return renderPlanBuyCard(plan, options);
+          })
+          .join("");
         return (
-          '<article class="plan-buy-card" data-plan-id="' +
-          escapeHtml(plan.Id) +
+          '<section class="plan-type-accordion account-accordion" data-plan-type="' +
+          escapeHtml(group.type) +
           '">' +
-          '<div class="plan-buy-card__copy">' +
-          '<h3 class="plan-buy-card__title">' +
-          escapeHtml(plan.Name) +
-          "</h3>" +
-          (plan.Description
-            ? '<p class="plan-buy-card__body">' +
-              escapeHtml(plan.Description) +
-              "</p>"
+          '<button type="button" class="account-accordion__toggle plan-type-accordion__toggle" aria-expanded="false">' +
+          '<span class="plan-type-accordion__heading">' +
+          '<span class="plan-type-accordion__title">' +
+          escapeHtml(title) +
+          "</span>" +
+          (subtitle
+            ? '<span class="plan-type-accordion__subtitle">' +
+              escapeHtml(subtitle) +
+              "</span>"
             : "") +
-          (meta
-            ? '<p class="plan-buy-card__meta">' + escapeHtml(meta) + "</p>"
-            : "") +
-          '<p class="plan-buy-card__price">' +
-          escapeHtml(formatPrice(plan.PriceCents, plan.Currency)) +
-          "</p>" +
-          "</div>" +
-          '<p class="plan-buy-card__actions">' +
-          '<button type="button" class="btn-primary" data-buy-plan="' +
-          escapeHtml(plan.Id) +
-          '"' +
-          (isBusy || options.disabled ? " disabled" : "") +
-          (isBusy ? ' aria-busy="true"' : "") +
-          ">" +
-          escapeHtml(t("account.buy.cta")) +
+          "</span>" +
+          '<span class="account-accordion__chevron" aria-hidden="true"></span>' +
           "</button>" +
-          "</p>" +
-          "</article>"
+          '<div class="account-accordion__panel" hidden>' +
+          '<div class="plan-buy-list">' +
+          cards +
+          "</div>" +
+          "</div>" +
+          "</section>"
         );
       })
       .join("");
 
     return (
-      '<div class="plan-buy-list" id="buy-plans-list">' +
-      cards +
+      '<div class="plan-buy-catalog" id="buy-plans-list">' +
+      '<div class="plan-type-accordions">' +
+      sections +
+      "</div>" +
       '<p class="account-note">' +
       escapeHtml(t("account.buy.note")) +
       "</p></div>"
@@ -262,6 +408,7 @@
   global.TourAiCheckout = {
     fetchActiveCatalogPlans: fetchActiveCatalogPlans,
     renderCatalogHtml: renderCatalogHtml,
+    wirePlanTypeAccordions: wirePlanTypeAccordions,
     startCheckout: startCheckout,
     mapCheckoutError: mapCheckoutError,
     consumeCheckoutQuery: consumeCheckoutQuery,

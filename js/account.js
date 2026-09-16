@@ -2588,6 +2588,10 @@
         disabled: !!buyState.busyPlanId,
       })
     );
+    const body = section.querySelector("[data-section-body]");
+    checkout.wirePlanTypeAccordions(
+      body?.querySelector?.("#buy-plans-list") || body
+    );
   }
 
   async function loadBuyPlansSection(section) {
