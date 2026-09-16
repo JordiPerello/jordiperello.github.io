@@ -63,8 +63,6 @@ If sign-in fails on localhost, add `localhost` / `127.0.0.1` under Firebase Auth
 
 ## Notes
 
-- The website does **not** show advertising (Unity LevelPlay is app-only).
-- App upsell ads (no active plan) use Unity LevelPlay mediation in the mobile app only.
 - Front-end JS is intentionally few modules: `site-ui.js`, `site-promo.js`, `auth.js`, `forms.js`, `account.js`, `community.js` (+ config / i18n).
 
 ---

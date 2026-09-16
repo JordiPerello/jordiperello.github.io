@@ -279,7 +279,7 @@ window.TourAiEnGBMessages = {
   "contact.name": "Full Name",
   "contact.name.placeholder": "E.g. John Smith",
   "contact.privacy": "I have read and accept the Data Protection Information.",
-  "contact.privacy.note": "We will use your email only to answer this enquiry. No advertising or spam.",
+  "contact.privacy.note": "We will use your email only to answer this enquiry.",
   "contact.subject": "Subject",
   "contact.subject.placeholder": "E.g. App issue, business enquiry...",
   "contact.submit": "SEND ENQUIRY TO TECHNICAL TEAM",
@@ -314,7 +314,7 @@ window.TourAiEnGBMessages = {
   "cookie.dismiss": "Got it",
   "cookie.more": "More info",
   "cookie.reject": "Reject",
-  "cookie.text": "We use necessary technical local storage (language, session and preferences). This website does not use advertising or third-party analytics.",
+  "cookie.text": "We use technical cookies for the site to work (language, session and preferences).",
   "dashboard.section.collapsed": "Expand to load this information.",
   "dashboard.section.loading": "Loading...",
   "dashboard.section.unknown": "Section unavailable.",
@@ -535,7 +535,7 @@ window.TourAiEnGBMessages = {
   "page.contact.privacyModal": `<h3>Data Protection</h3>
             <ul>
                 <li><strong>Controller:</strong> Jordi Perelló (TourAI project / TourAI App).</li>
-                <li><strong>Purpose:</strong> Handling and responding to the enquiry submitted. The data will not be used for advertising purposes.</li>
+                <li><strong>Purpose:</strong> Handling and responding to the enquiry submitted.</li>
                 <li><strong>Legal basis:</strong> Consent by ticking the box.</li>
                 <li><strong>Recipients:</strong> Data will not be disclosed to third parties for their own commercial purposes. Providers that supply hosting, authentication, database or email-sending services may access the data, acting as processors under TourAI's instructions.</li>
                 <li><strong>Rights:</strong> Access, rectification, erasure, restriction, portability and objection by writing to <a href="mailto:info@tourai.es">info@tourai.es</a>. <strong>Account deletion</strong> is automatic from the app or the <a href="delete-account.html">Delete account</a> page.</li>
@@ -598,7 +598,7 @@ window.TourAiEnGBMessages = {
         <div class="faq-item">
             <div class="faq-question">How do launch alerts work?</div>
             <div class="faq-answer">
-                <p>Choose your platform (iOS or Android), enter your email, verify your identity and agree to receive only the availability notice. <strong>We do not sell or share your email for third-party advertising</strong>; to send the notice we may use email providers that process the data on behalf of TourAI, in accordance with our <a href="privacy.html">privacy policy</a>.</p>
+                <p>Choose your platform (iOS or Android), enter your email, verify your identity and agree to receive the availability notice. TourAI will use your email only for that notice, in accordance with our <a href="privacy.html">privacy policy</a>.</p>
             </div>
         </div>
 
@@ -645,7 +645,7 @@ window.TourAiEnGBMessages = {
         </div>`,
   "page.faq.modal.consent": `I agree to receive the launch notification and the <span class="toggle-terms" onclick="toggleTerms()">privacy policy</span>.`,
   "page.faq.modal.privacyTerms": `<strong>Basic information on data protection:</strong><br>
-                        TourAI will use your email exclusively to send you the availability notice for the application on the selected platform. We will not sell or share your data for third-party advertising; sending may be carried out through email providers acting as processors. You may request cancellation at any time by writing to info@tourai.es. By ticking the box, you confirm that you are over 16 years of age.`,
+                        TourAI will use your email only to send you the availability notice on the selected platform. You may unsubscribe at any time by writing to info@tourai.es. By ticking the box, you confirm that you are over 16 years of age.`,
   "page.guides.content": `<main class="container">
             <h2 style="margin-top: 0;">Explore the world at your own pace</h2>
             <p><strong>TourAI</strong> audio guides remove the need for rigid groups and strict timetables. Discover the history of the world's most fascinating cities with professional, immersive narration.</p>
@@ -925,8 +925,9 @@ window.TourAiEnGBMessages = {
             <h2>5. Plans and promotional bonuses</h2>
             <p>Access to the map, artificial intelligence chat, audio guides and tour features in the mobile application requires an <strong>active plan</strong> (full contractual details appear in the terms embedded in the app):</p>
             <ul>
-                <li><strong>Without an active plan:</strong> limited access to the account, general information and TourAI creatives aimed at purchasing or activating a plan.</li>
-                <li><strong>Paid plans:</strong> temporary paid plans (for example, 1 day or weekend) with a service usage allowance while the plan is active.</li>
+                <li><strong>Active plan:</strong> map, chat, audio guides and guided tour with usage allowance while the plan is valid.</li>
+                <li><strong>Promotional ads (app):</strong> TourAI messages (text and audio) shown only to accounts without an active plan, aimed at purchasing or activating a plan.</li>
+                <li><strong>Paid plans:</strong> temporary plans (for example, 1 day or weekend) that activate usage allowance.</li>
                 <li><strong>Promotional bonuses:</strong> TourAI may grant a free active plan through alphanumeric codes or QR codes distributed in campaigns (WELCOME campaign on first registration, BIRTHDATE campaign for birthdays, bonuses pre-assigned to the user's email or other campaign codes). In particular:
                     <ul>
                         <li>Bonuses are <strong>associated with the user's account</strong>; they are not transferable, resaleable or redeemable for money.</li>
@@ -1079,11 +1080,11 @@ window.TourAiEnGBMessages = {
   "reviews.widget.aria": "Average rating {avg} out of 5 ({n} reviews)",
   "reviews.widget.ariaEmpty": "See TourAI reviews",
   "site.promo.dismiss": "Not now",
-  "site.promo.noPlan.body": "Get a plan to use the map, chat and audio guides without interruptions.",
+  "site.promo.noPlan.body": "Get a plan and use the map, chat and audio guides without limits.",
   "site.promo.noPlan.cta": "See plans",
-  "site.promo.noPlan.modalLead": "Without an active plan, tour access is limited. Get a plan or redeem a bonus.",
+  "site.promo.noPlan.modalLead": "Get a plan or redeem a bonus to use the map, chat and audio guides.",
   "site.promo.noPlan.railLabel": "Plans",
-  "site.promo.noPlan.title": "Want to use TourAI on your trip?",
+  "site.promo.noPlan.title": "Want TourAI without limits?",
   "site.promo.guest.body": "Discover places with your AI guide. Install the app and start exploring.",
   "site.promo.guest.cta": "Notify me at launch",
   "site.promo.guest.modalLead": "TourAI is built for the street: map, chat and narrations on your phone.",

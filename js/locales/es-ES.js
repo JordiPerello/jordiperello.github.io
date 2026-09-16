@@ -159,7 +159,7 @@ window.TourAiEsESMessages = {
   "community.blocked.banner": "Usuario bloqueado: puedes leer la comunidad, pero no publicar mensajes.",
   "community.blurb.help": "Resuelve dudas y echa una mano a quien empieza con TourAI.",
   "community.blurb.ideas": "Comparte propuestas para mejorar el producto.",
-  "community.blurb.news": "Novedades y anuncios de TourAI.",
+  "community.blurb.news": "Novedades de TourAI.",
   "community.blurb.travel": "Consejos y experiencias de viaje.",
   "community.cat.help": "Ayuda",
   "community.cat.ideas": "Ideas",
@@ -279,7 +279,7 @@ window.TourAiEsESMessages = {
   "contact.name": "Nombre Completo",
   "contact.name.placeholder": "Ej: Juan Pérez",
   "contact.privacy": "He leído y acepto la Información de Protección de Datos.",
-  "contact.privacy.note": "Usaremos su email exclusivamente para responder esta duda. No recibirá publicidad ni spam.",
+  "contact.privacy.note": "Usaremos su email solo para responder esta consulta.",
   "contact.subject": "Asunto de la consulta",
   "contact.subject.placeholder": "Ej: Error en la app, Información comercial...",
   "contact.submit": "ENVIAR CONSULTA AL EQUIPO TÉCNICO",
@@ -314,7 +314,7 @@ window.TourAiEsESMessages = {
   "cookie.dismiss": "Entendido",
   "cookie.more": "Más info",
   "cookie.reject": "Rechazar",
-  "cookie.text": "Utilizamos cookies técnicas necesarias para el sitio (idioma y preferencias). Esta web no muestra publicidad.",
+  "cookie.text": "Utilizamos cookies técnicas para el funcionamiento del sitio (idioma, sesión y preferencias).",
   "dashboard.section.collapsed": "Expande para cargar esta información.",
   "dashboard.section.loading": "Cargando…",
   "dashboard.section.unknown": "Sección no disponible.",
@@ -531,7 +531,7 @@ window.TourAiEsESMessages = {
   "page.contact.privacyModal": `<h3>Protección de Datos</h3>
             <ul>
                 <li><strong>Responsable:</strong> Jordi Perelló (proyecto TourAI / TourAI App).</li>
-                <li><strong>Finalidad:</strong> Gestión y respuesta de la consulta enviada. No se usarán los datos para fines publicitarios.</li>
+                <li><strong>Finalidad:</strong> Gestión y respuesta de la consulta enviada.</li>
                 <li><strong>Legitimación:</strong> Consentimiento al marcar la casilla.</li>
                 <li><strong>Destinatarios:</strong> No se cederán datos a terceros para fines comerciales propios. Podrán acceder a los datos proveedores que prestan servicios de alojamiento, autenticación, base de datos o envío de correo electrónico, actuando como encargados del tratamiento bajo instrucciones de TourAI.</li>
                 <li><strong>Derechos:</strong> Acceso, rectificación, supresión, limitación, portabilidad y oposición escribiendo a <a href="mailto:info@tourai.es">info@tourai.es</a>. La <strong>eliminación de cuenta</strong> es automática desde la app o la página <a href="delete-account.html">Eliminar cuenta</a>.</li>
@@ -594,7 +594,7 @@ window.TourAiEsESMessages = {
         <div class="faq-item">
             <div class="faq-question">¿Cómo funcionan las alertas de lanzamiento?</div>
             <div class="faq-answer">
-                <p>Elige tu plataforma (iOS o Android), introduce tu correo, verifica tu identidad y acepta recibir únicamente el aviso de disponibilidad. <strong>No vendemos ni cedemos tu correo para publicidad de terceros</strong>; para enviar el aviso podemos utilizar proveedores de correo que tratan el dato por cuenta de TourAI, conforme a nuestra <a href="privacy.html">política de privacidad</a>.</p>
+                <p>Elige tu plataforma (iOS o Android), introduce tu correo, verifica tu identidad y acepta recibir el aviso de disponibilidad. TourAI usará tu correo solo para ese aviso, conforme a nuestra <a href="privacy.html">política de privacidad</a>.</p>
             </div>
         </div>
 
@@ -641,7 +641,7 @@ window.TourAiEsESMessages = {
         </div>`,
   "page.faq.modal.consent": `Acepto recibir la notificación de lanzamiento y la <span class="toggle-terms" onclick="toggleTerms()">política de privacidad</span>.`,
   "page.faq.modal.privacyTerms": `<strong>Información básica sobre protección de datos:</strong><br>
-                        TourAI utilizará su correo exclusivamente para enviarle el aviso de disponibilidad de la aplicación en la plataforma seleccionada. No venderemos ni cederemos sus datos para publicidad de terceros; el envío puede realizarse a través de proveedores de correo que actúan como encargados del tratamiento. Puede solicitar la baja en cualquier momento escribiendo a info@tourai.es. Al marcar la casilla, confirma que es mayor de 16 años.`,
+                        TourAI utilizará su correo solo para enviarle el aviso de disponibilidad en la plataforma seleccionada. Puede darse de baja en cualquier momento escribiendo a info@tourai.es. Al marcar la casilla, confirma que es mayor de 16 años.`,
   "page.guides.content": `<main class="container">
             <h2 style="margin-top: 0;">Explore the world at your own pace</h2>
             <p><strong>TourAI</strong> audio guides remove the need for rigid groups and strict timetables. Discover the history of the world's most fascinating cities with professional, immersive narration.</p>
@@ -921,8 +921,9 @@ window.TourAiEsESMessages = {
             <h2>5. Planes y bonos promocionales</h2>
             <p>El acceso al mapa, al chat con inteligencia artificial, a las audioguías y a las funciones de recorrido en la aplicación móvil requiere un <strong>plan activo</strong> (los detalles contractuales completos figuran en los términos embebidos en la app):</p>
             <ul>
-                <li><strong>Sin plan activo:</strong> acceso limitado a la cuenta, información general y creatividades propias de TourAI orientadas a la contratación o activación de un plan.</li>
-                <li><strong>Planes de pago:</strong> planes temporales (por ejemplo, 1 día o fin de semana) con cupo de uso del servicio mientras el plan esté activo.</li>
+                <li><strong>Plan activo:</strong> mapa, chat, audioguías y recorrido guiado con cupo de uso mientras el plan esté vigente.</li>
+                <li><strong>Anuncios promocionales (app):</strong> mensajes propios de TourAI (texto y audio) que solo se muestran a cuentas sin plan activo, orientados a contratar o activar un plan.</li>
+                <li><strong>Planes de pago:</strong> planes temporales (por ejemplo, 1 día o fin de semana) que activan cupo de uso.</li>
                 <li><strong>Bonos promocionales:</strong> TourAI puede otorgar un plan activo gratuito mediante códigos alfanuméricos o códigos QR distribuidos en campañas (campaña WELCOME al registrarse por primera vez, campaña BIRTHDATE por cumpleaños, bonos pre-asignados al correo del usuario u otros códigos de campaña). En particular:
                     <ul>
                         <li>Los bonos quedan <strong>asociados a la cuenta del usuario</strong>; no son transferibles, revendibles ni canjeables por dinero.</li>
@@ -1075,11 +1076,11 @@ window.TourAiEsESMessages = {
   "reviews.widget.aria": "Valoración media {avg} de 5 ({n} reseñas)",
   "reviews.widget.ariaEmpty": "Ver opiniones de TourAI",
   "site.promo.dismiss": "Ahora no",
-  "site.promo.noPlan.body": "Activa un plan para usar el mapa, el chat y las audioguías sin interrupciones.",
+  "site.promo.noPlan.body": "Activa un plan y usa el mapa, el chat y las audioguías sin límites.",
   "site.promo.noPlan.cta": "Ver planes",
-  "site.promo.noPlan.modalLead": "Sin un plan activo el acceso al recorrido es limitado. Adquiere un plan o canjea un bono.",
+  "site.promo.noPlan.modalLead": "Contrata un plan o canjea un bono para usar el mapa, el chat y las audioguías.",
   "site.promo.noPlan.railLabel": "Planes",
-  "site.promo.noPlan.title": "¿Quieres usar TourAI en tu viaje?",
+  "site.promo.noPlan.title": "¿Quieres TourAI sin límites?",
   "site.promo.guest.body": "Descubre lugares con tu guía IA. Instala la app y empieza a explorar.",
   "site.promo.guest.cta": "Avísame del lanzamiento",
   "site.promo.guest.modalLead": "TourAI está pensada para usarla en la calle: mapa, chat y narraciones en tu móvil.",

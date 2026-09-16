@@ -41,7 +41,7 @@
     return (
       '<div class="site-cookie-banner__inner">' +
       '<p class="site-cookie-banner__text">' +
-      '<span data-i18n="cookie.text">Usamos almacenamiento local técnico necesario (idioma, sesión y preferencias). Esta web no usa publicidad ni analítica de terceros.</span> ' +
+      '<span data-i18n="cookie.text">Utilizamos cookies técnicas para el funcionamiento del sitio (idioma, sesión y preferencias).</span> ' +
       '<a href="cookies.html" data-i18n="cookie.more">Más info</a>.' +
       "</p>" +
       '<div class="site-cookie-banner__actions">' +
