@@ -605,8 +605,6 @@
         return "Google Play";
       case "Apple":
         return "App Store";
-      case "Windows":
-        return "Microsoft Store";
       case "Promo":
         return t("account.payment.method.promo");
       default:
