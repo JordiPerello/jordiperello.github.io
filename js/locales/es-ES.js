@@ -324,7 +324,7 @@ window.TourAiEsESMessages = {
   "cookie.dismiss": "Entendido",
   "cookie.more": "Más info",
   "cookie.reject": "Rechazar",
-  "cookie.text": "Utilizamos cookies técnicas para el funcionamiento del sitio (idioma, sesión y preferencias).",
+  "cookie.text": "Utilizamos cookies técnicas para el funcionamiento del sitio y, si lo aceptas, cookies de analítica (Google Analytics) para medir visitas.",
   "dashboard.section.collapsed": "Expande para cargar esta información.",
   "dashboard.section.loading": "Cargando…",
   "dashboard.section.unknown": "Sección no disponible.",
@@ -549,7 +549,7 @@ window.TourAiEsESMessages = {
             <p style="font-size: 0.8em; color: #888; margin-top: 20px;">Para más detalles, consulte nuestra Política de Privacidad completa.</p>`,
   "page.cookies.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. ¿Qué son las Cookies?</h2>
-            <p><strong>Última actualización:</strong> 16 de septiembre de 2026.</p>
+            <p><strong>Última actualización:</strong> 24 de septiembre de 2026.</p>
             <p>Las cookies son pequeños archivos de texto que los sitios web almacenan en su navegador para recordar información sobre su visita. También pueden usarse tecnologías similares de almacenamiento local en el navegador (por ejemplo, <code>localStorage</code>).</p>
             
             <h2>2. Tipos de Cookies que utilizamos</h2>
@@ -558,12 +558,13 @@ window.TourAiEsESMessages = {
                     <tr><th>Categoría</th><th>Propósito</th><th>Persistencia</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Técnicas</strong></td><td>Esenciales para el funcionamiento: idioma de la interfaz, sesión de cuenta en la zona privada (autenticación), estados técnicos de formularios (por ejemplo, verificación de correo en contacto, eliminación de cuenta o gestión de alertas de lanzamiento) y el registro de tu elección en el banner de cookies (<code>cookies-aceptadas</code>).</td><td>Sesión / hasta 1 año</td></tr>
+                    <tr><td><strong>Técnicas</strong></td><td>Esenciales para el funcionamiento: idioma de la interfaz, sesión de cuenta en la zona privada (autenticación), estados técnicos de formularios (por ejemplo, verificación de correo en contacto, eliminación de cuenta o gestión de alertas de lanzamiento) y el registro de tu elección en el banner de cookies (<code>cookies-aceptadas</code>: solo técnicas o técnicas + analítica).</td><td>Sesión / hasta 1 año</td></tr>
                     <tr><td><strong>Preferencia</strong></td><td>Idioma de la web elegido por el usuario (almacenado localmente en el navegador).</td><td>Hasta que lo cambies o borres los datos del sitio</td></tr>
+                    <tr><td><strong>Analítica (opcional)</strong></td><td><strong>Google Analytics</strong>, solo si aceptas en el banner: medición agregada de visitas y páginas vistas en tourai.es. Proveedor: Google Ireland Limited / Google LLC. No usamos cookies publicitarias ni remarketing en la web.</td><td>Según Google (hasta 14 meses) / hasta que retires el consentimiento o borres los datos del sitio</td></tr>
                 </tbody>
             </table>
             <p>Los ajustes de volumen o del último destino consultado en la <strong>app</strong> se guardan en el dispositivo como preferencias locales de la aplicación; <strong>no son cookies del sitio web</strong>.</p>
-            <p>La media de valoraciones mostrada en la web se obtiene de nuestros servidores; <strong>no</strong> implica cookies de analítica de terceros.</p>
+            <p>La media de valoraciones mostrada en la web se obtiene de nuestros servidores y es independiente de Google Analytics.</p>
 
             <h2>3. Cómo gestionar las Cookies</h2>
             <p>Puede bloquearlas o eliminarlas en los ajustes de su navegador (Chrome, Safari, etc.). Para volver a ver el banner de cookies de tourai.es, borre los datos del sitio (incluida la clave <code>cookies-aceptadas</code>) en su navegador.</p>
@@ -759,7 +760,7 @@ window.TourAiEsESMessages = {
         </div>`,
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Compromiso de Privacidad</h2>
-            <p><strong>Última actualización:</strong> 16 de septiembre de 2026.</p>
+            <p><strong>Última actualización:</strong> 24 de septiembre de 2026.</p>
             <p>En <strong>TourAI</strong>, accesible desde <a href="https://tourai.es">tourai.es</a>, consideramos que la privacidad de nuestros usuarios es un pilar fundamental. Esta política detalla cómo gestionamos la información para garantizar que el uso de nuestras audioguías inteligentes y de los servicios asociados en la web (cuenta, comunidad y opiniones) sea seguro y transparente.</p>
 
             <h2>2. Responsable del tratamiento</h2>
@@ -791,6 +792,7 @@ window.TourAiEsESMessages = {
                 <li><strong>Aceptación de textos legales:</strong> Registramos si has aceptado los Términos y la Política de Privacidad, la fecha de aceptación y la <strong>versión de aceptación</strong> vigente en ese momento, a fin de acreditar el consentimiento contractual y solicitar una nueva aceptación expresa cuando dichos textos se actualicen.</li>
                 <li><strong>Opiniones y valoraciones:</strong> Valorar es <strong>voluntario</strong>: no estás obligado a enviar una opinión para usar TourAI. Si decides enviar una valoración en <a href="reviews.html">Opiniones</a>, tratamos las estrellas (necesarias para completar el envío), el comentario opcional, el destino valorado (web o app), tu identificador de cuenta, el nombre o alias mostrado y el estado de moderación. Las reseñas <strong>no se publican hasta que un moderador las aprueba</strong>. Una vez aprobadas, son públicas. Conservamos también estadísticas agregadas (suma y número de valoraciones) sin necesidad de identificar a cada autor en la media mostrada.</li>
                 <li><strong>Formularios de la web:</strong> Si nos escribes desde <a href="contact.html">Contacto</a>, tratamos el nombre (si lo facilitas), el correo, el mensaje y la verificación asociada, solo para atender esa consulta.</li>
+                <li><strong>Analítica web (opcional):</strong> Si aceptas las cookies de analítica en el banner de tourai.es, utilizamos <strong>Google Analytics</strong> para obtener estadísticas agregadas de visitas y páginas vistas. Base jurídica: consentimiento. Puedes rechazarlas en el banner o retirar el consentimiento borrando los datos del sitio en tu navegador (incluida la clave <code>cookies-aceptadas</code>).</li>
                 <li><strong>Avisos de lanzamiento (lista de espera):</strong> Si te suscribes al aviso de disponibilidad en App Store o Google Play, tratamos tu correo electrónico, la plataforma elegida y los datos de verificación asociados, con la finalidad exclusiva de enviarte el aviso de publicación. Base jurídica: consentimiento. Puedes consultar o cancelar las alertas desde la web («Gestionar o cancelar alertas de lanzamiento»), tras <strong>acreditar la titularidad del correo</strong> mediante un código de verificación enviado a esa dirección o, si ya tienes sesión iniciada en tourai.es con el mismo correo, mediante esa sesión de autenticación. También puedes escribir a <a href="mailto:info@tourai.es">info@tourai.es</a>. El envío puede realizarse a través de proveedores de correo electrónico que actúan como encargados del tratamiento.</li>
                 <li><strong>Datos locales en el dispositivo:</strong> En el teléfono o el PC pueden guardarse preferencias locales (idioma, consentimiento de privacidad de la app, consentimiento de cookies en la web), correos usados previamente para facilitar el inicio de sesión y, si lo activas, el uso de biometría para desbloquear una sesión ya iniciada. Al abrir la app por primera vez, el <strong>idioma de la interfaz</strong> se toma del idioma del dispositivo (puedes cambiarlo después en Preferencias). Para el asistente de voz, cuando actives el micrófono (o una función que lo requiera), la app puede, <strong>tras tu confirmación</strong>, <strong>descargar e instalar en el dispositivo</strong> un componente de reconocimiento de voz según el idioma de la aplicación en ese momento; ese reconocimiento se procesa preferentemente <strong>en el dispositivo</strong>. Si borras los datos de la aplicación en el sistema, ese componente se elimina y podrá volver a descargarse cuando vuelvas a activar el micrófono.</li>
                 <li><strong>Diagnóstico técnico:</strong> Si la app detecta un error grave, puede enviarse un informe técnico a nuestro equipo (dispositivo, sistema, pantalla y, si hay sesión, identificador o correo) para corregir fallos. No se utiliza con fines comerciales de terceros.</li>

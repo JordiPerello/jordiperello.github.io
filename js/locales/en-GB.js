@@ -324,7 +324,7 @@ window.TourAiEnGBMessages = {
   "cookie.dismiss": "Got it",
   "cookie.more": "More info",
   "cookie.reject": "Reject",
-  "cookie.text": "We use technical cookies for the site to work (language, session and preferences).",
+  "cookie.text": "We use technical cookies for the site to work and, if you accept, analytics cookies (Google Analytics) to measure visits.",
   "dashboard.section.collapsed": "Expand to load this information.",
   "dashboard.section.loading": "Loading...",
   "dashboard.section.unknown": "Section unavailable.",
@@ -553,7 +553,7 @@ window.TourAiEnGBMessages = {
             <p style="font-size: 0.8em; color: #888; margin-top: 20px;">For further details, please see our full Privacy Policy.</p>`,
   "page.cookies.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. What are Cookies?</h2>
-            <p><strong>Last updated:</strong> 16 September 2026.</p>
+            <p><strong>Last updated:</strong> 24 September 2026.</p>
             <p>Cookies are small text files that websites store in your browser to remember information about your visit. Similar browser local-storage technologies may also be used (for example, <code>localStorage</code>).</p>
             
             <h2>2. Types of Cookies we use</h2>
@@ -562,12 +562,13 @@ window.TourAiEnGBMessages = {
                     <tr><th>Category</th><th>Purpose</th><th>Persistence</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Technical</strong></td><td>Essential for operation: interface language, account session in the private area (authentication), technical form states (for example, email verification on contact, account deletion or launch-alert management) and the record of your choice on the cookie banner (<code>cookies-aceptadas</code>).</td><td>Session / up to 1 year</td></tr>
+                    <tr><td><strong>Technical</strong></td><td>Essential for operation: interface language, account session in the private area (authentication), technical form states (for example, email verification on contact, account deletion or launch-alert management) and the record of your choice on the cookie banner (<code>cookies-aceptadas</code>: essential only or essential + analytics).</td><td>Session / up to 1 year</td></tr>
                     <tr><td><strong>Preference</strong></td><td>Website language chosen by the user (stored locally in the browser).</td><td>Until you change it or clear the site data</td></tr>
+                    <tr><td><strong>Analytics (optional)</strong></td><td><strong>Google Analytics</strong>, only if you accept in the banner: aggregated measurement of visits and page views on tourai.es. Provider: Google Ireland Limited / Google LLC. We do not use advertising or remarketing cookies on the website.</td><td>Per Google (up to 14 months) / until you withdraw consent or clear site data</td></tr>
                 </tbody>
             </table>
             <p>Volume settings or the last destination consulted in the <strong>app</strong> are saved on the device as local application preferences; <strong>they are not website cookies</strong>.</p>
-            <p>The average rating shown on the website is obtained from our servers; it does <strong>not</strong> involve third-party analytics cookies.</p>
+            <p>The average rating shown on the website is obtained from our servers and is independent of Google Analytics.</p>
 
             <h2>3. How to manage Cookies</h2>
             <p>You may block or delete them in your browser settings (Chrome, Safari, etc.). To see the tourai.es cookie banner again, clear the site data (including the <code>cookies-aceptadas</code> key) in your browser.</p>
@@ -763,7 +764,7 @@ window.TourAiEnGBMessages = {
         </div>`,
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
-            <p><strong>Last updated:</strong> 16 September 2026.</p>
+            <p><strong>Last updated:</strong> 24 September 2026.</p>
             <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we regard our users' privacy as a fundamental pillar. This policy explains how we manage information to ensure that the use of our intelligent audio guides and associated website services (account, community and reviews) is safe and transparent.</p>
 
             <h2>2. Data controller</h2>
@@ -795,6 +796,7 @@ window.TourAiEnGBMessages = {
                 <li><strong>Acceptance of legal texts:</strong> We record whether you have accepted the Terms and the Privacy Policy, the acceptance date and the <strong>acceptance version</strong> in force at that time, in order to evidence contractual consent and to request a new express acceptance when those texts are updated.</li>
                 <li><strong>Reviews and ratings:</strong> Rating is <strong>voluntary</strong>: you are not obliged to submit a review to use TourAI. If you choose to submit a rating on <a href="reviews.html">Reviews</a>, we process the stars (required to complete submission), the optional comment, the rated target (web or app), your account identifier, the displayed name or alias and the moderation status. Reviews <strong>are not published until a moderator approves them</strong>. Once approved, they are public. We also retain aggregated statistics (sum and number of ratings) without needing to identify each author in the displayed average.</li>
                 <li><strong>Website forms:</strong> If you write to us from <a href="contact.html">Contact</a>, we process the name (if you provide it), email, message and associated verification, solely to handle that enquiry.</li>
+                <li><strong>Web analytics (optional):</strong> If you accept analytics cookies in the tourai.es banner, we use <strong>Google Analytics</strong> to obtain aggregated visit and page-view statistics. Legal basis: consent. You may reject them in the banner or withdraw consent by clearing site data in your browser (including the <code>cookies-aceptadas</code> key).</li>
                 <li><strong>Launch notices (waitlist):</strong> If you subscribe to the App Store or Google Play availability notice, we process your email address, the chosen platform and associated verification data, for the sole purpose of sending you the publication notice. Legal basis: consent. You may view or cancel alerts from the website ("Manage or cancel launch alerts") after <strong>proving ownership of the email</strong> with a verification code sent to that address or, if you are already signed in on tourai.es with the same email, through that authentication session. You may also write to <a href="mailto:info@tourai.es">info@tourai.es</a>. Sending may be carried out through email providers acting as processors.</li>
                 <li><strong>Local data on the device:</strong> Preferences may be stored locally on the phone or PC (language, app privacy consent, cookie consent on the website), previously used emails to facilitate sign-in and, if you enable it, biometrics to unlock an already signed-in session. When you open the app for the first time, the <strong>interface language</strong> is taken from the device language (you can change it later in Preferences). For the voice assistant, when you turn on the microphone (or a feature that needs it), the app may, <strong>after your confirmation</strong>, <strong>download and install on the device</strong> a speech-recognition component for the app language at that time; that recognition is preferably processed <strong>on the device</strong>. If you clear the app's data in system settings, that component is removed and may be downloaded again when you turn the microphone back on.</li>
                 <li><strong>Technical diagnostics:</strong> If the app detects a serious error, a technical report may be sent to our team (device, system, screen and, if there is a session, identifier or email) to fix faults. It is not used for third-party commercial purposes.</li>

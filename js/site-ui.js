@@ -23,8 +23,6 @@
   window.gtag = window.gtag || gtag;
 
   gtag("consent", "default", {
-    // Web has no advertising or third-party analytics today; keep these denied
-    // even if the user acknowledges the technical-cookie notice.
     ad_storage: "denied",
     analytics_storage: "denied",
     ad_user_data: "denied",
@@ -34,74 +32,139 @@
 })();
 
 (function () {
-  // Dismiss flag for the technical-storage notice (not a marketing consent).
   var STORAGE_KEY = "cookies-aceptadas";
+  var CONSENT_ALL = "all";
+  var CONSENT_ESSENTIAL = "essential";
+  var gaLoaded = false;
 
-  function cookieBannerHtml() {
-    return (
-      '<div class="site-cookie-banner__inner">' +
-      '<p class="site-cookie-banner__text">' +
-      '<span data-i18n="cookie.text">Utilizamos cookies técnicas para el funcionamiento del sitio (idioma, sesión y preferencias).</span> ' +
-      '<a href="cookies.html" data-i18n="cookie.more">Más info</a>.' +
-      "</p>" +
-      '<div class="site-cookie-banner__actions">' +
-      '<button type="button" class="site-cookie-banner__accept" data-cookie-dismiss data-i18n="cookie.dismiss">Entendido</button>' +
-      "</div></div>"
-    );
+  function getMeasurementId() {
+    return window.TourAiSite?.config?.googleAnalyticsMeasurementId || "";
   }
 
-  function ensureCookieBanner() {
-    var banner = document.getElementById("cookie-banner");
-    if (!banner) {
-      if (!document.body) {
-        return null;
-      }
-      banner = document.createElement("div");
-      banner.id = "cookie-banner";
-      banner.className = "site-cookie-banner";
-      banner.hidden = true;
-      banner.setAttribute("aria-live", "polite");
-      document.body.appendChild(banner);
+  function setAnalyticsConsent(granted) {
+    if (!window.gtag) {
+      return;
     }
 
-    banner.innerHTML = cookieBannerHtml();
-    if (window.TourAiI18n?.applyTranslations && window.TourAiI18n?.getLocale) {
-      window.TourAiI18n.applyTranslations(window.TourAiI18n.getLocale());
-    }
-    return banner;
+    window.gtag("consent", "update", {
+      ad_storage: "denied",
+      analytics_storage: granted ? "granted" : "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+    });
   }
 
-  function dismissNotice() {
-    localStorage.setItem(STORAGE_KEY, "true");
-
-    if (window.gtag) {
-      window.gtag("consent", "update", {
-        ad_storage: "denied",
-        analytics_storage: "denied",
-        ad_user_data: "denied",
-        ad_personalization: "denied",
-      });
+  function loadGoogleAnalytics() {
+    var measurementId = getMeasurementId();
+    if (!measurementId || gaLoaded) {
+      return;
     }
 
+    gaLoaded = true;
+    var script = document.createElement("script");
+    script.async = true;
+    script.src =
+      "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(measurementId);
+    document.head.appendChild(script);
+    window.gtag("js", new Date());
+    window.gtag("config", measurementId);
+  }
+
+  function hideBanner() {
     var banner = document.getElementById("cookie-banner");
     if (banner) {
       banner.hidden = true;
     }
   }
 
+  function acceptAnalytics() {
+    localStorage.setItem(STORAGE_KEY, CONSENT_ALL);
+    setAnalyticsConsent(true);
+    loadGoogleAnalytics();
+    hideBanner();
+  }
+
+  function rejectAnalytics() {
+    localStorage.setItem(STORAGE_KEY, CONSENT_ESSENTIAL);
+    setAnalyticsConsent(false);
+    hideBanner();
+  }
+
+  function getStoredConsent() {
+    var value = localStorage.getItem(STORAGE_KEY);
+    if (value === CONSENT_ALL) {
+      return CONSENT_ALL;
+    }
+
+    if (value === "true" || value === CONSENT_ESSENTIAL) {
+      return CONSENT_ESSENTIAL;
+    }
+
+    return null;
+  }
+
+  function cookieBannerHtml() {
+    return (
+      '<div class="site-cookie-banner__inner">' +
+      '<p class="site-cookie-banner__text">' +
+      '<span data-i18n="cookie.text">Utilizamos cookies técnicas para el funcionamiento del sitio y, si lo aceptas, cookies de analítica (Google Analytics) para medir visitas.</span> ' +
+      '<a href="cookies.html" data-i18n="cookie.more">Más info</a>.' +
+      "</p>" +
+      '<div class="site-cookie-banner__actions">' +
+      '<button type="button" class="site-cookie-banner__reject" data-cookie-reject data-i18n="cookie.reject">Rechazar</button>' +
+      '<button type="button" class="site-cookie-banner__accept" data-cookie-accept data-i18n="cookie.accept">Aceptar</button>' +
+      "</div></div>"
+    );
+  }
+
+  function bindBannerActions(banner) {
+    if (!banner || banner.dataset.consentBound === "1") {
+      return;
+    }
+
+    banner.dataset.consentBound = "1";
+    banner.querySelector("[data-cookie-accept]")?.addEventListener("click", acceptAnalytics);
+    banner.querySelector("[data-cookie-reject]")?.addEventListener("click", rejectAnalytics);
+    banner.querySelector("[data-cookie-dismiss]")?.addEventListener("click", rejectAnalytics);
+  }
+
+  function createCookieBanner() {
+    if (!document.body) {
+      return null;
+    }
+
+    var banner = document.createElement("div");
+    banner.id = "cookie-banner";
+    banner.className = "site-cookie-banner";
+    banner.hidden = true;
+    banner.setAttribute("aria-live", "polite");
+    banner.innerHTML = cookieBannerHtml();
+    document.body.appendChild(banner);
+
+    if (window.TourAiI18n?.applyTranslations && window.TourAiI18n?.getLocale) {
+      window.TourAiI18n.applyTranslations(window.TourAiI18n.getLocale());
+    }
+
+    return banner;
+  }
+
   function initCookieBanner() {
-    var banner = ensureCookieBanner();
+    var stored = getStoredConsent();
+    if (stored === CONSENT_ALL) {
+      setAnalyticsConsent(true);
+      loadGoogleAnalytics();
+    }
+
+    var banner = document.getElementById("cookie-banner") || createCookieBanner();
     if (!banner) {
       return;
     }
 
-    if (!localStorage.getItem(STORAGE_KEY)) {
+    bindBannerActions(banner);
+
+    if (!stored) {
       banner.hidden = false;
     }
-
-    banner.querySelector("[data-cookie-dismiss]")?.addEventListener("click", function () {
-      dismissNotice();
-    });
   }
 
   if (document.readyState === "loading") {
