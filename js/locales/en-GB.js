@@ -956,7 +956,7 @@ window.TourAiEnGBMessages = {
                 </li>
             </ul>
             <p>Fraudulent or automated redemption of codes, forgery of codes or QR codes, or attempts to exceed per-user or per-code usage limits are prohibited.</p>
-            <p><strong>Allowance exhausted in the app:</strong> when the active plan's usage allowance runs out in the mobile app, TourAI may notify you by audio and start purchase of a new plan. If the exhausted plan was purchased, the app may offer repurchase of the same plan through the relevant store or gateway, with no charge until your explicit confirmation. If it came from a promotional bonus, the app will guide you to plan selection. Full contractual detail appears in the terms embedded in the app (section 7).</p>
+            <p><strong>Allowance exhausted in the app:</strong> when the active plan's usage allowance runs out in the mobile app, TourAI may notify you by audio and start purchase of a new plan. If the exhausted plan was purchased, the app may offer repurchase of the same plan through the relevant store or gateway, with no charge until your explicit confirmation. If it came from a promotional bonus, the app will guide you to plan selection. Once payment is confirmed in the store or gateway in this flow, the purchased plan may be activated automatically as your active plan. Full contractual detail appears in the terms embedded in the app (section 7).</p>
 
             <h2>5.3. Plan payments on the website (tourai.es)</h2>
             <p>Registered users may purchase plans from the tourai.es <strong>account dashboard</strong>. Payment is processed through <strong>Stripe</strong> (a third-party gateway). TourAI does not store full card numbers.</p>
