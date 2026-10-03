@@ -1210,7 +1210,7 @@
         </div>
       </dl>
       <div class="profile-card__actions">
-        <button type="button" class="btn-primary" id="accountEditOpen" data-i18n="account.edit">Editar cuenta</button>
+        <button type="button" class="btn-primary" id="accountEditOpen">${escapeHtml(t("account.edit"))}</button>
       </div>
     </article>`;
   }
@@ -1751,9 +1751,6 @@
       hasActivePlan
     );
     hydrateProfileAvatar(profileMount);
-    if (window.TourAiI18n?.applyTranslations && window.TourAiI18n?.getLocale) {
-      window.TourAiI18n.applyTranslations(window.TourAiI18n.getLocale());
-    }
   }
 
   function revokePendingPhotoPreview() {
@@ -2350,10 +2347,6 @@
     }
   });
 
-  document.addEventListener("tourai:locale-changed", function () {
-    renderProfile();
-    updatePasswordStrengthUi();
-  });
 })();
 
 
@@ -3239,14 +3232,4 @@
     window.location.href = href;
   });
 
-  document.addEventListener("tourai:locale-changed", function () {
-    document.querySelectorAll("[data-section].is-open").forEach(function (section) {
-      const key = section.getAttribute("data-section");
-      if (key === "plans" && pagers.plans.items.length) {
-        paintPlansSection(section);
-      } else if (key === "payments" && pagers.payments.items.length) {
-        paintPaymentsSection(section);
-      }
-    });
-  });
 })();

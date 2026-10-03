@@ -1,13 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://tourai.es/</loc></url>
-  <url><loc>https://tourai.es/about.html</loc></url>
-  <url><loc>https://tourai.es/community.html</loc></url>
-  <url><loc>https://tourai.es/reviews.html</loc></url>
-  <url><loc>https://tourai.es/contact.html</loc></url>
-  <url><loc>https://tourai.es/faq.html</loc></url>
-  <url><loc>https://tourai.es/whats-new.html</loc></url>
-  <url><loc>https://tourai.es/cookies.html</loc></url>
-  <url><loc>https://tourai.es/privacy.html</loc></url>
-  <url><loc>https://tourai.es/terms.html</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://tourai.es/</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/en/</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/about.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/en/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/about.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/community.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/community.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/community.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/community.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/en/community.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/community.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/community.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/community.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/reviews.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/reviews.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/reviews.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/reviews.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/en/reviews.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/reviews.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/reviews.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/reviews.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/contact.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/en/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/contact.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/faq.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/faq.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/en/faq.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/faq.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/whats-new.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/whats-new.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/whats-new.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/whats-new.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/en/whats-new.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/whats-new.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/whats-new.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/whats-new.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/cookies.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/cookies.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/cookies.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/cookies.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/en/cookies.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/cookies.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/cookies.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/cookies.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/en/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/terms.html"/>
+  </url>
+  <url>
+    <loc>https://tourai.es/en/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tourai.es/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tourai.es/en/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tourai.es/terms.html"/>
+  </url>
 </urlset>

@@ -3,6 +3,15 @@
   // Avoid nav flash: if we likely have a persisted session, hide "Mi cuenta"
   // until nav-auth paints the signed-in avatar/name (or confirms signed out).
   try {
+    var path = String(location.pathname || "").replace(/\\/g, "/");
+    if (/(?:^|\/)en(?:\/|$)/.test(path)) {
+      document.documentElement.lang = "en-GB";
+    }
+  } catch (e) {
+    /* ignore */
+  }
+
+  try {
     var hasProfile =
       !!window.sessionStorage.getItem("tourai-nav-profile-v2") ||
       !!window.localStorage.getItem("tourai-nav-profile-v2") ||
@@ -103,16 +112,34 @@
     return null;
   }
 
+  function isEnglishSite() {
+    return window.TourAiI18n?.getLocale?.() === "en-GB";
+  }
+
   function cookieBannerHtml() {
+    var text = isEnglishSite()
+      ? "We use technical cookies for the site to work and, if you accept, analytics cookies (Google Analytics) to measure visits."
+      : "Utilizamos cookies técnicas para el funcionamiento del sitio y, si lo aceptas, cookies de analítica (Google Analytics) para medir visitas.";
+    var more = isEnglishSite() ? "More info" : "Más info";
+    var reject = isEnglishSite() ? "Reject" : "Rechazar";
+    var accept = isEnglishSite() ? "Accept" : "Aceptar";
     return (
       '<div class="site-cookie-banner__inner">' +
       '<p class="site-cookie-banner__text">' +
-      '<span data-i18n="cookie.text">Utilizamos cookies técnicas para el funcionamiento del sitio y, si lo aceptas, cookies de analítica (Google Analytics) para medir visitas.</span> ' +
-      '<a href="cookies.html" data-i18n="cookie.more">Más info</a>.' +
+      "<span>" +
+      text +
+      "</span> " +
+      '<a href="cookies.html">' +
+      more +
+      "</a>." +
       "</p>" +
       '<div class="site-cookie-banner__actions">' +
-      '<button type="button" class="site-cookie-banner__reject" data-cookie-reject data-i18n="cookie.reject">Rechazar</button>' +
-      '<button type="button" class="site-cookie-banner__accept" data-cookie-accept data-i18n="cookie.accept">Aceptar</button>' +
+      '<button type="button" class="site-cookie-banner__reject" data-cookie-reject>' +
+      reject +
+      "</button>" +
+      '<button type="button" class="site-cookie-banner__accept" data-cookie-accept>' +
+      accept +
+      "</button>" +
       "</div></div>"
     );
   }
@@ -140,10 +167,6 @@
     banner.setAttribute("aria-live", "polite");
     banner.innerHTML = cookieBannerHtml();
     document.body.appendChild(banner);
-
-    if (window.TourAiI18n?.applyTranslations && window.TourAiI18n?.getLocale) {
-      window.TourAiI18n.applyTranslations(window.TourAiI18n.getLocale());
-    }
 
     return banner;
   }
@@ -198,10 +221,14 @@
     overlay.innerHTML = `
       <div class="tourai-loading-panel" role="status" aria-live="polite" aria-busy="true">
         <div class="tourai-loading-spinner" aria-hidden="true"></div>
-        <p class="tourai-loading-message" data-default-text="" data-i18n="loading.processing"></p>
+        <p class="tourai-loading-message"></p>
       </div>
     `;
     document.body.appendChild(overlay);
+    const messageEl = overlay.querySelector(".tourai-loading-message");
+    if (messageEl) {
+      messageEl.textContent = getMessage("");
+    }
     return overlay;
   }
 

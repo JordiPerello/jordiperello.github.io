@@ -155,7 +155,6 @@
 
   function boot() {
     loadWhatsNew();
-    document.addEventListener("tourai:locale-changed", loadWhatsNew);
   }
 
   if (document.readyState === "loading") {

@@ -4,7 +4,7 @@
   align-items: center;
   margin-left: 12px;
 }
-.lang-switch button {
+.lang-switch a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -19,27 +19,36 @@
   filter: grayscale(0.45);
   transform: scale(0.92);
   transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, filter 0.2s ease;
+  margin: 0;
+  text-decoration: none;
+  text-transform: none;
+  font-weight: inherit;
+  color: inherit;
 }
-.lang-switch button img {
+.lang-switch a img {
   display: block;
   width: 28px;
   height: 28px;
   border-radius: 50%;
   pointer-events: none;
 }
-.lang-switch button:hover {
+.lang-switch a:hover {
   opacity: 0.85;
   filter: grayscale(0.15);
   transform: scale(1);
 }
-.lang-switch button.active {
+.lang-switch a.active {
   opacity: 1;
   filter: none;
   transform: scale(1.1);
   border-color: #4db8ff;
   box-shadow: 0 0 0 2px rgba(77, 184, 255, 0.4);
+  color: inherit;
+  border-bottom: none;
+  cursor: default;
+  pointer-events: none;
 }
-.lang-switch button:focus-visible {
+.lang-switch a:focus-visible {
   outline: 2px solid #4db8ff;
   outline-offset: 2px;
 }
@@ -1533,9 +1542,9 @@ nav a {
 }
 
 /* Hide guest "Mi cuenta" while a persisted session is being restored. */
-html.tourai-auth-pending nav a[data-i18n="nav.account"],
+html.tourai-auth-pending nav a[href="login.html"]:not(.nav-account--signed-in),
 html.tourai-auth-pending nav a[data-auth-account]:not(.nav-account--signed-in),
-html.tourai-auth-pending .footer-col a[data-i18n="nav.account"],
+html.tourai-auth-pending .footer-col a[href="login.html"]:not(.nav-account--signed-in),
 html.tourai-auth-pending .footer-col a[data-auth-account]:not(.nav-account--signed-in) {
   visibility: hidden;
 }
@@ -1708,6 +1717,7 @@ nav a.active {
   .nav-links.active,
   .nav-links.show { display: flex; }
   nav a { margin: 10px 0; }
+  .lang-switch a { margin: 0; }
   nav { padding: 10px 20px; }
 }
 

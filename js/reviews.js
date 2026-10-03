@@ -415,14 +415,6 @@
     }
   }
 
-  function syncEditorPlaceholders() {
-    document.querySelectorAll(".community-rte__editor[data-i18n-placeholder]").forEach(function (el) {
-      const key = el.getAttribute("data-i18n-placeholder");
-      const fallback = el.getAttribute("data-placeholder") || "";
-      el.setAttribute("data-placeholder", t(key, fallback));
-    });
-  }
-
   function focusEditorEnd(editor) {
     if (!editor) {
       return;
@@ -646,7 +638,6 @@
 
   function initRichEditors() {
     document.querySelectorAll(".community-rte").forEach(bindRichEditor);
-    syncEditorPlaceholders();
   }
 
   function roundHalf(value) {
@@ -877,7 +868,6 @@
       }
       const firestore = await auth.getFirestore();
       cachedStats = await loadStats(firestore);
-      // Re-query after i18n may have replaced header innerHTML (data-i18n-html).
       paintHeroWidget(cachedStats);
     } catch (err) {
       console.warn("[TourAI reviews] widget stats failed", err);
@@ -885,14 +875,6 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    if (cachedStats) {
-      paintHeroWidget(cachedStats);
-    } else {
-      bootSiteRatingWidget();
-    }
-  });
-
-  document.addEventListener("tourai:locale-changed", function () {
     if (cachedStats) {
       paintHeroWidget(cachedStats);
     } else {
@@ -1018,7 +1000,7 @@
         '<div class="reviews-summary__text">' +
         '<p class="reviews-summary__avg">' +
         escapeHtml(label) +
-        ' <span data-i18n-skip>/ 5</span></p>' +
+        " <span>/ 5</span></p>" +
         '<p class="reviews-summary__count">' +
         escapeHtml(countLabel) +
         "</p></div></div>";
@@ -1610,14 +1592,6 @@
     renderSummary();
     syncAuthUi();
     initRichEditors();
-    document.addEventListener("tourai:locale-changed", function () {
-      syncEditorPlaceholders();
-      syncCommentUi();
-      syncAuthUi();
-      renderSummary();
-      renderStarsPicker();
-      renderList();
-    });
 
     auth
       .ensureFirebase()

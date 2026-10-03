@@ -1572,37 +1572,73 @@
     return document.getElementById("unsubEmail");
   }
 
+  function escModalHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/"/g, "&quot;");
+  }
+
   function ensureModal() {
     if (document.getElementById(MODAL_ID)) {
       return;
     }
+
+    const en = window.TourAiI18n?.getLocale?.() === "en-GB";
+    const title = tOr(
+      "unsubscribe.title",
+      en ? "Manage launch alerts" : "Gestionar alertas de lanzamiento"
+    );
+    const intro = tOr(
+      "unsubscribe.intro",
+      en
+        ? "Enter your email to verify your identity and cancel App Store or Google Play alerts."
+        : "Introduce tu correo para verificar tu identidad y cancelar las alertas de App Store o Google Play."
+    );
+    const emailPlaceholder = tOr(
+      "index.modal.email",
+      en ? "Email address" : "Correo electrónico"
+    );
+    const selectStores = tOr(
+      "unsubscribe.selectStores",
+      en
+        ? "Select the stores you want to unsubscribe from:"
+        : "Selecciona las tiendas de las que quieres darte de baja:"
+    );
+    const storeIos = tOr("unsubscribe.store.ios", "App Store (iOS)");
+    const storeAndroid = tOr("unsubscribe.store.android", "Google Play (Android)");
+    const verifyOk = tOr(
+      "contact.verify.success",
+      en ? "Email verified successfully." : "Email validado correctamente."
+    );
+    const closeLabel = tOr("contact.verify.close", en ? "Close" : "Cerrar");
 
     const modal = document.createElement("div");
     modal.id = MODAL_ID;
     modal.className = "modal";
     modal.innerHTML = `
       <div class="modal-content store-unsubscribe-content">
-        <span class="close" data-close-unsub role="button" aria-label="Cerrar">&times;</span>
-        <h3 style="color: var(--primary);" data-i18n="unsubscribe.title">Gestionar alertas de lanzamiento</h3>
-        <p data-i18n="unsubscribe.intro">Introduce tu correo para verificar tu identidad y cancelar las alertas de App Store o Google Play.</p>
+        <span class="close" data-close-unsub role="button" aria-label="${escModalHtml(closeLabel)}">&times;</span>
+        <h3 style="color: var(--primary);">${escModalHtml(title)}</h3>
+        <p>${escModalHtml(intro)}</p>
         <form id="unsubForm" onsubmit="return false;" novalidate>
-          <input type="email" id="unsubEmail" name="email" autocomplete="email" data-i18n-placeholder="index.modal.email" placeholder="">
-          <button type="button" id="unsubViewSubscriptionsBtn" class="btn-primary" data-i18n="unsubscribe.viewSubscriptions">Ver suscripciones</button>
+          <input type="email" id="unsubEmail" name="email" autocomplete="email" placeholder="${escModalHtml(emailPlaceholder)}">
+          <button type="button" id="unsubViewSubscriptionsBtn" class="btn-primary">${escModalHtml(tOr("unsubscribe.viewSubscriptions"))}</button>
           <div id="unsubVerificationBox" class="verification-box">
-            <p id="unsubVerificationMessage" data-i18n="contact.verify.success">Email validado correctamente.</p>
+            <p id="unsubVerificationMessage">${escModalHtml(verifyOk)}</p>
           </div>
           <div id="unsubManageSection" class="unsub-manage-section" hidden>
-            <p data-i18n="unsubscribe.selectStores">Selecciona las tiendas de las que quieres darte de baja:</p>
+            <p>${escModalHtml(selectStores)}</p>
             <label class="unsub-store-option">
               <input type="checkbox" id="unsubIos" value="iOS">
-              <span data-i18n="unsubscribe.store.ios">App Store (iOS)</span>
+              <span>${escModalHtml(storeIos)}</span>
             </label>
             <label class="unsub-store-option">
               <input type="checkbox" id="unsubAndroid" value="Android">
-              <span data-i18n="unsubscribe.store.android">Google Play (Android)</span>
+              <span>${escModalHtml(storeAndroid)}</span>
             </label>
-            <p id="unsubNoSubscriptions" class="unsub-empty-message" hidden data-i18n="unsubscribe.none">No tienes alertas activas con este correo.</p>
-            <button type="button" id="unsubSubmitBtn" class="btn-primary" disabled data-i18n="unsubscribe.submit">Darme de baja</button>
+            <p id="unsubNoSubscriptions" class="unsub-empty-message" hidden>${escModalHtml(tOr("unsubscribe.none"))}</p>
+            <button type="button" id="unsubSubmitBtn" class="btn-primary" disabled>${escModalHtml(tOr("unsubscribe.submit"))}</button>
           </div>
         </form>
       </div>
@@ -2036,10 +2072,6 @@
 
     const modal = document.getElementById(MODAL_ID);
     modal.style.display = "block";
-
-    if (window.TourAiI18n?.applyTranslations) {
-      window.TourAiI18n.applyTranslations(window.TourAiI18n.getLocale());
-    }
 
     getEmailInput()?.focus();
   }

@@ -766,14 +766,6 @@
     }
   }
 
-  function syncEditorPlaceholders() {
-    document.querySelectorAll(".community-rte__editor[data-i18n-placeholder]").forEach(function (el) {
-      const key = el.getAttribute("data-i18n-placeholder");
-      const fallback = el.getAttribute("data-placeholder") || "";
-      el.setAttribute("data-placeholder", t(key, fallback));
-    });
-  }
-
   function focusEditorEnd(editor) {
     if (!editor) {
       return;
@@ -997,7 +989,6 @@
 
   function initRichEditors() {
     document.querySelectorAll(".community-rte").forEach(bindRichEditor);
-    syncEditorPlaceholders();
   }
 
   function updateCategoryBlurb() {
@@ -3397,18 +3388,6 @@
   }
   markActiveTab();
   initRichEditors();
-  document.addEventListener("tourai:locale-changed", function () {
-    syncEditorPlaceholders();
-    updateCategoryBlurb();
-    syncAuthUi();
-    markActiveTab();
-    syncSearchSubmitLabel();
-    if (currentTopic) {
-      renderDetailThread();
-    } else {
-      renderTopicsList();
-    }
-  });
 
   syncSearchSubmitLabel();
 

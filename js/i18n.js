@@ -1,17 +1,12 @@
 (function () {
-  const STORAGE_KEY = "tourai-locale";
   const SPANISH_LOCALE = "es-ES";
   const ENGLISH_LOCALE = "en-GB";
-  const config = window.TourAiSite?.config ?? {
-    defaultLocale: SPANISH_LOCALE,
-    supportedLocales: [SPANISH_LOCALE, ENGLISH_LOCALE],
-  };
-  const htmlDefaults = new WeakMap();
-
   const messages = {
     [SPANISH_LOCALE]: {},
     [ENGLISH_LOCALE]: {},
   };
+
+  const legalHtmlCache = Object.create(null);
 
   function syncLocaleMessages() {
     if (window.TourAiEsESMessages && typeof window.TourAiEsESMessages === "object") {
@@ -35,20 +30,16 @@
     return locale;
   }
 
+  function isEnglishPath(pathname) {
+    const path = String(pathname || "").replace(/\\/g, "/");
+    return /(?:^|\/)en(?:\/|$)/.test(path);
+  }
+
   function getLocale() {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === "es") {
-      localStorage.setItem(STORAGE_KEY, SPANISH_LOCALE);
-      return SPANISH_LOCALE;
-    }
-    if (stored && config.supportedLocales.includes(stored)) {
-      return stored;
-    }
-    const browser = navigator.language?.toLowerCase() ?? "";
-    if (browser.startsWith("en")) {
+    if (typeof location !== "undefined" && isEnglishPath(location.pathname)) {
       return ENGLISH_LOCALE;
     }
-    return config.defaultLocale;
+    return SPANISH_LOCALE;
   }
 
   function applyVars(value, vars) {
@@ -62,73 +53,27 @@
     return out;
   }
 
-  /**
-   * Lookup copy for a locale table. Returns null if the key is missing.
-   * Both es-ES and en-GB must define keys used from JS.
-   */
   function t(key, locale, vars) {
     syncLocaleMessages();
     const normalized = normalizeLocale(locale) || getLocale();
-    const locales = [
-      normalized,
-      ...config.supportedLocales.filter((code) => code !== normalized),
-    ];
-
-    for (const code of locales) {
-      const table = messages[code] ?? {};
-      const value = table[key];
-      if (value == null || value === "" || value === key) {
-        continue;
-      }
-      return applyVars(value, vars);
+    const table = messages[normalized] ?? {};
+    const value = table[key];
+    if (value == null || value === "" || value === key) {
+      return null;
     }
-
-    return null;
+    return applyVars(value, vars);
   }
 
   function tOr(key, locale, vars, fallback) {
     return t(key, locale, vars) ?? fallback ?? "";
   }
 
-  function applyStoreBadges(locale) {
-    const badges = config.storeBadges;
-    if (!badges) {
-      return;
-    }
-    const normalized = normalizeLocale(locale);
-    const localeKey = isSpanishLocale(normalized) ? SPANISH_LOCALE : ENGLISH_LOCALE;
-    document.querySelectorAll("[data-store-badge]").forEach((img) => {
-      const store = img.getAttribute("data-store-badge");
-      const src = badges[store]?.[localeKey];
-      if (src) {
-        img.setAttribute("src", src);
-      }
-    });
-  }
-
-  function applyHtmlTranslations(locale) {
-    document.querySelectorAll("[data-i18n-html]").forEach((element) => {
-      const key = element.getAttribute("data-i18n-html");
-      const translated = t(key, locale);
-      if (translated) {
-        element.innerHTML = translated;
-      }
-    });
-  }
-
-  /** Legal page bodies live in locale tables; HTML shells only hold data-i18n-html keys. */
-  const LEGAL_PAGE_CONTENT_KEYS = {
-    terms: "page.terms.content",
-    privacy: "page.privacy.content",
-    cookies: "page.cookies.content",
-  };
-
   function extractLegalMainHtml(html) {
     const doc = new DOMParser().parseFromString(String(html || ""), "text/html");
     const main =
       doc.querySelector("main.legal-content") ||
       doc.querySelector("main.container.legal-content") ||
-      doc.querySelector("[data-i18n-html] main") ||
+      doc.querySelector(".legal-content main") ||
       doc.querySelector("main");
     if (!main) {
       return "";
@@ -136,138 +81,46 @@
     return main.innerHTML;
   }
 
-  function getLegalPageInnerHtml(kind, locale) {
-    const key = LEGAL_PAGE_CONTENT_KEYS[kind];
-    if (!key) {
+  function legalPageUrl(kind, locale) {
+    const english = !isSpanishLocale(normalizeLocale(locale));
+    const file =
+      kind === "terms" ? "terms.html" : kind === "privacy" ? "privacy.html" : kind === "cookies" ? "cookies.html" : "";
+    if (!file) {
+      return "";
+    }
+    return english ? `/en/${file}` : `/${file}`;
+  }
+
+  async function fetchLegalPageInnerHtml(kind, locale) {
+    const normalized = normalizeLocale(locale || getLocale());
+    const cacheKey = `${kind}:${normalized}`;
+    if (legalHtmlCache[cacheKey]) {
+      return legalHtmlCache[cacheKey];
+    }
+    const url = legalPageUrl(kind, normalized);
+    if (!url) {
       return null;
     }
-    const translated = t(key, locale || getLocale());
-    if (!translated) {
-      return null;
+    const response = await fetch(url, { credentials: "same-origin" });
+    if (!response.ok) {
+      throw new Error("LEGAL_FETCH_FAILED");
     }
-    return extractLegalMainHtml(translated) || translated;
-  }
-
-  function applyTranslations(locale) {
-    syncLocaleMessages();
-    const normalized = normalizeLocale(locale);
-    document.documentElement.lang = isSpanishLocale(normalized) ? SPANISH_LOCALE : ENGLISH_LOCALE;
-
-    const titleEl = document.querySelector("title");
-    const titleKey = titleEl?.getAttribute("data-i18n-doc-title");
-    if (titleEl && titleKey) {
-      const translatedTitle = t(titleKey, normalized);
-      if (translatedTitle) {
-        titleEl.textContent = translatedTitle;
-      }
+    const html = await response.text();
+    const inner = extractLegalMainHtml(html);
+    if (!inner) {
+      throw new Error("LEGAL_PARSE_FAILED");
     }
-
-    document.querySelectorAll("meta[data-i18n-meta]").forEach((meta) => {
-      const key = meta.getAttribute("data-i18n-meta");
-      const translated = t(key, normalized);
-      if (translated) {
-        meta.setAttribute("content", translated);
-      }
-    });
-
-    document.querySelectorAll("[data-i18n]").forEach((element) => {
-      const key = element.getAttribute("data-i18n");
-      if (!key) {
-        return;
-      }
-      const platform = element.getAttribute("data-i18n-platform");
-      const translated = t(key, normalized, platform ? { platform } : undefined);
-      if (translated) {
-        element.textContent = translated;
-      }
-    });
-
-    document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
-      const key = element.getAttribute("data-i18n-placeholder");
-      if (!key) {
-        return;
-      }
-      const translated = t(key, normalized);
-      if (translated) {
-        element.setAttribute("placeholder", translated);
-      }
-    });
-
-    document.querySelectorAll("[data-i18n-title]").forEach((element) => {
-      const key = element.getAttribute("data-i18n-title");
-      if (!key) {
-        return;
-      }
-      const translated = t(key, normalized);
-      if (translated) {
-        element.setAttribute("title", translated);
-      }
-    });
-
-    document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
-      const key = element.getAttribute("data-i18n-aria-label");
-      if (!key) {
-        return;
-      }
-      const translated = t(key, normalized);
-      if (translated) {
-        element.setAttribute("aria-label", translated);
-      }
-    });
-
-    applyHtmlTranslations(normalized);
-    applyStoreBadges(normalized);
-
-    document.querySelectorAll("[data-set-locale]").forEach((button) => {
-      const code = normalizeLocale(button.getAttribute("data-set-locale") ?? "");
-      button.classList.toggle("active", code === normalized);
-      button.setAttribute("aria-pressed", code === normalized ? "true" : "false");
-    });
-  }
-
-  function setLocale(locale) {
-    const normalized = normalizeLocale(locale);
-    if (!config.supportedLocales.includes(normalized)) {
-      return;
-    }
-    localStorage.setItem(STORAGE_KEY, normalized);
-    applyTranslations(normalized);
-    document.dispatchEvent(new CustomEvent("tourai:locale-changed", { detail: { locale: normalized } }));
-  }
-
-  function initLanguageSwitcher() {
-    document.querySelectorAll("[data-set-locale]").forEach((button) => {
-      button.addEventListener("click", () => {
-        setLocale(button.getAttribute("data-set-locale"));
-      });
-    });
+    legalHtmlCache[cacheKey] = inner;
+    return inner;
   }
 
   window.TourAiI18n = {
     t,
     tOr,
     getLocale,
-    setLocale,
-    applyTranslations,
-    getLegalPageInnerHtml,
+    fetchLegalPageInnerHtml,
+    isEnglishPath,
     SPANISH_LOCALE,
     ENGLISH_LOCALE,
   };
-
-  document.addEventListener("DOMContentLoaded", () => {
-    initLanguageSwitcher();
-    applyTranslations(getLocale());
-  });
-
-  document.addEventListener("tourai:locale-changed", (event) => {
-    const platform = document.getElementById("platform")?.innerText;
-    const intro = document.getElementById("modalIntro");
-    if (intro && platform && window.TourAiI18n) {
-      const locale = event.detail?.locale ?? window.TourAiI18n.getLocale();
-      const translated = window.TourAiI18n.t("index.modal.text", locale, { platform });
-      if (translated) {
-        intro.textContent = translated;
-      }
-    }
-  });
 })();

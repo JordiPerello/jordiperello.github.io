@@ -732,7 +732,7 @@
 
   function accountLinks() {
     return document.querySelectorAll(
-      'nav a[data-i18n="nav.account"], nav a[data-auth-account], nav a[data-i18n-account-key], nav a.nav-account--signed-in, .footer-col a[data-i18n="nav.account"], .footer-col a[data-auth-account], .footer-col a[data-i18n-account-key], .footer-col a.nav-account--signed-in'
+      'nav a[href="login.html"], nav a.nav-account--signed-in, .footer-col a[href="login.html"], .footer-col a.nav-account--signed-in'
     );
   }
 
@@ -801,7 +801,11 @@
       return legalDocHtmlCache[cacheKey];
     }
 
-    const html = global.TourAiI18n?.getLegalPageInnerHtml?.(kind, locale);
+    const fetchLegal = global.TourAiI18n?.fetchLegalPageInnerHtml;
+    if (typeof fetchLegal !== "function") {
+      throw new Error("LEGAL_PARSE_FAILED");
+    }
+    const html = await fetchLegal(kind, locale);
     if (!html) {
       throw new Error("LEGAL_PARSE_FAILED");
     }
@@ -1111,11 +1115,6 @@
     accountLinks().forEach(function (link) {
       link.href = "dashboard.html";
       link.classList.add("nav-account--signed-in");
-      if (link.getAttribute("data-i18n") === "nav.account") {
-        link.setAttribute("data-i18n-account-key", "nav.account");
-        link.removeAttribute("data-i18n");
-      }
-
       link.textContent = "";
       const avatar = document.createElement("span");
       avatar.className = "nav-account-avatar";
@@ -1140,17 +1139,10 @@
       link.href = "login.html";
       link.classList.remove("nav-account--signed-in");
       link.removeAttribute("title");
-      if (link.hasAttribute("data-i18n-account-key") || !link.hasAttribute("data-i18n")) {
-        link.setAttribute("data-i18n", link.getAttribute("data-i18n-account-key") || "nav.account");
-        link.removeAttribute("data-i18n-account-key");
-      }
       const accountLabel = t("nav.account");
       link.textContent = accountLabel;
       link.setAttribute("data-default-text", accountLabel);
     });
-    if (global.TourAiI18n?.applyTranslations && global.TourAiI18n?.getLocale) {
-      global.TourAiI18n.applyTranslations(global.TourAiI18n.getLocale());
-    }
     markAuthResolved();
   }
 
@@ -1246,12 +1238,6 @@
     currentProfile = earlyProfile;
     applySignedIn(earlyProfile);
   }
-
-  document.addEventListener("tourai:locale-changed", function () {
-    if (currentProfile) {
-      applySignedIn(currentProfile);
-    }
-  });
 
   function forceSignedOutNav() {
     currentUser = null;
@@ -1917,11 +1903,6 @@
     setPasswordsVisible(true);
     updateFieldErrors();
     setStatus("", false);
-  });
-
-  document.addEventListener("tourai:locale-changed", () => {
-    setPasswordsVisible(passwordsVisible);
-    updateFieldErrors();
   });
 
   form?.addEventListener("submit", async (event) => {
