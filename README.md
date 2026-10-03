@@ -2,15 +2,26 @@
 
 Static site for **tourai.es** (GitHub Pages): product landing, support pages, and authenticated account area.
 
+## Languages and URLs
+
+- **Spanish (Spain):** pages at the site root (`/`, `/faq.html`, …).
+- **English (United Kingdom):** the same pages under **`/en/`** (`/en/`, `/en/faq.html`, …).
+- Copy is **baked into each HTML file** (crawlers and users do not depend on client-side translation).
+- The header language switcher uses normal links to the equivalent page in the other language.
+- `js/locales/es-ES.js` and `js/locales/en-GB.js` hold **runtime UI strings only** (account panel, forms, community, auth messages). Each public page loads **one** locale file matching its language.
+
 ## Pages
 
-- `index.html` — App landing and launch waitlist
-- `about.html`, `contact.html`, `faq.html` — Product info and support
-- `login.html` / `account.html` — Account sign-in and private zone (Firebase Auth)
-- `community.html` — Public community (topics/replies in Firestore; see `firestore.community.rules.example`)
-- `dashboard.html` — Lazy-loaded plans / payments panel
-- `privacy.html`, `terms.html`, `cookies.html` — Legal
-- `delete-account.html`, `reset-password.html` — Account self-service
+| Spanish (root) | English (`/en/`) | Notes |
+|----------------|------------------|--------|
+| `index.html` | `en/index.html` | Landing, launch waitlist |
+| `about.html`, `contact.html`, `faq.html` | `en/…` | Product info and support |
+| `privacy.html`, `terms.html`, `cookies.html` | `en/…` | Legal (Spanish is reference for web terms) |
+| `community.html`, `reviews.html`, `whats-new.html` | `en/…` | Public UGC / release notes |
+| `login.html`, `register.html`, `account.html`, `dashboard.html` | `en/…` | Firebase Auth; account/dashboard `noindex` |
+| `delete-account.html`, `reset-password.html` | `en/…` | Account self-service |
+
+Public SEO URLs are listed in `sitemap.xml` (10 pages × 2 languages). Auth-only pages are omitted from the sitemap.
 
 ## Deploy
 
@@ -41,29 +52,32 @@ Deploy the Cloud Function from `D:\Proyectos\TourAI\firebase` (`createCheckoutSe
 
 Stripe is in **Test mode** for both Firebase environments until go-live: use `sk_test_...` and a **Test mode** webhook pointing to `https://europe-west1-tourai-production-7dabf.cloudfunctions.net/stripeWebhook` (see `TourAI/firebase/README.md`).
 
-## i18n
+## Editing copy and SEO shell
 
-- `js/locales/es-ES.js` — Spanish UI strings (`TourAiEsESMessages`)
-- `js/locales/en-GB.js` — English UI strings (`TourAiEnGBMessages`)
-- Pages keep structure only (`data-i18n`, `data-i18n-html`, `data-i18n-meta`, …); **no user-facing copy in HTML**.
-- JS looks up keys from both tables (optional fallbacks in code — prefer keys in both locale files).
+1. **Spanish body/head copy:** edit `*.html` in the repo root.
+2. **English body/head copy:** edit `en/*.html` directly (do not expect auto-translation from Spanish).
+3. **Dynamic JS messages:** add keys to `js/locales/es-ES.js` and `en-GB.js`, then run `node scripts/prune-locale-files.js`.
+4. **Hreflang, sitemap, language switcher paths:** `node scripts/sync-static-site.js` (runs `build-en-pages.js`, optional Spanish bake if templates still had `data-i18n`, then prune). After migration, routine legal/marketing edits are usually **manual HTML in both languages**; use sync when adding a new public page or changing URL structure.
 
-## Run locally with Node (no npm)
+Scripts live in `scripts/` (`build-en-pages.js`, `bake-spanish-html.js`, `i18n-html-bake-lib.js`, `prune-locale-files.js`, `sync-static-site.js`).
 
-Do **not** open the HTML files with `file://` — Firebase Auth will not work. Serve the folder over HTTP with Node only (no `npm` / `npx`):
+## Run locally
+
+Do **not** open the HTML files with `file://` — Firebase Auth will not work. Serve the folder over HTTP, for example:
 
 ```powershell
 cd D:\Proyectos\TourAIWeb\jordiperello.github.io
-node -e "const http=require('http'),fs=require('fs'),path=require('path'),url=require('url');const root=process.cwd();const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.png':'image/png','.svg':'image/svg+xml','.json':'application/json','.ico':'image/x-icon'};http.createServer((req,res)=>{let p=decodeURIComponent(url.parse(req.url).pathname);if(p==='/')p='/index.html';const file=path.join(root,p);if(!file.startsWith(root)||!fs.existsSync(file)||fs.statSync(file).isDirectory()){res.writeHead(404);return res.end('Not found');}res.writeHead(200,{'Content-Type':types[path.extname(file)]||'application/octet-stream'});fs.createReadStream(file).pipe(res);}).listen(8080,()=>console.log('http://127.0.0.1:8080/login.html'));"
+npx --yes serve -l 8080 .
 ```
 
-Then open: http://127.0.0.1:8080/login.html
+Then open http://127.0.0.1:8080/ or http://127.0.0.1:8080/en/
 
 If sign-in fails on localhost, add `localhost` / `127.0.0.1` under Firebase Authentication → Authorized domains, and (if the API key has HTTP referrer restrictions) allow `http://127.0.0.1:8080/*` and `http://localhost:8080/*`.
 
 ## Notes
 
-- Front-end JS is intentionally few modules: `site-ui.js`, `site-promo.js`, `auth.js`, `forms.js`, `account.js`, `community.js` (+ config / i18n).
+- Front-end JS modules: `site-ui.js`, `site-promo.js`, `auth.js`, `forms.js`, `account.js`, `community.js`, `reviews.js`, `whats-new.js`, `i18n.js`, config.
+- Lawyer PDF export reads published Spanish legal HTML from this repo (`legal-export` tooling); see `D:\Proyectos\Documents\legal-export\README.md`.
 
 ---
 © TourAI. All rights reserved.

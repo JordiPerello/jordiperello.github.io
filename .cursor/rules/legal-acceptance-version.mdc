@@ -18,7 +18,7 @@ App and Web read this at runtime. An Android store release is **not** required o
 Any edit to published legal content on this site, including:
 
 - `terms.html`, `privacy.html`, `cookies.html`
-- `js/locales/**` keys that embed legal page HTML (`page.terms.*`, `page.privacy.*`, …)
+- `en/privacy.html`, `en/terms.html`, `en/cookies.html` (and root Spanish legal HTML)
 - `js/auth.js` legal re-acceptance / `LegalDocumentsVersion`
 
 ## Mandatory checklist (same calendar day as the legal change)
