@@ -553,7 +553,7 @@ window.TourAiEnGBMessages = {
             <p style="font-size: 0.8em; color: #888; margin-top: 20px;">For further details, please see our full Privacy Policy.</p>`,
   "page.cookies.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. What are Cookies?</h2>
-            <p><strong>Last updated:</strong> 24 September 2026.</p>
+            <p><strong>Last updated:</strong> 3 October 2026.</p>
             <p>Cookies are small text files that websites store in your browser to remember information about your visit. Similar browser local-storage technologies may also be used (for example, <code>localStorage</code>).</p>
             
             <h2>2. Types of Cookies we use</h2>
@@ -571,7 +571,7 @@ window.TourAiEnGBMessages = {
             <p>The average rating shown on the website is obtained from our servers and is independent of Google Analytics.</p>
 
             <h2>3. How to manage Cookies</h2>
-            <p>You may block or delete them in your browser settings (Chrome, Safari, etc.). To see the tourai.es cookie banner again, clear the site data (including the <code>cookies-aceptadas</code> key) in your browser.</p>
+            <p>In the banner you may <strong>Accept</strong> (technical and analytics cookies) or <strong>Reject</strong> (technical only). A previous «Got it» choice is treated as technical only. You may also block or delete them in your browser settings (Chrome, Safari, etc.). To see the tourai.es cookie banner again, clear the site data (including the <code>cookies-aceptadas</code> key) in your browser.</p>
         </main>
 
         <aside class="sidebar">
@@ -630,7 +630,7 @@ window.TourAiEnGBMessages = {
         <div class="faq-item">
             <div class="faq-question">Does tourai.es use cookies?</div>
             <div class="faq-answer">
-                <p>We use technical cookies necessary for the site (for example language and preferences). See the <a href="cookies.html">cookie policy</a>.</p>
+                <p>We use technical cookies necessary for the site (language, session and preferences) and, only if you accept them in the banner, analytics cookies (Google Analytics) to measure visits. You may reject them and read the detail in the <a href="cookies.html">cookie policy</a>.</p>
             </div>
         </div>
 
@@ -764,7 +764,7 @@ window.TourAiEnGBMessages = {
         </div>`,
   "page.privacy.content": `<main class="container legal-content">
             <h2 style="margin-top:0;">1. Privacy Commitment</h2>
-            <p><strong>Last updated:</strong> 2 October 2026.</p>
+            <p><strong>Last updated:</strong> 3 October 2026.</p>
             <p>At <strong>TourAI</strong>, accessible from <a href="https://tourai.es">tourai.es</a>, we regard our users' privacy as a fundamental pillar. This policy explains how we manage information to ensure that the use of our intelligent audio guides and associated website services (account, community and reviews) is safe and transparent.</p>
 
             <h2>2. Data controller</h2>
