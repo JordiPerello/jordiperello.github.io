@@ -2,12 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://tourai.es/</loc></url>
   <url><loc>https://tourai.es/about.html</loc></url>
+  <url><loc>https://tourai.es/community.html</loc></url>
+  <url><loc>https://tourai.es/reviews.html</loc></url>
   <url><loc>https://tourai.es/contact.html</loc></url>
   <url><loc>https://tourai.es/faq.html</loc></url>
-  <url><loc>https://tourai.es/login.html</loc></url>
-  <url><loc>https://tourai.es/register.html</loc></url>
+  <url><loc>https://tourai.es/whats-new.html</loc></url>
   <url><loc>https://tourai.es/cookies.html</loc></url>
   <url><loc>https://tourai.es/privacy.html</loc></url>
   <url><loc>https://tourai.es/terms.html</loc></url>
-  <url><loc>https://tourai.es/delete-account.html</loc></url>
 </urlset>
