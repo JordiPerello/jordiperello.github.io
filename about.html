@@ -10,19 +10,19 @@
     <link rel="alternate" hreflang="x-default" href="https://tourai.es/about.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="TourAI">
-    <meta property="og:title" content="Sobre nosotros - TourAI">
-    <meta property="og:description" content="Conoce quién está detrás de TourAI, la aplicación de turismo inteligente con guías personalizadas e inteligencia artificial.">
+    <meta property="og:title" content="Qué es TourAI — App oficial en tourai.es">
+    <meta property="og:description" content="TourAI es la app de turismo con IA, mapas y audioguías GPS del proyecto en tourai.es (España). No confundir con otras apps homónimas en buscadores.">
     <meta property="og:url" content="https://tourai.es/about.html">
     <meta property="og:image" content="https://tourai.es/img/tourai_logo.png">
     <meta property="og:locale" content="es_ES">
     <meta property="og:locale:alternate" content="en_GB">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Sobre nosotros - TourAI">
-    <meta name="twitter:description" content="Conoce quién está detrás de TourAI, la aplicación de turismo inteligente con guías personalizadas e inteligencia artificial.">
+    <meta name="twitter:title" content="Qué es TourAI — App oficial en tourai.es">
+    <meta name="twitter:description" content="TourAI es la app de turismo con IA, mapas y audioguías GPS del proyecto en tourai.es (España). No confundir con otras apps homónimas en buscadores.">
     <meta name="twitter:image" content="https://tourai.es/img/tourai_logo.png">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"TourAI","url":"https://tourai.es","logo":"https://tourai.es/img/tourai_logo.png","email":"info@tourai.es","founder":{"@type":"Person","name":"Jordi Perelló"},"address":{"@type":"PostalAddress","addressCountry":"ES"}}</script>
-    <meta name="description" content="Conoce quién está detrás de TourAI, la aplicación de turismo inteligente con guías personalizadas e inteligencia artificial.">
-    <title>Sobre nosotros - TourAI</title>
+    <meta name="description" content="Qué es TourAI: app móvil de turismo con inteligencia artificial, mapas y audioguías por GPS. Proyecto independiente en España; web oficial tourai.es.">
+    <title>Qué es TourAI — App de turismo con IA | tourai.es</title>
     <link rel="icon" type="image/png" href="img/tourai_logo.png">
     <link rel="apple-touch-icon" href="img/tourai_logo.png">
     <link rel="stylesheet" href="css/site.css">
@@ -56,6 +56,17 @@
         .footer-social__icon { width: 18px; height: 18px; flex-shrink: 0; display: block; }
         .legal-bottom { font-size: 0.9em; color: #aaa; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
         .footer-email { color: var(--accent); text-decoration: none; font-weight: bold; }
+        .info-box { margin-top: 32px; padding: 25px; background: #f0f7ff; border-radius: 12px; border: 1px solid #e3f2fd; }
+        .about-highlight { margin: 28px 0; padding: 22px 26px; background: #f8fbff; border-left: 4px solid var(--accent); border-radius: 0 12px 12px 0; }
+        .about-steps { margin: 16px 0 0; padding-left: 1.25rem; }
+        .about-steps li { margin-bottom: 10px; }
+        .about-cta { margin-top: 36px; padding: 28px; text-align: center; background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fc 100%); border-radius: 12px; border: 1px solid #d6ebfa; }
+        .about-cta p { margin: 0 0 16px; }
+        .about-cta-links { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+        .about-cta-links a { display: inline-block; padding: 10px 18px; background: var(--primary); color: #fff; text-decoration: none; font-weight: 600; border-radius: 8px; font-size: 0.95rem; }
+        .about-cta-links a:hover { background: var(--secondary); }
+        .about-cta-links a.about-cta-links--secondary { background: #fff; color: var(--primary); border: 2px solid var(--primary); }
+        .about-cta-links a.about-cta-links--secondary:hover { background: #f4f7f9; }
         @media (max-width: 768px) { .menu-icon { display: flex; } .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background: #fff; padding: 20px 0; } .nav-links.show { display: flex; } h1 { font-size: 2.2em; } .container { margin: 20px; padding: 30px 20px; } .footer-grid { grid-template-columns: 1fr; gap: 28px; text-align: center; justify-items: center; } .footer-col { width: 100%; max-width: 320px; } .footer-social__links { margin: 0 auto; max-width: 220px; } }
     </style>
 </head>
@@ -65,11 +76,11 @@
         <div class="menu-icon" onclick="toggleMenu()"><span></span><span></span><span></span></div>
         <div class="nav-links" id="nav-links">
             <a href="index.html">La App</a>
-            <a class="active">Sobre nosotros</a>
+            <a class="active">Qué es TourAI</a>
             <a href="community.html">Comunidad</a>
             <a href="contact.html">Contacto</a>
             <a href="login.html">Mi cuenta</a>
-                                                <div class="lang-switch" role="group" aria-label="Idioma">
+                                                            <div class="lang-switch" role="group" aria-label="Idioma">
                 <a href="/about.html" hreflang="es-ES" lang="es-ES" class="active" aria-current="page" title="Español" aria-label="Español">
                     <img src="img/lang/icon_spanish_flag.png" alt="" width="28" height="28" decoding="async">
                 </a>
@@ -81,13 +92,19 @@
     </nav>
 
     <header>
-        <div><h1>Sobre TourAI</h1>
-            <p>Turismo inteligente, personalizado y accesible para todos los viajeros.</p></div>
+        <div><h1>Qué es TourAI</h1>
+            <p>La app oficial de turismo con IA del proyecto <strong>tourai.es</strong> — mapas, chat y audioguías a tu ritmo.</p></div>
     </header>
 
-    <main class="container"><h2>¿Quiénes somos?</h2>
+    <main class="container"><h2>El proyecto</h2>
         <p><strong>TourAI</strong> es un proyecto independiente de turismo digital creado por <strong>Jordi Perelló</strong>, desarrollador y apasionado de los viajes con sede en España. Nacimos con una idea sencilla: que cualquier persona pueda explorar una ciudad con la misma profundidad que tendría con un guía local, pero a su ritmo, en su idioma y desde el móvil.</p>
         <p>Este sitio web, <strong>tourai.es</strong>, es el portal oficial del proyecto: información sobre la app, contacto, soporte y acceso a la zona privada de cuenta para usuarios registrados.</p>
+
+        <div class="about-highlight">
+            <h2 style="margin-top:0;">TourAI en tourai.es (marca oficial)</h2>
+            <p>En buscadores pueden aparecer otras apps o marcas con nombres parecidos («Tour AI», «TourAi», etc.). <strong>TourAI</strong> —escrito junto y en mayúsculas AI— es el proyecto independiente de <strong>Jordi Perelló</strong> en España. La app y esta web oficial están en <strong>https://tourai.es</strong> y el contacto del proyecto es <a href="mailto:info@tourai.es">info@tourai.es</a>. Si buscas esta app, comprueba el dominio y las tiendas enlazadas desde tourai.es.</p>
+        </div>
+
         <h2>¿Qué hace TourAI?</h2>
         <p>TourAI es una aplicación móvil que combina <strong>inteligencia artificial</strong>, <strong>geolocalización</strong> y <strong>audioguías</strong> para ofrecer una experiencia de viaje personalizada:</p>
         <ul>
@@ -98,8 +115,57 @@
             <li><strong>Planes y bonos:</strong> adquiere un plan temporal o canjea un bono promocional para usar mapa, chat y audioguías.</li>
         </ul>
         <p>La aplicación se encuentra actualmente en fase de desarrollo y pruebas. Las versiones para iOS y Android se publicarán en las tiendas oficiales cuando estén listas.</p>
+
+        <h2>La app en capturas</h2>
+        <p>Interfaz real de TourAI en español (pantallas de la app móvil):</p>
+        <div class="app-screens-grid">
+            <figure>
+                <img src="img/app/es/StreetMap-1.jpeg" alt="Mapa con ruta guiada" loading="lazy" width="390" height="844">
+                <figcaption>Mapa / ruta</figcaption>
+            </figure>
+            <figure>
+                <img src="img/app/es/StreetMap-2.jpeg" alt="Detalle del mapa y recorrido" loading="lazy" width="390" height="844">
+                <figcaption>Mapa / recorrido</figcaption>
+            </figure>
+            <figure>
+                <img src="img/app/es/ChatAI.jpeg" alt="Chat con inteligencia artificial" loading="lazy" width="390" height="844">
+                <figcaption>ChatAI</figcaption>
+            </figure>
+            <figure>
+                <img src="img/app/es/Audioguia-1.jpeg" alt="Audioguía en un recinto" loading="lazy" width="390" height="844">
+                <figcaption>Audioguía</figcaption>
+            </figure>
+            <figure>
+                <img src="img/app/es/Audioguia-2.jpeg" alt="Detalle de audioguía" loading="lazy" width="390" height="844">
+                <figcaption>Audioguía</figcaption>
+            </figure>
+            <figure>
+                <img src="img/app/es/UserProfile.jpeg" alt="Perfil y planes" loading="lazy" width="390" height="844">
+                <figcaption>Perfil / planes</figcaption>
+            </figure>
+        </div>
+
+        <h2>Cómo funciona en la práctica</h2>
+        <p>Un recorrido típico con TourAI combina mapa, asistente y narración en el móvil:</p>
+        <ol class="about-steps">
+            <li><strong>Elige destino y plan:</strong> inicia sesión, activa un plan temporal o canjea un bono promocional para desbloquear mapa, chat y audioguías.</li>
+            <li><strong>Explora el mapa:</strong> localiza puntos de interés cercanos y empieza un recorrido a pie guiado por GPS.</li>
+            <li><strong>Pregunta al asistente:</strong> usa chat o voz para historias, recomendaciones prácticas o dudas mientras caminas.</li>
+            <li><strong>Escucha audioguías:</strong> al acercarte a un punto, la app puede reproducir narraciones adaptadas a tu ubicación.</li>
+        </ol>
+        <p>Más respuestas en las <a href="faq.html">preguntas frecuentes</a>.</p>
+
         <h2>Nuestra misión</h2>
         <p>Queremos democratizar el acceso a información cultural de calidad. Creemos que viajar no debería depender de contratar tours caros ni de llevar guías impresas obsoletas. TourAI funciona con planes temporales y bonos promocionales que desbloquean el acceso completo a la app.</p>
+        <div class="about-cta">
+            <p><strong>¿Quieres probar TourAI cuando esté en tienda?</strong></p>
+            <div class="about-cta-links">
+                <a href="index.html">Ver la app en la home</a>
+                <a href="faq.html" class="about-cta-links--secondary">Preguntas frecuentes</a>
+                <a href="contact.html" class="about-cta-links--secondary">Contacto</a>
+            </div>
+        </div>
+
         <div class="info-box">
             <strong>Contacto directo</strong><br>
             Correo electrónico: <a href="mailto:info@tourai.es">info@tourai.es</a><br>
@@ -114,7 +180,7 @@
             <div class="footer-col">
                 <h4>Explora</h4>
                 <a href="index.html">La App</a>
-                <a class="active">Sobre nosotros</a>
+                <a class="active">Qué es TourAI</a>
                 <a href="community.html">Comunidad</a>
                 <a href="reviews.html">Opiniones</a>
                 <a href="contact.html">Contacto</a>
@@ -129,7 +195,7 @@
             </div>
             <div class="footer-col">
                 <h4>Ayuda</h4>
-                <a class="active">Sobre nosotros</a>
+                <a class="active">Qué es TourAI</a>
                 <a href="community.html">Comunidad</a>
                 <a href="reviews.html">Opiniones</a>
                 <a href="contact.html">Contacto</a>
