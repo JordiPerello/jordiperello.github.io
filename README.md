@@ -70,7 +70,7 @@ cd D:\Proyectos\TourAIWeb\jordiperello.github.io
 npx --yes serve -l 8080 .
 ```
 
-Then open http://127.0.0.1:8080/ or http://127.0.0.1:8080/en/
+Then open http://127.0.0.1:8080/ or http://127.0.0.1:8080/en/ (same as production). The repo includes `serve.json` so **`npx serve`** rewrites `/en` and `/en/` to `en/index.html`. If you use another static server and get **404** on `/en/`, open http://127.0.0.1:8080/en/index.html or switch to `npx serve` from the repo root.
 
 If sign-in fails on localhost, add `localhost` / `127.0.0.1` under Firebase Authentication → Authorized domains, and (if the API key has HTTP referrer restrictions) allow `http://127.0.0.1:8080/*` and `http://localhost:8080/*`.
 
